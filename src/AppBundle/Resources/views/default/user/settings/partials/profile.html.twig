@@ -1,0 +1,215 @@
+{% set userSettings = app.user.userSettings %}
+
+<form class="form-horizontal" action="{{ path('account_profile') }}" id="userProfileForm" method="POST" enctype="multipart/form-data">
+    <h3 class="text-darkness">Contact Information</h3>
+    <div class="table-container table-container--spacing m-b-lg">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_name"></label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <img
+                    id="profile_picture"
+                    class="img-circle user-profile-picture" style="margin-right: 10px"
+                    src="{{ userSettings and userSettings.profilePicture ? userSettings.profilePicture : asset('bundles/app/user-photo-placeholder.png') }}"
+                    data-placeholder="{{ asset('bundles/app/user-photo-placeholder.png') }}"
+                    alt=""
+                    width="50"
+                    height="50"
+                />
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <span class="btn btn-default btn-upper btn-file"><span class="fileinput-new">{{ userSettings and userSettings.profilePicture ? 'Change' : 'Upload' }} Photo</span>
+                    <span class="fileinput-exists">Change Photo</span><input type="file" name="profile_picture" id="account_profile_picture" accept="image/*" /></span>
+                    <span class="fileinput-filename"></span>
+                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_name">Your Name</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input autocomplete="off" name="name" id="account_name" class="form-control" value="{{ app.user.name }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_email">Your E-Mail</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input autocomplete="off" type="email" name="email" id="account_email" class="form-control" value="{{ app.user.email }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_phone">Your Phone Number</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input type="tel" name="phone" id="account_phone" class="form-control" style="margin-bottom: 6px" value="{{ app.user.phone }}">
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3 class="text-darkness">Change Password</h3>
+    </div>
+    <div class="table-container table-container--spacing">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_company">Current password</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input type="password" name="password" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_company">New password</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input type="password" name="password1" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_company">Repeat password</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input type="password" name="password2" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3 class="text-darkness">Company Information</h3>
+    </div>
+    <div class="table-container table-container--spacing">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_company">Company Name</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+                <input name="company_name" id="account_company" class="form-control" value="{{ userSettings and userSettings.companyName ? userSettings.companyName : '' }}">
+            </div>
+        </div>
+        {% if app.user.userStripe %}
+          <div class="form-group">
+              <label class="control-label col-sm-2" for="account_email">Your Company VAT / EIN number</label>
+              <div class="col-sm-8 col-md-6 col-lg-4">
+                  <input autocomplete="off" type="text" name="vat" class="form-control" value="{{ app.user.userStripe.vat }}">
+              </div>
+          </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_company_logo">Company Logo</label>
+            <div class="col-sm-8 col-md-6 col-lg-6">
+                <div class="form-company-logo">
+                    {% if userSettings and userSettings.companyLogo %}
+                        <img src="{{ userSettings and userSettings.companyLogo ? userSettings.companyLogo : '' }}" alt="" />
+                    {% endif %}
+                </div>
+                <div class="fileinput fileinput-new" data-provides="fileinput" style="vertical-align:middle;margin-bottom:0;margin-top:4px;">
+                    <span class="btn btn-default btn-upper btn-file"><span class="fileinput-new">{{ userSettings and userSettings.companyLogo ? 'Change' : 'Upload' }} Logo</span>
+                    <span class="fileinput-exists">Change Logo</span><input type="file" name="company_logo" id="account_company_logo" accept="image/*" /></span>
+                    <span class="fileinput-filename"></span>
+                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                </div>
+                <p class="help-block">You logo will be illustrated in your clients' app.</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="text-darkness" id="payments">Payment Information</h3>
+    </div>
+    <div class="table-container table-container--spacing">
+        <div class="form-group" style="display:flex;align-items: center;">
+            <label class="control-label col-sm-2" for="account_company">Accept Client Payments</label>
+            <div class="col-sm-8 col-md-6 col-lg-4">
+              {% if not app.user.userStripe %}
+                <a role="button" href="{{ stripe_connect }}" class="btn btn-success">Connect with Stripe</a>
+                <br />
+                <small>Powered by Stripe.com</small>
+                <br />
+                <small>Zenfit Processing Fee: 2,4% (Stripe fees not included)</small>
+              {% else %}
+                <span class="label label-primary"><i class="fa fa-check"></i> You are all setup with Stripe Connect</span>
+                <br />
+                <small>Powered by Stripe.com</small>
+                <br />
+                <small>Zenfit Processing Fee: {{ app.user.userStripe.feePercentage }}% (Stripe fees not included)</small>
+              {% endif %}
+            </div>
+        </div>
+        <div class="form-group" style="display:flex;align-items: flex-start;">
+            <label class="control-label col-sm-2" for="account_company">Credit Card</label>
+            <div class="col-sm-8 col-md-6 col-lg-4" style="padding-top:7px;">
+                <div class="m-t">
+                    <button id="checkout-button" class="btn btn-success">Update Card Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="text-darkness">Personalization</h3>
+        <span class="help-block">Give personalized experience to your clients when they use the Zenfit App. <a id="personalization-example" href="#">See example here</a>.</span>
+    </div>
+
+    <div class="table-container table-container--spacing">
+        <div class="form-group{{ video or videoError ? '' : ' hidden' }}">
+            <label for="account_trainer_video" class="control-label col-sm-2"></label>
+            <div class="col-sm-10">
+                <div id="trainer_video">
+                    {% if video %}
+                        {{ video | embed_video(232, 132) | raw }}
+                    {% endif %}
+                </div>
+                <p class="help-block">
+                    {% if videoError %}
+                      <span class="text-danger">{{ videoError }}</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="account_trainer_video" class="control-label col-sm-2">Introduction Video</label>
+            <div class="col-sm-10">
+                <input
+                    autocomplete="off"
+                    name="trainer_video_url"
+                    id="account_trainer_video"
+                    class="form-control"
+                    value="{{ userSettings and userSettings.video ? userSettings.video : '' }}"
+                    placeholder="Your Youtube Video Url"
+                    style="width:230px; display: inline"
+                >
+                <p class="help-block">Record and upload a personal welcome message to your clients. It will appear when they use the Zenfit app.</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="account_welcome_message">Welcome Message</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="welcome_message" id="account_welcome_message" cols="30" rows="5">{{ userSettings and userSettings.welcomeMessage ? userSettings.welcomeMessage : '' }}</textarea>
+                <p class="help-block">This welcome message will be shown with your name, profile pic and company info when your clients use the Zenfit app.</p>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="text-darkness">Email Notifications</h3>
+    <div class="table-container table-container--spacing">
+        <div class="checkbox">
+            <label>
+                <input name="receive_email_on_new_message" type="checkbox" class="input-receive-emails" {{ userSettings and userSettings.receiveEmailOnNewMessage ? ' checked' : '' }}>
+                Receive email every time a client writes you a message
+            </label>
+        </div>
+    </div>
+    <div class="m-b-lg">
+        <button class="btn btn-success btn-upper" type="submit" data-loading-text="Saving Changes...">Save Changes</button>
+    </div>
+
+    <br /><br />
+    <div>
+        <h3 class="text-darkness">Delete my profile</h3>
+        <span class="help-block">Please contact Zenfit Support to have your profile deleted.</span>
+    </div>
+</form>
+
+{% block extra_css %}
+    <style>
+        .btn-grey {
+            color: #ccc;
+            background-image: none;
+            background-color: transparent;
+            border-color: #ccc;
+        }
+    </style>
+{% endblock %}

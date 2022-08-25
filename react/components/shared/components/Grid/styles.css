@@ -1,0 +1,17 @@
+@media (min-width: 992px) {
+    .zf.row {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+    }
+
+    .zf.row > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .zf.row:before,
+    .zf.row:after {
+        order: 10;
+    }
+}

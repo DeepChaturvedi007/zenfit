@@ -1,0 +1,167 @@
+AppBundle\Entity\UserSettings:
+    type: entity
+    table: user_settings
+    repositoryClass: AppBundle\Repository\UserSettingsRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        autoDeactivate:
+            type: boolean
+
+        profilePicture:
+            type: string
+            length: 255
+            nullable: true
+
+        video:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        videoThumb:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        welcomeMessage:
+            type: text
+            nullable: TRUE
+
+        address:
+            type: text
+            nullable: TRUE
+
+        companyName:
+            column: company_name
+            nullable: TRUE
+            type: string
+            length: 255
+
+        companyLogo:
+            type: string
+            length: 255
+            nullable: true
+
+        receiveEmailOnNewMessage:
+            type: boolean
+            options:
+                default: true
+
+        receiveEmailOnNewLead:
+            type: boolean
+            options:
+                default: true
+
+        postCheckinsToChat:
+            type: boolean
+            options:
+                default: true
+
+        checkInQuestions:
+            type: text
+            nullable: true
+
+        backgroundImage:
+            type: string
+            length: 255
+            nullable: true
+
+        mailChimpApiKey:
+            type: string
+            length: 255
+            nullable: true
+
+        mailChimpListId:
+            type: string
+            length: 255
+            nullable: true
+
+        customPrimaryGoals:
+            type: boolean
+            options:
+                default: false
+
+        oldChatsInterval:
+            type: integer
+            length: 1
+            options:
+                default: 4
+
+        checkInDuration:
+            type: integer
+            length: 1
+            options:
+                default: 7
+
+        checkInMessageMandatory:
+            type: boolean
+            options:
+                default: false
+
+        askForPeriod:
+            type: boolean
+            options:
+                default: true
+
+        showFatPercentage:
+            type: boolean
+            options:
+                default: true
+
+        primaryColor:
+            type: string
+            column: primary_color
+            nullable: TRUE
+            length: 10
+
+        showLeadUtm:
+            type: boolean
+            options:
+                default: false
+
+        defaultCurrency:
+            type: string
+            length: 10
+            nullable: true
+
+        defaultMonths:
+            type: integer
+            length: 2
+            nullable: true
+
+        defaultRecurring:
+            type: integer
+            length: 10
+            nullable: true
+
+        defaultUpfront:
+            type: integer
+            length: 10
+            nullable: true
+
+        defaultCheckInDay:
+            type: integer
+            length: 1
+            nullable: true
+
+        questionnaireText:
+            type: text
+            nullable: true
+
+    oneToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: userSettings
+            joinColumn:
+                nullable: false
+
+    lifecycleCallbacks: {  }

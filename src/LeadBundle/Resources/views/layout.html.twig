@@ -1,0 +1,67 @@
+<!-- v:42d40fe -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>Zenfit - Personal Trainer Software</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no, height=device-height" />
+
+    <link rel="icon" type="image/png" href="{{ asset('bundles/app/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/app/icons/icon57.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/app/icons/icon72.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/app/icons/icon114.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/app/icons/icon144.png') }}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="{{ asset('bundles/app/css/emoji.css') }}" rel="stylesheet">
+
+    <!-- iPad retina icon -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-152.png') }}"
+          sizes="152x152"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-144.png') }}"
+          sizes="144x144"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad non-retina icon -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-76.png') }}"
+          sizes="76x76"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad non-retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-72.png') }}"
+          sizes="72x72"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone 6 Plus icon -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-120.png') }}"
+          sizes="120x120"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-114.png') }}"
+          sizes="114x114"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone non-retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-57.png') }}"
+          sizes="57x57"
+          rel="apple-touch-icon-precomposed">
+
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-60.png') }}"
+          rel="apple-touch-icon">
+
+    <link rel="icon" type="image/png" href="{{ asset('bundles/app/logo.png') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body>
+    {% block content %}{% endblock content %}
+    {% block script %}{% endblock script %}
+</body>
+</html>

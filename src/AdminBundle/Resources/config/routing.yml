@@ -1,0 +1,90 @@
+admin_home:
+    path:     /
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:indexAction' }
+
+admin_recipes:
+    path:     /recipes
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:recipesAction' }
+
+admin_recipe_children:
+    path:     /recipe-children/{id}
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:recipeChildrenAction' }
+
+admin_users:
+    path:     /users
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:usersAction' }
+
+admin_clients:
+    path:     /clients
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:clientsAction' }
+
+admin_api_users:
+    path:     /api/users
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:usersAction' }
+
+generate_customer:
+    path:     /generate-customer
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:generateCustomerAction' }
+
+api_clients:
+    path:     /api/clients
+    methods: GET
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:getClientsAction' }
+
+admin_ingredients:
+    path:     /ingredients
+    methods: GET
+    defaults: { _controller: 'AdminBundle\Controller\DefaultController:ingredientsAction' }
+
+admin_api_ingredients_create:
+    path:     /api/ingredients
+    methods: POST
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:createIngredientAction' }
+
+admin_api_ingredients_update:
+    path:     /api/ingredients/update/{id}
+    methods: POST
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:updateIngredientAction' }
+
+admin_api_ingredients_delete:
+    path:     /api/ingredients/delete/{id}
+    methods: POST
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:deleteIngredientAction' }
+
+admin_api_update_children_and_parent:
+    path:     /api/recipes/update-recipes-and-parent/{recipe}
+    methods: POST
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:updateRecipesChildrenAndParentAction' }
+
+admin_api_ingredients:
+    path:     /api/ingredients
+    methods: GET
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:getIngredientsAction' }
+
+admin_api_recipes:
+    path:     /api/recipes
+    controller: 'AdminBundle\Controller\ApiController:getRecipesAction'
+    methods: GET|HEAD
+
+admin_api_recipes_show:
+    path:     /api/recipes/{id}
+    controller: 'AdminBundle\Controller\ApiController:showRecipeAction'
+    methods: GET
+
+admin_api_recipes_clone_and_adjust:
+    path:     /api/recipes/{recipe}/clone-and-adjust
+    controller: 'AdminBundle\Controller\ApiController:cloneAndAdjustRecipeAction'
+    methods: POST
+
+admin_api_stats:
+    path:     /api/stats
+    controller: 'AdminBundle\Controller\ApiController:getStatsAction'
+    methods: GET
+
+activate_trainer:
+    path:     /api/activate-trainer
+    defaults: { _controller: 'AdminBundle\Controller\ApiController:activateTrainerAction' }
+
+gecko_api:
+    path:     /gecko
+    defaults: { _controller: 'AdminBundle\Controller\GeckoController:getAction' }

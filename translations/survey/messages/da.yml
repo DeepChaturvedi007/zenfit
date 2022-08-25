@@ -1,0 +1,21 @@
+errors:
+  default: "Ups! Noget gik galt"
+  invalid: "Valideringsfejl"
+  fields:
+    name:
+      required: "Navn kræves"
+    email:
+      required: "E-mail kræves"
+      invalid: "E-mail er ikke gyldig"
+    age:
+      required: "Alder kræves"
+    gender:
+      required: "Vælg venligst køn"
+    startWeight:
+      required: "Nuværende vægt kræves"
+    goalWeight:
+      required: "Mål vægt kræves"
+    height:
+      required: "Højde kræves"
+    measuringSystem:
+      required: "Måle enhed kræves"

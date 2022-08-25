@@ -1,0 +1,58 @@
+AppBundle\Entity\TrackWorkout:
+    type: entity
+    table: workout_tracking
+    repositoryClass: AppBundle\Repository\TrackWorkoutRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        reps:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        sets:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        weight:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        time:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        date:
+            type: date
+            column: date
+
+        deleted:
+            type: boolean
+            column: deleted
+            options:
+                default: false
+
+
+    manyToOne:
+        workout:
+            targetEntity: AppBundle\Entity\Workout
+            inversedBy: tracking
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

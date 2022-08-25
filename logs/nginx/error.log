@@ -1,0 +1,2 @@
+2016/08/18 18:12:55 [emerg] 1#0: "daemon" directive is duplicate in /etc/nginx/nginx.conf:29
+2016/08/18 18:13:37 [emerg] 1#0: "daemon" directive is duplicate in /etc/nginx/nginx.conf:29

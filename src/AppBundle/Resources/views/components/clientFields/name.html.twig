@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label class="control-label">Full Name</label>
+    <div class="form-group-in max-width">
+        <input type="text" name="name" class="form-control" {% if client.name is not null %} value="{{ client.name }}" {% else %} placeholder="Full Name" {% endif %}>
+    </div>
+</div>

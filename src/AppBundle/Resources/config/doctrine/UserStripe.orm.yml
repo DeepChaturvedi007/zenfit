@@ -1,0 +1,63 @@
+AppBundle\Entity\UserStripe:
+    type: entity
+    table: user_stripe
+    repositoryClass: AppBundle\Repository\UserStripeRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        stripeUserId:
+            type: string
+            length: 255
+            nullable: false
+
+        stripeRefreshToken:
+            type: string
+            length: 255
+            nullable: false
+
+        feePercentage:
+            type: float
+            column: fee_percentage
+
+        paymentRequired:
+            type: boolean
+            column: payment_required
+            options:
+                default: false
+
+        applicationFeeRequired:
+            type: boolean
+            column: application_fee_required
+            options:
+                default: false
+
+        klarnaEnabled:
+            type: boolean
+            options:
+                default: false
+
+        sepaEnabled:
+            type: boolean
+            options:
+                default: false
+
+        klarnaCountry:
+            type: string
+            length: 2
+            nullable: TRUE
+
+    oneToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: userStripe
+
+    lifecycleCallbacks: {  }

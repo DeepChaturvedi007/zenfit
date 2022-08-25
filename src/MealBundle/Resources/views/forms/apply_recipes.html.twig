@@ -1,0 +1,256 @@
+<div
+        class="modal modal-recipes inmodal in"
+        id="applyMealRecipe"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <div class="d-flex align-items-center">
+                    <h4 class="modal-title flex-grow-1">Recipes</h4>
+                    <label class="help-block mt-0 mb-0" for="recipes_filter_mine">
+                        <input type="checkbox" name="recipes_filter_mine" id="recipes_filter_mine" value="1"
+                               checked="checked">
+                        Only show own recipes.
+                    </label>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="plans-search-text">
+                    <input class="form-control" type="text" name="q" value="" placeholder="Search recipe" autocomplete="off">
+                </div>
+                <div class="modal-recipes-empty" hidden>
+                    <p>You haven't created any recipes that fit this language & macro split.</p>
+                    <a class="btn btn-success" href="{{ path('meal_recipes') }}">
+                        Create your first recipe
+                    </a>
+                </div>
+                <div class="recipe-list js-modal-recipe-list"></div>
+                <div class="modal-recipes-spinner" hidden>
+                    <img src="{{ asset('images/ajax-loader.gif') }}" />
+                </div>
+                <div class="js-modal-recipes-more text-center m-b" hidden>
+                    <button class="btn btn-success" type="button">Load more recipes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ asset('bundles/app/js/fuse.min.js') }}"></script>
+<script>
+  (function ($) {
+    var $modal = $('#applyMealRecipe');
+    var $ownFilter = $modal.find('#recipes_filter_mine');
+
+    var widget = {
+      $modal: $modal,
+      $ownFilter: $ownFilter,
+      $list: $modal.find('.js-modal-recipe-list'),
+      $spinner: $modal.find('.modal-recipes-spinner'),
+      $empty: $modal.find('.modal-recipes-empty'),
+      $more: $modal.find('.js-modal-recipes-more'),
+      endpoint: "{{ path('get_recipes')|raw }}",
+      imagePlaceholder: "{{ asset('bundles/app/images/recipe-placeholder.png') }}",
+      params: {},
+      data: [],
+      limit: 20,
+      page: 0,
+    };
+
+    var cookingTimes = {
+      1: '0-10',
+      2: '10-20',
+      3: '20-30',
+      4: '+30'
+    };
+
+    var macroSplits = {
+      1: '50/30/20',
+      2: '40/40/20',
+      3: '30/30/40',
+      4: '10/30/60',
+      5: '20/40/40',
+    };
+
+    var types = {
+      1: 'Breakfast',
+      2: 'Lunch',
+      3: 'Dinner',
+      4: 'Morning Snack',
+      5: 'Afternoon Snack',
+      6: 'Evening Snack',
+    };
+
+    var fuse = new Fuse(widget.data, {
+      shouldSort: true,
+      findAllMatches: true,
+      matchAllTokens: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 3,
+      keys: ["name"],
+    });
+
+    function render (data) {
+      var count = Array.isArray(data) ? data.length : 0;
+      var hasData = !!widget.data.length;
+
+      /*
+      if (!hasData && !count) {
+        return widget.$empty.removeAttr('hidden');
+      }
+
+      widget.$empty.attr('hidden', 'hidden');
+
+      if (count < widget.limit) {
+        widget.$more.attr('hidden', 'hidden');
+      } else {
+        widget.$more.removeAttr('hidden');
+      }
+      */
+
+      var listItems = data.map(function (recipe) {
+        var description = [];
+        var timeBadge = '';
+
+        if (macroSplits[recipe.macroSplit]) {
+          description.push(macroSplits[recipe.macroSplit]);
+        }
+
+        if (types[recipe.type]) {
+          description.push(types[recipe.type]);
+        }
+
+        if (description.length) {
+          description = '<span class="recipe-list-text">' + description.join(', ') + '</span>';
+        } else {
+          description = '';
+        }
+
+        if (cookingTimes[recipe.cookingTime]) {
+          timeBadge = '<div class="recipe-list-badge">' + cookingTimes[recipe.cookingTime]+ ' min</div>'
+        }
+
+        var applyUrl = '/meal/apply-recipe/' + widget.params.plan + '/' + recipe.id;
+
+        if (widget.params.meal) {
+          applyUrl += '/' + widget.params.meal;
+        }
+
+        return '<div class="recipe-list-item">' +
+          '<div class="recipe-list-thumbnail">' +
+          '<img src="' + (recipe.image || widget.imagePlaceholder) + '" alt="' + recipe.name + '">' +
+          '</div>' +
+          '<h4 class="recipe-list-heading">' + recipe.name + description + '</h4>' +
+          timeBadge +
+          '<a class="recipe-list-btn" href="' + applyUrl + '">Apply</a>' +
+          '</div>';
+      });
+
+      // widget.$list.html(listItems);
+      widget.$list.append(listItems);
+    }
+
+    function fetch (page) {
+      var queryParams = Object.keys(widget.params).map(function (key) {
+        return key + '=' + widget.params[key];
+      });
+
+      if (page) {
+        queryParams.push('offset=' + (page * widget.limit));
+      }
+
+      var url = widget.endpoint + '?' + queryParams.join('&');
+
+      widget.$empty.attr('hidden', true);
+      widget.$spinner.removeAttr('hidden');
+      widget.$more.attr('hidden', true);
+      widget.page = page || 0;
+
+      $.get(decodeURI(url))
+        .done(function (data) {
+          widget.data = page ? widget.data.concat(data) : data;
+          fuse.setCollection(widget.data);
+          render(data);
+        })
+        .fail(function () {
+          // @TODO show error
+        })
+        .always(function () {
+          widget.$spinner.show();
+          widget.$spinner.attr('hidden', true);
+          widget.$more.removeAttr('hidden');
+        });
+    }
+
+    function debounce(func, wait, immediate) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
+    }
+
+    function reset() {
+      widget.$list.empty();
+      widget.data.length = 0;
+      widget.page = 0;
+      fuse.setCollection(widget.data);
+    }
+
+    widget.$modal.on('show.bs.modal', function (e) {
+      var $relatedTarget = $(e.relatedTarget);
+
+      try {
+        widget.params = JSON.parse(window.atob($relatedTarget.data('params')));
+        widget.params.type = '';
+      } catch (e) {
+        widget.params = {};
+      }
+
+      widget.params.user = widget.$ownFilter.prop('checked') ? 1 : 0;
+      fetch();
+    });
+
+    widget.$modal.on('hidden.bs.modal', function () {
+      widget.params = {};
+      reset();
+    });
+
+    widget.$more.on('click', 'button', function (event) {
+      event.preventDefault();
+      fetch(widget.page + 1);
+    });
+
+    widget.$ownFilter.on('change', function () {
+      widget.params.user = this.checked ? 1 : 0;
+      reset();
+      fetch();
+    });
+
+    widget.$modal.on('keyup', '[name="q"]', debounce(function (e) {
+      e.preventDefault();
+
+      var keyword = $(this).val();
+      var data = keyword ? fuse.search(keyword) : widget.data;
+
+      widget.$list.empty();
+      render(data);
+    }, 250));
+  })(jQuery);
+</script>

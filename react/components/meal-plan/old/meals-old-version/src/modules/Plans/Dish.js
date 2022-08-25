@@ -1,0 +1,49 @@
+import React, { memo } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import { ReactComponent as NotificationIcon } from "remixicon/icons/Media/notification-2-fill.svg";
+import { Dish, DishCaption, DishImageBox, DishImage, DishActions, DishPopover, DishOverlay } from "../../components/Dish";
+import { IconButton, VerticalDivider } from "../../components/UI";
+
+const Card = memo(({ dish, index, onShowRecipes, onRemove, onPlanView }) => {
+  const diff = Math.round(Math.abs(dish.ideal_kcals - dish.totals.kcal));
+  return (
+    <Draggable
+      draggableId={dish.id}
+      index={index}
+    >
+      {(provided, snapshot) => (
+        <Dish
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <DishImageBox>
+            <DishImage src={dish.image} />
+            {diff > 30 && (
+              <DishOverlay>
+                <NotificationIcon/>
+                <span>{diff} kcals off</span>
+              </DishOverlay>
+            )}
+          </DishImageBox>
+          <DishCaption>
+            <h5>{dish.name}</h5>
+            <span>{dish.totals.kcal} kcals</span>
+          </DishCaption>
+          <DishActions>
+            <IconButton onClick={onShowRecipes}>restaurant</IconButton>
+            <VerticalDivider/>
+            <IconButton onClick={onPlanView}>remove_red_eye</IconButton>
+            <VerticalDivider/>
+            <IconButton onClick={onRemove}>close</IconButton>
+          </DishActions>
+          <DishPopover hidden={snapshot.isDragging}>
+            {dish.totals.kcal} kcals: {dish.name}
+          </DishPopover>
+        </Dish>
+      )}
+    </Draggable>
+  );
+});
+
+export default Card;

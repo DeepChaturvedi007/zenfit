@@ -1,0 +1,48 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+    <div id="wrapper" class="gray-bg">
+        <div class="page-container">
+            <div class="block-header">
+                <img class="box-logo" src="{{ asset('bundles/app/images/zenfit-logo-dark.svg') }}">
+                <div class="box-text">
+                    <h4 class="box-title">Client is being unsubscribed...</h4>
+                </div>
+            </div>
+            <div class="block-body">
+            </div>
+            <div class="block-footer">
+                <div class="powered-by">
+                    <p>Powered by <img src="{{ asset('bundles/app/images/zenfit-logo-dark.svg') }}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+  <script>
+    (function($) {
+      $(window).on('load', function() {
+        var $block = $('.block-body');
+        var data = {
+          client: "{{ client.id }}",
+        };
+
+        $.post("{{ path('zenfit_stripe_client_unsubscribe') }}", data)
+          .done(res => {
+            if(res.canceled) {
+              $block.append('<p>Client has been unsubscribed.</p>');
+            } else {
+              $block.append('<p>Client was not unsubscribed. Engineers have been notified.</p>');
+            }
+          })
+          .fail(err => {
+            $block.append('<p>Something went wrong. Engineers have been notified.</p>');
+          });
+      });
+    })(jQuery);
+  </script>
+{% endblock script %}

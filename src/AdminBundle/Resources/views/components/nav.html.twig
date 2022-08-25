@@ -1,0 +1,28 @@
+<nav class="responsive-tabs client-nav">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+      <a class="responsive-tab {{ isDashboard is defined and isDashboard ? 'active' : '' }}" href="{{ path('admin_home') }}">
+          Sales
+      </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+      <a class="responsive-tab {{ recipes is defined ? 'active' : '' }}" href="{{ path('admin_recipes') }}">
+          Recipes
+      </a>
+      <a class="responsive-tab {{ ingredients is defined ? 'active' : '' }}" href="{{ path('admin_ingredients') }}">
+          Create ingredient
+      </a>
+      <a class="responsive-tab {{ clients is defined ? 'active' : '' }}" href="{{ path('admin_clients') }}">
+          Clients
+      </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+      <a class="responsive-tab {{ users is defined ? 'active' : '' }}" href="{{ path('admin_users') }}">
+          Users
+      </a>
+      <a class="responsive-tab {{ subscriptions is defined ? 'active' : '' }}" href="{{ path('generate_customer') }}">
+          Generate customer
+      </a>
+    {% endif %}
+</nav>

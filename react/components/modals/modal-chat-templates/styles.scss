@@ -1,0 +1,231 @@
+@import "../../default-messages/default-messages";
+
+@mixin modal-base {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgb(204, 204, 204);
+    outline: none;
+    background-color: #fafafb;
+    overflow: hidden;
+    border-radius: 20px;
+
+    &-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.65);
+        z-index: 2500;
+    }
+}
+
+@mixin modal-close {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    opacity: 0.3;
+    transition: opacity .3s ease-out;
+
+    &:hover {
+        opacity: 1;
+    }
+    &:before, &:after {
+        position: absolute;
+        left: 10px;
+        content: ' ';
+        height: 20px;
+        width: 2px;
+        background-color: #333;
+    }
+    &:before {
+        transform: rotate(45deg);
+    }
+    &:after {
+        transform: rotate(-45deg);
+    }
+}
+
+.default-messages-preview {
+    @include modal-base;
+
+    min-width: 250px;
+    min-height: 250px;
+    padding: 20px;
+    max-width: 98%;
+    max-height: 98%;
+
+    .preview-text {
+        white-space: pre-line;
+        padding-top: 20px;
+        overflow: auto;
+    }
+    .modal-close {
+        @include modal-close;
+
+        position: absolute;
+        top: 18px;
+        right: 18px;
+    }
+}
+
+.default-messages-modal {
+    @include modal-base;
+
+    min-width: 250px;
+    min-height: 250px;
+    padding: 0;
+    height: 90%;
+    width: 100%;
+
+    @media(min-width: 50rem) {
+        width: 80%;
+    }
+    @media(min-width: 70rem) {
+        width: 50%;
+    }
+
+    .modal-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        border-bottom: 1px solid #e2e2ea;
+        margin-bottom: 20px;
+    }
+
+    .chat-template-list-wrap {
+        flex-grow: 1;
+    }
+
+    .template-list-wrap {
+        flex-grow: 1;
+        padding: 0 20px 20px 20px;
+        overflow: auto;
+    }
+
+    .template-list {
+        padding-bottom: 10px;
+    }
+
+    .modal-title {
+        font-family: Poppins, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.13px;
+        color: #131313;
+        margin: 11px 0;
+    }
+
+    .no-messages {
+        position: relative;
+        padding: .75rem 1.25rem;
+        margin-bottom: 1rem;
+        border-radius: .25rem;
+        color: #004085;
+        background-color: #cce5ff;
+        border: 1px solid #b8daff;
+    }
+
+    .template-item {
+        width: 100%;
+
+        @media(min-width: 40rem) {
+            width: 50%;
+        }
+
+        &-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &-id {
+                flex-shrink: 0;
+                font-family: Poppins, sans-serif;
+                font-size: 14px;
+                font-weight: 400;
+                text-align: right;
+                color: #777777;
+            }
+        }
+
+        &-btm {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            margin-top: 20px;
+        }
+
+        &-btn {
+            cursor: pointer;
+            text-align: center;
+
+            font-family: Poppins, sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+
+            padding: 10px 0;
+
+            width: 100%;
+
+            &--primary {
+                color: #ffffff;
+                border-radius: 10px;
+                background-color: rgba(0, 98, 255, 1);
+                transition: background-color .35s ease;
+
+                &:hover {
+                    background-color: rgba(0, 98, 255, .8);
+                }
+            }
+            &--secondary {
+                color: #696974;
+                border-radius: 10px;
+                background-color: rgba(241, 241, 245, 1);
+                transition: background-color .35s ease;
+
+                &:hover {
+                    background-color: rgba(234, 234, 238, 1);
+                }
+            }
+        }
+        &-text {
+            overflow-wrap: break-word;
+        }
+    }
+
+    .modal-close {
+        @include modal-close;
+    }
+    .template-item-message-text{
+        --max-lines: 3;
+        max-height: 100px;
+        overflow-wrap: break-word;
+        overflow: hidden;
+        &::after {
+            content: "...";
+            display: block
+        }
+    }
+    .template-local-lng {
+        margin: 10px 20px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        select {
+            width: 150px;
+        }
+    }
+}

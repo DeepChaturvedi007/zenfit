@@ -1,0 +1,228 @@
+<form action="{{ path('updateClientInfo',{'client':client.id}) }}" id="clientInfoForm" method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox">
+                <header class="ibox-header reverse">
+                    <div class="ibox-header-left">
+                        <h4 class="ibox-header-title">Contact Information</h4>
+                    </div>
+                </header>
+                {% set imageSrc = client.photo ? client.photo | picture_filter(constant('AWS_PHOTO_KEY', client)) : asset('bundles/app/user-photo-placeholder.png') %}
+                <div class="ibox-content ibox-content-line m-p-x" id="general_info">
+                    <div class="form-group">
+                        <label class="control-label">Client’s Photo</label>
+                        <div class="form-group-in">
+                            <div class="client-photo">
+                                <img class="img-circle"
+                                     id="client_photo"
+                                     style="margin-right: 10px"
+                                     src="{{ imageSrc }}"
+                                     data-placeholder="{{ asset('bundles/app/user-photo-placeholder.png') }}"
+                                     alt=""
+                                     width="50"
+                                     height="50"
+                                />
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <span class="btn btn-default btn-upper btn-file">
+                                        <span class="fileinput-new">{{ client.photo ? 'Change' : 'Upload' }} Photo</span>
+                                        <span class="fileinput-exists">Change Photo</span>
+                                        <input id="photo_input" type="file" name="photo" accept="image/*" />
+                                    </span>
+                                    <span class="fileinput-filename"></span>
+                                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% include '@App/components/clientFields/name.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/email.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/phone.html.twig' with {'client': client} %}
+                    <div class="form-group">
+                        <label class="control-label">Tags <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="Just for your own sake, to make it easier to filter & find clients. You could add 'bootcamp' for instance.">?</span></label>
+                        <div class="form-group-in max-width">
+                          <input type="text"
+                            id="createTag"
+                            name="tags"
+                            class="demo-default"
+                            data-client="{{ client.id }}"
+                            value="{% for tag in client.tags %}{{ tag.title }},{% endfor %}"
+                            placeholder="Press Enter to add tag">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Duration <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="How long is the client staying with you?">?</span></label>
+                        <div class="form-group-in max-width">
+                            <div class="row duration-time">
+                                <div class="col-xs-6 col-md-5 col-lg-5">
+                                    <label for="startDate" class="control-label">Start Date</label>
+                                    <div class="input-group date">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <input type="text"
+                                               name="startDate"
+
+                                               style="background-color: #fff;"
+                                               class="form-control"
+                                               {% if client.startDate is not null %}
+                                                    value="{{ client.startDate.format('d M Y') }}"
+                                               {% endif %}
+                                               readonly="true"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                    <label for="duration" class="control-label">Months</label>
+                                    <select id="duration" name="duration" class="form-control select-track-progress">
+                                        {% for key, day in constant('DURATION_MONTHS', client) %}
+                                            <option value="{{ key }}"
+                                                {% if key == client.duration %} selected {% endif %}
+                                            >{{ day }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                                    <label for="ending" class="control-label">Ending</label>
+                                    <small id="endDate">{{ client.endDate ? client.endDate|date('d M Y') : '-' }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Check-In Day <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="The day of the week the client should be prompted to track body progress">?</span></label>
+                        <div class="form-group-in max-width">
+                            <select name="dayTrackProgress" class="form-control">
+                                <option value="">Pick Check-In Day</option>
+                                {% for key, day in constant('NOTIFICATION_DAYS', client) %}
+                                    <option value="{{ key }}"
+                                        {% if key == client.dayTrackProgress %} selected {% endif %}
+                                    >{{ day }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox">
+                <header class="ibox-header">
+                    <div class="ibox-header-left">
+                        <h4 class="ibox-header-title">Notes</h4>
+                    </div>
+                </header>
+                <div class="ibox-content ibox-content-line m-p-x" id="general_info">
+                    {% if client.lead %}
+                        {% include '@App/components/clientFields/leadInfo.html.twig' with {'client': client} %}
+                    {% endif %}
+                    {% include '@App/components/clientFields/note.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/updatePlansSchedule.html.twig' with {'client': client} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox">
+                <header class="ibox-header">
+                    <div class="ibox-header-left">
+                        <h4 class="ibox-header-title">Basic Information</h4>
+                    </div>
+                </header>
+                <div class="ibox-content ibox-content-line m-p-x" id="general_info">
+                    {% include '@App/components/clientFields/gender.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/age.html.twig' with {'client': client} %}
+                    <div class="form-group">
+                        <label class="control-label">US or Metric System</label>
+                        <div class="form-group-in">
+                            <label>
+                                <input name="measuringSystem"
+                                       type="radio"
+                                       value="{{ constant('MEASURING_SYSTEM_IMPERIAL', client) }}"
+                                        {% if client.isImperialMeasuringSystem %} checked {% endif %}
+                                >
+                                <span class="question">US (lbs/inches)</span>
+                            </label>
+                            <label>
+                                <input name="measuringSystem"
+                                       type="radio"
+                                       value="{{ constant('MEASURING_SYSTEM_METRIC', client) }}"
+                                        {% if not client.isImperialMeasuringSystem %} checked {% endif %}
+                                >
+                                <span class="question">Metric (kg/cm)</span>
+                            </label>
+                        </div>
+                    </div>
+                    {% include '@App/components/clientFields/startWeight.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/height.html.twig' with {'client': client} %}
+                    {% if not (app.user.userSettings and app.user.userSettings.customPrimaryGoals) %}
+                        {% include '@App/components/clientFields/activityLevel.html.twig' with {'client': client} %}
+                    {% endif %}
+                    {#}{% include '@App/components/clientFields/beforeAfterPhoto.html.twig' with {'client': client} %}#}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox">
+                <header class="ibox-header">
+                    <div class="ibox-header-left">
+                        <h4 class="ibox-header-title">Goals</h4>
+                    </div>
+                </header>
+                <div class="ibox-content ibox-content-line m-p-x">
+                    {% include '@App/components/clientFields/primaryGoal.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/goalWeight.html.twig' with {'client': client} %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-info animated fadeInRight">
+        <div class="box-info-right">
+            <h4 class="box-info-title">
+                Estimate Calorie Need
+                <span data-toggle="tooltip"
+                      data-placement="right"
+                      title="These Calorie Estimates are only for guidance. It is your sole responsibility to give your client sufficient nutritions and calories. It is inadvisable to lower calorie intake by more than 1,000 calories per day. The Calorie Calculations are based on the Mifflin-St Jeor Equation which calculates basal metabolic rate (BMR).">
+                    <i class="material-icons{% if isEstimatedCalories %} pace-inactive{% endif %}">info</i>
+                </span>
+            </h4>
+            <p class="estimate-calorie-need">{{ estimateCalorieNeedString }}</p>
+        </div>
+        {% include '@App/components/clientFields/estimateKcalNeed.html.twig' with {'client': client} %}
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox">
+                <header class="ibox-header">
+                    <div class="ibox-header-left">
+                        <h4 class="ibox-header-title">Optional Questions</h4>
+                    </div>
+                </header>
+                <div class="ibox-content ibox-content-line m-p-x" id="general_info">
+                  {% if not (app.user.userSettings and app.user.userSettings.customPrimaryGoals) %}
+                    {% include '@App/components/clientFields/injuries.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/experienceLevel.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/experience.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/exercisePreferences.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/workoutsPerWeek.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/workoutLocation.html.twig' with {'client': client} %}
+
+                    {% include '@App/components/clientFields/avoid.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/numberOfMeals.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/dietStyle.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/lifeStyle.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/motivation.html.twig' with {'client': client} %}
+                    {% include '@App/components/clientFields/other.html.twig' with {'client': client} %}
+                  {% endif %}
+                    {% include '@App/components/clientFields/customSurveyQuestions.html.twig' with {'client': client, 'questions': questions} %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

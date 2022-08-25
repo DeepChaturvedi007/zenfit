@@ -1,0 +1,32 @@
+{% import "@App/default/pdf/meal_plan/blocks.html.twig" as blocks %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        {{ (src_dir ~ '/AppBundle/Resources/views/default/pdf/meal_plan/styles.css')|content|raw }}
+    </style>
+</head>
+<body>
+{{ blocks.header(plan, client, colorPDF) }}
+<footer>
+    <img class="trainer-logo" src="{{ logo ? logo : null }}">
+</footer>
+
+{% if plan.explaination is not empty %}
+<article class="chapter">
+    {{ plan.explaination|raw }}
+</article>
+{% endif %}
+
+{% for meal in meals %}
+<article class="contents page-beak-before">
+    {{ blocks.meal_header(meal) }}
+    {% for recipe in meal.meals %}
+        {{ blocks.recipe(recipe) }}
+    {% endfor %}
+</article>
+{% endfor %}
+</body>
+</html>

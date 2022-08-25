@@ -1,0 +1,22 @@
+AppBundle\Entity\Language:
+    type: entity
+    table: languages
+    repositoryClass: AppBundle\Repository\LanguageRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+        locale:
+            type: string
+            length: 255
+
+    lifecycleCallbacks: {  }

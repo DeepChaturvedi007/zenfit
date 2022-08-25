@@ -1,0 +1,21 @@
+<div class="col-xs-12 col-lg-6">
+    <div class="ibox">
+        <header class="ibox-header">
+            <div class="ibox-header-left">
+                <h4 class="ibox-header-title">Goal and Workout Info</h4>
+            </div>
+        </header>
+        <div class="ibox-content ibox-content-line m-p-x">
+            {% include '@App/components/clientFields/goalType.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/goal.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/activityLevel.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/experience.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/exercisePreferences.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/foodPreferences.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/numberOfMeals.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/motivation.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/injuries.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/other.html.twig' with {'client': client} %}
+        </div>
+    </div>
+</div>

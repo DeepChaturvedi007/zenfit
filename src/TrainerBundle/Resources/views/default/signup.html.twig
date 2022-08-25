@@ -1,0 +1,177 @@
+{% extends '@App/base.html.twig' %}
+{% block content -%}
+    <div id="wrapper" class="intro-page">
+      <!-- MAIN CONTENT -->
+      <div class="container-fluid main">
+        <div class="row d-flex flex-column align-items-center justify-content main-container">
+          <!-- HEADER -->
+          {#}
+          <div class="col-12 text-center">
+            <h2 class="main__heading">
+              Just a few quick things to set up your account…
+            </h2>
+          </div>#}
+          <!-- HEADER -->
+
+          <!-- FIRST FORM -->
+          <div class="col-11 col-sm-4 col-lg-3 main__first-form-container active">
+            <div class="row">
+              <div class="col-12 d-flex flex-column align-items-center justify-content">
+                <h5 class="main__step-heading text-center ">
+                  You're almost there!
+                </h5>
+              </div>
+            </div>
+            <form method="post" id="signup-form" data-action="{{ path('trainer_signup_api') }}" class="first-form">
+              <h3 class="form__header">
+                First, tell us a bit about yourself.
+              </h3>
+              <input
+                type="text"
+                data-validation="required"
+                name="name"
+                class="form__input"
+                placeholder="Your name"
+                required
+              />
+              <input
+                type="text"
+                data-validation="required"
+                name="social"
+                class="form__input"
+                placeholder="Your social name"
+                required
+              />
+              <input
+                type="text"
+                data-validation="required"
+                name="phone"
+                class="form__input"
+                placeholder="Your phone"
+                required
+              />
+              <input
+                type="email"
+                data-validation="required"
+                name="email"
+                class="form__input"
+                placeholder="Your email"
+                value="{{ email }}"
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                data-validation="custom"
+                data-validation-regexp="^(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
+                class="form__input password"
+                placeholder="Choose password"
+                required
+              />
+              <select
+                name="clients"
+                data-validation="required"
+                class="form__select-input form-control"
+                required
+              >
+                <option value="" disabled selected class="disabled"
+                  >Number of clients</option
+                >
+                <option value="not coach">I am not a coach</option>
+                <option value="0">0 clients</option>
+                <option value="1-20">1-20 clients</option>
+                <option value="20-50">20-50 clients</option>
+                <option value="50-100">50-100 clients</option>
+                <option value="100">+100 clients</option>
+                <option value="gym owner">I am a gym owner</option>
+              </select>
+
+
+              <br />
+
+              <input
+                type="checkbox"
+                name="terms"
+                value=""
+                class="form__checkbox"
+                id="accept_terms"
+                required
+                data-validation="required"
+                data-validation-error-msg="You didn't accept our terms"
+              />
+              <label for="accept_terms" class="form__checkbox-label"
+                >I accept Zenfit's
+                <a href="https://zenfit.io/terms-and-conditions-2/" target="_blank" class="form__checkbox-link">terms</a> and
+                <a href="https://zenfit.io/privacy-policy-2/" target="_blank" class="form__checkbox-link">privacy policy</a></label
+              >
+              <br />
+
+              <div class="cta-footer">
+                <button data-loading-text="Loading..." type="submit" class="form__next">
+                  Start Free Trial
+                </button>
+                <span class="text-danger warning-msg"></span>
+              </div>
+            </form>
+
+          </div>
+          <!-- FIRST FORM -->
+        </div>
+      </div>
+      <!-- MAIN CONTENT -->
+    </div>
+{% endblock %}
+{% block extra_css %}
+    <link href="{{ asset('bundles/app/css/signup.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block script %}
+<script>
+  (function($) {
+
+    $('#signup-form').on('submit', function(e) {
+      e.preventDefault();
+      const $form = $(this);
+      const $action = $form.data('action');
+      const $data = $form.serialize();
+      const $btn = $form.find('button');
+      const $warning = $form.find('.warning-msg');
+
+      $btn.button('loading');
+
+      $.post($action, $data)
+        .done(res => {
+          executeZapierWebhook($form, () => {
+            window.location.replace(res.redirect + '#introVideo');
+          });
+        })
+        .fail(err => {
+          let json = err.responseJSON;
+          $warning.text(json.error);
+        })
+        .always(() => {
+          $btn.button('reset');
+        });
+    });
+
+    function executeZapierWebhook($form, callback) {
+      const url = 'https://hooks.zapier.com/hooks/catch/3174319/o4l2hlp/';
+      const data = getFormData($form);
+      $.post(url, data).done(callback);
+    }
+
+    function getFormData($form) {
+      var unindexed_array = $form.serializeArray();
+      var indexed_array = {};
+
+      $.map(unindexed_array, function(n, i) {
+          indexed_array[n['name']] = n['value'];
+      });
+
+      return indexed_array;
+    }
+
+
+  })(jQuery);
+</script>
+{% endblock %}

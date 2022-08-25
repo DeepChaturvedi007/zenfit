@@ -1,0 +1,82 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+
+    {% include '@App/components/sideNav.html.twig' %}
+
+    <div id="page-wrapper" class="gray-bg sm-white-bg">
+        {% include '@App/components/adminNav.html.twig' with {'metrics': 'true'} %}
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">This Week</span>
+                            <h5>Unique trainer logins</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{ data.trainerLogins }}</h1>
+                            <div class="stat-percent font-bold text-{{ data.trainerLoginsRate > 0 ? 'navy' : 'danger' }}">{{ data.trainerLoginsRate }}% <i class="fa fa-level-{{ data.trainerLoginsRate > 0 ? 'up' : 'down' }}"></i></div>
+                            <small>Last week: {{ data.trainerLoginsPrevious }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">This Week</span>
+                            <h5>Unique client logins</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{ data.clientLogins }}</h1>
+                            <div class="stat-percent font-bold text-{{ data.clientLoginsRate > 0 ? 'navy' : 'danger' }}">{{ data.clientLoginsRate }}% <i class="fa fa-level-{{ data.clientLoginsRate > 0 ? 'up' : 'down' }}"></i></div>
+                            <small>Last week: {{ data.clientLoginsPrevious }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">This Week</span>
+                            <h5>Subscribers</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{ data.subscribers }}</h1>
+                            <div class="stat-percent font-bold text-{{ data.subscribersRate > 0 ? 'navy' : 'danger' }}">{{ data.subscribersRate }}% <i class="fa fa-level-{{ data.subscribersRate > 0 ? 'up' : 'down' }}"></i></div>
+                            <small>Last week: {{ data.subscribersPrevious }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right">This Week</span>
+                            <h5>Avg. $ / mo</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">${{ data.subscribersAmount }} / mo</h1>
+                            <div class="stat-percent font-bold text-{{ data.subscribersAmountRate > 0 ? 'navy' : 'danger' }}">{{ data.subscribersAmountRate }}% <i class="fa fa-level-{{ data.subscribersAmountRate > 0 ? 'up' : 'down' }}"></i></div>
+                            <small>Last week: ${{ data.subscribersAmountPrevious }} / mo</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {% include '@App/components/footer.html.twig' %}
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function() {});
+    </script>
+{% endblock script %}

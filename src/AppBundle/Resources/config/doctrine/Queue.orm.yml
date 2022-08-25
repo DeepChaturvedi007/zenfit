@@ -1,0 +1,83 @@
+AppBundle\Entity\Queue:
+    type: entity
+    table: queue
+    repositoryClass: AppBundle\Repository\QueueRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+        email:
+            type: string
+            length: 255
+
+        status:
+            type: integer
+
+        datakey:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        type:
+            type: integer
+
+        notifiedTrainer:
+            type: integer
+            column: notified_trainer
+            options:
+              default: 0
+
+        createdAt:
+            type: datetime
+            column: created_at
+
+        clientName:
+            type: string
+            length: 255
+            column: client_name
+            nullable: true
+
+        clientEmail:
+            type: string
+            length: 255
+            column: client_email
+            nullable: true
+
+        survey:
+            type: boolean
+            nullable: false
+
+        subject:
+            type: string
+            nullable: TRUE
+            length: 255
+
+        message:
+            type: text
+            nullable: TRUE
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: emails
+            joinColumn:
+                onDelete: CASCADE
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                onDelete: CASCADE
+
+    oneToOne:
+        payment:
+            targetEntity: AppBundle\Entity\Payment
+            inversedBy: queue
+            joinColumn:
+                onDelete: CASCADE

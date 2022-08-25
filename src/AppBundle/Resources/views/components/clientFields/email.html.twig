@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label class="control-label">E-Mail</label>
+    <div class="form-group-in max-width">
+        <input type="email" name="email" class="form-control" {% if client.email is not null %} value="{{ client.email }}" {% else %} placeholder="E-Mail" {% endif %}>
+    </div>
+</div>

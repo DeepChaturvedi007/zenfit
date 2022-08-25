@@ -1,0 +1,49 @@
+AppBundle\Entity\VideoClient:
+    type: entity
+    table: video_clients
+    repositoryClass: AppBundle\Repository\VideoClientRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        locked:
+            type: boolean
+            options:
+                default: false
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+        isNew:
+            type: boolean
+            options:
+                default: true
+
+    manyToOne:
+        video:
+            targetEntity: AppBundle\Entity\Video
+            inversedBy: videoClients
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: videoClients
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

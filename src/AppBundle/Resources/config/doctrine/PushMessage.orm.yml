@@ -1,0 +1,40 @@
+AppBundle\Entity\PushMessage:
+    type: entity
+    table: push_messages
+    repositoryClass: AppBundle\Repository\PushMessageRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        message:
+            type: text
+            nullable: true
+
+        sentAt:
+            type: datetime
+            column: sent_at
+            nullable: true
+
+        delivered:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: clientStripe
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

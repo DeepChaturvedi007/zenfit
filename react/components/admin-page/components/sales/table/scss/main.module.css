@@ -1,0 +1,12 @@
+.universalTable td {
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid transparent;
+  flex-direction: row;
+  position: relative;
+}
+.universalTable a {
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=main.module.css.map */

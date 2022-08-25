@@ -1,0 +1,54 @@
+AppBundle\Entity\WorkoutDay:
+    type: entity
+    table: workout_day
+    repositoryClass: AppBundle\Repository\WorkoutDayRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                    unsigned: true
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: FALSE
+
+        workoutDayComment:
+            type: text
+            nullable: TRUE
+
+        order:
+            column: '`order`'
+            type: integer
+            nullable: true
+
+        image:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToMany:
+        workouts:
+            orderBy: { 'orderBy' : 'ASC' }
+            targetEntity: AppBundle\Entity\Workout
+            mappedBy: workoutDay
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    manyToOne:
+        workoutPlan:
+            targetEntity: AppBundle\Entity\WorkoutPlan
+            inversedBy: workoutDays
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

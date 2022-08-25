@@ -1,0 +1,58 @@
+<div class="modal inmodal fade sm" id="saveAsTemplate" tabindex="-1" role="dialog" aria-hidden="true" data-templates-url="{{ path('workout_templates') }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Save Workout Plan as Template</h4>
+            </div>
+            <form action="{{ path('workout_create_template', { 'plan': plan.id }) }}" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="template_name" class="control-label">Workout Plan Name</label>
+                        <input type="text" id="template_name" name="name" class="form-control"
+                               placeholder="Name of Workout Plan">
+                    </div>
+                    <div class="form-group">
+                        <label for="template_comment" class="control-label">Comment</label>
+                        <input type="text" id="template_comment" name="comment" class="form-control"
+                               placeholder="Enter Your Comment">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper" data-loading-text="Saving...">Save
+                        Workout
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  (function($) {
+    var $modal = $('#saveAsTemplate');
+
+    $modal.on('submit', 'form', function(event) {
+      event.preventDefault();
+
+      var $form = $(this);
+      var $submit = $form.find('[type="submit"]').button('loading');
+
+      toastr.options.preventDuplicates = true;
+
+      $.post($form.attr('action'), $form.serialize(), 'json')
+        .done(function() {
+          toastr.success('Workout plan was successfully saved as a template');
+          $modal.modal('hide');
+        })
+        .fail(function() {
+          toastr.error('Cannot save Workout plan as template, try again', 'Error');
+        })
+        .always(function() {
+          $submit.button('reset');
+        });
+    });
+  })(jQuery);
+</script>

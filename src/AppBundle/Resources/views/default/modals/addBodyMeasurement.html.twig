@@ -1,0 +1,57 @@
+<div class="modal inmodal fade sm" id="addRecord" tabindex="-1" role="dialog" aria-hidden="true" data-title-suffix="body measurement">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Add body measurement</h4>
+            </div>
+
+            <form action="{{ path('addRecord',{'client':client.id}) }}" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="id" class="id" />
+                    <div class="form-group" id="data_1">
+                        <label for="bm-date" class=" control-label">Date</label>
+                        <div class="input-group date">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            <input type="text" name="date" id="bm-date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bm-weight" class="control-label">Weight</label>
+                        <input type="text" id="bm-weight" name="weight" class="form-control"
+                               placeholder="0.0">
+                        <span id="helpBlock" class="help-block">Leave blank if not needed.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bm-fat" class="control-label">Fat</label>
+                        <div class="input-group">
+                            <input type="text" id="bm-fat" name="fat" class="form-control"
+                                   placeholder="0.0">
+                            <div class="input-group-addon">
+                                <i class="fa fa-percent" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <span id="helpBlock" class="help-block">Leave blank if not needed.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bm-muscle" class="control-label">Muscle Mass</label>
+                        <input type="text" id="bm-muscle" name="muscle_mass" class="form-control"
+                               placeholder="0.0">
+                        <span id="helpBlock" class="help-block">Leave blank if not needed.</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default btn-upper cancel" data-dismiss="modal" aria-label="Close">Cancel</button>
+                        <button type="submit" class="btn btn-success btn-upper send">Add Record</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

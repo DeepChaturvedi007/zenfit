@@ -1,0 +1,236 @@
+client:
+    activation:
+        greeting: 'Hei %name%!'
+        greetingNew: "Hei %name%, Aloitetaan!"
+        welcomeMsg: 'Sinua on pyydetty luomaan tili. Täytä seuraava kyselylomake.'
+        description: 'Sinun tulee valita salasana päästäksesi %name% sovellukseen.'
+        createPasswordTitle: 'Luo salasanasi'
+        createAccountTitle: 'Luo tili'
+        createAccountSubTitle: 'Anna yleiset tietosi tilin luomiseksi'
+        updateAccountTitle: 'Päivitä tili'
+        updateAccountSubTitle: 'Anna tietosi päivittääksesi tilisi'
+        email: 'Sähköpostisi'
+        emailInvalid: 'Sähköposti on virheellinen'
+        password: 'Valitse salasana'
+        fieldEmpty: 'Kenttä on tyhjä'
+        fieldNotSelected: 'Vaihtoehtoja ei ole valittu'
+        passwordDontMatch: 'Salasanat eivät täsmää'
+        passwordPlaceholder: 'Tee siitä vaikea, mutta helposti muistettava'
+        confirmPassword: 'Vahvista salasana'
+        confirmPasswordPlaceholder: 'Anna salasanasi uudestaan'
+        passwordLength: 'Salasanan on oltava vähintään 8 merkkiä pitkä'
+        createLoginBtn: 'Luo käyttäjätili'
+        updateLogin: 'Päivitä tili'
+        hasBeenCreated: 'Tilisi on luotu'
+        next: 'Seuraava'
+        generalTitle: 'Yleiset tiedot'
+        generalSubTitle: 'Täytä perustiedot itsestäsi'
+        bodyPictures:
+            front: 'Etupuoli'
+            side: 'Sivu'
+            back: 'Takapuoli'
+            uploadPicture: 'lataa kuva'
+            removePicture: 'poista kuva'
+            spec: 'Lisää JPG- tai PNG-tiedostosi tähän'
+    survey:
+        title: 'Kerro hieman itsestäsi'
+        description: 'Ole hyvä ja täytä valmentajasi kysely – valmentajasi tarvitsee tätä tietoa luodakseen parhaat suunnitelmat sinulle!'
+        loginCreatedTitle: 'Hyvin tehty! Käyttäjätili on luotu!'
+        loginCreatedDescription: 'Nyt sinun tarvitsee vain vastata tähän kyselyyn, jotta valmentajasi voi aloittaa suunnitelmiesi luomisen.'
+        contactTitle: 'Yhteystiedot'
+        photo: 'Kuvasi'
+        imperial: 'tuuma'
+        metric: 'metrijärjestelmä'
+        uploadPhoto: 'Lataa kuva'
+        changePhoto: 'Vaihda kuva'
+        fullName: 'Koko nimi'
+        email: Sähköposti
+        phone: Puhelin
+        basicInfoTitle: 'Perustiedot'
+        gender: Sukupuoli
+        male: Mies
+        female: Nainen
+        age: Ikä
+        metricSystem: 'US- vai metrijärjestelmä'
+        startWeight: 'Alkupaino'
+        height: Pituus
+        activityLevel: 'Aktiivisuustaso'
+        selectActivityLevel: 'Valitse aktiivisuustaso'
+        activityLevels:
+            1: 'En tee mitään fyysistä'
+            2: 'En ole kovinaan aktiivinen ja harjoittelen 2-3 kertaa viikossa'
+            3: 'Olen jonkin verran aktiivinen ja harjoittelen 3-4 kertaa viikossa'
+            4: 'Olen melko aktiivinen ja treenaan aika paljon'
+            5: 'Minulla on raskas fyysinen työ ja treenaan lähes joka päivä'
+        photos: Kuvat
+        photosDescription: 'Lataa yksi tai useampi kuva itsestäsi (valinnainen)'
+        goalInfoTitle: 'Tavoitteesi'
+        yourCurrentWeight: 'Tämänhetkinen painosi on %weightString%. Mikä on tavoitepainosi?'
+        goalHigherCurrent: 'Nykyinen paino on suurempi kuin tavoitepaino'
+        goalLessCurrent: 'Nykyinen paino on pienempi kuin tavoitepaino'
+        goalEqualCurrent: 'Nykyinen paino vastaa tavoitepainoa'
+        goalWeek: 'Tällä edistyksellä se vie %week% viikkoa tavoitteen saavuttamiseksi!'
+        primaryGoal: 'Ensisijainen tavoite'
+        selectPrimaryGoal: 'Valitse ensisijainen tavoite'
+        customPrimaryGoals:
+            2: 'Pudota painoa'
+            3: 'Ylläpidä paino'
+            4: 'Kerrytä painoa'
+        primaryGoals:
+            metric:
+                1: 'Pudota 1 kg viikossa'
+                2: 'Pudota 0,5 kg viikossa'
+                3: 'Pidä paino samana'
+                4: 'Nosta 0,5 kg viikossa'
+                5: 'Nosta 1 kg viikossa'
+            imperial:
+                1: 'Pudota 2 paunaa viikossa'
+                2: 'Pudota 1 paunaa viikossa'
+                3: 'Pidä paino samana'
+                4: 'Nosta 1 paunaa viikossa'
+                5: 'Nosta 2 paunaa viikossa'
+        goalWeight: Tavoitepaino
+        additionalInfoTitle: Lisäkysymykset
+        injuries: 'Vammat / Sairaudet'
+        injuriesPlaceholder: 'Onko sinulla vammoja/sairauksia/terveyshuolia, jotka saattavat vaikuttaa suunnitelmaasi? Esim. selkäkipu, astma yms.'
+        workoutExperienceLevel: 'Harjoittelukokemus'
+        workoutExperienceLevelPlaceholder: 'Kuinka kauan olet harjoitellut johdonmukaisesti?'
+        selectWorkoutExperienceLevel: 'Valitse kokemustasosi.'
+        workoutExperienceLevels:
+            1: 'Olen aloittelija, eikä minulla ole kokemusta'
+            2: 'Olen harjoittanut jonkin aikaa ja osaan perusteet.'
+            3: 'Olen kokenut ja harjoitellut monien vuosien ajan.'
+        workoutExperience: Haluatko lisätä jotain harjoittelukokemukseesi?
+        workoutExperiencePlaceholder: Kerro omin sanoin.
+        workoutPreferences: 'Harjoittelumieltymykset'
+        workoutSubtitlePreferences: 'Täytä kaikki alla olevat kysymykset'
+        workoutPreferencesPlaceholder: 'Onko sinulla joitain tiettyjä lihasryhmiä, joita haluat kehittää? Yritätkö kehittää voimaa, kestävyyttä vai molempia?'
+        workoutLocation: 'Missä harjoittelet?'
+        selectWorkoutLocation: 'Valitse, missä harjoittelet.'
+        workoutLocationPlaceholder: 'Harjoitteletko kuntosalilla, kotona vai ulkona?'
+        workoutLocations:
+            1: 'Kuntosali'
+            2: 'Kotona'
+            3: 'Ulkona'
+        workoutsPerWeek: 'Harjoituksia viikossa?'
+        workoutsPerWeekPlaceholder: 'Kuinka monta kertaa viikossa haluat harjoitella?'
+        allergiesIngredientsToAvoid: 'Allergiat tai raaka-aineet, joita välttää?'
+        allergiesIngredientsToAvoidPlaceholder: 'Raaka-aineet / ruoka-aineet, joita välttää?'
+        excludeIngredients: 'Jätä ainesosat pois (allergiat)'
+        none: 'ei mitään'
+        vegetarianType: "Olen kasvissyöjä"
+        pescetarianType: "Olen pescovegetaristi"
+        veganType: "Olen vegaani"
+        lactose: Laktoosi
+        gluten: Gluteeni
+        nuts: Pähkinät
+        eggs: Munat
+        pig: Sika
+        shellfish: Äyriäiset
+        fish: Kala
+        vegetarian: 'Olen kasvissyöjä'
+        vegan: 'Olen vegaani'
+        pescetarian: 'Olen pescovegetaristi'
+        dietStyle: 'Ruokavaliosi'
+        dietStyleSubTitle: 'Täytä kaikki alla olevat kysymykset'
+        dietStyleTitle: 'Ruokavaliomieltymykset'
+        dietStylePlaceholder: 'Onko sinulla erityisiä ruokavaatimuksia tai joitain ruokia, joita suosit?'
+        numberOfMeals: 'Ateriat päivässä'
+        numberOfMealsPlaceholder: 'Kuinka monta ateriaa päivässä haluaisit?'
+        lifestyle: Elämäntapa
+        lifestyleNew: "Elämäntapa - aktiivinen työ? Aktiivinen elämäntapa? Tupakoitko? Muuta?"
+        lifestylePlaceholder: 'Aktiivinen työ? Aktiivinen elämäntapa? Tupakoitko? Muuta?'
+        motivation: 'Motivaatio'
+        otherFeedbackTitle: 'Muu palaute'
+        otherFeedbackSubTitle: 'Nämä ovat viimeiset kysymykset, ja sitten olet valmis!'
+        otherLifeStyle: 'Kuvaile elämäntyyliäsi (työ, harrastukset, tupakoitko jne.)'
+        howMotivated: 'Kuinka motivoitunut olet?'
+        motivationPlaceholder: 'Jos 1 on ”ei ollenkaan motivoitunut” ja 10 on ”olen valmis syömään 6 kertaa päivässä ja harjoittelemaan 6 päivää viikossa” – kuinka motivoitunut olet?'
+        submit: 'Lähetä kysely'
+    downloadApp:
+        title: 'Kysely lähetetty valmentajalle!'
+        updated: 'Tilisi on päivitetty'
+        updatedSubtitle: "Olet suorittanut tilisi päivityksen. Ole hyvä ja lataa asiakassovellus!"
+        description: 'Loistavaa %name%! Nyt vain rentoudu ja anna valmentajasi luoda sinulle suunnitelmat.'
+        readyTitle: 'Olet valmis lataamaan %name%-sovelluksen!'
+        whatsNext: 'Mitä seuraavaksi?'
+        subTitle: 'Olet saanut tilisi perustamisen valmiiksi. Ole hyvä ja lataa asiakassovellus!'
+        downloadAppTitle: 'Mikäli et ole vielä ladannut %name%-sovellusta, nyt on sen aika'
+        iphone: 'Hanki iPhone-versio'
+        android: 'Hanki Android-versio'
+    checkout:
+        amount: Summa
+        periodFixed: 'Toistuu kuukausittain %months% kuukautta'
+        periodUntilUnsubscribe: 'Toistuu kuukausittain, kunnes peruutat tilauksen'
+        upfrontFee: 'Ennakkomaksu %upfrontFee%'
+        couponCode: 'Kuponkikoodi'
+        choosePayment: 'Valitse maksutapa'
+        back: 'Takaisin'
+        cardPay: 'Maksa kortilla'
+        klarnaPay: 'Maksa Klarnalla'
+        sepaPay: 'Maksa Sepalla'
+        name: 'Kortinhaltijan nimi'
+        email: Sähköposti
+        ibanDesc: 'Antamalla IBAN-tilinumerosi ja vahvistamalla maksun, valtuutat maksupalveluntarjoajamme Zenfit ApS:n ja Stripen lähettämään pankkiisi ohjeet, veloittaakseen tililtäsi näiden ohjeiden mukaisesti. Sinulla on oikeus hyvitykseen pankistasi, heidän sopimusehtojen mukaisesti. Hyvitystä on haettava 8 viikon kuluessa siitä päivästä, jolloin tililtäsi veloitettiin.'
+        acceptTerms: 'Olen lukenut ja hyväksynyt %terms%'
+        termsOfService: 'palvelun ehdot'
+        acceptTermsError: "Sinun on hyväksyttävä palveluehdot"
+        klarnaError: Klarnan maksu epäonnistui. Yritä uudelleen tai käytä toista maksutapaa.
+        reachOutSupport: 'Ota yhteyttä Zenfitin tukeen.'
+        reachOutBank: Ota yhteyttä pankkiisi tai kokeile toista korttia.
+        paymentDeclined: Maksusi hylättiin.
+        invalidNameError: 'Tarkista nimi'
+        invalidEmailError: 'Tarkista sähköposti'
+        button: Osta
+        sepaButton: Vahvista toimeksianto ja aloita veloitus %amount%
+        paymentSuccessfulTitle: 'Maksu suoritettu'
+        paymentSuccessfulDescription: 'Olemme lähettäneet maksuvahvistuksen sähköpostiisi'
+        paymentSuccessfulBundleSubtitle: 'Lataa tiedostot napsauttamalla alla olevaa linkkiä'
+        paymentSuccessfulSubtitle: 'Klikkaa alta luodaksesi käyttäjätunnuksen %app%.'
+        paymentSuccessfulButton: 'Luo kirjautumistunnukseni'
+        klarna:
+            title: 'Klarna'
+            category:
+                now: 'Maksa nyt'
+                later: 'Maksa myöhemmin'
+                overTime: 'Maksa osissa'
+    notifications:
+        checkIn: Hei %name%, muista päivittää tavoitteet tänään!
+        newVideo: Valmentajasi latasi juuri uuden videon sinulle!
+        voice: Valmentaja lähettää sinulle ääniviestin
+        video: Valmentajasi lähetti sinulle videoviestin
+emails:
+    client:
+        newMessage:
+            subject: 'Olet saanut uuden viestin!'
+            cta: 'Klikkaa tästä lukeaksesi se'
+        answerSurvey:
+            subject: 'Ole hyvä ja täytä valmentajasi kysely'
+            body: 'Valmentajasi on kehoittanut sinua täyttämään kyselyn, jotta suunnitelmasi voidaan luoda.'
+            cta: 'Klikkaa tästä tehdäksesi niin.'
+        mealPlanPdf:
+            subject: 'Ateriasuunnitelma PDF'
+            body: 'Hei %client%, liitteenä on PDF-muodossa ateriasuunnitelmasi.'
+        workoutPlanPdf:
+            subject: 'Harjoittelusuunnitelma PDF'
+            body: 'Hei %client%, liitteenä on PDF-muodossa harjoittelusuunnitelmasi.'
+    user:
+        newMessage:
+            subject: 'Olet saanut uuden viestin!'
+            body: 'Asiakkaasi %client% lähetti sinulle uuden viestin Zenfit:issä.'
+            cta: 'Klikkaa tästä lukeaksesi se'
+meal:
+    clientPlanTitle: '%name% ateriasuunnitelma'
+    metaDescription: 'Voit vapaasti valita kumman vain näistä aterioista. Ne molemmat sisältävät suurinpiirtein:'
+    carbs: Hiilihydraatteja
+    protein: Proteiinia
+    fat: Rasvaa
+    ingredients: Raaka-aineet
+    recipe: Resepti
+    types:
+        1: Aamupala
+        2: Lounas
+        3: Illallinen
+        4: 'Aamun välipala'
+        5: 'Iltapäivän välipala'
+        6: 'Iltapala'

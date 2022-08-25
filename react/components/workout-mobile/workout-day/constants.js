@@ -1,0 +1,60 @@
+/*jshint esversion: 6 */
+
+//Actions
+
+const REQUEST = 'REQUEST';
+const SUCCESS = 'SUCCESS';
+const FAILURE = 'FAILURE';
+
+function createRequestTypes(base) {
+    return [REQUEST, SUCCESS, FAILURE].reduce((requestType, type) => {
+        requestType[type] = `${base}_${type}`;
+        return requestType;
+    }, {});
+}
+
+////Global
+export const SET_TOTAL_ACTIVE_CLIENTS = 'SET_TOTAL_ACTIVE_CLIENTS';
+
+////Workout Day
+export const FETCH_WORKOUTS_DAY = createRequestTypes('FETCH_WORKOUT_DAY');
+
+export const CREATE_WORKOUTS = 'CREATE_WORKOUTS';
+export const UPDATE_DAY_COMMENT = 'UPDATE_DAY_COMMENT';
+export const UPDATE_DAY_WORKOUTS = 'UPDATE_DAY_WORKOUTS';
+
+export const SHOW_ADD_EXERCISES = 'SHOW_ADD_EXERCISES';
+export const SHOW_WORKOUT_DETAILS = 'SHOW_WORKOUT_DETAILS';
+export const SHOW_SUPERSET_OPTIONS_LIST = 'SHOW_SUPERSET_OPTIONS_LIST';
+export const HIDE_ADD_EXERCISES = 'HIDE_ADD_EXERCISES';
+export const HIDE_WORKOUT_DETAILS = 'HIDE_WORKOUT_DETAILS';
+export const HIDE_SUPERSET_OPTIONS_LIST = 'HIDE_SUPERSET_OPTIONS_LIST';
+export const TOGGLE_TIMER = 'TOGGLE_TIMER';
+export const TOGGLE_WORKOUT_REMOVE = 'TOGGLE_WORKOUT_REMOVE';
+export const REMOVE_WORKOUT = 'REMOVE_WORKOUT';
+
+export const DISABLE_DAY_DATA_UPDATING = 'DISABLE_DAY_DATA_UPDATING';
+
+export const HIDE_ASSIGN_PLAN_BAR = 'HIDE_ASSIGN_PLAN_BAR';
+export const HIDE_ASSIGN_CLIENTS_LIST = 'HIDE_ASSIGN_CLIENTS_LIST';
+export const HIDE_ADD_CLIENT_MODAL = 'HIDE_ADD_CLIENT_MODAL';
+export const HIDE_ASSIGN_TEMPLATE = 'HIDE_ASSIGN_TEMPLATE';
+export const SET_ASSIGN_CLIENT_DATA = 'SET_ASSIGN_CLIENT_DATA';
+
+////Workout Track
+export const ADD_NEW_WEIGHT = 'ADD_NEW_WEIGHT';
+export const ADD_TODAY_WEIGHT = 'ADD_TODAY_WEIGHT';
+export const UPDATE_HISTORY = 'UPDATE_HISTORY';
+export const UPDATE_HISTORY_ON_DATE_CHANGE = 'UPDATE_HISTORY_ON_DATE_CHANGE';
+export const SHOW_TRACK_WEIGHT = 'SHOW_TRACK_WEIGHT';
+export const SHOW_WEIGHT_HISTORY = 'SHOW_WEIGHT_HISTORY';
+export const HIDE_TRACK_WEIGHT = 'HIDE_TRACK_WEIGHT';
+export const HIDE_WEIGHT_HISTORY = 'HIDE_WEIGHT_HISTORY';
+export const TOGGLE_DATE_PICKER = 'TOGGLE_DATE_PICKER';
+export const SET_UPDATING_WEIGHT = 'SET_UPDATING_WEIGHT';
+export const DISABLE_UPDATING_WEIGHT = 'DISABLE_UPDATING_WEIGHT';
+
+//Other
+
+export const DROPSET_TEXT = 'This is a dropset. Drop the set 1 time.';
+export const WEIGHT_DATE_FORMAT = 'YYYY-MM-DD';

@@ -1,0 +1,66 @@
+AppBundle\Entity\ActivityLog:
+    type: entity
+    table: activity_log
+    repositoryClass: AppBundle\Repository\ActivityLogRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: datetime
+
+        notifiedTrainer:
+            type: integer
+            column: notified_trainer
+            nullable: TRUE
+
+        seen:
+            type: boolean
+            column: seen
+            options:
+                default: false
+
+        count:
+            type: integer
+            nullable: FALSE
+            options:
+                default: 1
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: activities
+            joinColumn:
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: activities
+            joinColumn:
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        event:
+            targetEntity: AppBundle\Entity\Event
+            joinColumn:
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    indexes:
+        event_client_idx:
+            columns: [ client_id, event_id ]
+        event_date_idx:
+            columns: [ event_id, date ]
+
+
+    lifecycleCallbacks: {  }

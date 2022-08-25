@@ -1,0 +1,46 @@
+{% set isHiddenMetric = '' %}
+{% set isHiddenImperial = 'hidden' %}
+{% if constant('MEASURING_SYSTEM_METRIC', client) == client.measuringSystem %}
+    {% set isHiddenImperial = 'hidden' %}
+    {% set isHiddenMetric = '' %}
+{% elseif constant('MEASURING_SYSTEM_IMPERIAL', client) == client.measuringSystem %}
+    {% set isHiddenMetric = 'hidden' %}
+    {% set isHiddenImperial = '' %}
+{% endif %}
+
+<div class="form-group">
+    <label class="control-label">{% trans %} client.survey.primaryGoal {% endtrans %}</label>
+    {% if client.user.userSettings and client.user.userSettings.customPrimaryGoals %}
+      <div class="form-group-in max-width">
+          <select name="primaryGoal" class="form-control">
+              <option disabled value="">{% trans %} client.survey.selectPrimaryGoal {% endtrans %}</option>
+              {% for key in range(2,4) %}
+                 <option value="{{ key }}" {% if key == client.primaryGoal %} selected {% endif %}>
+                    {{('client.survey.customPrimaryGoals.'~key)|trans}}
+                 </option>
+              {%- endfor %}
+          </select>
+      </div>
+    {% else %}
+      <div class="form-group-in max-width measuring-system-metric" {{ isHiddenMetric }}>
+          <select name="primaryGoal" class="form-control">
+              <option value="">{% trans %} client.survey.selectPrimaryGoal {% endtrans %}</option>
+              {% for key in range(1,5) %}
+                 <option value="{{ key }}" {% if key == client.primaryGoal %} selected {% endif %}>
+                    {{('client.survey.primaryGoals.metric.'~key)|trans}}
+                 </option>
+              {%- endfor %}
+          </select>
+      </div>
+      <div class="form-group-in max-width measuring-system-imperial" {{ isHiddenImperial }}>
+          <select name="primaryGoal" class="form-control">
+              <option value="">{% trans %} client.survey.selectPrimaryGoal {% endtrans %}</option>
+              {% for key in range(1,5) %}
+                 <option value="{{ key }}" {% if key == client.primaryGoal %} selected {% endif %}>
+                    {{('client.survey.primaryGoals.imperial.'~key)|trans}}
+                 </option>
+              {%- endfor %}
+          </select>
+      </div>
+    {% endif %}
+</div>

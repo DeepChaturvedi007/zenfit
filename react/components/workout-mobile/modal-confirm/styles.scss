@@ -1,0 +1,48 @@
+.modal-confirm-wrapper {
+  background: #ffffff;
+  border-radius: 13px;
+  margin-left: -135px;
+  margin-top: -50px;
+  left: 50%;
+  overflow: hidden;
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  width: 270px;
+  z-index: 103;
+}
+.modal-confirm-text {
+  padding: 20px 15px 0;
+  h4 {
+    color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0 0 9px;
+  }
+  p {
+    color: #111111;
+    font-size: 13px;
+    line-height: 1.23;
+    margin: 0 0 18px;
+  }
+
+}
+.modal-confirm-buttons {
+  button {
+    border: none;
+    background: #ffffff;
+    border-top: 1px solid #c8c7cc;
+    color: #007aff;
+    font-size: 17px;
+    line-height: 1.29;
+    padding: 11px 0;
+    width: 50%;
+    &:not(:first-child) {
+      border-left: 1px solid #c8c7cc;
+    }
+  }
+  .modal-confirm-warning-btn {
+    color: #ff3b30;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,99 @@
+<div
+        class="modal inmodal in sm"
+        id="recipeModalImage"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Recipe Image</h4>
+            </div>
+            <form action="#" data-action="#" method="POST" id="imageRecipeForm" autocomplete="off" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="recipe" value="" />
+                    <div class="form-group">
+                        <div class="plans-box-header-image m-r-none">
+                            <img class="recipeImgThumbnail" src="{{ asset('bundles/app/images/recipe-placeholder.png') }}" data-placeholder="{{ asset('bundles/app/images/recipe-placeholder.png') }}" alt="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeImage" class="control-label">Upload recipe image</label>
+                        <input class="form-control" id="recipeImage" type="file" name="image" accept="image/*">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  (function ($) {
+    var $modal = $('#recipeModalImage');
+    var widget = {
+      $modal: $modal,
+      $thumbnail: $modal.find('img.recipeImgThumbnail'),
+      action: '#',
+    };
+
+{% if recipe is defined %}
+    widget.action = "{{ path('meal_recipes_update', { 'recipe': '~id~' }) }}";
+{% elseif plan is defined %}
+    widget.action = "{{ path('meal_upload_image', { 'mealPlan': '~id~' }) }}";
+{% endif %}
+
+    function updateModalData (props) {
+      var isMeal = props.type === 'meal';
+      var title = isMeal ? 'Meal' : 'Recipe';
+      var action = props.id ? widget.action.replace('~id~', props.id) : '#';
+
+      widget.$modal.find('form').attr({
+        'action': action,
+        'data-action': action,
+      });
+
+      widget.$modal.find('.modal-title').text(title + ' Image');
+      widget.$modal.find('label[for="recipeImage"]').text('Upload ' + title.toLowerCase() + ' image');
+
+      widget.$thumbnail.attr({
+        src: props.image || widget.$thumbnail.data('placeholder'),
+        alt: props.name || '',
+      });
+    }
+
+    widget.$modal.on('change', '#recipeImage', function () {
+      if (this.files && this.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          widget.$thumbnail.attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+
+    widget.$modal.on('show.bs.modal', function (e) {
+      var $relatedTarget = $(e.relatedTarget);
+      var props = JSON.parse(window.atob($relatedTarget.data('image')));
+
+      updateModalData(props);
+
+      console.log('recipeModalImage(show.bs.modal)', {
+        $relatedTarget,
+        props,
+      });
+    });
+
+    widget.$modal.on('hidden.bs.modal', function () {
+      updateModalData({});
+    })
+  })(jQuery);
+</script>

@@ -1,0 +1,75 @@
+AppBundle\Entity\Bundle:
+    type: entity
+    table: bundles
+    repositoryClass: AppBundle\Repository\BundleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        name:
+            type: string
+            length: 255
+
+        description:
+            type: text
+            nullable: true
+
+        upfrontFee:
+            type: float
+            options:
+                default: 0
+
+        recurringFee:
+            type: float
+            options:
+                default: 0
+
+        months:
+            type: integer
+            options:
+                default: 0
+
+        currency:
+            type: string
+            length: 5
+
+        type:
+            type: integer
+            options:
+                default: 0
+
+        trainerNeedsToCreate:
+            type: boolean
+            options:
+                default: false
+
+        terms:
+            type: text
+            nullable: true
+
+
+    oneToMany:
+        documents:
+            targetEntity: AppBundle\Entity\Document
+            mappedBy: bundle
+            cache:
+                usage : NONSTRICT_READ_WRITE
+
+        lead:
+            targetEntity: AppBundle\Entity\Lead
+            mappedBy: bundle
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: documents
+            joinColumn:
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

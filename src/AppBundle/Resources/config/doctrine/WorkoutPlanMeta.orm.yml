@@ -1,0 +1,58 @@
+AppBundle\Entity\WorkoutPlanMeta:
+    type: entity
+    table: workout_plan_meta
+    repositoryClass: AppBundle\Repository\WorkoutPlanMetaRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        level:
+            type: integer
+            length: 1
+            nullable: true
+
+        type:
+            type: integer
+            length: 1
+            nullable: true
+
+        location:
+            type: integer
+            length: 1
+            nullable: true
+
+        duration:
+            type: integer
+            length: 2
+            nullable: true
+
+        workoutsPerWeek:
+            type: integer
+            length: 1
+            nullable: true
+
+        gender:
+            type: integer
+            length: 1
+            nullable: true
+
+
+    oneToOne:
+        plan:
+            targetEntity: AppBundle\Entity\WorkoutPlan
+            inversedBy: workoutPlanMeta
+            joinColumn:
+                name: plan_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE

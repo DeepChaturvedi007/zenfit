@@ -1,0 +1,110 @@
+{% extends '@App/base.html.twig' %}
+
+{%- block body_classes -%}
+    no-scroll skip-height-fix
+{%- endblock -%}
+
+{% block content -%}
+    {% set baseMealPlanTitle = plan.name %}
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+
+        <div id="page-wrapper" class="gray-bg">
+            {% if client %}
+                {% include '@App/components/clientNav.html.twig' with { 'clientMeal': 'true' } %}
+            {% else %}
+                {% include '@App/components/metabar.html.twig' with {
+                    'title': 'Meal Plan Builder',
+                    'description': 'Create your Meal Plans once and use on multiple clients!',
+                    'template': 'meal_templates'
+                } %}
+            {% endif %}
+            {% include '@App/components/flashSuccess.html.twig' %}
+
+            <div class="exercise-wrapper{{ client ? '' : ' no-client-nav' }}" id="meal-planner">
+                <div class="spinner">
+                    <img src="{{ asset('images/ajax-loader.gif') }}" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% include '@App/default/widgets/chatWidget.html.twig' %}
+{% endblock %}
+
+{% block extra_css -%}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/dragula-3.6.6.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/workout.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/recipes.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ "plans.css"|webpack_asset }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    {% include '@App/default/modals/saveAsPdf.html.twig' with {'type': 'meal'} %}
+    {% include '@Meal/forms/plan.html.twig' with {
+        'action': path('meal_update', { 'plan': plan.id }),
+        'title': 'Edit Meal Plan',
+        'client': client
+    } %}
+    {% include '@Meal/forms/save_as_template.html.twig' %}
+    {% include '@Meal/forms/apply_template.html.twig' with {
+        'title': 'Apply Meal Template',
+        'client': client,
+        'templates': templates
+    } %}
+    {% include '@Meal/forms/meal_plan.html.twig' with { 'plan': plan } %}
+    {% include '@Meal/forms/clone_meal_plan.html.twig' with { 'plan': plan } %}
+    {% include '@Meal/recipes/recipe-modal.html.twig' %}
+
+    {% include '@Meal/recipes/recipe-modal-image.html.twig' %}
+    {% include '@Meal/forms/apply_recipes.html.twig' %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.0/autosize.min.js"></script>
+    <script src="{{ "plans.js"|webpack_asset }}"></script>
+
+    {% include '@App/default/user/meal_products/editor.html.twig' %}
+    <script>
+      (function($) {
+        {% if client %}
+          var client = {
+            id: '{{ client.id }}',
+            name: '{{ client.name }}',
+            firstName: '{{ client.firstName }}'
+          };
+          var template = null;
+        {% else %}
+          var client = null;
+          var template = {
+            id: {{ plan.id }},
+            name: '{{ plan.name }}'
+          };
+        {% endif %}
+
+        var plan = {
+          id: '{{ plan.id }}',
+          name: '{{ plan.name }}',
+          template: {{ plan.template ? 'true' : 'false' }},
+          meal: '{{ meal ? meal : null }}',
+          contains_alternatives: '{{ plan.containsAlternatives ? true : false }}',
+          desired_kcals: '{{ plan.desiredKcals }}',
+          avg_totals: '{{ plan.avgTotals|json_encode|raw }}'
+        };
+        var mealPlans = new Plans(document.getElementById('meal-planner'), Plans.MEAL, {
+          client: client,
+          updatedAt: '{{ plan.lastUpdated|date('d F Y') }}',
+          locale: '{{ plan.locale }}',
+          plan: plan,
+          template: template
+        });
+
+        autosize($('textarea'));
+      })(jQuery);
+    </script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock %}

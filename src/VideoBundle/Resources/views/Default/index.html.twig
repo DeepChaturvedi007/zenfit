@@ -1,0 +1,305 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Videos' } %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="container-mobile m-n-p-x video-wrapper">
+
+                <div class="video-item">
+                    <div class="video-item-header">
+                        <h3 class="video-item-title">Add Video</h3>
+                    </div>
+                    <div class="video-item__descr">
+                        <p class="video-item-text">Add videos for your clients to watch!</p>
+                    </div>
+                    <div class="video-item-footer">
+                        <button class="btn btn-success video-item-btn"
+                                data-toggle="modal"
+                                data-target="#addVideoModal"
+                                data-action="{{ path('update_or_create_video') }}"
+                        >
+                            Add Video
+                        </button>
+                    </div>
+                </div>
+
+                <div class="animated fadeInRight under-header" style="padding-top: 30px;">
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom:10px;">
+                          {% for tag, count in assignmentTags %}
+                              <button
+                                  data-tag="{{ tag }}"
+                                  class="assignmentTag btn {{ activeTag == tag ? 'btn-success' : 'btn-default' }}"
+                              >
+                                {{ tag ~ " (" ~ count ~ ")" }}
+                              </button>
+                          {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if videos is not empty %}
+
+                                <div class="table-container video__container">
+
+                                    <table class="table video__table">
+                                        <colgroup>
+                                            <col width="40%">
+                                            <col>
+                                            <col>
+                                            <col width="15%">
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th>Video</th>
+                                            <th>Hashtags</th>
+                                            <th>Assign To</th>
+                                            <th>Available To Client</th>
+                                            <th class="text-right">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for video in videos %}
+                                            <tr class="video-item">
+                                                <td class="video__preview">
+                                                    <div class="video__thumbnail-wrapper">
+                                                        <a data-toggle="modal" data-target="#exerciseModal" href="{{ path('play_video', { 'video': video.getId }) }}"
+                                                           class="video__thumbnail">
+                                                            {% if video.picture %}
+                                                                <img class="video__thumbnail-image"
+                                                                     src="{{ video.picture }}"/>
+                                                            {% else %}
+                                                                <img class="video__thumbnail-image" src="data:image/jpeg;base64,/9j/4QCLRXhpZgAATU0AKgAAAAgABgEPAAIAAAAIAAAAVgESAAMAAAABAAEAAAEaAAUAAAABAAAAXgEbAAUAAAABAAAAZgEoAAMAAAABAAIAAAExAAIAAAAVAAAAbgAAAABCZUZ1bmt5AAAAASwAAAABAAABLAAAAAFCZUZ1bmt5IFBob3RvIEVkaXRvcgD/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQIBAQEBAQIBAQECAgICAgICAgIDAwQDAwMDAwICAwQDAwQEBAQEAgMFBQQEBQQEBAT/2wBDAQEBAQEBAQIBAQIEAwIDBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAT/wAARCAHgAoADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAr/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AK8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/9k=" />
+                                                            {% endif %}
+                                                            <span class="absolute-centered video__thumbnail-btn-play">
+                                                                <i class="absolute-centered fa fa-play"></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="video__description">
+                                                        <h5 class="video__title">{{ video.title }}</h5>
+                                                        {% if not is_mobile() %}
+                                                            <p class="video__comment" data-text="{{ video.comment }}" data-expanded="false">{{ video.comment|slice(0, 120) }}
+                                                                {% if video.comment|length > 120 %}
+                                                                    ... <a href="#" class="video__link toggleExpandMinimize">More</a>
+                                                                {% endif %}
+                                                            </p>
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {% if video.tagsList|length > 0 %}
+                                                        {% for tag in video.tagsList %}
+                                                            <a onclick="void(0)"><b>{{ tag.title }}</b></a>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        —
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if video.isAssignedToAll %}
+                                                        <span class="label label-inverse assignment-tag">#all</span>
+                                                    {% elseif video.getAssignmentTags|length > 0 %}
+                                                        {% for assigmentTag in video.getAssignmentTags %}
+                                                            <span class="label label-inverse assignment-tag"><b>{{ assigmentTag }}</b></span>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        —
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if video.assignWhen == 0 %}
+                                                      Immediately
+                                                    {% elseif video.assignWhen == 1 %}
+                                                      After 1 day
+                                                    {% else %}
+                                                      After {{ video.assignWhen }} days
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="video__actions justify-center">
+                                                        <a role="button"
+                                                           class="edit-action"
+                                                           data-toggle="modal"
+                                                           data-target="#addVideoModal"
+                                                           data-video="{{ video.toArray|json_encode }}"
+                                                           data-action="{{ path('update_or_create_video') }}"
+                                                        >
+                                                            <i class="fa fa-cog icon" aria-hidden="true"
+                                                               data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                                               title="Edit video"></i>
+                                                        </a>
+                                                        <a href="{{ path('delete_video', { 'video': video.id }) }}" role="button" onclick="shouldDelete(event)">
+                                                            <i class="fa fa-trash icon" aria-hidden="true" data-toggle="tooltip"
+                                                               data-placement="bottom" data-html="true" title="Remove video"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+
+                            {% else %}
+
+                                <div class="text-center">
+                                    <h2>Add your first video</h2>
+                                    <p class="mb-1">
+                                        Brand yourself with videos in the app.
+                                    </p>
+                                    <a
+                                        href="#"
+                                        role="button"
+                                        data-toggle="modal"
+                                        data-target="#addVideoModal"
+                                        data-action="{{ path('update_or_create_video') }}"
+                                        data-type="new"
+                                        class="btn btn-primary">
+                                        Add Your First Video
+                                    </a>
+                                </div>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+    <style>
+        .video__comment {
+            word-break: break-all;
+        }
+    </style>
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset('bundles/app/css/video.css') }}" rel="stylesheet">
+    <style>
+        form.swal-extra-form {
+            margin: 20px auto;
+        }
+
+        form.swal-extra-form input {
+            width: initial;
+            height: initial;
+            border: initial;
+            display: initial;
+            margin: initial;
+            font-size: initial;
+            padding: initial;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    {% include '@Video/modals/addVideoModal.html.twig' %}
+
+    <script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+    <script async>
+        const defaultThumbnail = 'data:image/jpeg;base64,/9j/4QCLRXhpZgAATU0AKgAAAAgABgEPAAIAAAAIAAAAVgESAAMAAAABAAEAAAEaAAUAAAABAAAAXgEbAAUAAAABAAAAZgEoAAMAAAABAAIAAAExAAIAAAAVAAAAbgAAAABCZUZ1bmt5AAAAASwAAAABAAABLAAAAAFCZUZ1bmt5IFBob3RvIEVkaXRvcgD/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQIBAQEBAQIBAQECAgICAgICAgIDAwQDAwMDAwICAwQDAwQEBAQEAgMFBQQEBQQEBAT/2wBDAQEBAQEBAQIBAQIEAwIDBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAT/wAARCAHgAoADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAr/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AK8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/9k=';
+        window.shouldDelete = function (e) {
+            e.preventDefault();
+            const href = e.currentTarget.href;
+            const id = 'relative-element';
+            let removeEverywhere = false;
+            window.handleEverywhereChange = function (event) {
+              removeEverywhere = event.target.checked;
+            };
+            const onConfirm = () => {
+                $.ajax({
+                    url: `${href}?everywhere=${removeEverywhere}`,
+                    type: 'DELETE',
+                    success: function(result) {
+                        location.reload();
+                    }
+                });
+            };
+            swal({
+                title: "Are you sure?",
+                html: true,
+                text: `<span id="${id}">You will not be able to recover this video!</span>`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, onConfirm);
+
+            const relativeEl = $(`#${id}`);
+            const onElementReady = function () {
+                const parent = relativeEl.parent();
+                if(!!parent.parent().find(`#${id}-wrapper`).length) {
+                    $(`#${id}-wrapper`).remove();
+                }
+                parent.remove(`${id}-wrapper`);
+                const form = `
+                    <form id="${id}-wrapper" class="swal-extra-form">
+                        <input id="everywhere-checkbox" type="checkbox" name="everywhere" onchange="handleEverywhereChange(event)"/>
+                        &nbsp;
+                        <label for="everywhere-checkbox">
+                            Also remove from clients
+                        </label>
+                    </form>
+                `;
+                $(form).insertBefore(parent);
+                relativeEl.unbind('ready', onElementReady)
+            };
+            relativeEl.ready(onElementReady);
+        };
+        const onExpandMinimizeClick = function () {
+          const element = $(this);
+          const newElement = element.clone();
+          const parent = element.parent();
+          const fullText = parent.data('text');
+          const expanded = parent.data('expanded');
+          element.remove();
+          newElement.click(onExpandMinimizeClick)
+          if(expanded) {
+            newElement.text('More');
+            parent.text(`${fullText.slice(0, 125)}... `);
+            parent.append(newElement);
+          } else {
+            parent.text(`${fullText} `);
+            newElement.text('Less');
+            parent.append(newElement);
+          }
+          parent.data('expanded', !expanded);
+        };
+
+
+        $('img.video__thumbnail-image')
+          .error(function () {
+            $( this ).attr( "src", defaultThumbnail );
+          });
+        $('.toggleExpandMinimize').click(onExpandMinimizeClick);
+        $('#exerciseModal')
+          .on('hidden.bs.modal', function() {
+            const content = $(this).find('.modal-body');
+            content.empty();
+          });
+
+        $('.assignmentTag').on('click', function(e) {
+          e.preventDefault();
+          let tag = $(this).data('tag');
+          var url = new URL(window.location);
+          (url.searchParams.has('tag') ? url.searchParams.set('tag', tag) : url.searchParams.append('tag', tag));
+          window.location = url;
+        });
+
+    </script>
+{% endblock %}

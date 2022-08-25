@@ -1,0 +1,7 @@
+framework:
+    messenger:
+        transports:
+            pdf_generation: 'in-memory:///'
+            video_compress: 'in-memory:///'
+            media_compressed: 'in-memory:///'
+            voice_compress: 'in-memory:///'

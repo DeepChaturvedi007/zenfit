@@ -1,0 +1,20 @@
+{% set metric = {'weight': 'kg', } %}
+{% set imperial = {'weight': 'lbs'} %}
+
+{% if constant('MEASURING_SYSTEM_METRIC', client) == client.measuringSystem %}
+    {% set weight = metric.weight %}
+{% elseif constant('MEASURING_SYSTEM_IMPERIAL', client) == client.measuringSystem %}
+    {% set weight = imperial.weight %}
+{% endif %}
+
+<div class="form-group">
+    <label class="control-label">Start Weight</label>
+    <div class="form-group-in max-width row">
+        <div class="col-xs-6">
+            <div class="box-unit">
+                <input type="number" name="startWeight" class="form-control replace-comma" {% if client.startWeight is not null %} value="{{ client.startWeight }}" {% else %} placeholder="Start Weight" {% endif %}>
+                <div class="unit">{{ weight }}</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+login_check:
+    path: /login_check
+
+gesdinet_jwt_refresh_token:
+    path: /token/refresh
+    defaults: { _controller: gesdinet.jwtrefreshtoken:refresh }
+
+lenus_api:
+    resource: "@LenusBundle/Controller/v1"
+    type:     annotation
+    prefix:   /lenus/v1
+
+plan:
+    resource: "@PlanBundle/Controller/"
+    type:     annotation
+    prefix:   /plans
+
+zapier:
+    resource: "@ZapierBundle/Controller/"
+    type:     annotation
+    prefix:   /zapier
+
+lead:
+    resource: "@LeadBundle/Controller/"
+    type:     annotation
+    prefix:   /leads
+
+gym:
+    resource: "@GymBundle/Controller/"
+    type:     annotation
+    prefix:   /gym
+
+progress:
+    resource: "@ProgressBundle/Controller/"
+    type:     annotation
+    prefix:   /progress
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+video:
+    resource: "@VideoBundle/Controller/"
+    type:     annotation
+    prefix:   /video
+
+chat:
+    resource: "@ChatBundle/Controller/"
+    type:     annotation
+    prefix:   /chat
+
+exercise:
+    resource: "@ExerciseBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+client:
+    resource: "@ClientBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+meal:
+    resource: "@MealBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+trainer_api:
+    resource: "@TrainerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+workout_plan:
+    resource: "@WorkoutPlanBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+email:
+    resource: "@EmailBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+react_api:
+    resource: "@ReactApiBundle/Controller/"
+    type:     annotation
+    prefix:   /react-api/
+
+react_api_v3:
+    resource: "@ReactApiBundle/Controller/v3"
+    type:     annotation
+    prefix:   /react-api/v3/
+
+zenfit_user:
+    resource: "@ZenfitUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+zenfit_stripe:
+    resource: "@ZenfitStripeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+fos_user_security_logout:
+    defaults: { _controller: 'fos_user.security.controller:logoutAction'}
+    path: /logout
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_registration_confirmed:
+    path: /registration/confirmed
+    defaults: { _controller: 'TrainerBundle\Controller\IntroController:introAction' } #TODO check this
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+api:
+  resource: "@ApiBundle/Controller/"
+  type:     annotation
+  prefix:   /api

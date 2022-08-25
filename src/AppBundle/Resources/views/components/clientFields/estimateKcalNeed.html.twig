@@ -1,0 +1,36 @@
+<div class="box-info-left{% if isEstimatedCalories == false %} pace-inactive{% endif %}">
+    <div class="measuring-system-metric" {{ isHiddenMetric }}>
+        <p data-primary-goal="1" class="{% if 1 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round - 1000)|number_format(0, '.', ',') }} Calories/day to lose 1 kg per week.
+        </p>
+        <p data-primary-goal="2" class="{% if 2 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round - 500)|number_format(0, '.', ',') }} Calories/day to lose 0.5 kg per week.
+        </p>
+        <p data-primary-goal="3" class="{% if 3 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round)|number_format(0, '.', ',') }} Calories/day to maintain weight.
+        </p>
+        <p data-primary-goal="4" class="{% if 4 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round + 500)|number_format(0, '.', ',') }} Calories/day to gain 0.5 kg per week.
+        </p>
+        <p data-primary-goal="5" class="{% if 5 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round + 1000)|number_format(0, '.', ',') }} Calories/day to gain 1 kg per week.
+        </p>
+    </div>
+    <div class="measuring-system-imperial" {{ isHiddenImperial }}>
+        <p data-primary-goal="1" class="{% if 1 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round - 1000)|number_format(0, '.', ',') }} Calories/day to lose 2 lb per week.
+        </p>
+        <p data-primary-goal="2" class="{% if 2 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round - 500)|number_format(0, '.', ',') }} Calories/day to lose 1 lb per week.
+        </p>
+        <p data-primary-goal="3" class="{% if 3 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round)|number_format(0, '.', ',') }} Calories/day to maintain weight.
+        </p>
+        <p data-primary-goal="4" class="{% if 4 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round + 500)|number_format(0, '.', ',') }} Calories/day to gain 1 lb per week.
+        </p>
+        <p data-primary-goal="5" class="{% if 5 == client.primaryGoal %} selected {% endif %}">
+            Client needs {{ (calories|round + 1000)|number_format(0, '.', ',') }} Calories/day to gain 2 lb per week.
+        </p>
+    </div>
+</div>

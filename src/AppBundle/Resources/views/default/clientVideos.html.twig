@@ -1,0 +1,168 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+        <div id="page-wrapper" class="gray-bg">
+            {% include '@App/components/clientNav.html.twig' with {'clientVideos': 'true'}  %}
+
+            <div class="gray-bg container-mobile m-n-p-x">
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h3>{{ client.name }}'s videos</h3>
+                                <small class="help-block">Videos that {{ client.name }} will be able to view from the Zenfit App</small>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <div class="project-list">
+                                    <table class="table">
+                                        <tbody>
+                                        {% for clientVideo in clientVideos %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ clientVideo.url }}" target="_blank">{{ clientVideo.title }}</a>
+                                                </td>
+                                                <td class="text-right">
+                                                    <a class="btn btn-danger btn-sm" role="button" data-confirm href="{{ path('deleteVideoToClient',{'video':clientVideo.id,'client':client.id}) }}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                {#<td class="alert alert-warning">#}
+                                                <td class="text-center">
+                                                    <img class="mb-1" src="{{ asset('bundles/app/documents-visual.png') }}" width="192" alt="" />
+                                                    <p class="text-center">
+                                                        Add videos here to let your clients view from<br>
+                                                        the Zenfit mobile application.
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td colspan="2" class="text-center">
+                                                <a
+                                                  class="btn btn-primary add-video-to-client"
+                                                  href="#"
+                                                  role="button"
+                                                  data-client="{{ client.id }}"
+                                                  data-toggle="modal"
+                                                  data-target="#addSingleVideoToClientModal"
+                                                >
+                                                    Upload video to client
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h3>Videos</h3>
+                                <small class="help-block">These are all your videos to use on your clients</small>
+                            </div>
+                            <div class="ibox-content no-padding">
+                                <div class="project-list">
+                                    <table class="table">
+                                        <tbody>
+                                        {% for video in videos %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ video.url }}" target="_blank">{{ video.title }}</a>
+                                                </td>
+                                                <td class="text-right">
+                                                    {% if video.exists %}
+                                                        <a role="button" href="#" style="background-color: #18a689;border-color:#18a689" class="btn btn-sm btn-info">
+                                                            <i class="fa fa-check"></i> Added
+                                                        </a>
+                                                    {% else %}
+                                                        <a role="button" href="{{ path('addVideoToClient',{'video':video.id,'client':client.id}) }}" class="btn btn-sm btn-success">
+                                                            Add to {{ client.name }} <i class="fa fa-arrow-right"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td class="alert alert-warning">
+                                                    Looks like you don’t have any videos.
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                </div>
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="center-block text-center">
+                        <h3>Are you sure?</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '@App/default/widgets/chatWidget.html.twig' %}
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+
+{% include '@Video/modals/addVideoSingleClientModal.html.twig' %}
+
+    <script>
+        (function($) {
+            var $confirmModal = $('#confirm-delete')
+                .on('hidden.bs.modal', function() {
+                    $(this).find('.btn-ok').attr('href', '#');
+                });
+
+            $('body')
+                .on('click', '[data-confirm]', function(evt) {
+                    evt.preventDefault();
+
+                    var href = $(this).attr('href');
+                    bootbox.confirm('Are you sure?', function() {
+                        window.location.href = href;
+                    });
+                });
+        }(jQuery));
+    </script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock script %}

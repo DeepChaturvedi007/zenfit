@@ -1,0 +1,107 @@
+{% extends '@App/base.html.twig' %}
+
+
+{% block content -%}
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Exercises' } %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="container-mobile m-n-p-x">
+                {% include '@App/components/emptyContainer.html.twig' with {
+                    'title': 'Create New Exercise',
+                    'text': "Create your own custom exercises,<br> you can even include videos from YouTube/Vimeo!",
+                    'image': asset('bundles/app/add-exercise.png'),
+                    'actions': '<a href="#" role="button" data-toggle="modal" data-target="#user_exercise_modal" data-type="new" class="btn btn-success">Add New Exercise</a>'
+                } %}
+
+                <div class="animated fadeInRight under-header" style="padding-top: 30px;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if exercises is not empty %}
+
+                                <div class="table-container">
+
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    {% if not is_mobile() %}
+                                                        <th width="150">Muscle Group</th>
+                                                        <th width="150">Exercise Type</th>
+                                                        <th width="150">Equipment</th>
+                                                    {% endif %}
+                                                    <th width="70" class="text-right">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for exercise in exercises %}
+                                                    <tr>
+                                                        <td width="{{ is_mobile() ? '70%' : '30%' }}">
+                                                            <a data-toggle="modal" data-target="#exerciseModal" href="{{ path('exerciseInfo',{'exercise':exercise.id}) }}">
+                                                                {{ exercise.name }}
+                                                            </a>
+                                                            {% if exercise.demo == 1 %}
+                                                                <span class="label label-success">EXAMPLE</span>
+                                                            {% endif %}
+                                                        </td>
+                                                        {% if not is_mobile() %}
+                                                            <td>{% if exercise.muscleGroup %}{{ exercise.muscleGroup.name }}{% else %}-{% endif %}</td>
+                                                            <td>{% if exercise.exerciseType%}{{ exercise.exerciseType.name }}{% else %}-{% endif %}</td>
+                                                            <td>{% if exercise.equipment %}{{ exercise.equipment.name }}{% else %}-{% endif %}</td>
+                                                        {% endif %}
+                                                        <td class="text-right">
+                                                            <form action="{{ path('remove_exercise', {exercise: exercise.id}) }}">
+                                                                <a href="#" data-toggle="modal" data-type="edit" data-target="#user_exercise_modal" data-action="{{ path("edit_user_exercise", {'id': exercise.id}) }}" role="button" class="btn btn-default btn-sm" data-exercise='{{ exercise|json_encode }}'>
+                                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                                </a>
+                                                                <a href="#" role="button" class="btn btn-danger btn-sm" onclick="deleteAlert(event)">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </a>
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                            {% endif %}
+
+                            {% if showCreateBox %}
+                                <div class="text-center">
+                                    <h2>Create your own exercise with video</h2>
+                                    <p class="mb-1">
+                                        If we're missing an exercise in our exercise library, you can create you own here.<br/>
+                                        After creating the exercise you will be able to use it in your Workout Plans from the exercise library.
+                                    </p>
+                                    <p class="mb-1">
+                                        This is also the perfect way to brand your self to your regular and online clients, so you appear in all exercise in their Workout Plans.
+                                    </p>
+                                    <a href="#" role="button" data-toggle="modal" data-target="#user_exercise_modal" data-type="new" class="btn btn-primary">
+                                        Create Your First Exercise
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    {% include '@App/default/user/exercises/createExercise.html.twig' %}
+{% endblock %}

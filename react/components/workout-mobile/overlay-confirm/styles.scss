@@ -1,0 +1,51 @@
+.overlay-container {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: left;
+  background: #ffffff;
+  .overlay-header {
+    display: flex;
+    padding: 14px 20px;
+    button {
+      background: #ffffff;
+      border: none;
+      padding: 0;
+      outline: none;
+    }
+    .overlay-close {
+      padding-top: 6px;
+      color: #000000;
+    }
+    .overlay-text {
+      flex: 1;
+      text-align: center;
+      h2 {
+        color: #000000;
+        font-size: 17px;
+        font-weight: 500;
+        margin: 0;
+      }
+      p {
+        color: #8292a6;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.31;
+        margin: 0;
+        &.bold {
+          font-weight: 500;
+        }
+      }
+    }
+    .overlay-confirm {
+      padding-top: 6px;
+      color: #1a91eb;
+      &.tick-grey {
+        color: #c8c7cc;
+      }
+    }
+  }
+}

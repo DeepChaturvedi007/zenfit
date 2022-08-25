@@ -1,0 +1,42 @@
+<div class="modal inmodal fade sm" id="addSingleVideoToClientModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Upload new video to client</h4>
+            </div>
+
+            <form method="POST" action="{{ path('add_video_to_client') }}">
+                <input type="hidden" name="client" value="" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="videoTitle" class="control-label">Title</label>
+                        <input type="text" name="title" class="form-control" placeholder="Title of video">
+                    </div>
+                    <div class="form-group">
+                        <label for="documentFile" class="control-label">URL</label>
+                        <input type="text" name="url" class="form-control" placeholder="URL of video" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper">Upload video</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% block script %}
+    <script>
+        let modal = $('#addSingleVideoToClientModal');
+        $('.add-video-to-client').on('click', function() {
+          let client = $(this).data('client');
+          modal.find('input[name=client]').val(client);
+        });
+    </script>
+{% endblock %}

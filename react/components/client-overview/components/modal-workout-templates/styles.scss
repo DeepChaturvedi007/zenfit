@@ -1,0 +1,23 @@
+.modal-content {
+    z-index: 2002;
+}
+.workout-modal{
+    overflow-y: scroll;
+}
+
+.workout-template-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5px;
+}
+.noData{
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
+    font-weight: bold;
+}
+
+.results{
+    padding: 3rem 0 0;
+}

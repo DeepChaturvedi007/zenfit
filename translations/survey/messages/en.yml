@@ -1,0 +1,21 @@
+errors:
+  default: "Oops! Something went wrong"
+  invalid: "Validation error"
+  fields:
+    name:
+      required: "Name is required"
+    email:
+      required: "Email is required"
+      invalid: "Email is invalid"
+    age:
+      required: "Age is required"
+    gender:
+      required: "Please choose your gender"
+    startWeight:
+      required: "Start weight is required"
+    goalWeight:
+      required: "Start weight is required"
+    height:
+      required: "Height is required"
+    measuringSystem:
+      required: "Measuring system is required"

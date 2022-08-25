@@ -1,0 +1,32 @@
+AppBundle\Entity\News:
+    type: entity
+    table: news
+    repositoryClass: AppBundle\Repository\NewsRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+
+        date:
+            type: datetime
+            column: date
+
+        picture:
+            type: string
+            length: 255
+            nullable: false
+
+        link:
+            type: string
+            length: 255
+            nullable: true
+
+    lifecycleCallbacks: {  }

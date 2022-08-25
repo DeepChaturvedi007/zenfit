@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label class="control-label">Activity Level</label>
+    <div class="form-group-in">
+        <select name="activityLevel" class="form-control">
+            <option value="">Select Activity Level</option>
+            {% for key in range(1,5) %}
+               <option value="{{ key }}" {% if key == client.activityLevel %} selected {% endif %}>
+                  {{('client.survey.activityLevels.'~key)|trans}}
+               </option>
+            {%- endfor %}
+        </select>
+    </div>
+</div>

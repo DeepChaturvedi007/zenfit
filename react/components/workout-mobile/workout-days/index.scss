@@ -1,0 +1,88 @@
+@import "../components-styles";
+
+.container-block {
+  background: #f3f3f4;
+  padding: 15px;
+  .ibox-content,
+  .ibox-header{
+    background: none;
+  }
+}
+
+.workout-days-item {
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  display: -webkit-flex;
+  display: flex;
+  .workout-days-text {
+    flex: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 10px;
+    padding-left: 5px;
+    p {
+      color: #7f8fa4;
+      margin: 0;
+      line-height: 1.6;
+      padding-top: 4px;
+    }
+  }
+  h4 {
+    color: #354052;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+.add-day-btn {
+  color: #1a91eb;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 26px 0;
+  text-align: center;
+  button {
+    background: none;
+    border: none;
+    outline: none;
+  }
+}
+
+.view-link {
+  color: #5E5E5E;
+  font-size: 20px;
+}
+
+.icon-dots {
+  background: #1a91eb;
+  border-radius: 50%;
+  display: inline-block;
+  height: 3px;
+  margin: 0 5px;
+  position: relative;
+  vertical-align: middle;
+  width: 3px;
+  &:before,
+  &:after {
+    background: #1a91eb;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 3px;
+    position: absolute;
+    width: 3px;
+  }
+  &:before {
+    left: -5px;
+  }
+  &:after {
+    right: -5px;
+  }
+}

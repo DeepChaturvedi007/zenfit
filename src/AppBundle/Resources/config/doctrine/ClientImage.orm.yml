@@ -1,0 +1,39 @@
+AppBundle\Entity\ClientImage:
+    type: entity
+    table: client_images
+    repositoryClass: AppBundle\Repository\ClientImageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 32
+
+        date:
+            type: datetime
+            column: date
+
+        deleted:
+            type: boolean
+            options:
+                default: 0
+
+        type:
+            type: integer
+            length: 1
+            options:
+                default: 0
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: images
+            joinColumn:
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

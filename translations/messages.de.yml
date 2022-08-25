@@ -1,0 +1,244 @@
+client:
+    activation:
+        greeting: 'Hallo %name%!'
+        greetingNew: " Hallo %name%, fangen wir mit Ihnen an!"
+        welcomeMsg: Sie wurden eingeladen, ein Konto zu erstellen. Bitte füllen Sie den folgenden Fragebogen aus.'
+        description: 'Bitte wähle ein Passwort aus um auf die %name% App zugreifen zu können.'
+        createPasswordTitle: 'Erstelle ein Passwort'
+        createAccountTitle: Erstellen Sie ein Konto
+        createAccountSubTitle: Geben Sie Ihre allgemeinen Informationen ein, um Ihr Konto zu erstellen
+        updateAccountTitle: 'Konto aktualisieren'
+        updateAccountSubTitle: 'Geben Sie Ihre Informationen ein, um Ihr Konto zu aktualisieren'
+        email: 'Deine E-Mail Adresse'
+        emailInvalid: 'Email ist ungültig'
+        password: 'Passwort auswählen'
+        fieldEmpty: ‘Feld ist leer'
+        fieldNotSelected: 'Keine Optionen ausgewählt'
+        passwordDontMatch: 'Passwörter stimmen nicht überein'
+        passwordPlaceholder: 'Wähle ein schwieriges Passwort aus, stelle aber sicher das du es nicht vergisst'
+        confirmPassword: 'Passwort bestätigen'
+        confirmPasswordPlaceholder: 'Gib dein Passwort erneut ein'
+        passwordLength: 'Das Passwort muss mindestens 8 Zeichen lang sein.'
+        createLoginBtn: 'Erstelle Log in'
+        updateLogin: 'Konto aktualisieren'
+        hasBeenCreated: "Ihr Konto wurde erstellt"
+        next: "Weiter"
+        generalTitle: 'Allgemeine Informationen'
+        generalSubTitle: ‘Fülle die grundlegenden Informationen über dich aus'
+        bodyPictures:
+            front: 'Vorne'
+            side: ‘Seite’
+            back: ‘Hinten’
+            uploadPicture: 'Bild hochladen'
+            removePicture: 'Bild entfernen'
+            spec: ‘Legen Sie Ihre JPG- oder PNG-Datei hier ab'
+    survey:
+        title: 'Erzähl mir etwas über dich'
+        description: 'Bitte fülle den Fragebogen deines Trainers aus - Dein Trainer benötigt diese Informationen, um die besten Pläne für dich zu erstellen!'
+        loginCreatedTitle: 'Gut gemacht! Dein Login wurde erstellt!'
+        loginCreatedDescription: 'Jetzt musst du nur noch diesen Fragebogen beantworten, damit dein Coach mit der Erstellung deiner Pläne beginnen kann.'
+        contactTitle: 'Kontaktinformation'
+        photo: 'Dein Foto'
+        imperial: 'imperial'
+        metric: 'metric'
+        uploadPhoto: 'Foto hochladen'
+        changePhoto: 'Foto ändern'
+        fullName: 'Vollständiger Name'
+        email: E-Mail
+        phone: Telefonnummer
+        basicInfoTitle: 'Grundinformation'
+        gender: Geschlecht
+        male: Männlich
+        female: Weiblich
+        age: Alter
+        metricSystem: 'US- oder metrisches System'
+        startWeight: 'Startgewicht'
+        height: Grösse
+        activityLevel: 'Aktivitätsstufe'
+        selectActivityLevel: ' Aktivitätsstufe auswählen'
+        activityLevels:
+            1: 'Ich mache keine körperliche Bewegung'
+            2: 'Ich bin nicht sehr aktiv und trainiere 2-3 Tage die Woche'
+            3: 'Ich bin mäßig aktiv und trainiere 3-4 mal pro Woche'
+            4: 'Ich bin ziemlich aktiv und trainiere ziemlich viel'
+            5: 'Ich habe einen harten körperlichen Job und trainiere die meisten Tage'
+        photos: Fotos
+        photosDescription: 'Lade ein oder mehrere Bilder von dir hoch (freiwillig)'
+        goalInfoTitle: 'Dein Ziel'
+        yourCurrentWeight: 'You current weight is %weightString%. What is your goal weight?'
+        goalHigherCurrent: 'Das aktuelle Gewicht ist höher als das Zielgewicht'
+        goalLessCurrent: 'Aktuelles Gewicht ist niedriger als das Zielgewicht'
+        goalEqualCurrent: 'Aktuelles Gewicht ist gleich dem Zielgewicht'
+        goalWeek: 'Bei diesem Fortschritt wird es %week% Wochen dauern, bis du dein Ziel erreichst!'
+        primaryGoal: 'Hauptziel'
+        selectPrimaryGoal: 'Wähle dein Primäres Ziel'
+        customPrimaryGoals:
+            2: 'Gewicht verlieren'
+            3: 'Gewicht halten'
+            4: 'Gewicht zunehmen'
+        primaryGoals:
+            metric:
+                1: '1 KG pro Woche abnehmen'
+                2: '0,5 KG pro Woche abnehmen'
+                3: 'Das Gewicht halten'
+                4: '0,5 KG pro Woche zunehmen'
+                5: '1 KG pro Woche zunehmen'
+            imperial:
+                1: '2 Pfund pro Woche abnehmen'
+                2: '1 Pfund pro Woche abnehmen'
+                3: 'Das Gewicht halten'
+                4: '1 Pfund pro Woche zunehmen'
+                5: '2 Pfund pro Woche zunehmen'
+        goalWeight: 'Traumgewicht'
+        additionalInfoTitle: 'Weitere Fragen'
+        injuries: 'Verletzungen / Krankheiten'
+        injuriesPlaceholder: 'Hast du Verletzungen / Krankheiten / medizinische Bedenken, die sich auf deinen Plan auswirken können? Z.B. Rückenschmerzen, Asthma etc.'
+        workoutExperienceLevel: 'Trainingserfahrung'
+        workoutExperienceLevelPlaceholder: 'Wie lange trainieren Sie schon regelmäßig?'
+        selectWorkoutExperienceLevel: 'Bitte bestimme Deine Trainingserfahrung'
+        workoutExperienceLevels:
+            1: 'Ich bin Anfänger und habe keine bis wenig Erfahrung.'
+            2: 'Ich trainiere schon seit einiger Zeit und kenne die Grundlagen.'
+            3: 'Ich bin erfahren und trainiere bereits seit mehreren Jahren'
+        workoutExperience: Gibt es etwas, was Du zu Deiner Trainingserfahrung hinzufügen möchtest?
+        workoutExperiencePlaceholder: Du kannst Deine Erfahrungen hier näher erläutern.
+        workoutPreferences: 'bevorzugtes Training'
+        workoutSubtitlePreferences: 'Bitte füllen Sie alle nachstehenden Fragen aus'
+        workoutPreferencesPlaceholder: 'Gibt es bestimmte Muskelgruppen, die du verbessern möchtest? Versuchst du, Kraft, Ausdauer oder beides zu verbessern?'
+        workoutLocation: 'Wo trainierst Du?'
+        selectWorkoutLocation: 'Bitte wähle aus, wo Du trainierst'
+        workoutLocationPlaceholder: 'Trainierst du in einem Fitnessstudio oder zu Hause? Welche Art von Geräten haben Sie zur Verfügung?'
+        workoutLocations:
+            1: 'Fitnessstudio'
+            2: 'Zu Hause'
+            3: 'Draußen'
+        workoutsPerWeek: 'Trainingseinheiten pro Woche?'
+        workoutsPerWeekPlaceholder: 'Wie oft pro Woche möchtest du trainieren?'
+        allergiesIngredientsToAvoid: 'Allergien oder Inhaltsstoffe die vermeidet werden sollen?'
+        allergiesIngredientsToAvoidPlaceholder: 'Zutaten / Lebensmittel die vermeidet werden sollen?'
+        excludeIngredients: 'Zutaten ausgeschlossen (Allergien)'
+        none: 'none'
+        vegetarianType: "Ich bin Vegetarier"
+        pescetarianType: "I'm Pescetarier"
+        veganType: "Ich bin Vegan"
+        lactose: Laktose
+        gluten: Gluten
+        nuts: Nüsse
+        eggs: Eier
+        pig: Schwein
+        shellfish: Schalentiere
+        fish: Fisch
+        vegetarian: 'Ich bin Vegetarier'
+        vegan: 'Ich bin Vegan'
+        pescetarian: 'Ich bin Pesketarier'
+        dietStyle: 'Deine Diät'
+        dietStyleSubTitle: 'Bitte füllen Sie alle nachstehenden Fragen aus'
+        dietStyleTitle: 'Ernährungspräferenzen'
+        dietStylePlaceholder: 'Haben Sie spezielle Lebensmittelanforderungen oder einige Lebensmittel, die Sie bevorzugen?'
+        numberOfMeals: 'Mahlzeiten pro Tag'
+        numberOfMealsPlaceholder: 'Wie viele Mahlzeiten pro Tag möchtest du in deinem Plan?'
+        lifestyleNew: "Lifestyle - Active Job? Active life-style? Do you smoke? Other?"
+        lifestyle: Lebensstil
+        lifestylePlaceholder: 'Aktiver Job? Aktiver Lebensstil? Rauchen Sie? Andere?'
+        motivation: 'Motivation'
+        otherFeedbackTitle: 'Zusätzliche Kommentare'
+        otherFeedbackSubTitle: 'Das sind die letzten Fragen und dann bist du bereit!'
+        otherLifeStyle: Beschreibe deinen Lebensstil (Beruf, Hobbys, rauchst du, usw.)'
+        howMotivated: 'Wie motiviert bist du?'
+        motivationPlaceholder: 'Von einer Skala von 1-10, wie motiviert bist du 6 Mal am Tag zu essen und 6 Tage die Woche zu trainieren?'
+        submit: 'Fragebogen absenden'
+    downloadApp:
+        title: 'Fragebogen wurde an deinen Coach geschickt!'
+        updated: 'Dein Konto wurde aktualisiert'
+        updatedSubtitle: "Sie haben die Aktualisierung Ihres Kontos abgeschlossen. Bitte laden Sie die Client-App herunter!"
+        description: 'Perfekt %name%! Lehne dich nun zurück und lasse die Coaches einen Plan für dich erstellen.'
+        readyTitle: 'Du bist nun bereit um die %name% app herunterzuladen!'
+        whatsNext: 'Was kommt als nächstes?'
+        subTitle: 'You have completed the creation of your account. Please go ahead and download the client-app!'
+        downloadAppTitle: 'Solltest du die %name% App noch nicht heruntergeladen haben, ist jetzt die richtige Zeit dafür'
+        iphone: 'Hole dir die Iphone Version'
+        android: 'Hole dir die Android Version'
+    checkout:
+        amount: Betrag
+        periodFixed: 'Erneuert sich monatlich für %months% Monate'
+        periodUntilUnsubscribe: 'Erneuert sich monatlich, bis Sie sich abmelden'
+        upfrontFee: 'Vorabzahlung %upfrontFee%'
+        couponCode: 'Gutscheincode'
+        choosePayment: 'Wähle die Zahlungsmethode aus'
+        back: 'Zurück'
+        cardPay: 'Mit Karte bezahlen'
+        klarnaPay: 'Mit Klarna bezahlen'
+        sepaPay: 'Mit Sepa bezahlen'
+        name: 'Name des Karteninhabers'
+        email: E-Mail
+        ibanDesc: Indem du deine IBAN angibst und diese Zahlung bestätigst, ermächtigst du Zenfit ApS und Stripe, unseren Zahlungsdienstleister, Anweisungen an deine Bank zu senden, um dein Konto gemäß diesen Anweisungen zu belasten. Du hast Anspruch auf eine Erstattung von deiner Bank gemäß den Bedingungen deines Vertrags mit deiner Bank. Eine Rückerstattung muss innerhalb von 8 Wochen ab dem Datum der Abbuchung von deinem Konto beantragt werden.
+        acceptTerms: Ich habe das gelesen und akzeptiere die %terms%
+        termsOfService: 'Allgemeine Geschäftsbedingungen'
+        acceptTermsError: Du musst die Nutzungsbedingungen akzeptieren
+        klarnaError: Klarna-Zahlung fehlgeschlagen. Bitte versuche es erneut oder mit einer anderen Zahlungsmethode.
+        reachOutSupport: Bitte wende dich an den Zenfit-Support.
+        reachOutBank: Bitte kontaktiere Deine Bank oder versuche eine andere Karte.
+        paymentDeclined: Deine Zahlung wurde abgelehnt.
+        invalidNameError: Ungültiger Name
+        invalidEmailError: Ungültige E-Mail
+        button: Kaufen
+        sepaButton: Bestätige das Mandat und leite die Abbuchung für %amount% ein
+        paymentSuccessfulTitle: 'Zahlung erfolgreich'
+        paymentSuccessfulDescription: 'Wir haben eine Zahlungsbestätigung an deine E-Mail Adresse gesendet'
+        paymentSuccessfulBundleSubtitle: 'Klicken Sie unten, um die Dateien herunterzuladen.'
+        paymentSuccessfulSubtitle: 'Klicke unten, um ein Login für %app% zu erstellen.'
+        paymentSuccessfulButton: 'Erstelle ein Login'
+        klarna:
+            title: 'Klarna'
+            category:
+                now: 'Jetzt bezahlen'
+                later: 'Später bezahlen'
+                overTime: 'Pay over time'
+        firstMonth: 'erster Monat'
+        afterFirstMonth: 'Folgende Monate bis du dich abmeldest'
+        creditCard: 'Kreditkarte'
+        description: 'Sichere Überweisung über dein Bankkonto. Visa, Maestro, Discover, American Express.'
+        cardNumber: 'Kartennummer'
+        expiryDate: 'Verfallsdatum'
+        cvcCode: CVC
+        stripeMessage: Diese Zahlung wird sicher verschlüsselt mit %stripe%
+    notifications:
+        checkIn: Hallo %name%, bitte denke daran, heute einzuchecken
+        newVideo: Dein Trainer hat gerade ein neues Video für Dich hochgeladen!
+        voice: Dein Coach hat dir eine Sprachnachricht gesendet
+        video: Dein Coach hat dir eine Videobotschaft gesendet
+emails:
+    client:
+        newMessage:
+            subject: 'Du hast eine neue Nachricht!'
+            cta: 'Klicke hier, um es zu lesen'
+        answerSurvey:
+            subject: 'Bitte fülle den Fragebogen deines Trainers aus'
+            body: 'Dein Coach hat dich aufgefordert, den Fragebogen auszufüllen, damit deine Pläne erstellt werden können'
+            cta: 'Bitte klicken hier, um dies zu tun'
+        mealPlanPdf:
+            subject: 'Ernährungsplan PDF'
+            body: 'Hallo %client%, Im Anhang findest du deinen Ernährungsplan als PDF.'
+        workoutPlanPdf:
+            subject: 'Trainingsplan PDF'
+            body: 'Hallo %client%, Im Anhang findest du deinen Trainingsplan als PDF.'
+    user:
+        newMessage:
+            subject: 'Du hast eine neue Nachricht!'
+            body: 'Dein Kunde %client% hat dir eine neue Nachricht in Zenfit gesendet.'
+            cta: 'Klicken Sie hier, um es zu lesen'
+meal:
+    clientPlanTitle: '%name% Ernährungsplan'
+    metaDescription: 'Sie können jede dieser Mahlzeiten frei wählen. Sie enthalten alle ungefähr:'
+    carbs: Kohlenhydrate
+    protein: Proteine
+    fat: Fette
+    ingredients: Zutaten
+    recipe: Rezept
+    types:
+        1: Frühstück
+        2: Mittagessen
+        3: Abendessen
+        4: 'Morgen Snack'
+        5: 'Nachmittags Snack'
+        6: 'Abend Snack'

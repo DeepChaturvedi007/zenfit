@@ -1,0 +1,125 @@
+AppBundle\Entity\ClientStripe:
+    type: entity
+    table: client_stripe
+    repositoryClass: AppBundle\Repository\ClientStripeRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        stripeCustomer:
+            type: string
+            length: 255
+            nullable: false
+
+        stripePlan:
+            type: string
+            length: 255
+            nullable: true
+
+        stripeSubscription:
+            type: string
+            length: 255
+            nullable: true
+
+        stripeUpfrontCharge:
+            type: string
+            length: 255
+            nullable: true
+
+        currentPeriodStart:
+            type: string
+            length: 255
+            nullable: true
+
+        currentPeriodEnd:
+            type: string
+            length: 255
+            nullable: true
+
+        periodEnd:
+            type: string
+            length: 255
+            nullable: true
+
+        canceled:
+            type: boolean
+            options:
+                default: 0
+
+        canceledAt:
+            type: string
+            length: 255
+            nullable: true
+
+        paused:
+            type: boolean
+            options:
+                default: 0
+
+        pausedUntil:
+            type: string
+            length: 255
+            nullable: true
+
+        lastPaymentFailed:
+            type: boolean
+            column: last_payment_failed
+            options:
+                default: false
+
+        nextPaymentAttempt:
+            type: string
+            length: 255
+            nullable: true
+
+        attemptCount:
+            type: integer
+            length: 2
+            nullable: true
+
+        invoiceUrl:
+            type: string
+            length: 255
+            nullable: true
+
+        paymentWarningCount:
+            type: integer
+            column: payment_warning_count
+            options:
+                default: 0
+
+        lastPaymentWarningDate:
+            type: datetime
+            column: last_payment_warning_date
+            nullable: true
+
+
+#    manyToOne:
+#        client:
+#            targetEntity: AppBundle\Entity\Client
+#            inversedBy: clientStripe
+#            joinColumn:
+#                referencedColumnName: id
+#                onDelete: CASCADE
+#                nullable: TRUE
+
+    oneToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: clientStripe
+            joinColumn:
+                nullable: false
+
+        payment:
+            targetEntity: AppBundle\Entity\Payment
+            inversedBy: clientStripe
+
+    lifecycleCallbacks: {  }

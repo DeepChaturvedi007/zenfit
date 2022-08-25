@@ -1,0 +1,152 @@
+#ingredients-list {
+  border-radius: 0;
+  background: inherit;
+
+  .ibox-content {
+    max-height: calc(100vh - 100px);
+    padding: 0;
+    border: 0;
+    background: #fff;
+    border-radius: 20px;
+    overflow: auto;
+
+    .card-header {
+      flex-wrap: wrap;
+
+      .ingredients-table-button {
+        position: relative;
+        height: 38px;
+        width: 114px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 35px;
+        margin: 0 8px;
+        border-radius: 10px;
+        border: 1px solid #0062ff;
+        background: #0062ff;
+        color: #fff;
+        font-family: Poppins;
+        font-size: 14px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.1px;
+        white-space: nowrap;
+        cursor: pointer;
+
+        i {
+          position: absolute;
+          left: 0;
+          padding: 0 10px;
+          font-size: 14px;
+        }
+      }
+
+      .form-search {
+        flex-grow: 1;
+        max-width: inherit;
+
+        .form-control {
+          height: 42px;
+          padding-left: 40px;
+          background-color: #fafafb;
+          border: 0;
+          border-radius: 10px;
+          font-family: Roboto;
+          font-size: 14px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.71;
+          letter-spacing: 0.1px;
+          color: #92929d;
+          box-shadow: none;
+        }
+
+        i {
+          position: absolute;
+          padding: 10px 12px;
+          left: 0;
+          color: #92929d;
+          font-size: 21px;
+        }
+      }
+
+      .card-title {
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.1px;
+        color: #171725;
+      }
+    }
+
+    .card-body {
+      .ingredients-table {
+        background-color: transparent;
+        max-width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+
+        td,
+        th {
+          padding: 8px;
+        }
+
+        .table-actions .btn {
+          background-color: inherit;
+          color: #92929d;
+          border: 0;
+        }
+
+        thead,
+        tfoot {
+          th,
+          td {
+            background-color: #fafafb;
+            color: #44444f;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            vertical-align: middle;
+          }
+
+          th:first-child,
+          td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+          }
+
+          th:last-child,
+          td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+          }
+
+          tbody {
+            tr {
+              border-top: 1px solid #f1f1f5;
+            }
+
+            tr:first-child,
+            tr:last-child {
+              border-top: none;
+            }
+
+            td {
+              font-size: 12px;
+              font-weight: normal;
+              color: #171725;
+              letter-spacing: 0.17px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

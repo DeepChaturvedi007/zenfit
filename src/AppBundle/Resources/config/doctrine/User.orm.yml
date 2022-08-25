@@ -1,0 +1,221 @@
+AppBundle\Entity\User:
+    type: entity
+    table: users
+    repositoryClass: AppBundle\Repository\UserRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+        userType:
+            type: smallint
+            options:
+                default: 1
+
+        assignLeads:
+            type: boolean
+            options:
+                default: true
+
+        signupDate:
+            type: datetime
+            column: signup_date
+
+        firstName:
+            type: string
+            length: 200
+            nullable: true
+            column: first_name
+
+        lastName:
+            type: string
+            length: 200
+            nullable: true
+            column: last_name
+
+        interactiveToken:
+            column: interactive_token
+            type: string
+            length: 255
+            nullable: true
+
+        phone:
+            column: phone
+            nullable: TRUE
+            type: string
+            length: 30
+
+        deleted:
+            type: boolean
+            options:
+                default: 0
+
+        activated:
+            type: boolean
+            options:
+                default: 0
+
+        plansVisible:
+            type: boolean
+            options:
+                default: 0
+
+        leadsVisible:
+            type: boolean
+            options:
+                default: 1
+
+        onlyShowOwnExercises:
+            type: boolean
+            column: only_show_own_exercises
+            options:
+                default: 0
+
+        monthlyGoal:
+            type: float
+            precision: 10
+            scale: 2
+            nullable: TRUE
+
+        hideNutritionalFactsInApp:
+            type: boolean
+            column: hide_nutritional_facts_in_app
+            options:
+                default: 0
+
+    manyToMany:
+        gyms:
+            targetEntity: GymBundle\Entity\Gym
+            mappedBy: users
+
+    manyToOne:
+        language:
+            targetEntity: AppBundle\Entity\Language
+            mappedBy: user
+
+    oneToMany:
+        videos:
+            targetEntity: AppBundle\Entity\Video
+            mappedBy: user
+
+        questions:
+            targetEntity: AppBundle\Entity\Question
+            mappedBy: user
+
+        clients:
+            targetEntity: AppBundle\Entity\Client
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        documents:
+            targetEntity: AppBundle\Entity\Document
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        mealProducts:
+            targetEntity: AppBundle\Entity\MealProduct
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        activities:
+            targetEntity: AppBundle\Entity\ActivityLog
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        workoutPlans:
+            targetEntity: AppBundle\Entity\WorkoutPlan
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        mealPlans:
+            targetEntity: AppBundle\Entity\MasterMealPlan
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        conversations:
+            targetEntity: ChatBundle\Entity\Conversation
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        messages:
+            targetEntity: ChatBundle\Entity\Message
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        leads:
+            targetEntity: AppBundle\Entity\Lead
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        defaultMessages:
+            targetEntity: AppBundle\Entity\DefaultMessage
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        recipes:
+            targetEntity: AppBundle\Entity\Recipe
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        recipePreferences:
+            targetEntity: AppBundle\Entity\RecipePreference
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        stripeConnect:
+            targetEntity: AppBundle\Entity\StripeConnect
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToOne:
+        userStripe:
+            targetEntity: AppBundle\Entity\UserStripe
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        userTerms:
+            targetEntity: AppBundle\Entity\UserTerms
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        userApp:
+            targetEntity: AppBundle\Entity\UserApp
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        userSubscription:
+            targetEntity: AppBundle\Entity\UserSubscription
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        userSettings:
+            targetEntity: AppBundle\Entity\UserSettings
+            mappedBy: user
+            cache:
+                usage: NONSTRICT_READ_WRITE
+

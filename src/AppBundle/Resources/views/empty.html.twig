@@ -1,0 +1,97 @@
+<!-- v:42d40fe -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <title>Zenfit - Personal Trainer Software</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="icon" type="image/png" href="{{ asset('bundles/app/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/app/icons/icon57.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/app/icons/icon72.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/app/icons/icon114.png') }}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/app/icons/icon144.png') }}" />
+    <link href="{{ asset('bundles/app/css/emoji.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- iPad retina icon -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-152.png') }}"
+          sizes="152x152"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-144.png') }}"
+          sizes="144x144"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad non-retina icon -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-76.png') }}"
+          sizes="76x76"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPad non-retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-72.png') }}"
+          sizes="72x72"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone 6 Plus icon -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-120.png') }}"
+          sizes="120x120"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-114.png') }}"
+          sizes="114x114"
+          rel="apple-touch-icon-precomposed">
+
+    <!-- iPhone non-retina icon (iOS < 7) -->
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-57.png') }}"
+          sizes="57x57"
+          rel="apple-touch-icon-precomposed">
+
+    <link href="{{ asset('bundles/app/ios/apple-touch-icon-60.png') }}"
+          rel="apple-touch-icon">
+
+    <link rel="icon" type="image/png" href="{{ asset('bundles/app/logo.png') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/style.css?v2') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+    {% block extra_css %}
+
+    {% endblock %}
+</head>
+
+
+<body class="gray-bg">
+
+    <div class="content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
+<!-- Mainly scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="{{ asset('bundles/app/INSPINIA/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('bundles/app/INSPINIA/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('bundles/app/INSPINIA/js/plugins/pace/pace.min.js') }}"></script>
+<script src="{{ asset('bundles/app/INSPINIA/js/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset("bundles/app/js/notifications.js") }}"></script>
+<script src="{{ asset("bundles/app/js/mobile.js") }}"></script>
+<script src="{{ asset('bundles/app/INSPINIA/js/inspinia.js?v2') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+{% include '@App/default/tracking.html.twig' %}
+{% include '@App/default/tracking/goals.html.twig' %}
+
+{% block script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,10 @@
+AppBundle\Entity\Client:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+
+        body_progress:
+            exclude: true

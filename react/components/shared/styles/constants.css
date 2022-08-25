@@ -1,0 +1,11 @@
+:root {
+    --dark: #171725;
+    --light: #fafafb;
+    --primary: #0062ff;
+    --success: #3dd598;
+    --danger: #fc5a5a;
+    --muted: #676a6c;
+    --default-border: 1px solid #f1f1f5;
+    --default-padding: 10px 15px;
+    --font-size: 14px;
+}

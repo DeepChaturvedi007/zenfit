@@ -1,0 +1,52 @@
+monolog:
+    channels: [requests]
+    handlers:
+        main:
+            type: fingers_crossed
+            # 500 errors are logged at the critical level
+            action_level: critical
+            # to also log 400 level errors (but not 404's):
+            # action_level: error
+            # excluded_404s:
+            #     - ^/
+            handler: grouped
+
+        grouped:
+            type:    group
+            members: [streamed, deduplicated, fpm]
+
+        docker:
+            type: stream
+            path: "php://stderr"
+            level: error
+
+        streamed:
+            type:  stream
+            path: "php://stderr"
+            level: error
+
+        fpm:
+            type:  stream
+            path:  "php://stderr"
+            level: error
+
+        deduplicated:
+            type:    deduplication
+            handler: mail
+
+        mail:
+            type:       symfony_mailer
+            from_email: 'error@zenfitapp.com'
+            to_email:   'tech@zenfitapp.com'
+            # or list of recipients
+            # to_email:   ['dev1@example.com', 'dev2@example.com', ...]
+            subject:    'An Error Occurred! %%message%%'
+            level:      debug
+            formatter:  monolog.formatter.html
+            content_type: text/html
+
+        requests:
+            type: stream
+            path: "php://stderr"
+            level: debug
+            channels: ['requests']

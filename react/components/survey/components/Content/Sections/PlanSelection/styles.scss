@@ -1,0 +1,118 @@
+#plan-selection {
+  * {
+    transition: 0.3s;
+  }
+  .container-body {
+    .plans-wrapper {
+      display: flex;
+      @media (max-width: 1000px) {
+        flex-direction: column;
+        .flex-card {
+          article {
+            padding: 15px;
+          }
+        }
+        .popular {
+          order: 1
+        }
+      }
+    }
+    .flex-card {
+      max-width: 100%;
+      box-shadow: 0 10px 29px 0 rgba(100, 146, 188, 0.17);
+      padding: 0;
+      background-color: #fff;
+      overflow: hidden;
+      border-radius: 0;
+      margin-bottom: 45px;
+      margin-top: 45px;
+      border: solid 2px #ffffff;
+      order: 2;
+      > {
+        header {
+          padding: 15px;
+          justify-content: center;
+          color: #1e2022;
+          font-weight: bold;
+          font-size: 16px;
+          letter-spacing: 0.89px;
+          line-height: 20px;
+        }
+
+        article {
+          justify-content: space-between;
+          padding: 35px;
+
+          .title {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+          }
+
+          .price {
+            font-size: 21px;
+            letter-spacing: 1.17px;
+            color: #b7b7b7;
+          }
+
+          .discount {
+            font-size: 15px;
+            color: #b7b7b7;
+            letter-spacing: 0.83px;
+            font-style: italic;
+          }
+
+          .description {
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 14px;
+            color: #565656;
+            line-height: 1.86;
+          }
+        }
+
+        footer {
+          padding: 15px;
+        }
+      }
+
+      &.popular {
+        z-index: 100;
+        margin-bottom: 15px;
+        margin-top: 15px;
+
+        article {
+          padding-top: 15px;
+
+          .price {
+            color: #5b5b5b;
+          }
+        }
+      }
+
+      &.selected {
+        z-index: 200;
+        border-color: #1676ee;
+        box-shadow: 0 30px 80px 0 rgba(100, 146, 188, 0.4);
+        article {
+          .price {
+            font-size: 21px;
+            letter-spacing: 1.17px;
+            color: #1676ee;
+          }
+        }
+      }
+
+      @media (max-width: 768px) {
+        bottom: initial;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center !important;
+    }
+  }
+}

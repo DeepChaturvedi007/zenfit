@@ -1,0 +1,204 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@Meal/forms/apply_template.html.twig' with {
+            'title': 'Apply Meal Template',
+            'templates': templates
+        } %}
+
+        {% if plan.containsAlternatives %}
+          {% set totals = plan.avgTotals %}
+        {% else %}
+          {% set totals = plan.totals %}
+        {% endif %}
+
+        {% set emptyState = true %}
+        {% set notified = false %}
+        {% for mp in plans %}
+            {% if mp.children|length > 0 %}
+                {% set emptyState = false %}
+            {% endif %}
+        {% endfor %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            {% if client %}
+                {% include '@App/components/clientNav.html.twig' with {
+                    'clientMeal': 'true'
+                } %}
+            {% else %}
+                {% include '@App/components/metabar.html.twig' with {
+                    'title': plan.name,
+                    'mobile': true,
+                    'template': 'meal_templates'
+                } %}
+            {% endif %}
+
+            <div class="container-mobile m-n-p-x p-n-t">
+                {% if emptyState %}
+                    {% set notified = true %}
+                    <div class="alert alert-info b-r-n">
+                        Welcome to the Meal Plan Builder! You can start out by creating a meal plan for your client by <strong>applying an existing meal template.</strong>
+                        In order to create Meal Plans from scratch - please use a computer.
+                    </div>
+                {% else %}
+                    {% for msg in app.session.flashBag.get('applyTemplate') %}
+                        <div class="alert alert-success b-r-n">
+                            {{ msg }}
+                            {% if app.user.getTotalClient == 0 %}
+                                <strong><a href="#" data-path="clientMeal" class="addNewClient">Click here</a></strong> to add your first client.
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if emptyState %}
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary js-use-template">Create Meal Plan from Template</button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info b-r-n">
+                        Welcome to the Meal Plan Builder! In order to make changes to the meal plan please use a computer.
+                    </div>
+
+                    <div id="plans-container" class="list-group workout-scroll">
+                        <div class="plan-box">
+                            {% for key, mp in plans %}
+                                <div class="workout-day workout-day-mobile">
+                                    <div class="workout-day-title">
+                                        <h5>{{ mp.name }}</h5>
+                                        {# Show summary only for the first item like it was shown on mockups #}
+                                        {#
+                                              The reason for such approach is:
+                                                avoiding to play with positioning blocks and calculating paddings/margins
+                                                which could affect the rest screen layout and will be dynamic values,
+                                                which depends on screen width
+                                        #}
+                                        {% if key == 0 %}
+                                            <div class="plans-board-header plan-summary">
+                                                <div class="board-meal-totals">
+                                                    {% if plan.containsAlternatives %}
+                                                        <h6 class="text-right">
+                                                            Target for this plan: <span class="no-wrap"><var class="js-header-target-kcal">{{ plan.desiredKcals }}</var> kcal</span>
+                                                        </h6>
+                                                        <h6 class="text-right">
+                                                            Your average: <span class="no-wrap"><var class="js-header-avg-kcal">{{ totals.kcal }}</var> kcal</span>
+                                                        </h6>
+                                                    {% else %}
+                                                        <h6 class="text-right">
+                                                            Total kcals: <span class="no-wrap"><var class="js-header-target-kcal">{{ totals.kcal }}</var> kcal</span>
+                                                        </h6>
+                                                    {% endif %}
+                                                    {% set progressMax = totals.protein * 4 + totals.carbohydrate * 4 + totals.fat * 9 %}
+                                                    {% set carbsPercentage = progressMax ? (totals.carbohydrate * 4 / progressMax) * 100 : 0 %}
+                                                    {% set proteinPercentage = progressMax ? (totals.protein * 4 / progressMax) * 100 : 0 %}
+                                                    {% set fatPercentage = progressMax ? (totals.fat * 9 / progressMax) * 100 : 0 %}
+                                                    <div class="board-meal-meta text-right no-wrap">
+                                                        <span class="no-wrap"><span data-color="red">C<var class="js-header-carbohydrate">{{ totals.carbohydrate }} ({{ carbsPercentage |round }}%)</var></span></span>
+                                                        <span class="no-wrap"> • <span data-color="blue">P<var class="js-header-protein">{{ totals.protein }} ({{ proteinPercentage |round }}%)</var></span></span>
+                                                        <span class="no-wrap"> • <span data-color="yellow">F<var class="js-header-fat">{{ totals.fat }} ({{ fatPercentage |round }}%)</var></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="plan-box-meals">
+                                        {% for children in mp.children %}
+                                            {% set planTotals = children.totals %}
+                                            <div class="workout-day-children">
+                                                <div class="workout-day-title">
+                                                    {% if children.image %}
+                                                        <img src="{{ children.image }}"
+                                                             alt="{{ children.name }}"
+                                                             width="50"
+                                                             style="margin-right: 10px"
+                                                        />
+                                                    {% endif %}
+                                                    <h5>{{ children.name }}</h5>
+                                                </div>
+                                                <div class="plan-totals plan-totals-mobile">
+                                                    <div class="plan-totals-col">
+                                                        <span>Protein</span>
+                                                        <var>{{ planTotals.protein|round }}</var>g
+                                                    </div>
+                                                    <div class="plan-totals-col">
+                                                        <span>Carbohydrate</span>
+                                                        <var>{{ planTotals.carbohydrate|round }}</var>g
+                                                    </div>
+                                                    <div class="plan-totals-col">
+                                                        <span>Fat</span>
+                                                        <var>{{ planTotals.fat|round }}</var>g
+                                                    </div>
+                                                    <div class="plan-totals-col">
+                                                        <var>{{ planTotals.weight|round }}</var>g
+                                                    </div>
+                                                    <div class="plan-totals-col">
+                                                        <var>{{ planTotals.kcal|round }}</var>kcal
+                                                    </div>
+                                                </div>
+                                                <div class="exercises">
+                                                    {% for product in children.products %}
+                                                        {% include '@App/components/planProductRow.html.twig' with {
+                                                            'product': product,
+                                                            'locale': locale,
+                                                            'mobile': true
+                                                        } %}
+                                                    {% endfor %}
+                                                </div>
+                                                {% if children.comment is not empty %}
+                                                    <div class="workout-day-comment meal-comment">
+                                                        {{ children.comment }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% if mp.comment is not empty %}
+                                        <div class="workout-day-comment">
+                                            {{ mp.comment }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                {% endif %}
+
+                {% if emptyState and notified == false %}
+                    <div class="alert alert-info b-r-n">
+                        <strong>Note:</strong> Please use a computer in order to edit this meal plan.
+                    </div>
+                {% endif %}
+            </div>
+            {% include '@App/default/widgets/chatWidget.html.twig' %}
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+{% block extra_css -%}
+    <link href="{{ "plans.css"|webpack_asset }}" rel="stylesheet">
+    <style>
+        .workout-day-title {
+            padding: 16px 22px;
+        }
+        .plan-summary {
+            width: 50%;
+            box-shadow: none;
+            border: none;
+            justify-content: flex-end
+        }
+    </style>
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('bundles/app/js/workout.js') }}"></script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock %}

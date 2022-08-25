@@ -1,0 +1,127 @@
+heading.title: 'Her kan du bestille din kost og treningsplan'
+heading.subtitle: 'Vær oppmerksom på at når du kun bestiller en plan, vil coaching og oppfølging av utviklingen ikke følge med.'
+howItWorks.title: 'Slik fungerer det'
+howItWorks.steps.1.title: '1. Fyll ut spørreskjemaet'
+howItWorks.steps.1.description: 'Hvis du bare fyller ut skjemaet her på siden, vet jeg alt jeg trenger for å skreddersy planer som er laget spesielt for deg.'
+howItWorks.steps.2.title: '2. Jeg setter i gang'
+howItWorks.steps.2.description: 'Len deg tilbake og vent maks 48 timer på at jeg skal lage dine personlige planer basert på spørreskjemaet du har fylt ut.'
+howItWorks.steps.3.title: '3. Motta planene dine'
+howItWorks.steps.3.description: 'Når jeg er ferdig med planene dine, vil du motta de via e-post. Planen inneholder alt du trenger for å komme i gang.'
+plans.title: 'Velg produkt'
+plans.cards.title: '%title%'
+plans.cards.description: '%description%'
+plans.cards.general.action.default: 'Velg plan'
+plans.cards.general.action.active: Valgt
+plans.cards.general.label.popular: 'Mest populær'
+plans.cards.general.price: '%unit%%amount%'
+plans.cards.general.discount: 'Spar %unit%%amount%'
+gender.title: 'Velg kjønn'
+gender.options.male: Mann
+gender.options.female: Kvinne
+personInfo.title: 'Personlig informasjon'
+personInfo.inputs.name.label: Navn
+personInfo.inputs.age.label: Alder
+personInfo.inputs.phone.label: Telefonnummer
+personInfo.inputs.email.label: Epost
+goal.title: 'Ditt mål'
+goal.types.gainMuscle.title: 'Bygge muskler'
+goal.types.loseFat.title: 'Redusere fett'
+goal.intensity.title: 'Hvor fort?'
+goal.intensity.options.1: 'Jeg vil gå ned ca. 1 kilo i uken'
+goal.intensity.options.2: 'Jeg vil gå ned ca. 0.5 kilo i uken'
+goal.intensity.options.3: 'Jeg ønsker å holde den nåværende vekten'
+goal.intensity.options.4: 'Jeg vil gå opp ca. 0.5 kilo i uken'
+goal.intensity.options.5: 'Jeg vil gå opp ca. 1 kilo i uken'
+goal.extras.title: 'Ekstra fokus på noen kroppsdeler?'
+goal.extras.options.chest: Bryst
+goal.extras.options.shoulders: Skuldre
+goal.extras.options.back: Rygg
+goal.extras.options.legs: Ben
+goal.extras.options.arms: Armer
+goal.extras.options.calfs: Legger
+body.title: 'Din kropp'
+body.personParams.inputs.startWeight.label: 'Nåværende vekt'
+body.personParams.inputs.goalWeight.label: Målvekt
+body.personParams.inputs.height.label: 'Høyde (cm)'
+body.personParams.inputs.fat.label: Fettprosent
+body.measurement.title: 'Velg måleenheter'
+body.measurement.options.us: 'US (pund/tommer)'
+body.measurement.options.metric: 'Metrisk (kg/cm)'
+bodyPictures.title: 'Førbilder (valgfritt)'
+bodyPictures.description: '<b>NOTE: Bilder er valgfrie. Imidlertid er bilder viktige for meg i oppdateringer.</b><br/>Da det gjør at jeg kan gjøre de best mulige justeringene i planene dine. Ingen bilder vil bli delt offentlig på sosiale medier uten samtykke!'
+bodyPictures.options.front: Foran
+bodyPictures.options.side: Side
+bodyPictures.options.back: Bak
+bodyPictures.actions.addPhoto: 'Legg til bilde'
+activity.title: Aktivitetsnivå
+activity.intensity.title: 'Sport og fritid'
+activity.intensity.options.1: 'Jeg gjør ingen fysiske aktiviteter'
+activity.intensity.options.2: 'Jeg er ikke veldig aktiv og trener 2-3 dager i uken'
+activity.intensity.options.3: 'Jeg har et moderat aktivitetsnivå og trener 3-4 ganger i uken'
+activity.intensity.options.4: 'Jeg er ganske aktiv og trener 5-6 ganger i uken'
+activity.intensity.options.5: 'Jeg har en fysisk krevende jobb og trener de fleste dager'
+meal.title: Kostholdspreferanser
+meal.allergens.options.avoidLactose: Laktosefri
+meal.allergens.options.avoidGluten: Glutenfri
+meal.allergens.options.avoidNuts: 'Ingen nøtter'
+meal.allergens.options.avoidEggs: 'Ingen egg'
+meal.allergens.options.avoidShellfish: 'Ingen Skalldyr'
+meal.allergens.options.avoidFish: 'Ingen Fisk'
+meal.allergens.options.avoidPig: 'Ingen Svin'
+meal.allergens.options.isVegetarian: 'Jeg er vegetarianer'
+meal.allergens.options.isVegan: 'Jeg er veganer'
+meal.allergens.options.isPescetarian: 'Jeg er pesketarianer'
+meal.count.title: 'Velg antall måltider'
+meal.count.options.3: '3 om dagen'
+meal.count.options.4: '4 om dagen'
+meal.count.options.5: '5 om dagen'
+meal.count.options.6: '6 om dagen'
+meal.exclusion.title: 'Utelat andre ingredienser'
+meal.exclusion.input.label: 'Velg ingredienser'
+meal.exclusion.input.placeholder: Søk
+meal.exclusion.input.selectAll: 'Velg alle'
+meal.budget.title: Matbudsjett
+meal.budget.options.1: 'Billigst mulig'
+meal.budget.options.2: 'Ikke relevant'
+meal.budget.clarifications.prefix: 'Billigst mulig'
+meal.budget.clarifications.suffix: 'Ikke relevant'
+meal.cookingTime.title: 'Tid til matlaging'
+meal.cookingTime.options.1: 'Raskt og enkelt'
+meal.cookingTime.options.2: 'Ikke relevant'
+meal.cookingTime.clarifications.prefix: 'Raskt og enkelt'
+meal.cookingTime.clarifications.suffix: 'Ikke relevant'
+meal.comment.title: 'Andre kommentarer for ernæring og preferanser?'
+meal.comment.input.label: 'Andre kommentarer?'
+meal.comment.description: 'Når foretrekker du å spise, etc.'
+workout.title: 'Treningspreferanser og erfaring'
+workout.intensity.title: 'Hvor mange ganger per uke kan du trene?'
+workout.intensity.options.general: '%value% ganger'
+workout.experience.title: 'Hvor mye erfaring har du med styrketrening?'
+workout.experience.options.1: 'Jeg er helt uerfaren'
+workout.experience.options.2: 'Jeg har litt erfaring'
+workout.experience.options.3: 'Jeg har trent en stund og kjenner til noen øvelser'
+workout.experience.options.4: 'Jeg har ganske bra med erfaring og kjenner til de fleste øvelser'
+workout.experience.options.5: 'Jeg har trent i mange år og er kjent med alle øvelsene'
+workout.place.title: 'Hvor mye erfaring har du med styrketrening?'
+workout.place.options.1: 'På treningssenteret'
+workout.place.options.2: Hjemmetrening
+workout.place.options.3: Utendørs
+workout.comment.title: 'Andre kommentarer for treningspreferanser?'
+workout.comment.label: 'Andre kommentarer?'
+workout.comment.description: 'Når foretrekker du å trene, etc.'
+additionalInfo.title: 'Skader, sykdommer og andre hensyn'
+additionalInfo.injuries.title: 'Noen skader? Vennligst fortell meg om det'
+additionalInfo.injuries.options.knee: Kne
+additionalInfo.injuries.options.shoulders: Skuldre
+additionalInfo.injuries.options.albow: Albue
+additionalInfo.injuries.options.wrist: Håndledd
+additionalInfo.injuries.options.back: Rygg
+additionalInfo.injuries.options.lowerBack: Korsryggen
+additionalInfo.injuries.options.abdominals: Mageemuskler
+additionalInfo.injuries.options.other: Annet
+additionalInfo.comment.title: 'Andre kommentarer?'
+additionalInfo.comment.label: 'Si ifra'
+confirmation.rules.label: 'Jeg bekrefter at jeg ikke har hatt noen spiseforstyrrelser'
+confirmation.terms.label: 'Jeg godtar'
+confirmation.terms.link: brukervilkårene
+confirmation.submit.text: 'Gå til kassen'

@@ -1,0 +1,23 @@
+<p>These terms and conditions apply to %company-name% ("Service Provider") and the Service Providers website, mobile apps, or other online services.</p>
+<p>1. Payment and delivery<br/>
+The Service Provider accepts the following payment methods as a minimum: Visa and MasterCard. You will not be charged any fees that affect the price offered through the Service Provider.</p>
+<p>The amount is deducted upon checkout and monthly payments can occur, if you sign up for monthly programs designed by the Service Provider.</p>
+<p>The Service Provider will never be able to withdraw a larger amount than you have approved at the time of purchase.</p>
+<p>Prices are quoted in Danish kroner, Dollars ($) or in EURO incl. VAT.</p>
+<p>2. Right of withdrawal <br/>
+By accepting 'terms and conditions' you agree that online training courses, workout plans and diet plans are tailored specifically according to your needs and objectives, why these are subject to the ‘exception clause 18’ of the Danish Consumer Agreement Act. 2, No. 3.</p>
+<p>Thus, there is no right of withdrawal after your training plan, diet plan or training course has been delivered. This also applies if you sign up for monthly programs then you accept to pay a periods of the plan given to you from the Service Provider.</p>
+<p>3. Data and Privacy<br/>
+The Service Provider makes a registration of your personal information for the purpose of providing the most customized service to you.</p>
+<p>In order to be able to make a purchase at the Service Provider and its website, mobile apps, or other online service, you must provide at least: Name, Email Address, Sex, Height, Information about your current body-shape and diet preferences. This data is secured and processed through a third party provider, “Zenfit”, together with information about the services you have purchased from the Service Provider as a maximum of 5 years of the current financial year in which the information relates, cf. section 10 of the Danish Bookkeeping Act. Hereafter the information is deleted. The Service Provider does not register any personal information such as personal identification numbers, any medical documents or the like.</p>
+<p>The Service Provider's ‘third party provider’ Zenfit ApS may use links to other Internet sites and / or use other online providers. As the Service Provider has no control over such sites and resources and is not responsible or responsible for the availability, content, advertisements, products, services or other materials accessible from such sites or resources. Note that these third party services may have their own terms and conditions.</p>
+<p>Information is not sold by the Service Provider to other third party service providers, unless this happens in connection with a restructuring or a full or partial sale of the Service Provider. In this case information will only be diclosed accordingly the Danish Data Protection Act.</p>
+<p>As a customer, you have the opportunity to get any data the Service Provider's registers about you 10 working days after notice. You may object to a any registration of data in accordance with the rules of the Personal Data Protection Act. An inquiry of such should be addressed to the Service Provider by e-mail.</p>
+<p>The Service Provider is responsible for your data and has access to the information registered about you at any time.</p>
+<p>If the Service Provider wishes to use the data provided and made available by you for anything other than providing direct service to you, this must have your absolute acceptance.</p>
+<p>4. Cookies<br/>
+The Service Provider uses cookies from Google Analytics. Google Analytic is persistent cookies and is used to analyze website statistics and user behavior. Google Analytics does not collect personal information. You can learn about Google Analytics cookies at: http://code.google.com/intl/da/apis/analytics/docs/concepts/gaConceptsCookies.html http://www.facebook.com/help/cookies.</p>
+<p>5. Age<br/>
+If you are under 18 years of age and accept these terms and conditions, your Service Provider encourage your parents and/or guardian to participate in and advise you on your use of online activities. The Service Provider encourages children to have their parents and /or a guardian's permission before publishing information to an online media such as the one of the Service Provider.</p>
+<p>6. Law and jurisdiction<br/>
+Purchase of services through the Service Provider and its website, mobile apps, or other online services are subject to Danish Law. Any dispute will be settled by the ordinary Danish courts.</p>

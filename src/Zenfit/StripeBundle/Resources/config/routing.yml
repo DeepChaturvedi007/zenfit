@@ -1,0 +1,72 @@
+zenfit_stripe_trainer_initiate:
+    path:   /trainer/initiate
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SubscriptionController:initiateAction' }
+
+zenfit_stripe_trainer_confirm:
+    path:   /trainer/confirm
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SubscriptionController:confirmAction' }
+
+zenfit_stripe_trainer_confirmed:
+    path:   /trainer/confirmed
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SubscriptionController:confirmedAction' }
+
+zenfit_stripe_client_unsubscribe:
+    path: /client/connect/unsubscribe
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\ClientConnectController:unsubscribeClientAction' }
+
+zenfit_stripe_client_pause_subscription:
+    path: /client/connect/pause-subscription
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\ClientConnectController:pauseSubscriptionClientAction' }
+
+zenfit_stripe_client_refund:
+    path: /client/connect/refund-client
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\ClientConnectController:refundClientAction' }
+
+# start: Stripe Strong Customer Authentication (SCA)
+zenfit_stripe_checkout_initiate:
+    path: /checkout/initiate
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:initiateAction' }
+
+zenfit_stripe_checkout_confirm:
+    path: /checkout/confirm
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:confirmAction' }
+
+zenfit_stripe_checkout_klarna_charge:
+    path: /checkout/klarna-charge
+    defaults: { _controller: ZenfitStripeBundle:SCACheckout:klarnaCharge }
+
+zenfit_stripe_checkout_confirmed:
+    path: /checkout/confirmed
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:confirmedAction' }
+
+zenfit_stripe_checkout_success_bundle:
+    path:   /checkout/success/bundle/{bundle}/{client}/{payment}
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:successBundleAction' }
+
+zenfit_stripe_checkout_success:
+    path:   /checkout/success/{key}
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:successAction' }
+
+zenfit_stripe_bundle_checkout:
+    path:   /checkout/bundle/{bundle}/{client}
+    defaults: { client: "" }
+    controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:checkoutBundleAction'
+
+zenfit_stripe_checkout:
+    path:   /checkout/{key}
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\SCACheckoutController:checkoutAction' }
+
+# end: Stripe Strong Customer Authentication (SCA)
+
+zenfit_stripe_hook:
+    path:   /hook/handle
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\HookController:handleAction' }
+    methods: [POST]
+
+zenfit_stripe_connect_redirect:
+    path:   /connect/redirect
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\ConnectController:redirectAction' }
+
+zenfit_stripe_api_paymentslog:
+    path: /api/stripe/payments-log
+    defaults: { _controller: 'Zenfit\StripeBundle\Controller\ApiController:getClientPaymentsLogAction' }

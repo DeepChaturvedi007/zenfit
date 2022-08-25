@@ -1,0 +1,56 @@
+AppBundle\Entity\BundleLog:
+    type: entity
+    table: bundle_log
+    repositoryClass: AppBundle\Repository\BundleRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        datakey:
+            type: string
+            length: 255
+
+        redemptions:
+            type: integer
+            length: 10
+            options:
+                default: 0
+
+        purchaseDate:
+            type: datetime
+            column: purchase_date
+            nullable: true
+
+        contacted:
+            type: boolean
+            column: contacted
+            options:
+                default: 0
+
+        confirmed:
+            type: boolean
+            column: confirmed
+            options:
+                default: 0
+
+    manyToOne:
+        bundle:
+            targetEntity: AppBundle\Entity\Bundle
+            inversedBy: bundles
+            joinColumn:
+                onDelete: CASCADE
+                nullable: false
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: bundles
+            joinColumn:
+                onDelete: CASCADE
+                nullable: TRUE
+
+    lifecycleCallbacks: {  }

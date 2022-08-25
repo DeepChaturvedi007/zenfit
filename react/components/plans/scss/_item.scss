@@ -1,0 +1,334 @@
+.plan-item {
+  align-items: center;
+  //background-color: #f6f7f7;
+  //box-shadow: 0 1px 1px rgba(44, 64, 90, 0.2);
+  border: 1px solid #e6eaee;
+  border-radius: 2px;
+  display: flex;
+  padding: 5px 12px 5px 24px;
+  flex-wrap: wrap;
+  position: relative;
+  background-color: #f6f7f7;
+
+}
+
+
+.plan-item + .plan-superset {
+  margin-top: 5px;
+}
+
+.plan-item + .plans-box-item-list {
+  margin-top: 5px;
+}
+
+.plan-item + .plan-item {
+  margin-top: 5px;
+}
+
+.plan-item-thumb {
+  flex-shrink: 1;
+  margin-right: 15px;
+
+  a {
+    display: block;
+    position: relative;
+    outline: none;
+    width: 36px;
+    height: 36px;
+
+    img {
+      display: block;
+      border-radius: 4px;
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      position: relative;
+    }
+
+    span {
+      content: "";
+      display: block;
+      background: $play-button no-repeat center center / 30px;
+      border-radius: 4px;
+      width: 36px;
+      height: 36px;
+      top: 0;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    &:hover {
+      span {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.plans-no-touch {
+  .plan-item-delete {
+    //visibility: hidden;
+  }
+
+  .plan-item:hover {
+    .plan-item-delete {
+      visibility: visible;
+    }
+  }
+}
+
+.plan-item-title {
+  color: #354052;
+  font-weight: normal;
+  font-size: 12px;
+
+  &:active,
+  &:hover,
+  &:focus,
+  &:visited {
+    color: #354052;
+  }
+}
+
+.plan-item-details {
+  flex: 1;
+  margin-top: 2px;
+
+  .plan-item-details {
+    white-space: nowrap;
+  }
+}
+
+.plan-item-state-link {
+  color: #1A91EB;
+  font-size: 13px;
+  font-weight: 600;
+
+  &.is-active {
+    color: #FB4A4A;
+  }
+}
+
+.plan-item-state-link + .plan-item-state-link {
+  margin-left: 15px;
+}
+
+.plan-item-description {
+  display: block;
+  color: #7F8FA4;
+  font-size: 11px;
+}
+
+.plan-item-comment {
+  flex: 1 1 100%;
+  margin-top: 12px;
+
+  textarea {
+    border-radius: 2px;
+    resize: none;
+  }
+}
+
+
+.plan-item-inputs {
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+  justify-content: flex-end;
+
+
+  .form-group {
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+
+  .form-group + .form-group {
+    margin-left: 10px;
+  }
+
+  .form-control {
+    border-radius: 2px;
+    width: 55px;
+  }
+
+  label {
+    font-size: 12px;
+    color: #9fabbb;
+  }
+}
+
+.plan-item-delete {
+  background: none;
+  border-width: 0;
+  color: #7F8FA4;
+  font-weight: normal;
+  padding: 0;
+  margin: 0 0 0 18px;
+  width: 30px;
+  height: 30px;
+  outline: none;
+
+  .material-icons {
+    font-size: 18px;
+    line-height: 30px;
+  }
+}
+
+.plans[data-type="workout"] {
+  .plan-item-delete {
+    margin-top: 18px;
+  }
+}
+
+.plans[data-type="meal"] {
+  .plans-board {
+    .plan-item {
+      background-color: #F4F7F9;
+      border-color: #E6EAEE;
+      box-shadow: none;
+    }
+  }
+}
+
+.plans[data-type="meal"],
+.plans[data-type="recipe"] {
+  .plan-item-inputs {
+    .form-group:last-of-type {
+      text-align: right;
+      width: 80px;
+    }
+  }
+}
+
+.plan-meal-totals-drop,
+.plan-item-amount-drop {
+  z-index: 1000;
+  font-size: 12px;
+  &:hover {
+    cursor: pointer;
+  }
+  .drop-content {
+    background-color: white !important;
+    border-radius: 3px !important;
+    padding: 10px !important;
+
+    &:before {
+      border-width: 10px !important;
+    }
+  }
+}
+
+.plan-meal-totals-drop {
+  width: 224px;
+  max-width: 224px;
+
+  .drop-content {
+    &:before {
+      border-right-color: #fff !important;
+      left: -20px;
+      top: calc(50% - 10px);
+    }
+  }
+}
+
+.plan-item-amount-drop {
+  width: 380px;
+  max-width: 380px;
+
+  .drop-content {
+    &:before {
+      border-bottom-color: #fff !important;
+    }
+  }
+}
+
+a.plan-item-amount-drop {
+  outline: none;
+}
+
+.plan-meal-totals-chart {
+  width: 150px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.plan-item-amount-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  label,
+  > div {
+    margin-right: 10px;
+  }
+
+  label {
+    color: #364053;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+
+  input {
+    margin: 0;
+  }
+
+  input[type="number"] {
+    width: 70px;
+    margin-right: 10px;
+    -webkit-appearance: none;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.plan-item-amount-total {
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+
+  &.is-visible {
+    visibility: visible;
+  }
+
+  var {
+    font-style: normal;
+  }
+}
+
+.plan-item-amount-actions {
+  display: flex;
+  align-items: center;
+
+  div {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+@media (max-width: 1432px) {
+  .plans[data-type="workout"] .plan-item {
+    padding-right: 50px;
+  }
+
+  .plan-item-inputs {
+    padding-top: 10px;
+  }
+
+  .plans[data-type="workout"] .plan-item-delete {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    margin-top: 13px;
+  }
+}
+
+.plan-item--youtube {
+  cursor: inherit;
+  padding-left: 12px;
+}

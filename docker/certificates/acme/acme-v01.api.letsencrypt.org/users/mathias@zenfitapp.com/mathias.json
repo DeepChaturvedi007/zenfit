@@ -1,0 +1,22 @@
+{
+	"Email": "mathias@zenfitapp.com",
+	"Registration": {
+		"body": {
+			"resource": "reg",
+			"id": 17479375,
+			"key": {
+				"kty": "EC",
+				"crv": "P-384",
+				"x": "UiBeUuQOhutPhdk8awXgrcKg7pjWro5px6Uc2JL8db65BzfGeTH0y_mQX79DKds2",
+				"y": "LnoNaqKOaQZMgGufmcH9B_-QMIijACQjCtI5uIEMHkPu_UgFpsd_-JdKz7K-BL_9"
+			},
+			"contact": [
+				"mailto:mathias@zenfitapp.com"
+			],
+			"agreement": "https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf"
+		},
+		"uri": "https://acme-v01.api.letsencrypt.org/acme/reg/17479375",
+		"new_authzr_uri": "https://acme-v01.api.letsencrypt.org/acme/new-authz",
+		"terms_of_service": "https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf"
+	}
+}

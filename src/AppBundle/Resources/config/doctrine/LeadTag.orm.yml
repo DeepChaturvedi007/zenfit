@@ -1,0 +1,24 @@
+AppBundle\Entity\LeadTag:
+    type: entity
+    table: lead_tags
+    repositoryClass: AppBundle\Repository\LeadTagRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+
+    manyToOne:
+        lead:
+            targetEntity: AppBundle\Entity\Lead
+            inversedBy: tags
+            joinColumn:
+                nullable: false
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

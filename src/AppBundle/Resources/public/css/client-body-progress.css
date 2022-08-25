@@ -1,0 +1,280 @@
+.progress-alert {
+    min-height: 77px;
+    border-radius: 6px;
+    background-color: #d9eef7;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+}
+
+.progress-alert .close {
+    position: absolute;
+    top: 6px;
+    right: 22px;
+    font-size: 14px;
+}
+
+.progress-alert .left-side {
+    font-size: 14px;
+    color: #306f8f;
+    flex:1;
+}
+
+.progress-alert .right-side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 25px;
+}
+
+.progress-item {
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+
+}
+
+.progress-item p {
+    font-size: 13px;
+    line-height:13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #2c405a;
+}
+.progress-item .value {
+    font-size: 28px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.71;
+    letter-spacing: normal;
+    text-align: left;
+    color: #2c405a;
+    display: inline-block;
+    margin-top: 10px;
+    margin-right: 8px;
+}
+.progress-item .info {
+    object-fit: contain;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.23;
+    letter-spacing: normal;
+    text-align: left;
+    color: #7f8fa4;
+
+}
+@media (max-width: 1150px) and (min-width: 992px ){
+    .progress-item span {
+        width: 100%;
+    }
+    .progress-item .value {
+       margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 1550px) {
+    .progress-item .info {
+        display: block;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 992px ) {
+    .progress-item .info {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 767px) {
+    .progress-alert .left-side {
+        flex:1;
+    }
+
+    .progress-alert .right-side {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-evenly;
+        min-height: 25px;
+        flex:1;
+        flex-direction: column-reverse;
+    }
+    .feedback-given {
+        margin-right: 0px !important;
+        font-size: 12px !important;
+        text-align: right;
+        position:relative;
+        top: 5px;
+    }
+
+    .weekInformation .current-week {
+        margin-left: 15px;
+    }
+}
+
+.give-feedback {
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-right: 10px;
+}
+
+.feedback-given {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #2895f1;
+}
+
+#giveFeedback .editable {
+    min-height: 200px;
+    background-color: #fff;
+    border: 1px solid #CCC;
+    padding: 10px;
+    border-radius: 3px;
+    outline-style:none;
+}
+
+.weekInformation {
+    padding: 15px 0px;
+}
+
+.weekInformation .current-week {
+    font-size: 28px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.4px;
+    color: #2c405a;
+}
+
+.weekInformation .remaining {
+    opacity: 0.5;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.46;
+    letter-spacing: normal;
+    margin: 0px 10px;
+    color: #3f536e;
+}
+
+.new-btn {
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: solid 1px #dfe3e9;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.1px;
+    text-align: center;
+    color: #354052 !important;
+    text-transform: uppercase;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.weekInformation a {
+    margin-top: -7px;
+}
+
+@media (max-width: 468px) {
+    .weekInformation a {
+        /*margin-top: 0px;*/
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+}
+.feedback-message {
+    word-wrap: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#uploadImageForm .modal-body button {
+    padding:7px 12px;
+    font-weight: initial;
+}
+
+#uploadImageForm label{
+    font-weight: initial;
+}
+
+#front-picture, #back-picture, #side-picture {
+    background-color: #fff;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    box-shadow: none;
+    border: solid 1px #dcdddd;
+}
+
+
+.progressBar {
+    margin-top:20px;
+}
+
+.progressBar .row{
+    display:flex;
+    align-items:center;
+}
+
+.progress-bar {
+    background-color: #2895f1;
+}
+
+.progressBar .percentage {
+    font-size: 28px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.71;
+    letter-spacing: normal;
+    color: #2c405a;
+}
+.goal-description {
+    display: flex;
+}
+
+.goal-description > div:first-child {
+    display: flex;
+    flex: 1;
+    padding-right: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.goal-description > div:last-child {
+    color: #7f8fa4;
+}
+
+@media (max-width: 468px) {
+    .goal-description {
+        flex-direction: column;
+    }
+
+    .goal-description > div:first-child {
+        padding-right: 0px;
+        padding-bottom: 10px;
+    }
+    .goal-description > div:last-child {
+        font-size:12px;
+    }
+}
+.muscle-graph {
+    height: 160px;
+}
+.muscle-graph p:first-child {
+    font-size: 28px;
+    font-weight: bold;
+    padding-top: 35px;
+    margin-bottom: 0;
+    color: #000;
+}
+.muscle-graph p:last-child {
+    font-size: 18px;
+    color: #535353
+}

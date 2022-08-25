@@ -1,0 +1,268 @@
+<div class="modal inmodal in" id="progressPicturesModal" tabindex="-1" aria-labelledby="myModalLabel" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Progress Pictures</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <fieldset class="client-photos-uploader">
+                    <label for="clientPhotoFile">
+                        <span>Upload a new picture</span>
+                    </label>
+                    <input type="file" name="picture" id="clientPhotoFile" accept="image/png, image/jpeg">
+                </fieldset>
+
+                <div class="client-photos-gallery"></div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button class="btn btn-default btn-upper action-cancel" type="button">Cancel</button>
+                    <button class="btn btn-success btn-upper action-submit" type="button">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  (function ($) {
+    var IS_SELECTED = 'is-selected';
+    var IS_CLICKABLE = 'is-clickable';
+    var IS_EMPTY = 'is-empty';
+    var IS_LOADING = 'is-loading';
+
+    var $modal = $('#progressPicturesModal');
+    var state = {};
+
+    function galleryPicture(picture) {
+      var className = IS_CLICKABLE;
+
+      if (picture.id === state.picture) {
+        className += ' ' + IS_SELECTED;
+      }
+
+      return '<figure class="' + className + '" data-id="' + picture.id + '" data-uri="' + picture.uri + '">' +
+        '<img src="' + picture.uri + '" alt="' + picture.name + '">' +
+        '</figure>';
+    }
+
+    function render(pictures) {
+      var gallery = pictures.map(galleryPicture);
+
+      $modal.find('.client-photos-gallery').html(gallery);
+    }
+
+    function inputFileName(inputFile, initial) {
+      var label = initial;
+
+      if (inputFile.files && inputFile.files.length === 1) {
+        label = inputFile.value.split('\\').pop();
+      } else if (inputFile.hasAttribute('multiple') && inputFile.files && inputFile.files.length > 1) {
+        label = inputFile.input.files.length + ' files';
+      }
+
+      return label;
+    }
+
+    function uploadFile(inputFile) {
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('POST', '/react-api/v2/photos');
+        xhr.setRequestHeader('Authorization', state.client);
+
+        // xhr.upload.onprogress = function (event) {
+        //   var progress = Math.floor((event.loaded * 100) / event.total);
+        //   console.log('client.photos.upload:', 'progress(' + progress + '%)', event);
+        // };
+
+        xhr.onload = function () {
+          var data;
+
+          if (xhr.readyState === 4 && ((xhr.status > 200 && xhr.status < 400) || xhr.status === 0)) {
+            try {
+              data = JSON.parse(xhr.responseText);
+            } catch (e) {
+            }
+          }
+
+          resolve({data: data, xhr: xhr});
+        };
+
+        xhr.onerror = function () {
+          reject({xhr: xhr});
+        };
+
+        if (xhr.readyState === 4 && ((xhr.status > 200 && xhr.status < 400) || xhr.status === 0)) {
+          console.log('client.photos.upload:', xhr.responseText);
+        }
+
+        var formData = new FormData();
+
+        formData.append('picture', inputFile.files[0]);
+        xhr.send(formData);
+
+        this.xhr = xhr;
+      });
+    }
+
+    $modal.on('client.photos.updated', function (event, picture) {
+      var $parent = state.$relatedTarget.parent();
+      var $img = $parent.children('img');
+      var $input = $parent.children('[type="hidden"]');
+
+      $input.val(state.picture = picture.id);
+
+      if (picture.uri) {
+        var newImg = '<img src="' + picture.uri + '" alt="" />';
+
+        if ($img.length) {
+          $img.replaceWith(newImg);
+        } else {
+          $input.after(newImg);
+        }
+
+        $parent.removeClass(IS_EMPTY);
+        state.$relatedTarget.attr('data-picture', picture.id);
+      } else {
+        $img.remove();
+        $parent.addClass(IS_EMPTY);
+        state.$relatedTarget.removeAttr('data-picture');
+      }
+    });
+
+    $modal.on('client.photos.uploaded', function (event) {
+
+    });
+
+    $modal.on('client.photos.fetch', function (event, refresh) {
+      var $gallery = $modal.find('.client-photos-gallery');
+      var $pictures = $gallery.children();
+
+      if ($pictures.length && !refresh) {
+        $pictures.each(function () {
+          $(this).toggleClass(IS_SELECTED, state.picture === parseInt(this.getAttribute('data-id'), 10));
+        });
+        return;
+      }
+
+      $gallery.addClass(IS_LOADING);
+
+      $.get('/react-api/v2/photos', {
+        client: state.client,
+      }).done(function (data) {
+        console.log('progress.pictures.fetch[done]', data);
+        render(data);
+      }).fail(function () {
+
+      }).always(function () {
+        $gallery.removeClass(IS_LOADING);
+      });
+
+      state.refresh = false;
+    });
+
+    $modal.on('change', '[type="file"]', function (event) {
+      var target = event.target;
+      var $parent = $(this).parent();
+      var $label = $parent.find('label>span');
+      var initialLabel = $label.text();
+      var currentLabel = inputFileName(target, initialLabel);
+
+      $label.text(currentLabel);
+
+      if (!target.files || !target.files.length) {
+        return;
+      }
+
+      $parent.addClass(IS_LOADING);
+      target.disabled = true;
+
+      var request = uploadFile(target);
+
+      request
+        .then(function (response) {
+          if (response.data) {
+            var picture = response.data[0];
+
+            $modal
+              .find('.client-photos-gallery')
+              .prepend(galleryPicture(picture))
+              .find('[data-id="' + picture.id + '"]')
+              .trigger('click');
+
+            $modal.trigger('client.photos.uploaded', [picture]);
+          }
+        })
+        .catch(function (response) {
+          $modal.trigger('client.photos.error', [response]);
+        })
+        .then(function () {
+          $parent.removeClass(IS_LOADING);
+
+          target.disabled = false;
+          target.value = '';
+
+          $label.text(initialLabel);
+        });
+    });
+
+    $modal.on('show.bs.modal', function (event) {
+      var $button = $(event.relatedTarget);
+      var client = parseInt($button.attr('data-client'), 10);
+
+      state.refresh = client !== state.client;
+      state.client = client;
+      state.picture = parseInt($button.attr('data-picture'), 10);
+      state.$relatedTarget = $button;
+    });
+
+    $modal.on('shown.bs.modal', function () {
+      $modal.trigger('client.photos.fetch', [state.refresh]);
+    });
+
+    $modal.on('click', '.is-clickable', function (event) {
+      event.preventDefault();
+
+      var $el = $(this);
+      var isSelected = $el.hasClass(IS_SELECTED);
+
+      if (!isSelected) {
+        $el.siblings('.' + IS_SELECTED).removeClass(IS_SELECTED);
+      }
+
+      $el.toggleClass(IS_SELECTED, !isSelected);
+    });
+
+    $modal.on('click', '.action-cancel', function (event) {
+      event.preventDefault();
+
+      $modal
+        .find('[data-id="' + state.picture + '"]')
+        .addClass(IS_SELECTED)
+        .siblings('.' + IS_SELECTED)
+        .removeClass(IS_SELECTED);
+
+      $modal.modal('hide');
+    });
+
+    $modal.on('click', '.action-submit', function (event) {
+      var data = $modal.find('.' + IS_SELECTED).data() || {};
+
+      if (data.id !== state.picture) {
+        $modal.trigger('client.photos.updated', [data]);
+      }
+
+      $modal.modal('hide');
+    });
+
+    $(document).on('click', '[data-toggle="client.photos"]', function (event) {
+      event.preventDefault();
+      $modal.modal('show', $(this));
+    });
+  })(jQuery);
+</script>

@@ -1,0 +1,36 @@
+AppBundle\Entity\MasterMealPlanMeta:
+    type: entity
+    table: master_meal_plan_meta
+    repositoryClass: AppBundle\Repository\MasterMealPlanMetaRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        type:
+            type: integer
+            length: 1
+            nullable: true
+
+        duration:
+            type: integer
+            length: 2
+
+    oneToOne:
+        plan:
+            targetEntity: AppBundle\Entity\MasterMealPlan
+            inversedBy: masterMealPlanMeta
+            joinColumn:
+                name: plan_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE

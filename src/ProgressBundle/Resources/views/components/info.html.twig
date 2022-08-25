@@ -1,0 +1,11 @@
+<div class="row weekInformation">
+    <div class="col-lg-12 week-details">
+        {% if currentWeek and weeks %}
+          <span class="current-week">Week {{ currentWeek }}</span>
+          <span class="remaining">out of {{ weeks }} weeks</span>
+        {% else %}
+          <span class="current-week">Body progress</span>
+          <span class="remaining">No end date chosen</span>
+        {% endif %}
+    </div>
+</div>

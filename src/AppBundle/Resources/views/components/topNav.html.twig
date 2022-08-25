@@ -1,0 +1,50 @@
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <img style="width:50px;height:auto;margin:2px;" src="{{ asset('bundles/app/logo.png') }}" />
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                {% if app.request.attributes.get('_route') == 'clients' %}
+                    <li class="active">
+                        <a aria-expanded="false" role="button" href="{{ path('clients') }}"><i class="fa fa-users"></i> My Clients</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('templateOverview') }}" role="button"><i class="fa fa-tasks"></i> My Templates</a>
+                    </li>
+                {% elseif app.request.attributes.get('_route') == 'user_exercises' %}
+                    <li>
+                        <a aria-expanded="false" role="button" href="{{ path('clients') }}"><i class="fa fa-users"></i> My Clients</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ path('user_exercises') }}" role="button"><i class="fa fa-bolt"></i> My exercises</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('templateOverview') }}" role="button"><i class="fa fa-tasks"></i> My Templates</a>
+                    </li>
+                {% elseif app.request.attributes.get('_route') == 'templateOverview' %}
+                    <li>
+                        <a aria-expanded="false" role="button" href="{{ path('clients') }}"><i class="fa fa-users"></i> My Clients</a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ path('templateOverview') }}" role="button"><i class="fa fa-tasks"></i> My Templates</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a aria-expanded="false" role="button" href="{{ path('clients') }}"><i class="fa fa-users"></i> My Clients</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('templateOverview') }}" role="button"><i class="fa fa-tasks"></i> My Templates</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <i class="fa fa-sign-out"></i> Log out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,73 @@
+AppBundle\Entity\MealPlanProduct:
+    type: entity
+    table: meal_plans_products
+    repositoryClass: AppBundle\Repository\MealPlanProductRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    indexes:
+        plan_idx:
+            columns: [ meal_plan_id ]
+        product_idx:
+            columns: [ meal_product_id ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        totalWeight:
+            type: integer
+            length: 5
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+
+        weightUnits:
+            type: float
+            options:
+                default: 0
+
+        order:
+            column: '`order`'
+            type: smallint
+            length: 5
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+
+    manyToOne:
+        plan:
+            targetEntity: AppBundle\Entity\MealPlan
+            inversedBy: products
+            joinColumn:
+                name: meal_plan_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        product:
+            targetEntity: AppBundle\Entity\MealProduct
+            joinColumn:
+                name: meal_product_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        weight:
+            targetEntity: AppBundle\Entity\MealProductWeight
+            joinColumn:
+                name: product_weight_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE

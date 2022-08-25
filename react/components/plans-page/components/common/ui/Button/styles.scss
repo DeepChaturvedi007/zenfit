@@ -1,0 +1,39 @@
+.plans-btn {
+  &.btn {
+    padding: 5px;
+    border-radius: 3px;
+    font-weight: normal;
+    font-size: inherit;
+  }
+  &.btn,
+  &.btn:active,
+  &.btn:hover,
+  &.btn:focus {
+    outline: none;
+    background: none;
+  }
+
+  &.btn-success {
+    background-color: #e2f6f0;
+    border-color: #e2f6f0;
+    color: #16da95;
+  }
+
+  &.btn-primary {
+    background-color: #e6f2fc;
+    border-color: #e6f2fc;
+    color: #47c1ff;
+  }
+
+  &.btn-warning {
+    background-color: #fff9ea;
+    border-color: #fff9ea;
+    color: #ffca3f;
+  }
+
+  &.btn-danger {
+    background-color: #ffeded;
+    border-color: #ffeded;
+    color: #ff6c72;
+  }
+}

@@ -1,0 +1,123 @@
+imports:
+    - { resource: parameters.yaml }
+    - { resource: security.yaml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    translator:
+        fallbacks: "%locale%"
+        logging: true
+        paths:
+            - '%kernel.project_dir%/translations'
+    secret:          "%secret%"
+    router:
+        utf8: true
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    serializer:      { enable_annotations: true }
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id: ~
+        save_path:   "%kernel.project_dir%/var/sessions/%kernel.environment%"
+        cookie_lifetime: 604800
+        gc_maxlifetime: 604800
+    fragments:       ~
+    http_method_override: true
+    php_errors:
+        log: true
+    assets:
+        version: "%assets_version%"
+    mailer:
+        dsn: '%mailer_dsn%'
+    http_client:
+        scoped_clients:
+            onesignal.client:
+                scope: 'https:\/\/onesignal\.com'
+                timeout: 3
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    cache:            false
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        container:    "@service_container"
+        account:      '@AppBundle\Services\AccountService'
+        translations: '@AppBundle\Services\TranslationService'
+        iphone_app:   "%iphone_app%"
+        stripe_connect:  "%stripe_connect%"
+        android_app:  "%android_app%"
+        webDir:       "%kernel.project_dir%/web"
+        src_dir:      "%kernel.project_dir%/src"
+        pusher:       "%pusher%"
+        userRepository:  '@AppBundle\Repository\UserRepository'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%env(ZF_DATABASE_HOST)%"
+        port:     "%env(ZF_DATABASE_PORT)%"
+        dbname:   "%env(ZF_DATABASE_NAME)%"
+        user:     "%env(ZF_DATABASE_USER)%"
+        password: "%env(ZF_DATABASE_PASSWORD)%"
+        charset:  utf8mb4
+        server_version: 8.0
+        # Options for SSL connection
+        #options: %ssl_options%
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                auto_mapping: true
+                dql:
+                    string_functions:
+                        replace:        AppBundle\DQL\ReplaceFunction #TODO use class from DoctrineExtensions
+                        cast:           AppBundle\DQL\CastFunction #TODO use class from DoctrineExtensions
+                        FROM_UNIXTIME:  DoctrineExtensions\Query\Mysql\FromUnixtime
+                        DATE_FORMAT:    DoctrineExtensions\Query\Mysql\DateFormat
+                        DATEDIFF:    DoctrineExtensions\Query\Mysql\DateDiff
+                        ROUND:    DoctrineExtensions\Query\Mysql\Round
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    registration:
+       form:
+           type: Zenfit\UserBundle\Form\RegistrationType
+    from_email:
+       address: account@zenfitapp.com
+       sender_name: Zenfit
+
+aws:
+    version: "2012-11-05"
+    region: eu-central-1
+    credentials:
+        key: "%env(AWS_ACCESS_KEY_ID)%"
+        secret: "%env(AWS_SECRET_ACCESS_KEY)%"
+
+# Nelmio CORS Configuration
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
+        allow_headers: ['*']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        max_age: 3600
+        hosts: []
+        origin_regex: false
+
+doctrine_migrations:
+    migrations_paths:
+        'DoctrineMigrations': '%kernel.project_dir%/migrations'

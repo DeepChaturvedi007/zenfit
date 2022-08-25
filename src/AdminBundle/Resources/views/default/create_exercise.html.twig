@@ -1,0 +1,90 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+
+    {% include '@App/components/sideNav.html.twig' %}
+
+    <div id="page-wrapper" class="gray-bg">
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Create exercise</h2>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <form class="form-horizontal" method="post" action="{{ path('save_exercise') }}">
+                <div class="form-group"><label class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Video</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="video" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Exercise type</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="exerciseType">
+                            {% for type in exerciseTypes %}
+                                <option value="{{ type.id }}">{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Muscle Group</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="muscleGroup">
+                            {% for mg in muscleGroups %}
+                                <option value="{{ mg.id }}">{{ mg.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Equipment</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="equipment">
+                            {% for e in equipments %}
+                                <option value="{{ e.id }}">{{ e.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Type</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="type">
+                            {% for type in types %}
+                                <option value="{{ type.id }}">{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Execution</label>
+                    <div class="col-lg-10">
+                        <textarea name="execution" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% include '@App/components/footer.html.twig' %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function() {});
+    </script>
+{% endblock script %}

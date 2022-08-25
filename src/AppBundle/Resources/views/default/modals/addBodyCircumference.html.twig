@@ -1,0 +1,80 @@
+<div class="modal inmodal fade sm" id="addBodyCircum" tabindex="-1" role="dialog" aria-hidden="true" data-title-suffix="body circumference">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Add body circumference</h4>
+            </div>
+
+            <form action="{{ path('addRecord',{'client':client.id}) }}"
+                  method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" name="id" class="id" />
+                    <div class="form-group" id="data_2">
+                        <label for="bc-date" class="control-label">Date</label>
+                        <div class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="text" name="date" id="bc-date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-chest" class="control-label">Chest</label>
+                        <input type="text" name="chest" id="bc-chest" class="form-control" placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-waist" class="control-label">Waist</label>
+                        <input type="text" name="waist" id="bc-waist" class="form-control" placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-hips" class="control-label">Hips</label>
+                        <input type="text" name="hips" id="bc-hips" class="form-control" placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-glutes" class="control-label">Glutes</label>
+                        <input type="text" name="glutes" id="bc-glutes" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-left-arm" class="control-label">Left arm</label>
+                        <input type="text" name="left_arm" id="bc-left-arm" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-right-arm" class="control-label">Right arm</label>
+                        <input type="text" name="right_arm" id="bc-right-arm" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-left-thigh" class="control-label">Left thigh</label>
+                        <input type="text" name="left_thigh" id="bc-left-thigh" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-right-thigh" class="control-label">Right thigh</label>
+                        <input type="text" name="right_thigh" id="bc-right-thigh" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-left-calf" class="control-label">Left calf</label>
+                        <input type="text" name="left_calf" id="bc-left-calf" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="bc-right-calf" class="control-label">Right calf</label>
+                        <input type="text" name="right_calf" id="bc-right-calf" class="form-control"
+                               placeholder="0.0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default btn-upper cancel" data-dismiss="modal" aria-label="Close">Cancel</button>
+                        <button type="submit" class="btn btn-success btn-upper send">Add Record</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

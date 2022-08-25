@@ -1,0 +1,112 @@
+{% extends '@App/base.html.twig' %}
+
+
+{% block content -%}
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Food Products' } %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="container-mobile m-n-p-x">
+                {% include '@App/components/emptyContainer.html.twig' with {
+                'title': 'Create New Food Product',
+                'text': "Add your own food items if we don't have them in our database.<br>The food items will only be visible to you.",
+                'image': asset('bundles/app/add-foot-product.png'),
+                'actions': '<a href="#" role="button" class="btn btn-success js-add-food-product">Create New Food Product</a>'
+                } %}
+
+                <div class="animated fadeInRight under-header" style="padding-top: 30px;">
+
+                    {% if products is not empty %}
+
+                        <div class="table-container">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            {% if not is_mobile() %}
+                                                <th>Brand Name</th>
+                                                <th>Protein pr 100g</th>
+                                                <th>Carbs pr 100g</th>
+                                                <th>Fat pr 100g</th>
+                                                <th>Calories pr 100g</th>
+                                            {% endif %}
+                                            <th style="text-align: right;" width="150">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product in products %}
+                                            <tr>
+                                                <td>{{ product.name }}</td>
+                                                {% if not is_mobile() %}
+                                                    <td>{{ product.brand }}</td>
+                                                    <td>{{ product.protein }}g</td>
+                                                    <td>{{ product.carbohydrates }}g</td>
+                                                    <td>{{ product.fat }}g</td>
+                                                    <td>{{ product.kcal }}kcal</td>
+                                                {% endif %}
+                                                <td class="text-right">
+                                                    <a href="#" data-id="{{ product.id }}" data-product='{{ product|json_encode|raw }}' role="button" class="btn btn-default btn-sm js-add-food-product">
+                                                        <span class="fa fa-pencil" aria-hidden="true"></span>
+                                                    </a>
+                                                    <a href="{{ path('deleteMealProduct',{ 'id': product.id }) }}" role="button" class="btn btn-danger btn-sm" onclick="shouldDelete(event)">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                    {% else %}
+                        <div class="text-center">
+                            <h2>You haven't created any food products yet</h2>
+                            <p class="mb-1">
+                                Create your own food items, in order to use them in your Meal Plans.<br>
+                            </p>
+                            <a href="#" role="button" class="btn btn-primary js-add-food-product">
+                                Create your First Food Product
+                            </a>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    {% include '@App/default/user/meal_products/editor.html.twig' %}
+
+    <script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+    <script>
+      window.shouldDelete = function (e) {
+        var href = e.currentTarget.href;
+        swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this food item!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false
+
+        }, function () {
+          window.location = href;
+        });
+        e.preventDefault();
+      }
+    </script>
+{% endblock %}

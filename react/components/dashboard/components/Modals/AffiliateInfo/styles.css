@@ -1,0 +1,41 @@
+#affiliate-terms .modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#affiliate-terms .modal-header {
+    border: none;
+}
+
+#affiliate-terms .modal-body p {
+    font-size: 14px;
+    color: #44444f;
+    margin: 15px 0;
+}
+
+#affiliate-terms .modal-body p strong {
+    color: #171725;
+    font-weight: 600;
+}
+
+#affiliate-terms .title {
+    font-size: 24px;
+}
+
+#affiliate-terms .author {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    color: #92929d;
+    margin-top: 25px;
+}
+
+#affiliate-terms .content {
+    padding: 0 35px;
+}
+
+#affiliate-terms .author-info-block span {
+    display: inline-block;
+    margin-left: 15px;
+    vertical-align: top;
+}

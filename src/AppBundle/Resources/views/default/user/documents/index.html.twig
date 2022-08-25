@@ -1,0 +1,185 @@
+{% extends '@App/base.html.twig' %}
+
+
+{% block content -%}
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Documents' } %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="container-mobile m-n-p-x">
+                {% include '@App/components/emptyContainer.html.twig' with {
+                    'title': 'Upload New Document',
+                    'text': "Upload introduction, surveys, documents etc. here<br>that you can assign to your clients!",
+                    'image': asset('bundles/app/documents.png'),
+                    'actions': '<a href="#" role="button" data-toggle="modal" data-target="#uploadDocument" data-action="' ~ path('uploadDocument') ~ '" data-type="new" class="btn btn-success">Upload New Document</a>'
+                } %}
+
+                <div class="animated fadeInRight under-header" style="padding-top: 30px;">
+                    {% if documents is not empty %}
+                        <div class="table-container">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        {% if not is_mobile() %}
+                                            <th>Comment</th>
+                                            <th>Assigned To</th>
+                                        {% endif %}
+                                        <th class="text-right" width="150">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for document in documents %}
+                                            <tr>
+                                                <td width="{{ is_mobile() ? '65%' : '30%' }}">
+                                                    <a href="{{ document.fileName }}">{{ document.name }}</a>
+                                                    {% if document.demo == 1 %}<span class="label label-success">EXAMPLE</span>{% endif %}
+                                                </td>
+                                                {% if not is_mobile() %}
+                                                    <td>{{ document.comment }}</td>
+                                                    <td>
+                                                        {% if document.isAssignedToAll %}
+                                                            <span class="label label-default assignment-tag">#all</span>
+                                                        {% else %}
+                                                            {% for assigmentTag in document.getAssignmentTags %}
+                                                                <span class="label label-inverse assignment-tag"><b>{{ assigmentTag.title }}</b></span>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                {% endif %}
+                                                <td class="text-right">
+                                                    <a class="btn btn-default btn-sm" href="{{ document.fileName }}" download="{{ document.name }}">
+                                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a class="btn btn-default btn-sm"
+                                                       href="#"
+                                                       data-toggle="modal"
+                                                       data-type="edit"
+                                                       data-target="#uploadDocument"
+                                                       data-action="{{ path("uploadDocument") }}"
+                                                       data-document='{{ {
+                                                           'id': document.id,
+                                                           'name': document.name,
+                                                           'comment': document.comment,
+                                                           'assignTo': document.assignmentTags,
+                                                           'filename': document.filename
+                                                       }|json_encode }}'>
+                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                    </a>
+                                                    <a href="{{ path('deleteDocument',{'document':document.id}) }}" role="button" class="btn btn-danger btn-sm" onclick="shouldDelete(event)">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    {% endif %}
+
+                    {% if showCreateBox %}
+                    <div class="text-center">
+                        <h2>You haven't uploaded any documents yet</h2>
+                        <p class="mb-1">
+                            Add documents for your clients here. These docs can be assigned to your clients for them to view in their App.
+                        </p>
+                        <a href="#" role="button" data-toggle="modal" data-target="#uploadDocument" data-action="{{ path('uploadDocument') }}" data-type="new" class="btn btn-primary">
+                            Upload your First Document
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+    <style>
+        .assignment-tag {
+            display: inline-block;
+            margin-right: 2px;
+            margin-bottom: 2px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+    <style>
+        form.swal-extra-form {
+            margin: 20px auto;
+        }
+
+        form.swal-extra-form input {
+            width: initial;
+            height: initial;
+            border: initial;
+            display: initial;
+            margin: initial;
+            font-size: initial;
+            padding: initial;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    {% include '@App/default/user/documents/form.html.twig' %}
+
+<script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+<script>
+    window.shouldDelete = function (e) {
+        e.preventDefault();
+        var href = e.currentTarget.href;
+        const id = 'relative-element';
+        let removeEverywhere = false;
+        window.handleEverywhereChange = function (event) {
+            removeEverywhere = event.target.checked;
+        };
+        const onConfirm = () => {
+            $.ajax({
+                url: `${href}?everywhere=${removeEverywhere}`,
+                type: 'GET',
+                success: function(result) {
+                    location.reload();
+                }
+            });
+        };
+        swal({
+            title: "Are you sure?",
+            html: true,
+            text: `<span id="${id}">You will not be able to recover this document!.</span>`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, onConfirm);
+
+        const relativeEl = $(`#${id}`);
+        const onElementReady = function () {
+            const parent = relativeEl.parent();
+            if(!!parent.parent().find(`#${id}-wrapper`).length) {
+              $(`#${id}-wrapper`).remove();
+            }
+            parent.remove(`${id}-wrapper`);
+            const form = `
+                    <form id="${id}-wrapper" class="swal-extra-form">
+                        <input id="everywhere-checkbox" type="checkbox" name="everywhere" onchange="handleEverywhereChange(event)"/>
+                        &nbsp;
+                        <label for="everywhere-checkbox">
+                            Also remove from clients
+                        </label>
+                    </form>
+                `;
+            $(form).insertBefore(parent);
+            relativeEl.unbind('ready', onElementReady)
+          };
+          relativeEl.ready(onElementReady);
+        };
+    </script>
+{% endblock %}

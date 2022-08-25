@@ -1,0 +1,8 @@
+<div class="row">
+  <form action="{{ path('updateClientInfo',{'client':client.id}) }}" method="POST" id="clientInfoForm">
+    {% include '@App/components/clientFields/basicInfo.html.twig' with {'client': client} %}
+    {% include '@App/components/clientFields/otherInfo.html.twig' with {'client': client} %}
+  </form>
+</div>
+
+<script src="{{ asset('bundles/app/js/client-info.js') }}"></script>

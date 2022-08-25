@@ -1,0 +1,36 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+    {% include '@App/components/sideNav.html.twig' %}
+    {% include '@App/components/metabar.html.twig' with { 'title': 'Messages' } %}
+
+    <div id="page-wrapper" class="gray-bg page-wrapper-chat">
+
+        <div
+            data-user-id="{{ app.user.id }}"
+            data-assistant="{{ app.user.isAssistant }}"
+            id="chat-container"
+            style="margin-right: -15px;margin-left: -15px;"
+            class="exercise-wrapper no-client-nav">
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_css -%}
+    <link rel="stylesheet" href="{{ "chat.css"|webpack_asset }}">
+{% endblock %}
+{% block script %}
+    <script src="{{ "chat.js"|webpack_asset }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addNewClientModal').on('shown.bs.modal', function () {
+                $('.chat-board .modal-backdrop').removeAttr( 'style' );
+            })
+        });
+    </script>
+{% endblock script %}

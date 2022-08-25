@@ -1,0 +1,44 @@
+{% extends '@App/empty.html.twig' %}
+
+{% block content %}
+
+{% set userApp = client.user.userApp ? client.user.userApp : false %}
+{% set appName = userApp ? userApp.title : 'Zenfit' %}
+
+<div id="wrapper" class="checkout-success">
+    <div class="logo-block-success">
+        {% if companyLogo %}
+            <img width="110" src="{{ companyLogo | picture_filter('trainers') }}"/>
+        {% endif %}
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 checkout-container">
+
+            	<img width="50" height="50" data-placeholder="{{ asset('bundles/app/images/success-checkout-icon.svg') }}" src="{{ asset('bundles/app/images/success-checkout-icon.svg') }}"/>
+            	<h2>{% trans %} client.checkout.paymentSuccessfulTitle {% endtrans %}</h2>
+
+              <p>{% trans %} client.checkout.paymentSuccessfulDescription {% endtrans %}</p>
+
+              {% if activationUrl is defined and activationUrl is not null %}
+                {% if documents is defined %}
+                  <p>Thank you for your purchase - your plans will be ready within 1-2 days.</p>
+                {% endif %}
+                <p>{% trans with {'%app%': appName } %} client.checkout.paymentSuccessfulSubtitle {% endtrans %}</p>
+                <a style="margin-top:10px;" role="button" href="{{ activationUrl }}" class="btn btn-success">{% trans %} client.checkout.paymentSuccessfulButton {% endtrans %}</a>
+              {% endif %}
+
+              {% if documents is defined and documents is not empty %}
+                <br /><br />
+                <h3>{% trans %} client.checkout.paymentSuccessfulBundleSubtitle {% endtrans %}</h3>
+                {% for doc in documents %}
+                  <li style="font-size: 20px;"><a href="{{ doc.fileName }}">{{ doc.name }}</a></li>
+                {% endfor %}
+              {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

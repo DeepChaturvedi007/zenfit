@@ -1,0 +1,62 @@
+{% extends '@App/base.html.twig' %}
+
+{% set userSettings = client is defined ? client.user.userSettings : null %}
+
+{% block content -%}
+
+    <div id="wrapper" class="gray-bg">
+        <div class="page-container">
+            <div class="block-header">
+                {% for message in app.flashes('error') %}
+                    <p class="text-danger">{{ message }}</p>
+                {% endfor %}
+
+                {% for message in app.flashes('success') %}
+                    <p class="text-success" style="font-size: 18px; color: green">{{ message }}</p>
+                {% endfor %}
+
+                <img class="box-logo" src="{{ userSettings and userSettings.companyLogo ? userSettings.companyLogo : asset('bundles/app/images/zenfit-logo-dark.svg') }}">
+                <div class="box-text">
+                    <h4 class="box-title">Hi there!</h4>
+                    <p>Login to your client account to update your settings.</p>
+
+                    {% for message in app.flashes('error') %}
+                        <p class="text-danger">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="block-body">
+                <form class="form" id="login-form" method="POST" action="{{ path('clientSendLogin') }}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="ibox">
+                                <div class="ibox-content ibox-content-line m-p-x">
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputName2">Your e-mail</label>
+                                        <div class="form-group-in max-width">
+                                            <input type="email" name="email" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputName2">Your password</label>
+                                        <div class="form-group-in max-width">
+                                            <input type="password" name="password" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label"></label>
+                                        <div class="form-group-in max-width">
+                                            <button type="submit" class="btn btn-success btn-upper">Login</button>
+                                            <a href="{{ path('clientForgotPassword') }}" style="margin-left:15px;">Forgot password?</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

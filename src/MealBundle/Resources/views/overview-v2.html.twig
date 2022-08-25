@@ -1,0 +1,260 @@
+{% extends '@App/base.html.twig' %}
+{% block content -%}
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+
+        {% set btnClass = client ? 'btn-default' : 'btn-success' %}
+        {% set btnModal = client ? '#createMealPlan' : '#mealPlanModal' %}
+        {% set btnText = client ? 'Create Manually' : 'Create Meal Template' %}
+        {% set btnActions = '<button class="btn ' ~ btnClass ~ ' meal-item-btn" data-toggle="modal" data-target=' ~ btnModal ~ '>' ~ btnText ~ '</button>' %}
+        {% set text = client ? 'Meal Plans for ' ~ client.name ~ '' : 'Meal Plan Templates' %}
+        {% set subtitle = client ? 'Generate delicious meal plans based on your client\'s kcal need, preferences and allergies.' : 'Create meal plan templates from scratch.' %}
+        {% set title = client ? 'Create meal plans' : 'Create meal templates' %}
+        {% if client %}
+            {% include '@App/components/clientNav.html.twig' with {'clientMeal': 'true'} %}
+        {% else %}
+            {% include '@App/components/metabar.html.twig' with { 'title': 'Your Meal Plan Templates' } %}
+        {% endif %}
+
+        <div id="page-wrapper" class="gray-bg">
+            <!-- begin meal -->
+            <div class="meal">
+                <div class="meal-items">
+
+                    <div class="meal-item meal--plans">
+                        <div class="meal-item--in">
+                            <div class="meal-item-header">
+                                <h3 class="meal-item-title">{{ title }}</h3>
+                            </div>
+                            <div class="meal-item__descr">
+                                <p class="meal-item-text">{{ subtitle }}</p>
+                            </div>
+                            <div class="meal-item-footer">
+                                {% if client %}
+                                    <button class="btn btn-success meal-item-btn"
+                                            data-toggle="modal"
+                                            data-target="#generateMealPlan">
+                                        generate meal plan
+                                    </button>
+                                    <span style="margin:10px;">or</span>
+                                {% endif %}
+                                {{ btnActions|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if client %}
+                <div data-user-id="{{ app.user.id }}" data-client-id="{{ client ? client.id : '' }}"
+                     data-react="meal-plans"></div>
+
+                <div data-user-id="{{ app.user.id }}"
+                     data-client-id="{{ client ? client.id : '' }}"
+                     data-client-name="{{ client ? client.firstName : '' }}"
+                     id="meal-plans">
+                </div>
+            {% else  %}
+                {% include '@Meal/plans/manual-plans.html.twig' %}
+            {% endif %}
+
+            {% include '@App/default/widgets/chatWidget.html.twig' %}
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_css -%}
+    <link href="{{ asset("bundles/app/css/meals.css") }}" rel="stylesheet">
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    {% include '@Meal/forms/generate-plan-modal.html.twig' %}
+    {% include '@Meal/forms/create.html.twig' %}
+    {% include '@Meal/forms/plan.html.twig' with {
+        'client': client,
+        'action': path('meal_create'),
+        'title': client ? 'Create new Meal Plan' : 'Create new Meal Template'
+    } %}
+    {% include '@Meal/forms/apply_template.html.twig' with {
+        'title': 'Create Meal Plan from Template',
+        'client': client,
+        'plan': null,
+        'templates': templates
+    } %}
+
+    <script>
+
+      $(function () {
+        var modal = $('#generateMealPlan');
+        var $excludeIngredients = $('#exclude-ingredients');
+        var $customMacrosKcals = $('#custom-macros-kcals');
+        const preloader = $('<i class="fa fa-circle-o-notch fa-spin fa-fw preloader"></i>');
+        const selectAllOption = { name: 'Select All', id: 0, permanent: -100 };
+
+        $excludeIngredients.selectize({
+          plugins: ['remove_button'],
+          create: false,
+          valueField: 'id',
+          labelField: 'name',
+          searchField: 'name',
+          sortField: ['$order', 'permanent'],
+          score: function(search) {
+            const score = this.getScoreFunction(search);
+            return (item) => {
+              return item.id === 0 ? 100 : score(item);
+            };
+          },
+          load: function(query, callback) {
+            if (query.length < 2) return callback();
+            this.clearOptions();
+            let locale = $('select[name=language]').val();
+
+            $.ajax({
+              url: "{{ path('get_recipe_ingredients') }}",
+              data: {q: query, locale: locale},
+              type: 'GET',
+              error: function() {
+                callback();
+              },
+              success: function(res) {
+                const options = [ selectAllOption, ...res ];
+                callback(options);
+              }
+            });
+          },
+          onInitialize: function () {
+            preloader.css({
+              position: 'absolute',
+              'z-index': 1,
+              right: '5px'
+            });
+            $('.selectize-input').css('padding-right', '40px !important');
+            $('.selectize-control').css({
+                display: 'flex',
+                'align-items': 'center'
+              })
+              .append(preloader);
+          },
+          onItemAdd: function (value) {
+            if(+value === selectAllOption.id) {
+              Object
+                .keys(this.options)
+                .forEach(key => {
+                  this.addItem(key);
+                });
+              this.removeItem(value);
+              this.removeOption(value);
+            }
+          },
+          onChange () {
+            if(this.hasOptions) {
+              this.addOption(selectAllOption)
+            }
+          }
+        });
+
+        $('body')
+          .on('submit', '#generateMealPlanForm', function (e) {
+            e.preventDefault();
+            var $form = $(this);
+            var $btn = $form.find('.btn-success').button('loading');
+
+            var avoid = [];
+            var path = '{{ client ? path('generate_meal_plan', { 'client': client.id }) : '' }}';
+
+            if (!path) {
+              return;
+            }
+
+            $(".avoid-checkbox label.current").each(function () {
+              const input = $(this).find('input');
+              avoid.push(input.val());
+            });
+
+            var $alternatives = $form.find('label.current > input[name=alternatives]');
+            var $meals = $form.find('label.current > input[name=meals]');
+
+            var alternatives = $alternatives.length ? $alternatives.val() : null;
+            var meals = $meals.length ? $meals.val() : null;
+            var type = $form.find('input[name=type]:checked').val();
+            var desiredKcals = $form.find('input[name=kcal]').val();
+            var macros = {
+              carbohydrate: $form.find('input[name=carbs]').val(),
+              protein: $form.find('input[name=protein]').val(),
+              fat: $form.find('input[name=fat]').val()
+            };
+
+            var exclude = $excludeIngredients[0].selectize;
+            type = type == undefined ? 1 : type;
+
+            if (type == 2) {
+                desiredKcals = parseInt(macros.carbohydrate) * 4 + parseInt(macros.protein) * 4 + parseInt(macros.fat) * 9;
+            }
+
+            var data = {
+              alternatives: alternatives,
+              numberOfMeals: meals,
+              desiredKcals: desiredKcals,
+              macroSplit: $form.find('select[name=macro_split]').val(),
+              locale: $form.find('select[name=language]').val(),
+              name: $form.find('input[name=name]').val(),
+              type: type,
+              avoid: avoid,
+              macros: macros,
+              excludeIngredients: exclude.getValue(),
+              prioritize: !!$form.find('input[name=prioritize]:checked').val(),
+            };
+
+            let token = "{{ app.user.interactiveToken }}";
+
+            $.ajax({
+              url: path,
+              method: "POST",
+              dataType: "json",
+              crossDomain: true,
+              contentType: "application/json; charset=utf-8",
+              data: JSON.stringify(data),
+              cache: false,
+              beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", token);
+              },
+              success: function (data) {
+                location.reload();
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                var json = jqXHR.responseJSON.error;
+                modal.find('div.notify').addClass('alert alert-danger').html(json);
+                $btn.button('reset');
+              }
+            });
+
+          });
+
+        $("#createMealPlan").on("click", "button", function () {
+          $("#createMealPlan").modal('hide');
+        });
+
+        $('input[name=carbs],input[name=protein],input[name=fat]').on('input', function() {
+          var carbs = modal.find('input[name=carbs]').val();
+          var protein = modal.find('input[name=protein]').val();
+          var fat = modal.find('input[name=fat]').val();
+          var kcals = carbs * 4 + protein * 4 + fat * 9;
+
+          $customMacrosKcals.text(kcals);
+        });
+
+      });
+    </script>
+
+    <script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+    <script src="{{ asset("bundles/app/js/plan-status.js") }}"></script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+    <script src="{{ "meal-plan.js"|webpack_asset }}"></script>
+{% endblock %}

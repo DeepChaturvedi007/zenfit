@@ -1,0 +1,27 @@
+<br />
+{#}
+<a class="client-version-alert" href="/dashboard/clients?bypass=1">
+    <div class="alert alert-info custome" role="alert">
+        Click here to try new version of the client overview.
+    </div>
+</a>#}
+<div class="empty-container{{ full is defined and full ? ' empty-container--full' : '' }}">
+    {% if image %}
+    <div class="empty-container-image">
+        <img src="{{ image }}" />
+    </div>
+    {% endif %}
+    <div class="empty-container-meta">
+        <div class="empty-container-body">
+            {% if title is defined %}
+            <h3>{{ title }}</h3>
+            {% endif %}
+            <p>{{ text | raw }}</p>
+        </div>
+        {% if actions %}
+        <div class="empty-container-actions">
+            {{ actions|raw }}
+        </div>
+        {% endif %}
+    </div>
+</div>

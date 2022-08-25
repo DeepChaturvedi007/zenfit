@@ -1,0 +1,201 @@
+heading:
+  title: "Her kan du bestille din kost og treningsplan"
+  subtitle: "Vær oppmerksom på at når du kun bestiller en plan, vil coaching og oppfølging av utviklingen ikke følge med."
+howItWorks:
+  title: "Slik fungerer det"
+  steps:
+    1:
+      title: "1. Fyll ut spørreskjemaet"
+      description: "Hvis du bare fyller ut skjemaet her på siden, vet jeg alt jeg trenger for å skreddersy planer som er laget spesielt for deg."
+    2:
+      title: "2. Jeg setter i gang"
+      description: "Len deg tilbake og vent maks 48 timer på at jeg skal lage dine personlige planer basert på spørreskjemaet du har fylt ut."
+    3:
+      title: "3. Motta planene dine"
+      description: "Når jeg er ferdig med planene dine, vil du motta de via e-post. Planen inneholder alt du trenger for å komme i gang."
+plans:
+  title: "Velg produkt"
+  cards:
+    title: "%title%"
+    description: "%description%"
+    general:
+      action:
+        default: "Velg plan"
+        active: "Valgt"
+      label:
+        popular: "Mest populær"
+      price: "%unit%%amount%"
+      discount: "Spar %unit%%amount%"
+gender:
+  title: "Velg kjønn"
+  options:
+    male: "Mann"
+    female: "Kvinne"
+personInfo:
+  title: "Personlig informasjon"
+  inputs:
+    name:
+      label: "Navn"
+    age:
+      label: "Alder"
+    phone:
+      label: "Telefonnummer"
+    email:
+      label: "Epost"
+goal:
+  title: "Ditt mål"
+  types:
+    gainMuscle:
+      title: "Bygge muskler"
+    loseFat:
+      title: "Redusere fett"
+  intensity:
+    title: "Hvor fort?"
+    options:
+      1: "Jeg vil gå ned ca. 1 kilo i uken"
+      2: "Jeg vil gå ned ca. 0.5 kilo i uken"
+      3: "Jeg ønsker å holde den nåværende vekten"
+      4: "Jeg vil gå opp ca. 0.5 kilo i uken"
+      5: "Jeg vil gå opp ca. 1 kilo i uken"
+  extras:
+    title: "Ekstra fokus på noen kroppsdeler?"
+    options:
+      chest: "Bryst"
+      shoulders: "Skuldre"
+      back: "Rygg"
+      legs: "Ben"
+      arms: "Armer"
+      calfs: "Legger"
+body:
+  title: "Din kropp"
+  personParams:
+    inputs:
+      startWeight:
+        label: "Nåværende vekt"
+      goalWeight:
+        label: "Målvekt"
+      height:
+        label: "Høyde (cm)"
+      fat:
+        label: "Fettprosent"
+  measurement:
+    title: "Velg måleenheter"
+    options:
+      us: "US (pund/tommer)"
+      metric: "Metrisk (kg/cm)"
+bodyPictures:
+  title: "Førbilder (valgfritt)"
+  description: "<b>NOTE: Bilder er valgfrie. Imidlertid er bilder viktige for meg i oppdateringer.</b><br/>Da det gjør at jeg kan gjøre de best mulige justeringene i planene dine. Ingen bilder vil bli delt offentlig på sosiale medier uten samtykke!"
+  options:
+    front: "Foran"
+    side: "Side"
+    back: "Bak"
+  actions:
+    addPhoto: "Legg til bilde"
+activity:
+  title: "Aktivitetsnivå"
+  intensity:
+    title: "Sport og fritid"
+    options:
+      1: "Jeg gjør ingen fysiske aktiviteter"
+      2: "Jeg er ikke veldig aktiv og trener 2-3 dager i uken"
+      3: "Jeg har et moderat aktivitetsnivå og trener 3-4 ganger i uken"
+      4: "Jeg er ganske aktiv og trener 5-6 ganger i uken"
+      5: "Jeg har en fysisk krevende jobb og trener de fleste dager"
+meal:
+  title: "Kostholdspreferanser"
+  allergens:
+    options:
+      avoidLactose: "Laktosefri"
+      avoidGluten: "Glutenfri"
+      avoidNuts: "Ingen nøtter"
+      avoidEggs: "Ingen egg"
+      avoidShellfish: "Ingen Skalldyr"
+      avoidFish: "Ingen Fisk"
+      avoidPig: "Ingen Svin"
+      isVegetarian: "Jeg er vegetarianer"
+      isVegan: "Jeg er veganer"
+      isPescetarian: "Jeg er pesketarianer"
+  count:
+    title: "Velg antall måltider"
+    options:
+      3: "3 om dagen"
+      4: "4 om dagen"
+      5: "5 om dagen"
+      6: "6 om dagen"
+  exclusion:
+    title: "Utelat andre ingredienser"
+    input:
+      label: "Velg ingredienser"
+      placeholder: "Søk"
+      selectAll: "Velg alle"
+  budget:
+    title: "Matbudsjett"
+    options:
+      1: "Billigst mulig"
+      2: "Ikke relevant"
+    clarifications:
+      prefix: "Billigst mulig"
+      suffix: "Ikke relevant"
+  cookingTime:
+    title: "Tid til matlaging"
+    options:
+      1: "Raskt og enkelt"
+      2: "Ikke relevant"
+    clarifications:
+      prefix: "Raskt og enkelt"
+      suffix: "Ikke relevant"
+  comment:
+    title: "Andre kommentarer for ernæring og preferanser?"
+    input:
+      label: "Andre kommentarer?"
+    description: "Når foretrekker du å spise, etc."
+workout:
+  title: "Treningspreferanser og erfaring"
+  intensity:
+    title: "Hvor mange ganger per uke kan du trene?"
+    options:
+      general: "%value% ganger"
+  experience:
+    title: "Hvor mye erfaring har du med styrketrening?"
+    # IMPORTANT TO SET A UNIQUE OPTIONS (Translations)
+    options:
+      1: "Jeg er helt uerfaren"
+      2: "Jeg har litt erfaring"
+      3: "Jeg har trent en stund og kjenner til noen øvelser"
+      4: "Jeg har ganske bra med erfaring og kjenner til de fleste øvelser"
+      5: "Jeg har trent i mange år og er kjent med alle øvelsene"
+  place:
+    title: "Hvor mye erfaring har du med styrketrening?"
+    options:
+      1: "På treningssenteret"
+      2: "Hjemmetrening"
+      3: "Utendørs"
+  comment:
+    title: "Andre kommentarer for treningspreferanser?"
+    label: "Andre kommentarer?"
+    description: "Når foretrekker du å trene, etc."
+additionalInfo:
+  title: "Skader, sykdommer og andre hensyn"
+  injuries:
+    title: "Noen skader? Vennligst fortell meg om det"
+    options:
+      knee: "Kne"
+      shoulders: "Skuldre"
+      albow: "Albue"
+      wrist: "Håndledd"
+      back: "Rygg"
+      lowerBack: "Korsryggen"
+      abdominals: "Mageemuskler"
+      other: "Annet"
+  comment:
+    title: "Andre kommentarer?"
+    label: "Si ifra"
+confirmation:
+  rules:
+    label: "Jeg bekrefter at jeg ikke har hatt noen spiseforstyrrelser"
+  terms:
+    label: "Jeg godtar"
+    link: "brukervilkårene"
+  submit:
+    text: "Gå til kassen"

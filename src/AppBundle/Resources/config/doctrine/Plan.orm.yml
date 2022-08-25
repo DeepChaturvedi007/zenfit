@@ -1,0 +1,60 @@
+AppBundle\Entity\Plan:
+    type: entity
+    table: plans
+    repositoryClass: AppBundle\Repository\PlanRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        type:
+            type: integer
+            length: 1
+
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        contacted:
+            type: boolean
+            options:
+                default: false
+
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: true
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        bundle:
+            targetEntity: AppBundle\Entity\Bundle
+            inversedBy: bundles
+            joinColumn:
+                onDelete: CASCADE
+                nullable: false
+
+    oneToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: plan
+            joinColumn:
+                nullable: false
+                name: client_id
+                referencedColumnName: id
+
+        payment:
+            targetEntity: AppBundle\Entity\Payment
+            inversedBy: plan
+            joinColumn:
+                nullable: false
+
+    lifecycleCallbacks: {  }

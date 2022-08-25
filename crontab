@@ -1,0 +1,19 @@
+#client
+* * * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:client:email:from:trainer:send --env=prod
+* * * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:client:message:notification:send --env=prod
+0 16 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:client:push:weekly:reminder --env=prod
+2 4 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:client:macros:populate:recent --env=prod
+0 * * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:client:videos:assign --env=prod
+0 * * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:client:payment:warning:email --env=prod
+
+#clientStatus
+6 4 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:check:for:missing:checkin --env=prod
+0 17 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:update:client:duration --env=prod
+0 18 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:check:for:update:plans --env=prod
+
+#trainer
+* * * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:trainer:email --env=prod
+0 0 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:subscriptions:cancel --env=prod
+*/5 * * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:auto:assign:leads --env=prod
+5 4 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:sync:user:client:stripe:count --env=prod
+3 4 * * * cd /home/ubuntu/prod && sudo docker-compose exec -T app php bin/console zf:check:for:missing:communication --env=prod

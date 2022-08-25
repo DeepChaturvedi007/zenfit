@@ -1,0 +1,57 @@
+AppBundle\Entity\Question:
+    type: entity
+    table: questions
+    repositoryClass: AppBundle\Repository\QuestionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        type:
+            type: integer
+
+        inputType:
+            type: integer
+
+        text:
+            type: text
+
+        options:
+            type: json
+            nullable: true
+
+        placeholder:
+            type: text
+
+        subtitle:
+            type: text
+            nullable: true
+
+        order:
+            type: integer
+
+        defaultValue:
+            type: integer
+            nullable: true
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+    oneToMany:
+        answers:
+            targetEntity: AppBundle\Entity\Answer
+            mappedBy: question
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: questions
+            joinColumn:
+                nullable: false

@@ -1,0 +1,46 @@
+AppBundle\Entity\StripeConnect:
+    type: entity
+    table: stripe_connect
+    repositoryClass: AppBundle\Repository\StripeConnectRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        amount:
+            type: float
+
+        currency:
+            type: string
+            length: 10
+
+        createdAt:
+            type: datetime
+            column: created_at
+
+        type:
+            type: integer
+            options:
+                default: 1
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: stripeConnectRows
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    oneToOne:
+        paymentsLog:
+            targetEntity: AppBundle\Entity\PaymentsLog
+            mappedBy: stripeConnect
+            nullable: true

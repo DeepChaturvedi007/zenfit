@@ -1,0 +1,49 @@
+/config/parameters.yaml
+/build/
+/phpunit.xml
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/log
+/var/log/*
+!var/log/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!/var/thumbs
+/var/thumbs/*
+!var/thumbs/.gitkeep
+!var/SymfonyRequirements.php
+/web/bundles/
+.idea/
+*.php~
+.DS_Store
+node_modules
+*.map
+log
+app/config/parameters.yml___jb_tmp___
+/temp
+docker/caddy/certs
+supervisord.pid
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+yarn.lock

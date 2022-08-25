@@ -1,0 +1,41 @@
+TrainerBundle\Entity\Referral:
+    type: entity
+    table: referrals
+    repositoryClass: TrainerBundle\Repository\ReferralRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        status:
+            type: integer
+            length: 1
+            options:
+              default: 0
+
+        payout:
+            type: integer
+            length: 1
+            options:
+              default: 0
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: referrals
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,90 @@
+AppBundle\Entity\ClientFoodPreference:
+    type: entity
+    table: client_food_preferences
+    repositoryClass: AppBundle\Repository\ClientFoodPreferencesRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        avoidLactose:
+            type: boolean
+            column: avoid_lactose
+            options:
+                default: false
+
+        avoidGluten:
+            type: boolean
+            column: avoid_gluten
+            options:
+                default: false
+
+        avoidNuts:
+            type: boolean
+            column: avoid_nuts
+            options:
+                default: false
+
+        avoidEggs:
+            type: boolean
+            column: avoid_eggs
+            options:
+                default: false
+
+        avoidPig:
+            type: boolean
+            column: avoid_pig
+            options:
+                default: false
+
+        avoidShellfish:
+            type: boolean
+            column: avoid_shellfish
+            options:
+                default: false
+
+        avoidFish:
+            type: boolean
+            column: avoid_fish
+            options:
+                default: false
+
+        isVegetarian:
+            type: boolean
+            column: is_vegetarian
+            options:
+                default: false
+
+        isVegan:
+            type: boolean
+            column: is_vegan
+            options:
+                default: false
+
+        isPescetarian:
+            type: boolean
+            column: is_pescetarian
+            options:
+                default: false
+
+        excludeIngredients:
+            type: text
+            nullable: true
+
+    oneToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: clientFoodPreferences
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

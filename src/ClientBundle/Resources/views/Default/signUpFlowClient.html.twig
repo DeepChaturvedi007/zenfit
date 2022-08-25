@@ -1,0 +1,32 @@
+{% extends '@App/base.html.twig' %}
+
+{% set page_title = 'Zenfit | Client Activation' %}
+
+{% block content -%}
+
+<div id="client-wrapper">
+    <div id="client-overview" class="themeStyle"
+            data-props="{{{
+                'client': client.clientInfo|json_encode,
+                'primaryColor': (client.user.userSettings) and (client.user.userSettings.primaryColor) ? client.user.userSettings.primaryColor : null,
+                'companyLogo': (client.user.userSettings) and (client.user.userSettings.companyLogo) ? client.user.userSettings.companyLogo : null,
+                'customQuestions': customQuestions|json_encode,
+                'clientImages': clientImages|json_encode,
+                'answers': answers|json_encode,
+                'locale': locale,
+                'userApp': client.user.userApp ? client.user.userApp.serialize|json_encode : null,
+                'config': config,
+                'datakey': datakey
+            }| json_encode }}">
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ "client-signup-flow.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ "client-signup-flow.js"|webpack_asset }}"></script>
+{% endblock %}

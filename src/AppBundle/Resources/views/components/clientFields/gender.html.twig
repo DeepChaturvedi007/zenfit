@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label class="control-label">Gender</label>
+    <div class="form-group-in">
+        <label>
+            <input name="gender" type="radio" value="{{ constant('GENDER_MALE', client) }}" {% if client.isMale %} checked {% endif %}>
+            <span class="question">Male</span>
+        </label>
+        <label>
+            <input name="gender" type="radio" value="{{ constant('GENDER_FEMALE', client) }}" {% if client.isFemale %} checked {% endif %}>
+            <span class="question">Female</span>
+        </label>
+    </div>
+</div>

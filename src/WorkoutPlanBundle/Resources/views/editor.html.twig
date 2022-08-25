@@ -1,0 +1,135 @@
+{% extends '@App/base.html.twig' %}
+
+{%- block body_classes -%}
+    no-scroll
+{%- endblock -%}
+
+{% block content -%}
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+
+        <div id="page-wrapper" class="gray-bg">
+            {% if client %}
+                {% include '@App/components/clientNav.html.twig' with {'clientWorkout': 'true'} %}
+            {% else %}
+                {% include '@App/components/metabar.html.twig' with {
+                    'title': 'Create Workout Template',
+                    'template': 'workout_templates'
+                } %}
+            {% endif %}
+
+            {% include '@App/components/flashSuccess.html.twig' %}
+
+            <div class="exercise-wrapper{{ client ? '' : ' no-client-nav' }} plans" id="workout-plans">
+                <div class="spinner">
+                    <img src="{{ asset('images/ajax-loader.gif') }}" />
+                </div>
+            </div>
+
+        </div>
+        {% include '@WorkoutPlan/forms/assign_template.html.twig' %}
+
+    </div>
+    {% include '@App/default/widgets/chatWidget.html.twig' %}
+{% endblock %}
+
+{% block extra_css -%}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/workout.css') }}">
+    <link href="{{ asset('bundles/app/css/assignPlanToClientBar.css') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ "plans.css"|webpack_asset }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    {% include '@WorkoutPlan/forms/plan.html.twig' with {
+        'action': path('workout_update', { 'plan': plan.id }),
+        'title': 'Edit Workout Plan',
+        'plan': plan,
+        'client':  client
+    } %}
+    {% include '@WorkoutPlan/forms/day.html.twig' %}
+    {% include '@WorkoutPlan/forms/clone_day.html.twig' %}
+    {% include '@WorkoutPlan/forms/settings.html.twig' %}
+    {% include '@WorkoutPlan/forms/save_as_template.html.twig' %}
+    {% include '@WorkoutPlan/forms/apply_template.html.twig' with {
+        'title': 'Apply template to Workout',
+        'plan': plan,
+        'client': client
+    } %}
+
+    {% include '@App/default/modals/saveAsPdf.html.twig' with { 'type': 'workout' } %}
+
+    {% include '@App/default/user/exercises/createExercise.html.twig' %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.0/autosize.min.js"></script>
+    <script src="{{ "plans.js"|webpack_asset }}"></script>
+    <script>
+      (function() {
+        {% if client %}
+            var client = {
+              id: '{{ client.id }}',
+              name: '{{ client.name }}',
+              firstName: '{{ client.firstName }}'
+            };
+        {% else %}
+            var client = null;
+        {% endif %}
+
+        {% if tour is defined %}
+            var tour = '{{ tour }}';
+        {% else %}
+            var tour = null;
+        {% endif %}
+
+        var meta = null;
+        {% if plan.workoutPlanMeta %}
+          meta = {
+            workoutsPerWeek: {{ plan.workoutPlanMeta.workoutsPerWeek ? plan.workoutPlanMeta.workoutsPerWeek : 0 }},
+            duration: {{ plan.workoutPlanMeta.duration ? plan.workoutPlanMeta.duration : 0 }},
+            gender: {{ plan.workoutPlanMeta.gender ? plan.workoutPlanMeta.gender : 0 }},
+            level: {{ plan.workoutPlanMeta.level ? plan.workoutPlanMeta.level : 0 }},
+            location: {{ plan.workoutPlanMeta.location ? plan.workoutPlanMeta.location : 0 }}
+          };
+        {% endif %}
+
+        var plan = {
+            id: '{{ plan.id }}',
+            name: '{{ plan.name }}',
+            explaination: '{{ plan.explaination }}',
+            comment: '{{ plan.comment|e('js') }}',
+            template: {{ plan.template ? 'true' : 'false' }},
+            meta: meta
+        };
+
+        var plans = new Plans(document.getElementById('workout-plans'), Plans.WORKOUT, {
+          client: client,
+          settings: {{ planSettings.toArray|json_encode|raw }},
+          updatedAt: '{{ lastUpdated|date('d F Y') }}',
+          plan: plan,
+          s3: '{{ container.parameter('s3beforeAfterImages') }}',
+          youtubeApiKey: '{{ container.parameter('youtubeApiKey') }}',
+          tour: tour,
+        });
+      })();
+
+
+      $(document).ready(function () {
+
+        autosize($('textarea'));
+
+        $("#saveTemplate").click(function (e) {
+          e.preventDefault();
+          if ($("#applyTemplateForm input:checkbox:checked").length > 0) {
+            $("#applyTemplateCheckboxes").hide();
+            $("#spinnerApplyTemplate").show();
+            $("#applyTemplateForm").submit();
+          }
+        });
+      });
+    </script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock script %}

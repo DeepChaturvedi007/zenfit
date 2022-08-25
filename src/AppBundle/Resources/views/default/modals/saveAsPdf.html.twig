@@ -1,0 +1,56 @@
+{% if plan is defined %}
+    {% if type == 'meal' %}
+      {% set routePath = 'exportPlansPdfMealClient' %}
+      {% set routeParams = { 'masterMealPlan': plan.id } %}
+    {% else %}
+      {% set routePath = 'exportPlansPdfWorkout' %}
+      {% set routeParams = { 'workoutPlan': plan.id } %}
+    {% endif %}
+{% endif %}
+
+<div class="modal inmodal fade sm" id="saveAsPdf" tabindex="-1" role="dialog" aria-hidden="true"
+     data-documents-url="{{ path('documentOverview') }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">
+                    {{ type == 'meal' ? 'Save Meal Plan as PDF' : 'Save Workout Plan as PDF' }}
+                </h4>
+            </div>
+            <form action="{{ path(routePath, routeParams) }}" method="POST" autocomplete="off">
+                <input type="hidden" name="type" value="{{ type }}"/>
+                <div class="modal-body">
+                    <div class="modal-body-main">
+                        {% if type == 'meal' %}
+                            <p>
+                                Click below to save your meal plan as PDF. We will also upload this plan to your Documents.
+                            </p>
+                        {% else %}
+                            <p>
+                                Click below to save your workout plan as PDF. We will also upload this plan to your Documents.
+                            </p>
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="template_name" class="control-label">Name</label>
+                            <input type="text" id="template_name" name="name" class="form-control"
+                                   placeholder="Name of PDF document"
+                                   value="{% if client is defined and client is not null %}{{ client.name }} {% else %} {% if plan is defined %} {{ plan.name }}  {% else %} {{ template.name }} {% endif %} {% endif %}{{ "now"|date("j. F Y") }} ">
+                        </div>
+                        <div class="form-group">
+                            <label for="template_comment" class="control-label">Comment</label>
+                            <input type="text" id="template_comment" name="comment" class="form-control"
+                                   placeholder="Enter Your Comment">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper" data-loading-text="Saving...">Save as PDF</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

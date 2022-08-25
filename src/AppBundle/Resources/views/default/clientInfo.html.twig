@@ -1,0 +1,149 @@
+{% extends '@App/base.html.twig' %}
+
+{% set metric = {'weight': 'kg', } %}
+{% set imperial = {'weight': 'lbs'} %}
+
+{% set feet = null %}
+{% set inches = null %}
+{% if client.height is not null %}
+    {% set fullFeet = client.height * 0.032808 %}
+    {% set feet = fullFeet|round(0, 'floor') %}
+    {% set inches = ((fullFeet - feet) * 12)|round(1, 'common') %}
+{% endif %}
+
+{% set weight = metric.weight %}
+{% set isHiddenMetric = '' %}
+{% set isHiddenImperial = 'hidden' %}
+{% if constant('MEASURING_SYSTEM_METRIC', client) == client.measuringSystem %}
+    {% set weight = metric.weight %}
+    {% set isHiddenImperial = 'hidden' %}
+    {% set isHiddenMetric = '' %}
+{% elseif constant('MEASURING_SYSTEM_IMPERIAL', client) == client.measuringSystem %}
+    {% set weight = imperial.weight %}
+    {% set isHiddenMetric = 'hidden' %}
+    {% set isHiddenImperial = '' %}
+{% endif %}
+
+{% block content -%}
+
+    <div id="wrapper" {% if client.demoClient %} class="demo-wrapper" {% endif %}>
+        {% if client.demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+
+        <div id="page-wrapper" class="gray-bg client-info">
+            {% include '@App/components/clientNav.html.twig' with {'clientInfo': 'true'}  %}
+            <div class="wrapper client-info-wrapper container-mobile m-n-p-x">
+
+              {% if creationLink and not client.password %}
+                <div class="alert alert-warning" role="alert">
+                  {{ client.name }} has still not created a login for the Zenfit Client App.
+                   Copy-paste this link to your client: <a target="_blank" href="{{ creationLink }}">{{ creationLink }}</a>
+                </div>
+              {% endif %}
+
+              {% if client.demoClient and client.email %}
+                <div class="alert alert-info">
+                  Did you know, that you can visit your demo client from the Zenfit Client app?
+                  <br /><br />
+                  <p><strong>Email: {{ client.email }}</strong></p>
+                  <p><strong>Password: 12345</strong></p>
+                  <br />
+                  <a style="margin-bottom: 5px;" target="_blank" role="button" class="btn btn-default" href="{{ iphone_app }}">Click here to download the iPhone version</a>
+                  <a style="margin-bottom: 5px;" target="_blank" role="button" class="btn btn-default" href="{{ android_app }}">Click here to download the Android version</a>
+                </div>
+              {% endif %}
+
+              <div class="col-lg-6">
+                {% include '@App/components/clientFields/clientInfo.html.twig' with {
+                  'client': client,
+                  'clientArr': clientArr,
+                  'demoClient': client.demoClient,
+                } %}
+              </div>
+              <div class="col-lg-6">
+                {% include '@App/components/clientFields/paymentInfo.html.twig' with {
+                  'client': client,
+                  'paymentsLog': paymentsLog
+                } %}
+              </div>
+              <div class="cl"></div>
+
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="center-block text-center">
+                        <h3>Are you sure?</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '@App/default/widgets/chatWidget.html.twig' %}
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset('bundles/app/INSPINIA/css/plugins/jasny/jasny-bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/intlTelInput.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/client-payment.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/client-info.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/client-survey-extra.css') }}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('bundles/app/js/client-info.js') }}"></script>
+
+    <script>
+        (function ($) {
+            if($('.demo-notification').is(':visible')){
+                $("#wrapper").addClass("dasboard-wrap");
+            } else {
+                $("#wrapper").removeClass("dasboard-wrap");
+            }
+
+            $('#close').on('click', function () {
+                var $this = $(this);
+                $.post($this.data('action'));
+                $this.parent().hide();
+            });
+
+            $('#phone_number').intlTelInput({
+                nationalMode: false,
+                autoHideDialCode: true,
+                preferredCountries: ["dk","se","no","us","gb"],
+                utilsScript: '{{ asset("bundles/app/js/utils.js") }}'
+            });
+        }(jQuery));
+    </script>
+
+    {#}{% include '@App/default/modals/progressPicturesModal.html.twig' %}
+    <script>
+      (function ($) {
+        var $modal = $('#progressPicturesModal');
+        var $form = $('#clientInfoForm');
+
+        $modal.on('client.photos.updated', function () {
+          $form.trigger('change');
+        });
+      })(jQuery);
+    </script>
+    #}
+
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock %}

@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label class="control-label">Age</label>
+    <div class="form-group-in max-width row">
+        <div class="col-xs-4">
+            <input type="number" name="age" class="form-control" {% if client.age is not null %} value="{{ client.age }}" {% else %} placeholder="Age" {% endif %}>
+        </div>
+    </div>
+</div>

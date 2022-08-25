@@ -1,0 +1,153 @@
+version: 2
+
+jobs:
+
+  tests:
+    docker:
+      # Specify the version you desire here
+      - image: circleci/php:8.0-node-browsers
+      - image: mysql:8
+        environment:
+          MYSQL_USER: zenfit
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+
+    steps:
+      - checkout
+
+      - run: sudo apt-get update && sudo apt-get -y install libmagickwand-dev --no-install-recommends libjpeg62-turbo-dev libssh-dev libxpm-dev libxslt-dev ffmpeg
+      - run: sudo docker-php-ext-install pdo pdo_mysql xsl
+      - run: sudo pecl install imagick
+      - run: sudo docker-php-ext-enable imagick
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: "Install Dependencies"
+          command: composer install -n --prefer-dist
+
+      - run:
+          name: Setup NVM
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
+
+      - run:
+          name: Setup Node
+          command: |
+            nvm install 14.18.0
+            nvm alias default 14.18.0
+            npm install -g yarn
+            node --version
+            yarn --version
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+
+      - restore_cache: # special step to restore the dependency cache if `package-lock.json` does not change
+          keys:
+            - node-v1-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - node-v1-
+      - run:
+          command: yarn
+      - save_cache: # special step to save the dependency cache with the `package-lock.json` cache key template
+          key: node-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Generate JWT keys
+          command: |
+            php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+      - run:
+          name: Init mysql database
+          command: |
+            php bin/console doctrine:database:create --env=test
+            php bin/console doctrine:schema:update --env=test --force
+            php bin/console zf:fixtures:load --env=test
+
+      - run:
+          name: Compile JS
+          no_output_timeout: 30m
+          command: |
+            node -v
+            yarn webpack-prod
+
+      # run tests with phpunit
+      - run:
+          name: Run tests
+          command: |
+            ./bin/phpunit install
+            vendor/bin/phpstan analyze --memory-limit 4096M
+            ./bin/phpunit --stop-on-failure
+
+  build:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1 \
+              bash \
+              curl \
+              jq
+            apk add --update-cache --upgrade curl
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
+      - add_ssh_keys:
+          fingerprints:
+            - "d8:16:ad:6f:be:3b:11:31:b9:09:8e:4c:c4:74:f8:fa"
+      - run:
+          name: Keyscan Github (HACK)
+          command: ssh-keyscan -H 54.93.56.212 54.93.234.151 >> ~/.ssh/known_hosts
+
+      - run:
+          name: Build & push Docker images
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              sh .circleci/deploy-test.sh
+            elif [ "${CIRCLE_BRANCH}" == "release" ]; then
+              sh .circleci/dev_deploy.sh zenfit_dev beta 'https://beta.zenfitapp.com' prod
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+              sh .circleci/deploy.sh
+            fi
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - tests:
+          filters:
+            branches:
+              only:
+                - /.*/
+          context:
+            - slack
+      - build:
+          requires:
+            - tests
+          filters:
+            branches:
+              only:
+                - develop
+                - release
+                - master
+          context:
+            - slack
+            - production

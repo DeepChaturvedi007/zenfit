@@ -1,0 +1,47 @@
+AppBundle\Entity\MealProductWeight:
+    type: entity
+    table: meal_products_weights
+    repositoryClass: AppBundle\Repository\MealProductWeightRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    indexes:
+        product_idx:
+            columns: [ product_id ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+
+        weight:
+            type: float
+            options:
+                default: 0
+
+        locale:
+            type: string
+            length: 10
+            nullable: false
+            options:
+                default: en
+
+    manyToOne:
+        product:
+            targetEntity: AppBundle\Entity\MealProduct
+            inversedBy: weights
+            joinColumn:
+                name: product_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE

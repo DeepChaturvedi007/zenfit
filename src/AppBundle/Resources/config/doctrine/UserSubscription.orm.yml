@@ -1,0 +1,78 @@
+AppBundle\Entity\UserSubscription:
+    type: entity
+    table: user_subscriptions
+    repositoryClass: AppBundle\Repository\UserSubscriptionRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            nullable: false
+            generator:
+                strategy: AUTO
+    fields:
+        stripeCustomer:
+            type: string
+            length: 255
+            nullable: true
+
+        stripeSubscription:
+            type: string
+            length: 255
+            nullable: true
+
+        subscribedDate:
+            type: date
+            nullable: true
+            column: subscribed_date
+
+        canceled:
+            type: boolean
+            options:
+                default: 0
+
+        canceledAt:
+            type: string
+            length: 15
+            nullable: true
+
+        lastPaymentFailed:
+            type: boolean
+            column: last_payment_failed
+            options:
+                default: false
+
+        nextPaymentAttempt:
+            type: string
+            length: 255
+            nullable: true
+
+        attemptCount:
+            type: integer
+            length: 2
+
+        invoiceUrl:
+            type: string
+            length: 255
+            nullable: true
+
+        vat:
+            type: string
+            length: 20
+            nullable: true
+
+    manyToOne:
+        subscription:
+            targetEntity: AppBundle\Entity\Subscription
+            inversedBy: userSubscription
+
+    oneToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: userSubscription
+            joinColumn:
+                nullable: false
+
+    lifecycleCallbacks:
+        prePersist: []

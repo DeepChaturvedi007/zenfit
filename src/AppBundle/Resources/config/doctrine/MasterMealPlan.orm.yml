@@ -1,0 +1,154 @@
+AppBundle\Entity\MasterMealPlan:
+    type: entity
+    table: master_meal_plans
+    repositoryClass: AppBundle\Repository\MasterMealPlanRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        name:
+            type: string
+            nullable: false
+            options:
+                default: ''
+
+        explaination:
+            type: text
+            nullable: true
+
+        active:
+            type: boolean
+            options:
+                default: 0
+
+        status:
+            type: string
+            options:
+                default: active
+
+        template:
+            type: boolean
+            options:
+                default: 0
+
+        demo:
+            type: boolean
+            options:
+                default: 0
+
+
+        lastUpdated:
+            type: datetime
+            column: last_updated
+
+        createdAt:
+            type: datetime
+            column: created_at
+
+        locale:
+            type: string
+            length: 10
+            nullable: false
+            options:
+                default: en
+
+        desiredKcals:
+            type: integer
+            column: desired_kcals
+            length: 10
+            nullable: true
+            options:
+                default: 0
+
+        macroSplit:
+            type: integer
+            column: macro_split
+            nullable: true
+
+        deleted:
+            type: boolean
+            options:
+                default: 0
+
+        approved:
+            type: boolean
+            options:
+                default: 0
+
+        parameters:
+            type: text
+            nullable: true
+
+        containsAlternatives:
+            type: boolean
+            options:
+                default: 0
+
+        image:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        assignmentTags:
+            type: string
+            column: assignment_tags
+            nullable: TRUE
+
+        started:
+            type: datetime
+            column: started
+            nullable: true
+
+        type:
+            type: integer
+            column: type
+            nullable: true
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: masterMealPlans
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage : NONSTRICT_READ_WRITE
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: mealPlans
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToMany:
+        mealPlans:
+            targetEntity: AppBundle\Entity\MealPlan
+            mappedBy: masterMealPlan
+            orderBy: { 'order': 'ASC' }
+            cache:
+                usage : NONSTRICT_READ_WRITE
+
+    oneToOne:
+        masterMealPlanMeta:
+            targetEntity: AppBundle\Entity\MasterMealPlanMeta
+            mappedBy: plan
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE

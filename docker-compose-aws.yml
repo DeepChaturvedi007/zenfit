@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+    nginx:
+        restart: always
+        image: mathiaslund/zenfit-nginx:latest
+        ports:
+            - 81:80
+        links:
+            - php
+        volumes_from:
+            - php
+        environment:
+            APP_SERVER_NAME: app.zenfitapp.com
+
+    php:
+        restart: always
+        image: mathiaslund/zenfit:prod
+        ports:
+            - 9000:9000
+        volumes:
+            - ./docker/php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+            - /var/www/html
+
+    lb:
+        image: abiosoft/caddy
+        depends_on:
+            - php
+        ports:
+            - 2015:2015
+            - 443:443
+            - 80:80
+        volumes:
+            - ./docker/caddy/Caddyfile:/etc/Caddyfile
+            - ./docker/caddy/certs:/root/.caddy
+        command: --conf /etc/Caddyfile --log stdout -email mathias@zenfitapp.com -agree

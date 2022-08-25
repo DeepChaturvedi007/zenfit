@@ -1,0 +1,5 @@
+{% if app.user.nextPaymentAttempt %}
+    <div class="subscription-notify">
+        Last payment failed. Your account will be locked down by {{ app.user.nextPaymentAttempt|date('j F, Y') }}. <a href="{{ app.user.nextInvoiceUrl }}#payments">Click here</a> to pay your latest invoice.
+    </div>
+{% endif %}

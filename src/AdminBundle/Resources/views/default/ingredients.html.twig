@@ -1,0 +1,34 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+
+    {% include '@App/components/sideNav.html.twig' %}
+    {% include '@App/components/metabar.html.twig' with { 'title': 'Admin Dashboard' } %}
+    
+    <div id="page-wrapper" class="gray-bg sm-white-bg">
+        {% include '@Admin/components/nav.html.twig' with {'exercises': 'true'} %}
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div id="admin-screen-controller"
+                 data-screen="ingredients"
+                 data-props="{{ {
+                     'authUserId': app.user.getId,
+                 }|json_encode }}"
+            ></div>
+        </div>
+
+        {% include '@App/components/footer.html.twig' %}
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset("admin.js"|webpack_asset) }}"></script>
+    <script>
+        $(function() {});
+    </script>
+{% endblock script %}

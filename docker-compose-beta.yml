@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  nginx:
+    restart: always
+    image: mathiaslund/zenfit-nginx:ssl
+    ports:
+      - 81:80
+    links:
+      - app
+    volumes_from:
+      - app
+    environment:
+      APP_SERVER_NAME: beta.zenfitapp.com
+
+  app:
+    restart: always
+    image: mathiaslund/zenfit:beta
+    ports:
+      - 9000:9000
+    environment:
+      ZF_APP_HOSTNAME: https://beta.zenfitapp.com
+      #ZF_DATABASE_HOST:
+      #ZF_DATABASE_NAME:
+      #ZF_DATABASE_USER:
+      #ZF_DATABASE_PASSWORD:
+    volumes:
+      - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - /var/www/html
+
+  lb:
+    restart: always
+    image: abiosoft/caddy
+    depends_on:
+      - app
+    ports:
+      - 2015:2015
+      - 443:443
+      - 80:80
+    volumes:
+      - ./caddy/Caddyfile:/etc/Caddyfile
+      - ./caddy/certs:/root/.caddy
+    command: --conf /etc/Caddyfile --log stdout -email mathias@zenfitapp.com -agree

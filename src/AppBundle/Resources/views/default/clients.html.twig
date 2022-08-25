@@ -1,0 +1,40 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+    {% include '@App/components/sideNav.html.twig' %}
+    {% include '@App/components/metabar.html.twig' with { 'title': 'Clients' } %}
+    <div id="page-wrapper" class="gray-bg">        
+
+        <div id="client-overview" data-props="{{ {
+            'clientsCount': {'active': activeCount, 'inactive': inactiveCount },
+            'userId': app.user.id,
+            'locale': app.user.language ? app.user.language.locale : 'en',
+            'stripeConnect': app.user.userStripe ? true : false,
+            'token': app.user.interactiveToken,
+            'paymentRequired': (app.user.userStripe) and (app.user.userStripe.paymentRequired) ? true : false,
+            'settings': app.user.userSettings ? app.user.userSettings.serialize|json_encode : null,
+            'tagsList': tagsList|json_encode
+        }|json_encode }}"></div>
+
+        <div id="chat-widget-container"></div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+    <link rel="stylesheet" href="{{ "client-overview.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ "client-overview.js"|webpack_asset }}"></script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-crosshair@1.1.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@5.9.2"></script>
+    <script src="{{ asset('bundles/app/js/body-progress.v2.js') }}"></script>
+{% endblock %}

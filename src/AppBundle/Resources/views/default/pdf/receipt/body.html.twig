@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        {{ (src_dir ~ '/AppBundle/Resources/views/default/pdf/receipt/styles.css')|content|raw }}
+    </style>
+</head>
+<body>
+<div class="contents">
+  <div class="header">
+    <div class="title">
+      <h1 class="com-name">Zenfit ApS</h1>
+      <div class="flex-grow"></div>
+      <h1 class="pdf-name">Receipt {{ receiptId }}</h1>
+    </div>
+    <div class="receipt-info">
+      <div class="trainer-info">
+        <ul>
+          <li>Jernbanegade 4, 3tv.</li>
+          <li>Copenhagen 1608</li>
+          <li>Denmark</li>
+          <li>+45 93 93 45 93</li>
+          <li>billing@zenfitapp.com</li>
+          <li>CVR: DK37085960</li>
+        </ul>
+      </div>
+      <div class="flex-grow"></div>
+      <div class="payment-info">
+        <ul>
+          <li>
+            <div class="flex-grow"></div>
+            <span style="color: black">{{ today|format('Y-m-d') }}</span>
+          </li>
+          <li>
+            <div class="flex-grow"></div>
+            <span style="color: black">{{ name }}</span>
+          </li>
+          <li>
+            <div class="flex-grow"></div>
+            <span style="color: black">{{ email }}</span>
+          </li>
+          <li>
+            <div class="flex-grow"></div>
+            <span style="color: black">{{ address|raw }}</span>
+          </li>
+          <li>
+            <div class="flex-grow"></div>
+            <span style="color: black">{{ cvr }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="payment-history">
+      <h1 class="title"><b>Paid</b> {{ currency|upper ~ ' ' ~ total|number_format(2, '.', ',') }}</h1>
+      <small>for period {{ periodStart }} to {{ periodEnd }}.</small>
+      <br /><br />
+      <p>Thanks for doing business with us.</p>
+      <table class="history-list">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th></th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Transaction fees, total incl. telesales</td>
+            <td>{{ countFees }}</td>
+            <td></td>
+            <td>{{ isDK ? (totalFees * 0.8)|number_format(2, '.', ',') ~ " " ~ currency|upper : totalFees|number_format(2, '.', ',') ~ " " ~ currency|upper }}</td>
+          </tr>
+
+          {% for salesPerson, row in fees %}
+            {% if row.commission > 0 %}
+              <tr>
+                <td>&nbsp;&nbsp;&nbsp;- {{ salesPerson }}</td>
+                <td>{{ row.count }}</td>
+                <td></td>
+                <td>{{ isDK ? (row.commission * 0.8)|number_format(2, '.', ',') : row.commission|number_format(2, '.', ',') }} {{ row.currency|upper }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+
+          {% if countRefunds > 0 %}
+            {% set totalRefundsFormatted = "-" ~ totalRefunds|number_format(2, '.', ',') %}
+            {% set totalRefundsFormattedDK = "-" ~ (totalRefunds * 0.8)|number_format(2, '.', ',') %}
+            <tr>
+              <td>Refunds</td>
+              <td>{{ countRefunds }}</td>
+              <td></td>
+              <td>{{ isDK ? totalRefundsFormattedDK ~ " " ~ currency|upper : totalRefundsFormatted ~ " " ~ currency|upper }}</td>
+            </tr>
+          {% endif %}
+          <tr>
+            <td colspan="2" style="border-top: 2px solid #B3BECA"></td>
+            <td colspan="2" style="border-top: 2px solid #B3BECA; padding: 0px">
+              <table class="total-table">
+                <tr>
+                  <td>Subtotal</td>
+                  <td>{{ isDK ? (total * 0.8)|number_format(2, '.', ',') ~ " " ~ currency|upper : total|number_format(2, '.', ',') ~ ' ' ~ currency|upper }}</td>
+                </tr>
+                {% if isDK %}
+                  <tr>
+                    <td>Tax (25%)</td>
+                    <td>{{ (total * 0.20)|number_format(2, '.', ',') ~ " " ~ currency|upper }}</td>
+                  </tr>
+                {% else %}
+                  <tr>
+                    <td>Tax to be paid on reverse charge basis.</td>
+                    <td></td>
+                  </tr>
+                {% endif %}
+                <tr>
+                  <td style="border-top: 1px solid #C0CAD4;">Amount paid</td>
+                  <td style="border-top: 1px solid #C0CAD4;">{{ total|number_format(2, '.', ',') ~ ' ' ~ currency|upper }}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="footer">
+    <small>This is an automated calculation of all your transactions from {{ periodStart }} to {{ periodEnd }}.
+    <br />Stripe fees are not included.</small>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{{ client.name }}
+{% if client.demoClient %}
+  <span class="label label-info">DEMO</span>
+{% endif %}
+
+{% for tag in client.tags %}
+  <span class="label label-client-type">{{ tag.title|upper }}</span>
+{% endfor %}

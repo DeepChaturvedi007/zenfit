@@ -1,0 +1,204 @@
+<div class="modal inmodal sm" id="addMealProduct" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Add New Food Product</h4>
+                <small class="text-muted">Once you add a food product, it will appear in the search results. Only you can see the food products you add.</small>
+            </div>
+            <form action="{{ path('createMealProduct') }}" method="post" id="saveFoodItem">
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">Language of food</label>
+                        <select name="language" id="food-language" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="da_DK">Dansk</option>
+                            <option value="sv_SE">Swedish</option>
+                            <option value="nb_NO">Norwegian</option>
+                            <option value="fi_FI">Finnish</option>
+                            <option value="nl_NL">Dutch</option>
+                            <option value="de_DE">German</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="food-name" class="control-label">Name of Food</label>
+                        <input type="text" name="name" id="food-name" class="form-control"
+                               placeholder="Eg. 'Chicken breast, filet'">
+                    </div>
+                    <div class="form-group">
+                        <label for="food-brand" class="control-label">Brand Name</label>
+                        <input type="text" name="brand" id="food-brand" class="form-control"
+                               placeholder="Write name of the brand (optional)">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-4 p-n-r">
+                            <label for="food-protein" class="control-label"><small>Protein pr. 100g</small></label>
+                            <input type="text" name="protein" id="food-protein" class="form-control" placeholder="Gram">
+                        </div>
+                        <div class="form-group col-xs-4 p-n-r">
+                            <label for="food-carbohydrates" class="control-label"><small>Carbs pr. 100g</small></label>
+                            <input type="text" name="carbohydrates" id="food-carbohydrates" class="form-control" placeholder="Gram">
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <label for="food-fat" class="control-label"><small>Fat pr. 100g</small></label>
+                            <input type="text" name="fat" id="food-fat" class="form-control" placeholder="Gram">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-4 p-n-r">
+                            <label for="food-kcal" class="control-label"><small>Calories pr. 100g</small></label>
+                            <input type="text" name="kcal" id="food-kcal" class="form-control" placeholder="Kcal">
+                        </div>
+                    </div>
+                    <hr style="margin-top: 10px;margin-bottom: 10px;" />
+                    <small class="text-muted">You can add amounts to your products to make it easier for
+                        your clients to follow their diet. <br> Eg. 1 ounce(28.35g), 1cup(230g), 1 tea spoon(6g), 1 protein bar (65g) etc.</small>
+                    <br />
+                    <div class="row" style="margin-top:23px;">
+                        <div class="form-group col-md-6">
+                            <label for="" class="control-label">Amount name #1</label>
+                            <input type="text" name="amount" id="" class="form-control" placeholder="Eg. '1 protein bar'">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6 mb-0">
+                            <label for="" class="control-label">Value in grams/ounces</label>
+                            <input type="text" name="amountValue" id="" class="form-control" placeholder="Eg. '65'">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-block btn-upper">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  (function($) {
+    var $modal = $('#addMealProduct');
+
+    function notify(method, messsage) {
+      if (window.toastr) {
+        toastr.options.preventDuplicates = true;
+        toastr[method](messsage);
+      }
+    }
+
+    function onFormSubmit(event) {
+      event.preventDefault();
+
+      var $form = $(event.target);
+      var $submit = $form
+        .find('button[type=submit]')
+        .button('loading');
+
+      var productName = $form.find('input[name="name"]').val();
+
+      $.post($form.attr('action'), $form.serialize(), 'json')
+        .done(function() {
+          $modal.modal('hide');
+          notify('success', 'Meal Product saved');
+
+          if (window.commitSearch) {
+            window.commitSearch(productName);
+          }
+        })
+        .fail(function() {
+          notify('error', 'Meal Product save failed');
+        })
+        .always(function() {
+          $submit.button('reset');
+        });
+    }
+
+    $('body')
+      .on('show.bs.modal', '#addMealProduct', function(event) {
+        var $target = $(event.relatedTarget);
+
+        if ($target.data('title')) {
+            var title = $target.data('title');
+            $("#food-name").val(title)
+        }
+
+        var $form = $modal.find('form');
+        var data = $target.data('product');
+        var ajax = $target.data('ajax');
+
+        if (!$.isEmptyObject(data)) {
+          $.each(data, function(key, value) {
+            $form.find('input[name="' + key +  '"]').val(value);
+          });
+
+          if (data.locale) {
+            $form
+              .find('#food-language')
+              .val(data.locale);
+          }
+
+          if (data.id) {
+            $form
+              .find('button[type=submit]')
+              .text('Save food product');
+
+            $modal
+              .find('.modal-title')
+              .text('Edit Food Product');
+          }
+
+        }
+
+        if (ajax) {
+          $form.on('submit', onFormSubmit);
+        }
+      })
+      .on('hidden.bs.modal', '#addMealProduct', function() {
+        var $form =  $modal
+          .find('form');
+
+        $form[0].reset();
+
+        $form
+          .find('button[type=submit]')
+            .text('Create food product')
+            .end();
+
+        $modal
+          .find('.modal-title')
+          .text('Add New Food Product');
+      })
+      .on('click', '.js-add-food-product', function(event) {
+        event.preventDefault();
+        $modal.modal('show', this);
+      })
+      .on('submit', '#saveFoodItem', function (e) {
+        e.preventDefault();
+        const $form = $(this);
+        const data = {
+          id: $form.find('input[name=id]').val(),
+          name: $form.find('input[name=name]').val(),
+          language: $form.find('select[name=language]').val(),
+          brand: $form.find('input[name=brand]').val(),
+          protein: $form.find('input[name=protein]').val(),
+          carbohydrates: $form.find('input[name=carbohydrates]').val(),
+          fat: $form.find('input[name=fat]').val(),
+          kcal: $form.find('input[name=kcal]').val(),
+          amount: $form.find('input[name=amount]').val(),
+          amountValue: $form.find('input[name=amountValue]').val(),
+        }
+
+        $.post($(this).attr('action'), data)
+          .done(function(res) {
+            location.reload();
+          });
+      });
+  })(jQuery);
+</script>

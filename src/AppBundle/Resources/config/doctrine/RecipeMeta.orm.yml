@@ -1,0 +1,79 @@
+AppBundle\Entity\RecipeMeta:
+    type: entity
+    table: recipes_meta
+    repositoryClass: AppBundle\Repository\RecipeMetaRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        lactose:
+            type: boolean
+            options:
+                default: false
+
+        gluten:
+            type: boolean
+            options:
+                default: false
+
+        nuts:
+            type: boolean
+            options:
+                default: false
+
+        eggs:
+            type: boolean
+            options:
+                default: false
+
+        pig:
+            type: boolean
+            options:
+                default: false
+
+        shellfish:
+            type: boolean
+            options:
+                default: false
+
+        fish:
+            type: boolean
+            options:
+                default: false
+
+        isVegetarian:
+            type: boolean
+            column: is_vegetarian
+            options:
+                default: false
+
+        isVegan:
+            type: boolean
+            column: is_vegan
+            options:
+                default: false
+
+        isPescetarian:
+            type: boolean
+            column: is_pescetarian
+            options:
+                default: false
+
+    oneToOne:
+        recipe:
+            targetEntity: AppBundle\Entity\Recipe
+            inversedBy: recipeMeta
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

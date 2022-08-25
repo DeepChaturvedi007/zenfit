@@ -1,0 +1,44 @@
+ChatBundle\Entity\Conversation:
+    type: entity
+    table: conversations
+    uniqueConstraints:
+        unique_conversation:
+          columns: [ user_id, client_id ]
+
+    repositoryClass: ChatBundle\Repository\ConversationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+    oneToMany:
+        messages:
+            targetEntity: ChatBundle\Entity\Message
+            mappedBy: conversation
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: conversations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: conversations
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

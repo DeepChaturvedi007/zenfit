@@ -1,0 +1,63 @@
+.notification-bar {
+    background-color: #2895f1;
+    text-align: center;
+    padding: 30px 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 2002;
+}
+
+.notification-bar .notification-title {
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.notification-bar .notification-btns {
+    padding-top: 25px;
+}
+
+.notification-bar .btn-success {
+    border: none;
+    background: none;
+}
+
+.notification-bar p {
+    color: #ffffff;
+    margin: -7px 0 10px;
+}
+
+.notification-bar .btn-skip {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+@media (max-width: 767px) {
+    .notification-bar{
+        position: fixed;
+        left: 0;
+        padding: 10px;
+    }
+    .notification-bar .notification-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+    .notification-bar .notification-btns {
+        padding-top: 0;
+    }
+
+    .notification-btns > .btn {
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+
+
+
+}

@@ -1,0 +1,94 @@
+{% set hasComment = day.comment is not null %}
+{% set hasDropSet = hasComment ? day.comment matches '/^this is a drop set/mi' : false %}
+{% set isSetAndRestDisabled = (isSuper != true and supersCount > 0) or (isSuper and isLast != true) %}
+<div
+    class="exercise-item{{ isSuper ? ' is-super' : '' }}"
+    data-id="{{ day.exercise.id }}"
+    data-workout-id="{{ day.id }}"
+>
+    <div class="exercise-item-move"></div>
+    <div class="exercise-item-thumb handle">
+        <a data-toggle="modal" data-target="#exerciseModal" href="{{ path('exerciseInfo',{'exercise':day.exercise.id}) }}">
+            {% if day.exercise.picture != "" %}
+                <img alt="image" src="{{ day.exercise.picture }}">
+            {% else %}
+                <img alt="image" src="{{ asset('images/exercise_thumbnail.png') }}">
+            {% endif %}
+        </a>
+    </div>
+    <div class="exercise-item-details">
+        <a data-toggle="modal" data-target="#exerciseModal" href="{{ path('exerciseInfo',{'exercise':day.exercise.id}) }}" class="exercise-item-title">{{ day.exercise.name }}</a>
+        <small class="exercise-item-info">
+            <a
+                href="#"
+                data-state="{{ hasComment ? 1 : 0 }}"
+                data-title-add="Add Comment"
+                data-title-remove="Remove Comment"
+                class="{{ hasComment ? 'delete-link' : 'add-link' }} js-add-comment"
+            >
+                {{ hasComment ? 'Remove' : 'Add' }} Comment
+            </a>
+            <a href="#"
+                data-state="{{ hasDropSet ? 1 : 0 }}"
+                data-title-add="Drop Set"
+                data-title-remove="Remove Drop Set"
+                class="{{ hasDropSet ? 'delete-link' : 'add-link' }} js-add-dropset"
+            >
+                {{ hasDropSet ? 'Remove ' : '' }}Drop Set
+            </a>
+            {% if not isSuper %}
+                <a
+                    href="#"
+                    data-state="{{ supersCount > 0 ? 1 : 0 }}"
+                    data-title-add="Create Super Set"
+                    data-title-remove="Cancel Super Set"
+                    class="{{ supersCount > 0 ? 'delete-link' : 'add-link' }} js-switch-superset"
+                >
+                    {{ supersCount ? 'Cancel' : 'Create' }} Super Set
+                </a>
+            {% endif %}
+        </small>
+    </div>
+    <div class="exercise-item-actions">
+        <div class="form-group">
+            <label>Set</label>
+            <input
+                {{ isSetAndRestDisabled  ? ' disabled' : ''}}
+                type="text"
+                placeholder="Sets"
+                value="{{ day.sets }}"
+                class="form-control js-input-sets"
+            >
+        </div>
+        <div class="form-group">
+            <label>{{ day.exercise.workoutType.name }}</label>
+            <input 
+                type="text"
+                placeholder="{{ day.exercise.workoutType.name }}"
+                {% if day.reps is not null or day.time is not null %}
+                    {% set type = day.exercise.workoutType.name == 'Reps' ? day.reps : day.time %}
+                    value="{{ type }}"
+                {% endif %}
+               class="form-control js-input-{{ day.exercise.workoutType.name|lower }}"
+           >
+        </div>
+        <div class="form-group">
+            <label>Rest in sec</label>
+            <input
+                {{ isSetAndRestDisabled  ? ' disabled' : ''}}
+                type="number"
+                min="0"
+                placeholder="Rest"
+                value="{{ supersCount > 0  ? 0 : day.rest }}"
+                class="form-control js-input-rest"
+            >
+        </div>
+
+        <button class="exercise-item-delete" data-action="delete-exercise" type="button">
+            <i class='fa fa-times'></i>
+        </button>
+    </div>
+    <div class="exercise-item-comment{{ hasComment ? '' : ' hidden' }}">
+        <textarea class="form-control comment" placeholder="Comment">{{ day.comment }}</textarea>
+    </div>
+</div>

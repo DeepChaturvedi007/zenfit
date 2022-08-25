@@ -1,0 +1,49 @@
+AppBundle\Entity\UserApp:
+    type: entity
+    table: user_app
+    repositoryClass: AppBundle\Repository\UserAppRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        onesignal_app_id:
+            type: string
+            length: 255
+            nullable: false
+
+        onesignal_app_key:
+            type: string
+            length: 255
+            nullable: false
+
+        iphone_link:
+            type: string
+            length: 255
+            nullable: false
+
+        android_link:
+            type: string
+            length: 255
+            nullable: false
+
+        title:
+            type: string
+            length: 255
+            nullable: false
+
+    oneToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: userApp
+            joinColumn:
+                nullable: false
+
+    lifecycleCallbacks: {  }

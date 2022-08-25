@@ -1,0 +1,25 @@
+{% set hasComment = exercise.comment is null ? false : true %}
+<tr data-exercise-href="{{ path('exerciseInfo', { 'exercise': exercise.exercise.id }) }}" onclick="">
+    <td class="client-avatar {{ hasComment ? 'no-borders' : '' }} {{ hasOpenSet ? 'superset-bg' : '' }}">
+        {% if exercise.exercise.picture != "" %}
+            <img style="width:50px;height:auto;" alt="image" src="{{ exercise.exercise.picture }}">
+        {% else %}
+            <img style="width:50px;height:auto;" alt="image" src="{{ asset('images/exercise_thumbnail.png') }}">
+        {% endif %}
+    </td>
+    <td class="{{ hasComment ? 'no-borders' : '' }} {{ hasOpenSet ? 'superset-bg' : '' }}">
+        <h4 class="exercise-title">{{ exercise.exercise.name }}</h4>
+        <span class="help-block">
+            Set: <strong>{{ exercise.sets? : 0 }}</strong> /
+            Reps: <strong>{{ exercise.reps? : 0 }}</strong> /
+            Rest: <strong>{{ exercise.rest? : 0 }} sec.</strong>
+        </span>
+    </td>
+</tr>
+{% if hasComment %}
+    <tr data-exercise-href="{{ path('exerciseInfo', { 'exercise': exercise.exercise.id }) }}" onclick="">
+        <td colspan="2" class="text-muted {{ hasOpenSet ? 'superset-bg' : '' }} {{ hasComment ? 'p-n-t' : '' }}">
+            {{ exercise.comment|nl2br }}
+        </td>
+    </tr>
+{% endif %}

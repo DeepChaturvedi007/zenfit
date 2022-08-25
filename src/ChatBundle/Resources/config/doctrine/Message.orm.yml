@@ -1,0 +1,87 @@
+ChatBundle\Entity\Message:
+    type: entity
+    table: messages
+    indexes:
+        client_user:
+            columns: [user_id, client_id]
+        new_deleted_conversation_user_client:
+            columns: [ is_new, deleted, conversation_id, client_id, user_id ]
+
+    repositoryClass: ChatBundle\Repository\MessageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        content:
+            type: text
+            nullable: true
+
+        sentAt:
+            type: datetime
+            column: sent_at
+
+        isNew:
+            type: boolean
+            options:
+                default: false
+
+        isProgress:
+            type: boolean
+            options:
+                default: false
+
+        feedbackGiven:
+            type: boolean
+            options:
+                default: false
+
+        video:
+            type: text
+            nullable: true
+
+        status:
+            type: string
+            nullable: TRUE
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        conversation:
+            targetEntity: ChatBundle\Entity\Conversation
+            inversedBy: messages
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: messages
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: messages
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+
+        clientStatus:
+            targetEntity: AppBundle\Entity\ClientStatus
+            inversedBy: messages
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+
+    lifecycleCallbacks: {  }

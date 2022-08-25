@@ -1,0 +1,58 @@
+{
+  "name": "zenfit-meals",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "proxy": "http://localhost:8888/",
+  "main": "src/index.js",
+  "homepage": "/js/meals/",
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "axios": "^0.18.0",
+    "es7-object-polyfill": "^1.0.0",
+    "formik": "^1.5.4",
+    "fuse.js": "^3.4.4",
+    "gensync": "^1.0.0-beta.1",
+    "indicative": "^5.0.8",
+    "lodash": "4.17.11",
+    "luxon": "^1.13.1",
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-addons-update": "15.6.2",
+    "react-beautiful-dnd": "^11.0.3",
+    "react-dom": "16.8.6",
+    "react-infinite-scroller": "^1.2.4",
+    "react-loads": "^8.0.4",
+    "react-modal": "^3.8.1",
+    "react-quill": "^1.3.3",
+    "react-scripts": "2.1.8",
+    "remixicon": "^1.1.2",
+    "styled-components": "^4.2.0"
+  },
+  "devDependencies": {
+    "copy": "^0.3.2",
+    "dotenv-cli": "^3.0.0",
+    "node-sass": "^4.11.0",
+    "rimraf": "^2.6.3",
+    "typescript": "3.3.3"
+  },
+  "resolutions": {
+    "fsevents": "1.2.9"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "postbuild": "node ./postbuild.js"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "serviceWorkerOptions": {
+    "skipWaiting": true
+  }
+}

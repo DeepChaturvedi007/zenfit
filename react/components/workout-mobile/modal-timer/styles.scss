@@ -1,0 +1,67 @@
+.modal-timer-container {
+  background: #ffffff;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  opacity: 0.95;
+  padding: 20px 16px 16px;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 101;
+}
+.modal-timer-close-button {
+  text-align: left;
+  button {
+    color: #000000;
+    background: #ffffff;
+    border: none;
+    padding: 0;
+  }
+}
+.modal-timer-content-wrapper {
+  align-self: center;
+  display: flex;
+  flex: 1;
+  .modal-timer-content {
+    align-self: center;
+    h4 {
+      color: #000000;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: -0.4px;
+      margin: 0 0 -8px;
+    }
+    h3 {
+      color: #14181f;
+      font-size: 50px;
+      font-weight: 400;
+      letter-spacing: 0px;
+    }
+    p {
+      color: #1a91eb;
+      font-size: 100px;
+      font-weight: 300;
+      letter-spacing: 0px;
+      margin: 0;
+      &.warning-text {
+        color: #fb924a;
+      }
+    }
+  }
+}
+.modal-timer-action-button {
+  button {
+    color: #1a91eb;
+    background: #ffffff;
+    border: solid 1px #1a91eb;
+    border-radius: 4px;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+    line-height: 1.33;
+    padding: 14px 0;
+    width: 100%;
+  }
+}

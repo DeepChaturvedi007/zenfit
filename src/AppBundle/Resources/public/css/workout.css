@@ -1,0 +1,101 @@
+/*.drop-here {
+	display: block;
+	height: 70px;
+	padding:8px 8px 8px 64px;
+	background-image: url(/bundles/app/dragdrop_icon_100.png);
+	background-size: 50px 40px;
+	background-position: 8px 8px;
+	background-repeat: no-repeat;
+	border:2px dashed;
+	background-color: #eee;
+	opacity: 0.5;
+}
+.drop-here::before {
+	content: "Drop exercise here...";
+	font-size: 1.5em;
+	margin-before: 0.83em;
+	margin-after: 0.83em;
+	margin-start: 0;
+	margin-end: 0;
+	font-weight: bold;
+}*/
+
+/*.exercises {
+	position: relative;
+	margin-bottom: 70px;
+}*/
+.right tr {
+	min-width: 600px;
+}
+.gu-mirror td {
+	padding:8px;
+}
+/*.gu-mirror a,.gu-mirror .client-status {
+		display: none;
+}*/
+.gu-mirror .client-link,.gu-mirror .client-avatar a {
+		display: inline;
+}
+
+.superset {
+		background-color: #fafafa;
+}
+
+.superset .table {
+	background: none;
+	width: 100%;
+}
+
+.supersetbody {
+	position: relative;
+	margin-bottom: 70px;
+}
+.supersetpadding {
+	padding:0px !important;
+}
+.supersetbody label, .main-workout .deleteExercise {
+	display: none;
+}
+.supersetbody tbody.rightsb::after {
+	content:"Drop superset exercise here...";
+	display: inline-block;
+	right: 0;
+	left: 0;
+	position: absolute;
+	font-weight: bold;
+	height: 70px;
+	padding:8px 8px 8px 64px;
+	background-image: url(/bundles/app/dragdrop_icon_100.png);
+	background-size: 50px 40px;
+	background-position: 8px 8px;
+	background-repeat: no-repeat;
+	border:2px dashed;
+	font-size: 1.5em;
+	margin-before: 0.83em;
+	margin-after: 0.83em;
+	margin-start: 0;
+	margin-end: 0;
+	opacity: 0.5;
+}
+.client-avatar a {
+	overflow: hidden;
+	display: block;
+	position: relative;
+}
+.client-avatar {
+}
+.client-avatar a:hover:after {
+		content:"";
+		display: block;
+		background-color:rgba(0,0,0,0.5);
+		width:50px;
+		height:50px;
+		top:0px;
+		background-image: url(/bundles/app/ic_play_arrow_white_48dp_2x.png);
+		background-size:32px;
+		background-position:center;
+		background-repeat: no-repeat;
+		position: absolute;
+		overflow: hidden;
+
+}

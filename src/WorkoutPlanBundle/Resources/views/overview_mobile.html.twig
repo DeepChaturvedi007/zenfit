@@ -1,0 +1,33 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+
+        <div id="page-wrapper" class="gray-bg">
+            {% include '@App/components/clientNav.html.twig' with {'clientWorkout': 'true'} %}
+
+            <div id="workout-plans" class="under-header" data-client-id="{{ client.id }}" data-client-name="{{ client.name }}"></div>
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+
+        {% include '@App/default/modals/confirmModal.html.twig' with {
+        modalId: 'deleteModal',
+        modalTitle: 'Delete workout plan?',
+        formPath: '',
+        btnClass: 'btn-danger',
+        btnName: 'Delete'
+        } %}
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ asset('js/workout-plans.css') }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('js/workout-plans.js') }}"></script>
+{% endblock %}

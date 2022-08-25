@@ -1,0 +1,115 @@
+AppBundle\Entity\Exercise:
+    type: entity
+    table: exercises
+    repositoryClass: AppBundle\Repository\ExerciseRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        muscleGroupId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+
+        exerciseTypeId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+
+        equipmentId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+
+        workoutTypeId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: true
+
+        name:
+            type: string
+            length: 255
+            nullable: false
+
+        execution:
+            type: text
+            nullable: true
+
+        picture_url:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        video_url:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        demo:
+            type: integer
+            length: 1
+            nullable: TRUE
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        muscleGroup:
+            targetEntity: AppBundle\Entity\MuscleGroup
+            inversedBy: exercises
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        exerciseType:
+            targetEntity: AppBundle\Entity\ExerciseType
+            inversedBy: exercises
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        equipment:
+            targetEntity: AppBundle\Entity\Equipment
+            inversedBy: exercises
+            cache:
+                usage: NONSTRICT_READ_WRITE
+            #inversedBy: exercises
+
+        workoutType:
+            targetEntity: AppBundle\Entity\WorkoutType
+            cache:
+                usage: NONSTRICT_READ_WRITE
+            #inversedBy: exercises
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: true
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    manyToMany:
+        workoutDay:
+            targetEntity: AppBundle\Entity\WorkoutDay
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+#    manyToOne:
+#        exerciseCategory:
+#            targetEntity: AppBundle\Entity\ExerciseCategory
+#            inversedBy: exercise
+
+    lifecycleCallbacks: {  }

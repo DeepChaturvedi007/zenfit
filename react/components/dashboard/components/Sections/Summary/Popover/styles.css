@@ -1,0 +1,19 @@
+.zf-popover {
+    box-shadow: 0 3px 24px 0 rgba(0, 0, 0, 0.24);
+    background-color: #fff;
+    border-radius: 15px;
+}
+.zf-popover .arrow {
+    box-shadow: 0 3px 24px 0 rgba(0, 0, 0, 0.24);
+    border: none;
+}
+
+.zf-popover .popover-content {
+    font-family: Poppins, sans-serif;
+    line-height: 1.27;
+    letter-spacing: 0.16px;
+    font-size: 11px;
+    padding: 14px;
+    color: #171725;
+    font-weight: normal;
+}

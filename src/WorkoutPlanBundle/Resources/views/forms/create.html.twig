@@ -1,0 +1,76 @@
+<div class="modal modal-workout inmodal in md" id="createWorkout" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Create Workout Plan</h4>
+            </div>
+            <div class="modal-body">
+                <div class="plan-create-row">
+                    <div class="plan-create-col">
+                        <div class="plan-create-col-main">
+                            <img src="{{ asset('bundles/app/template-plan-icon.png') }}" alt="">
+                            <h4>Create Workout Plan from Template</h4>
+                            <p>By creating your client’s workout plan from a template, you will save much time on customization.</p>
+                        </div>
+                        <div class="plan-create-col-footer">
+                            <button class="btn btn-success btn-upper" data-target="#addWorkoutTemplate" data-modal-back="#createWorkout">Choose Template</button>
+                        </div>
+                    </div>
+                    <div class="plan-create-or">
+                        <span>or</span>
+                    </div>
+                    <div class="plan-create-col">
+                        <div class="plan-create-col-main">
+                            <img src="{{ asset('bundles/app/empty-plan-icon.png') }}" alt="">
+                            <h4>Create Workout Plan From Scratch</h4>
+                            <p>By creating from scratch, you can easily make a fully customized plan for your client. Don’t worry, you can always save plans as templates later on.</p>
+                        </div>
+                        <div class="plan-create-col-footer">
+                            <button class="btn btn-success btn-upper" data-type="new" data-target="#editTemplateText" data-modal-back="#createWorkout">Create Plan From Scratch</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  (function($) {
+    $('body')
+      .on('click', '.modal-workout button[data-target]', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        var $button = $(this);
+        var $modal = $button.closest('.modal');
+        var $targetModal = $($button.data('target'));
+
+        $modal
+          .one('hidden.bs.modal', function() {
+            $targetModal.modal('show', $button.get(0));
+          })
+          .modal('hide');
+      })
+      .on('show.bs.modal', '.modal-workout', function (event) {
+        var $modal = $(this);
+        var $relatedTarget = $(event.relatedTarget);
+        var backAction = $relatedTarget.data('modalBack');
+
+        $modal.find('.modal-back-action').remove();
+
+        if (backAction) {
+          $modal.find('.modal-header').prepend(
+            '<div class="modal-back-action">' +
+                '<button class="btn btn-upper" type="button" data-target="' + backAction + '">' +
+                    '<i class="material-icons">&#xE314;</i> Back' +
+                '</button>' +
+            '</div>'
+          );
+        }
+      });
+  })(jQuery);
+</script>

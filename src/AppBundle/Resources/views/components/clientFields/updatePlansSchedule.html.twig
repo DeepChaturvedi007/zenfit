@@ -1,0 +1,27 @@
+<div class="form-group">
+    <label class="control-label">Update Meal Schedule <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="How often should you update meal plans for this client? Every 4 weeks for instance.">?</span></label>
+    <div class="form-group-in max-width">
+        <select name="updateMealSchedule" class="form-control">
+            <option value="">Not set</option>
+            {% for key, name in constant('UPDATE_PLANS_SCHEDULE', client)%}
+                <option value="{{ key }}"
+                        {% if key == client.updateMealSchedule %} selected {% endif %}
+                >{{ name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label">Update Workout Schedule <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="How often should you update workouts for this client? Every 4 weeks for instance.">?</span></label>
+    <div class="form-group-in max-width">
+        <select name="updateWorkoutSchedule" class="form-control">
+            <option value="">Not set</option>
+            {% for key, name in constant('UPDATE_PLANS_SCHEDULE', client)%}
+                <option value="{{ key }}"
+                        {% if key == client.updateWorkoutSchedule %} selected {% endif %}
+                >{{ name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

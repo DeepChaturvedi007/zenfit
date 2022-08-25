@@ -1,0 +1,64 @@
+@import "../shared/styles/main.css";
+
+#plans-page-controller {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    #plans-summary {
+        article  {
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+    }
+
+    .guide-card {
+        background-color: #a8ceff;
+        border-radius: 5px;
+        padding: 40px 15px;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 7px 14px rgba(0,0,0, .3);
+        }
+
+        button.close {
+            position: absolute;
+            right: 15px;
+            top: 8px;
+            font-size: 42px;
+            font-weight: 200;
+            color: #5391de;
+            opacity: 1;
+            outline: none;
+
+            &:focus, &:active, &:hover {
+                outline: none;
+            }
+        }
+        h4 {
+            color: #00387e;
+            font-weight: 600;
+            font-size: 24px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #0a448a;
+            font-size: 20px;
+            max-width: 800px;
+        }
+        a.learn-more {
+            border-radius: 7px;
+            width: auto;
+            display: inline-block;
+            padding: 10px 30px;
+            color: #f9f9fe;
+            background-color: #221f9e;
+            margin-right: auto;
+            font-size: 20px;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+#heading {
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  display: flex;
+  color: #fff !important;
+  font-size: 21px;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+  .overlay {
+    background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5));
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wrapper {
+    max-width: 750px;
+
+    .container-title, p {
+      color: #fff;
+    }
+
+    article {
+      z-index: 10;
+    }
+  }
+}

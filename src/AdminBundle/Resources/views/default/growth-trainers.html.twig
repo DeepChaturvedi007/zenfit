@@ -1,0 +1,166 @@
+{% extends '@App/base.html.twig' %}
+{% block content -%}
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Admin Dashboard' } %}
+        <div id="page-wrapper" class="gray-bg sm-white-bg">
+            {% include '@Admin/components/nav.html.twig' with {'growth': 'true'} %}
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+
+                <input type="text" name="daterange" />
+
+                <br />
+
+                <div class="ibox-content m-x-n no-padding">
+                    <div class="project-list">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Leads (total)</th>
+                                    <th>Leads (paid)</th>
+                                    <th>Conversion rate (total)</th>
+                                    <th>Conversion rate (paid)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="ibox-content m-x-n no-padding leads-table" style="display:none;">
+                    <div class="project-list">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>UTM</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body-leads"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+
+        </div>
+
+    </div>
+{% endblock %}
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+
+    const LEAD_STATUS = {
+      1: 'New',
+      2: 'Dialog',
+      3: 'Won',
+      4: 'Lost',
+      5: 'Awaiting payment'
+    };
+
+    function appendToTable(id, name, current, past) {
+      const {leadsTotal, leadsPaid, conversionTotal, conversionPaid} = current;
+      let leadsTotalPast = past.leadsTotal;
+      let leadsPaidPast = past.leadsPaid;
+      let conversionTotalPast = Math.round(past.conversionTotal);
+      let conversionPaidPast = Math.round(past.conversionPaid);
+
+      let leadsDiff = leadsTotal == 0 ? 0 : Math.round((leadsTotal-leadsTotalPast) / leadsTotal * 100);
+      let leadsPaidDiff = leadsPaid == 0 ? 0 : Math.round((leadsPaid - leadsPaidPast) / leadsPaid * 100);
+      let conversionTotalDiff = conversionTotal == 0 ? 0 : Math.round((conversionTotal-conversionTotalPast) / conversionTotal * 100);
+      let conversionPaidDiff = conversionPaid == 0 ? 0 : Math.round((conversionPaid-conversionPaidPast) / conversionPaid * 100);
+
+      let leadsLabel;
+      let leadsPaidLabel;
+      let conversionTotalLabel;
+      let conversionPaidLabel;
+
+      if (leadsDiff > 0) {
+        leadsLabel = `<span class="label label-green-success">${leadsDiff}%</span>`;
+      } else {
+        leadsLabel = `<span class="label label-danger">${leadsDiff}%</span>`;
+      }
+
+      if (leadsPaidDiff > 0) {
+        leadsPaidLabel = `<span class="label label-green-success">${leadsPaidDiff}%</span>`;
+      } else {
+        leadsPaidLabel = `<span class="label label-danger">${leadsPaidDiff}%</span>`;
+      }
+
+      if (conversionTotalDiff > 0) {
+        conversionTotalLabel = `<span class="label label-green-success">${conversionTotalDiff}%</span>`;
+      } else {
+        conversionTotalLabel = `<span class="label label-danger">${conversionTotalDiff}%</span>`;
+      }
+
+      if (conversionPaidDiff > 0) {
+        conversionPaidLabel = `<span class="label label-green-success">${conversionPaidDiff}%</span>`;
+      } else {
+        conversionPaidLabel = `<span class="label label-danger">${conversionPaidDiff}%</span>`;
+      }
+
+      let $body = $("#table-body");
+      $(`<tr>
+        <td>${id}</td>
+        <td><a href="#" class="trainer-name" data-id=${id}>${name}</a></td>
+        <td>${leadsTotal} ${leadsLabel}</td>
+        <td>${leadsPaid} ${leadsPaidLabel}</td>
+        <td>${conversionTotal}% ${conversionTotalLabel}</td>
+        <td>${conversionPaid}% ${conversionPaidLabel}</td>
+      </tr>`).appendTo($body);
+    }
+
+    function appendLeadToTable(id, name, date, status, utm) {
+      let $body = $("#table-body-leads");
+      $(`<tr>
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${date}</td>
+        <td>${status}</td>
+        <td>${utm}</td>
+      </tr>`).appendTo($body);
+    }
+
+    $(document).ready(function () {
+
+        let startDate;
+        let endDate;
+
+        $('input[name="daterange"]').daterangepicker({
+          opens: 'left'
+        }, function(start, end, label) {
+          $("#table-body tr").remove();
+          $(".leads-table").hide();
+          $("#table-body-leads tr").remove();
+
+          startDate = start.format('YYYY-MM-DD');
+          endDate = end.format('YYYY-MM-DD');
+        })
+
+        $("body").on("click", "a.trainer-name", function(e) {
+          e.preventDefault();
+          let id = $(this).data('id');
+          let leadsTable = $(".leads-table");
+          let leadsTableBody = $("#table-body-leads");
+          leadsTableBody.find("tr").remove();
+          leadsTable.show();
+        });
+    });
+</script>
+
+{% endblock script %}

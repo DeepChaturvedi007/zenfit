@@ -1,0 +1,105 @@
+<div class="table-container">
+    <table class="table actions-on-hover sort-table">
+        <thead>
+        <tr>
+            <th>Manually created meal plans</th>
+            <th class="no-wrap">Last Updated</th>
+            <th class="no-wrap hidden-xs">Created</th>
+            <th class="no-wrap hidden-xs"># Meals</th>
+            <th class="hidden-xs" width="150">Comment</th>
+            {% if client %}
+                <th class="no-wrap">Status</th>{% endif %}
+            <th style="text-align: right;" width="150">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for plan in plans %}
+            {% if (not plan.macroSplit and not plan.containsAlternatives) or (not client and plan.containsAlternatives) %}
+                {% if client %}
+                    {% set routePath = 'meal_client_edit' %}
+                    {% set routeParams = { 'plan': plan.id, 'client': client.id } %}
+                {% else %}
+                    {% set routePath = 'meal_templates_edit' %}
+                    {% set routeParams = { 'plan': plan.id } %}
+                {% endif %}
+                <tr>
+                    <td width="50%">
+                        <a href="{{ path(routePath, routeParams) }}"><strong>{{ plan.name }}</strong></a>
+                    </td>
+                    <td class="no-wrap hidden-xs">
+                        {% if plan.lastUpdated %}
+                            {{ plan.lastUpdated|date("d M Y") }}
+                        {% elseif plan.createdAt %}
+                            {{ plan.createdAt|date("d M Y") }}
+                        {% endif %}
+                    <td class="no-wrap hidden-xs">
+                        {% if plan.createdAt %}
+                            {{ plan.createdAt|date("d M Y") }}
+                        {% endif %}
+                    </td>
+                    <td class="no-wrap hidden-xs">{{ plan.mealsSize }}</td>
+                    <td class="hidden-xs">{{ plan.explaination }}</td>
+                    {% if client %}
+                        <td class="no-wrap">
+                            <div class="dropdown" data-status="{{ plan.status }}">
+                                <a class="plan-status-handler" href="#" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <span class="plan-status-label {{ plan.status == 'active' ? 'text-valid' : 'text-invalid' }}">{{ plan.status|capitalize }}</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"
+                                           data-action="toggle-action"
+                                           data-url="{{ path('meal_update', { 'plan': plan.id }) }}"
+                                           data-status="active">Activate</a></li>
+                                    <li><a href="#"
+                                           data-action="toggle-action"
+                                           data-url="{{ path('meal_update', { 'plan': plan.id }) }}"
+                                           data-status="inactive">Deactivate</a></li>
+                                    <li><a href="#"
+                                           data-action="toggle-action"
+                                           data-url="{{ path('meal_update', { 'plan': plan.id }) }}"
+                                           data-status="hidden">Hide plan</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    {% endif %}
+                    <td class="text-right table-actions no-wrap">
+                        <a
+                                class="btn btn-default btn-sm btn-edit-plan"
+                                data-name="{{ plan.name }}"
+                                data-comment="{{ plan.explaination }}"
+                                data-title="Edit Meal Plan"
+                                data-target="#mealPlanModal"
+                                data-action="{{ path('meal_update', { 'plan': plan.id }) }}"
+                                data-type="edit"
+                                data-toggle="modal"
+                                role="button"
+                                href="#"
+                        >
+                            <span class="fa fa-pencil" aria-hidden="true"></span>
+                        </a>
+                        <a
+                                href="#"
+                                class="btn btn-default btn-sm"
+                                data-plan="{{ plan.id }}"
+                                data-name="{{ plan.name }}"
+                                data-title="Clone Meal Plan"
+                                data-action="{{ path('meal_create') }}"
+                                data-target="#mealPlanModal"
+                                data-toggle="modal"
+                                role="button"
+                        >
+                            <span class="fa fa-clone" aria-hidden="true"></span>
+                        </a>
+                        <a href="{{ path('meal_delete', { 'plan': plan.id }) }}" role="button"
+                           class="btn btn-default btn-sm" onclick="shouldDelete(event)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

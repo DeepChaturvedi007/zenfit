@@ -1,0 +1,649 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+        <div id="page-wrapper" class="gray-bg">
+            {% include '@App/components/clientNav.html.twig' with {'clientBodyProgress': 'true'} %}
+
+            <div class="gray-bg container-mobile m-n-p-x">
+                {# Progress section #}
+                <section class="container-fluid">
+                    <div class="container-header row">
+                        <div class="col-sm-12 col-lg-3">
+                            <h1 class="container-title">
+                                Progress
+                                {% if progress.weeks > 0 %}
+                                    <span>Week {{ progress.currentWeek }} out of {{ progress.weeks }}</span>
+                                {% endif %}
+                            </h1>
+                        </div>
+                        <div class="col-sm-12 col-lg-9">
+                            {% if clientStatus.exists %}
+                                <div class="progress-alert progress-alert--info">
+                                    <div class="progress-alert-body">
+                                        <h5 class="progress-alert-title">New progress update!</h5>
+                                        {{ client.name }} updated his/her body progress {{ clientStatus.date|date("l, M d Y") }}
+                                    </div>
+                                    <div class="progress-alert-actions">
+                                        <button
+                                                class="ui-button ui-button--primary trigger-chat-widget"
+                                                type="button"
+                                        >
+                                            Give feedback
+                                        </button>
+                                        <button
+                                                class="ui-button ui-button--link js-ignore-client-status"
+                                                data-id="{{ clientStatus.id }}"
+                                                type="button"
+                                        >
+                                            Ignore
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="progress-cards">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h5 class="card-title">Weight</h5>
+                                    </header>
+                                    <div class="card-body">
+                                        <svg viewBox="0 0 400 250" class="js-chart-weight"></svg>
+                                    </div>
+                                    <footer class="card-footer">
+                                        <div class="kpi-label">Progress this week</div>
+                                        <div class="kpi-value">
+                                            {{ kpi.weight.now|number_symbol ~ ' ' ~ kpi.weight.unit }}
+                                            <small>{{ kpi.weight.lastWeek ? kpi.weight.lastWeek|number_symbol ~ ' ' ~ kpi.weight.unit ~ ' last week' : '' }}</small>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-lg-6">
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h5 class="card-title">Circumference</h5>
+                                    </header>
+                                    <footer class="card-footer">
+                                        <div class="kpi-value">
+                                            {% if kpi.circumference.total == 0 %}
+                                                N/A
+                                            {% else %}
+                                                {{ kpi.circumference.total|number_symbol }} {{ kpi.circumference.unit }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="kpi-value-alt">
+                                            Currently: {{ kpi.circumference.last == 0 ? 'N/A' : kpi.circumference.last|number_format(1) ~ ' ' ~ kpi.circumference.unit }}
+                                            (Start: {{ kpi.circumference.start == 0 ? 'N/A' : kpi.circumference.start|number_format(1) ~ ' ' ~ kpi.circumference.unit }})
+                                        </div>
+                                    </footer>
+                                </div>
+
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h5 class="card-title">Fat percentage</h5>
+                                    </header>
+                                    <footer class="card-footer">
+                                        <div class="kpi-value">
+                                            {% if kpi.fat.total == 0 %}
+                                                N/A
+                                            {% else %}
+                                                {{ kpi.fat.total|number_symbol }}{{ kpi.fat.unit }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="kpi-value-alt">
+                                            Currently: {{ kpi.fat.last == 0 ? 'N/A' : kpi.fat.last|number_format(1) ~ kpi.fat.unit }}
+                                            (Start: {{ kpi.fat.start == 0 ? 'N/A' : kpi.fat.start|number_format(1) ~ kpi.fat.unit }})
+                                        </div>
+                                    </footer>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h5 class="card-title">Pictures</h5>
+                                        <a class="card-link" href="#" data-toggle="modal" data-target="#galleryModal">View Gallery</a>
+                                    </header>
+                                    <div class="card-body">
+                                        <div class="progress-comparison">
+                                            {% for i in 0..1 %}
+                                                {% set picture = progress.pictures[i]|default(null) %}
+                                                <figure>
+                                                    {% if picture %}
+                                                        <img src="{{ imageUrl ~ picture.name }}" alt="">
+                                                        <figcaption>{{ picture.date|date('M j, Y') }}</figcaption>
+                                                    {% endif %}
+                                                </figure>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <footer class="card-footer">
+
+                                    </footer>
+                                </div>
+                            </div>
+                            {% if charts.weight.sum > 0 and charts.weight|length > 1 %}
+                                <div class="col-sm-12 col-lg-6">
+
+                                    <div class="card">
+                                        <header class="card-header">
+                                            <h5 class="card-title">Weight</h5>
+                                            <div class="progress-legend">{{ progress.unit }}</div>
+                                        </header>
+                                        <div class="card-footer">
+                                            <canvas width="100" height="70" class="js-line-weight"></canvas>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endif %}
+
+                            {% if charts.circumference.sum > 0 and charts.circumference|length > 1 %}
+                                <div class="col-sm-12 col-lg-6">
+
+                                    <div class="card">
+                                        <header class="card-header">
+                                            <h5 class="card-title">Circumference</h5>
+                                            <div class="progress-legend">{{ progress.unit == 'kg' ? 'cm' : 'inches' }}</div>
+                                        </header>
+                                        <div class="card-footer">
+                                            <canvas width="100" height="70" class="js-line-circumference"></canvas>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endif %}
+
+                            {% if charts.fat.sum > 0 and charts.fat|length > 1 %}
+                                <div class="col-sm-12 col-lg-6">
+
+                                    <div class="card">
+                                        <header class="card-header">
+                                            <h5 class="card-title">Fat percentage</h5>
+                                            <div class="progress-legend">{{ progress.unit }}</div>
+                                        </header>
+                                        <div class="card-footer">
+                                            <canvas width="100" height="70" class="js-line-fat"></canvas>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="card">
+                            <header class="card-header">
+                                <h5 class="card-title">Weight progress & Fat percentage</h5>
+                                <button
+                                        class="ui-button ui-button--primary"
+                                        type="button"
+                                        data-toggle="modal"
+                                        data-target="#addRecord"
+                                >
+                                    Add
+                                </button>
+                            </header>
+                            <div class="card-body --scrollable-x">
+                                <table class="progress-table" id="progressWeightTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th class="progress-table-nowrap">Weight</th>
+                                        <th class="progress-table-nowrap">Fat %</th>
+                                        <th class="progress-table-nowrap">Muscle mass</th>
+                                        <th class="progress-table-right">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for entry in progress.last %}
+                                        {% if entry.weight is not null or entry.fat is not null or entry.muscleMass is not null %}
+                                            <tr>
+                                                <td class="progress-table-date">{{ entry.date }}</td>
+                                                <td class="progress-table-value">{{ entry.weight|number_format(1) }}</td>
+                                                <td class="progress-table-value">{{ entry.fat|number_format(1) }}</td>
+                                                <td class="progress-table-value">{{ entry.muscleMass|number_format(1) }}</td>
+                                                <td class="progress-table-right">
+                                                    <button
+                                                            class="ui-button ui-button--icon"
+                                                            data-entry='{{ entry|json_encode|raw }}'
+                                                            data-client="{{ client.id }}"
+                                                            data-target="#addRecord"
+                                                            data-toggle="modal"
+                                                            title="Edit"
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                             width="24" height="24">
+                                                            <path fill="none" d="M0 0h24v24H0z"/>
+                                                            <path d="M5 19h1.414l9.314-9.314-1.414-1.414L5 17.586V19zm16 2H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L9.243 19H21v2zM15.728 6.858l1.414 1.414 1.414-1.414-1.414-1.414-1.414 1.414z"/>
+                                                        </svg>
+                                                    </button>
+                                                    <button
+                                                            class="ui-button ui-button--icon"
+                                                            data-confirm
+                                                            data-href="{{ path('deleteRecord',{'client':client.id,'id':entry.id}) }}"
+                                                            title="Delete"
+                                                    >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                             height="24">
+                                                            <path fill="none" d="M0 0h24v24H0z"/>
+                                                            <path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/>
+                                                        </svg>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% if progress.totalEntries > 5 %}
+                                <div class="card-footer card-footer--center">
+                                    <a class="card-link js-progress-entries" href="#"
+                                       data-href="{{ path('progressEntries', {'client': client.id}) }}"
+                                       data-target="#progressWeightTable"
+                                       data-total="{{ progress.totalEntries }}"
+                                       data-type="weight">Load More Measurements</a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="card">
+                            <header class="card-header">
+                                <h5 class="card-title">Circumference measurements</h5>
+                                <button
+                                        class="ui-button ui-button--primary"
+                                        type="button"
+                                        data-toggle="modal"
+                                        data-target="#addBodyCircum"
+                                >
+                                    Add
+                                </button>
+                            </header>
+                            <div class="card-body --scrollable-x">
+                                <table class="progress-table" id="progressCircumferenceTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Chest</th>
+                                        <th>Waist</th>
+                                        <th>Hips</th>
+                                        <th>Glutes</th>
+                                        <th>L ARM</th>
+                                        <th>R ARM</th>
+                                        <th>L THIGH</th>
+                                        <th>R THIGH</th>
+                                        <th>L CALF</th>
+                                        <th>R CALF</th>
+                                        <th class="progress-table-right">Total</th>
+                                        <th class="progress-table-right progress-table-shrink">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for entry in progress.last %}
+                                        {% if entry.total != 0 %}
+                                          <tr>
+                                              <td class="progress-table-date">{{ entry.date }}</td>
+                                              <td class="progress-table-value">{{ entry.chest|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.waist|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.hips|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.glutes|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.leftArm|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.rightArm|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.leftThigh|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.rightThigh|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.leftCalf|number_format(1) }}</td>
+                                              <td class="progress-table-value">{{ entry.rightCalf|number_format(1) }}</td>
+                                              <td class="progress-table-right">
+                                                  <span class="progress-label progress-label--success">{{ entry.total|number_format(1) }}</span>
+                                              </td>
+                                              <td class="progress-table-right progress-table-shrink">
+                                                  <button
+                                                          class="ui-button ui-button--icon"
+                                                          data-entry='{{ entry|json_encode|raw }}'
+                                                          data-client="{{ client.id }}"
+                                                          data-target="#addBodyCircum"
+                                                          data-toggle="modal"
+                                                          title="Edit"
+                                                  >
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                           width="24" height="24">
+                                                          <path fill="none" d="M0 0h24v24H0z"/>
+                                                          <path d="M5 19h1.414l9.314-9.314-1.414-1.414L5 17.586V19zm16 2H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L9.243 19H21v2zM15.728 6.858l1.414 1.414 1.414-1.414-1.414-1.414-1.414 1.414z"/>
+                                                      </svg>
+                                                  </button>
+                                                  <button
+                                                          class="ui-button ui-button--icon"
+                                                          data-confirm
+                                                          data-href="{{ path('deleteBodyMeasurements',{'bp':entry.id,'client':client.id}) }}"
+                                                          title="Delete"
+                                                  >
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                                           height="24">
+                                                          <path fill="none" d="M0 0h24v24H0z"/>
+                                                          <path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/>
+                                                      </svg>
+                                                  </button>
+                                              </td>
+                                          </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% if progress.totalEntries > 5 %}
+                                <div class="card-footer card-footer--center">
+                                    <a class="card-link js-progress-entries" href="#"
+                                       data-href="{{ path('progressEntries', {'client': client.id}) }}"
+                                       data-target="#progressCircumferenceTable"
+                                       data-total="{{ progress.totalEntries }}"
+                                       data-type="circumference">Load More Measurements</a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </section>
+
+                {#  Connect React component '~/react-components/ClientProgress'  #}
+                <div id="progress-container" data-props="{{
+                    {
+                        'clientId': client.getId,
+                        'goals': {
+                            'kcal': kcalNeed
+                        },
+                        'mfpLink': mfpLink
+                    }
+                |json_encode }}"></div>
+
+            </div>
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+    <div class="modal modal--full" tabindex="-1" role="dialog" id="galleryModal" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content container">
+                <div class="modal-header">
+                    <a href="#" class="action-back" aria-label="Back" data-dismiss="modal">
+                        <div></div>
+                        <h4>{{ client.name }} / Gallery</h4>
+                        <span>Back to Progress</span>
+                    </a>
+                    <div class="modal-actions"></div>
+                </div>
+
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '@App/default/widgets/chatWidget.html.twig' %}
+{% endblock %}
+
+{% block extra_css %}
+{#    <link rel="stylesheet" href="{{ asset('bundles/app/INSPINIA/css/plugins/blueimp/css/blueimp-gallery.min.css') }}">#}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/filepond@4.7.4/dist/filepond.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview@4.5.0/dist/filepond-plugin-image-preview.min.css">
+    <link href="{{ asset('bundles/app/css/body-progress.v2.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    {% include '@App/default/modals/addBodyCircumference.html.twig' %}
+    {% include '@App/default/modals/addBodyMeasurement.html.twig' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-crosshair@1.1.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@5.9.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-preview@4.5.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-crop@2.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-resize@2.0.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-transform@3.5.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond-plugin-image-exif-orientation@1.0.6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/filepond@4.7.4"></script>
+    <script src="{{ asset('bundles/app/js/body-progress.v2.js') }}"></script>
+    <script>
+      (function () {
+
+        $('.js-ignore-client-status').on('click', function() {
+          let id = $(this).data('id');
+          $.post('{{ path('ignoreClientStatus') }}', { id })
+            .then(res => {
+              $('.progress-alert').hide();
+            });
+        });
+
+        let chatWidget = $('#chat-widget-container');
+
+        $('.trigger-chat-widget').on('click', function() {
+          chatWidget.openChat();
+        });
+
+        var entries = {{ progress.entries|json_encode|raw }};
+
+        $zf.Gallery
+          .setup({
+            dataUrl: "{{ path('progressImages', {'client': client.id}) }}",
+            imageUrl: "{{ imageUrl }}",
+            uploadUrl: "{{ path('uploadImg',{'client':client.id}) }}",
+            clientId: "{{ client.id }}",
+          })
+          .init();
+
+        Array
+          .from(document.querySelectorAll('.js-chart-sparkline'))
+          .forEach(function (canvas) {
+            var data = JSON.parse(canvas.getAttribute('data-chart-values'));
+            $zf.SparkLine(canvas, data);
+          });
+
+        var weightChart = document.querySelector('.js-line-weight');
+        var circumferenceChart = document.querySelector('.js-line-circumference');
+        var fatChart = document.querySelector('.js-line-fat');
+
+        const roundToDecimals = (number, decimals = 1) => {
+          return Math.round( number * Math.pow(10, decimals) ) / Math.pow(10, decimals);
+        };
+
+        const enableTooltip = (chart, data, unitTransformer = (value) => value) => {
+          chart.options.tooltips.enabled = true;
+          chart.options.elements.point.radius = 5;
+          chart.options.tooltips.callbacks.beforeLabel = function (tooltipItem) {
+            const date = Object.keys(data)[tooltipItem.index];
+            const [preLabel] = date.split(',');
+            return preLabel
+          };
+          chart.options.tooltips.callbacks.label = function (tooltipItem) {
+            const date = Object.keys(data)[tooltipItem.index];
+            return unitTransformer(data[date]);
+          };
+          chart.update();
+        };
+
+        if (weightChart) {
+          let weightData = {{ charts.weight|json_encode|raw }};
+          let progressUnit = '{{ progress.unit }}';
+          const chart = $zf.LineChart(weightChart, weightData);
+          enableTooltip(chart, weightData, (value) => `${roundToDecimals(value)} ${progressUnit}`);
+        }
+
+        if (circumferenceChart) {
+          let circumferenceData = {{ charts.circumference|json_encode|raw }};
+          let progressUnit = '{{ progress.unit }}';
+          let unit = progressUnit == 'kg' ? 'cm' : 'inches';
+          const chart = $zf.LineChart(circumferenceChart, circumferenceData);
+          enableTooltip(chart, circumferenceData, (value) => `${roundToDecimals(value)} ${unit}`);
+        }
+
+        if (fatChart) {
+          let fatData = {{ charts.fat|json_encode|raw }};
+          const chart = $zf.LineChart(fatChart, fatData);
+          enableTooltip(chart, fatData, (value) => `${roundToDecimals(value)} %`);
+        }
+        var weightProgressValue = {{ progress.percentage }};
+        $zf.ProgressCircle('.js-chart-weight', Math.min(Math.max(weightProgressValue, 0), 100), {
+          progressText: '{{ kpi.weight.goal ? kpi.weight.progress|abs|number_format(1) ~ ' ' ~ kpi.weight.unit : '%' }}',
+          prefixText: '{{ kpi.weight.goal ? (kpi.weight.progressText ? kpi.weight.progressText : '') : 'No goal set' }}',
+          suffixText: '{{ kpi.weight.goal ? (kpi.weight.offText ? kpi.weight.offText : '') : 'Set a goal in General' }}',
+        });
+
+        $zf.ProgressEntries
+          .setLimit(5)
+          .init();
+      })();
+    </script>
+    <script>
+      (function () {
+        var kcalChart = document.querySelector('.js-stacked-bar-kcal');
+
+        const enableTooltip = (chart) => {
+          chart.options.tooltips.enabled = true;
+          chart.options.tooltips.callbacks.label = function (tooltipItem, data) {
+            const { datasets } = data;
+            const { datasetIndex, index, value } = tooltipItem;
+            if(datasets[datasetIndex].labels) {
+              return datasets[datasetIndex].labels[index]
+            }
+            return datasets[datasetIndex].labels ? datasets[datasetIndex].labels[index] : value;
+          };
+          chart.update();
+        };
+
+        if (kcalChart) {
+
+          const proteinStats = [
+            {
+              week: 37,
+              value: 2750
+            },
+            {
+              week: 38,
+              value: 2200
+            },
+            {
+              week: 39,
+              value: 2400
+            },
+            {
+              week: 40,
+              value: 2000
+            },
+            {
+              week: 41,
+              value: 2600
+            },
+            {
+              week: 42,
+              value: 1500
+            },
+            {
+              week: 43,
+              value: 1500
+            }
+          ];
+
+          const carbsFatsStats = [
+            {
+              week: 37,
+              value: 3300
+            },
+            {
+              week: 38,
+              value: 2750
+            },
+            {
+              week: 39,
+              value: 3350
+            },
+            {
+              week: 40,
+              value: 2850
+            },
+            {
+              week: 41,
+              value: 3300
+            },
+            {
+              week: 42,
+              value: 2700
+            },
+            {
+              week: 43,
+              value: 2800
+            }
+          ];
+
+          function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
+          }
+          const weeks = [
+            ...proteinStats.map(({week}) => week),
+            ...carbsFatsStats.map(({week}) => week)
+          ]
+            .filter(onlyUnique)
+            .sort();
+
+          const getByWeek = (pool, week) => {
+            const item = pool.find(stat => stat.week === week);
+            return item ? item.value : 0;
+          };
+
+          let data = {
+            labels: weeks,
+            datasets: [
+              {
+                label: 'Protein',
+                data: weeks.map(week => getByWeek(proteinStats, week)),
+                barPercentage: 0.5,
+                minBarLength: 2,
+                backgroundColor: weeks.map(() => '#0062ff'),
+                barThickness: 14,
+                xAxisID: 0,
+                yAxisID: 0,
+              },
+              {
+                label: 'Carbs + fats',
+                // data: weeks.map(week => Math.abs(getByWeek(carbsFatsStats, week) - getByWeek(proteinStats, week))),
+                data: weeks.map(week => getByWeek(carbsFatsStats, week)),
+                barPercentage: 0.5,
+                minBarLength: 2,
+                backgroundColor: weeks.map(() => '#50b5ff'),
+                barThickness: 14,
+                xAxisID: 0,
+                yAxisID: 0,
+              },
+              {
+                label: 'Diff.',
+                // data: weeks.map(week => Math.abs((getByWeek(proteinStats, week) - getByWeek(carbsFatsStats, week)))),
+                data: weeks.map(week => Math.abs((getByWeek(proteinStats, week) - getByWeek(carbsFatsStats, week)))),
+                barPercentage: 0.5,
+                minBarLength: 2,
+                backgroundColor: weeks.map(() => '#e2e2ea'),
+                barThickness: 14,
+                xAxisID: 0,
+                yAxisID: 0,
+              }
+            ],
+          };
+          const chart = $zf.BarChart(kcalChart, data);
+          enableTooltip(chart);
+        }
+
+      })();
+    </script>
+
+    {#  Connect React component '~/react-components/ClientProgress'  #}
+    <script src="{{ asset("client-progress.js"|webpack_asset) }}"></script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock %}

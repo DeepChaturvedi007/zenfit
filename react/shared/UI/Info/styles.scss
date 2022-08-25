@@ -1,0 +1,43 @@
+.zf-info {
+    margin: 60px 0px 150px 47px;
+
+    &--title {
+        font-family: Poppins;
+        font-size: 18px;
+        font-weight: 500;
+        color: #000;
+    }
+
+    &--left {
+        padding-left: 0px;
+    }
+
+    &--content {
+        margin: 9px 0 0;
+        font-family: Poppins;
+        font-size: 12px;
+        line-height: 1.5;
+        color: #7f7f7f;
+        width: 240px;
+    }
+
+    &--right {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        padding: 0px;
+    }
+
+    @media (max-width: 800px ) {
+        margin: 60px 10px 120px;
+
+        &--left { 
+            margin-bottom: 50px;
+        }
+
+        &--right {
+            margin-top: 10px;            
+            width: 100%;
+        }
+    }
+}

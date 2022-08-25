@@ -1,0 +1,25 @@
+AppBundle\Entity\Answer:
+    type: entity
+    table: answers
+    repositoryClass: AppBundle\Repository\AnswerRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        answer:
+            type: text
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: answers
+
+        question:
+            targetEntity: AppBundle\Entity\Question
+            inversedBy: answers

@@ -1,0 +1,30 @@
+AppBundle\Entity\ProgressFeedback:
+    type: entity
+    table: progress_feedbacks
+    repositoryClass: AppBundle\Repository\ProgressFeedbackRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        content:
+            type: text
+
+        createdAt:
+            type: datetime
+            column: created_at
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: progressFeedback
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE

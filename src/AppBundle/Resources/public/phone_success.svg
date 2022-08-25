@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="55px" height="71px" viewBox="0 0 55 71" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon Phone</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M28.875,14.4489796 C28.875,22.428862 22.4110425,28.8979592 14.4375,28.8979592 C6.4639575,28.8979592 0,22.428862 0,14.4489796 C0,6.46909714 6.4639575,0 14.4375,0 C22.4110425,0 28.875,6.46909714 28.875,14.4489796 L28.875,14.4489796 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-2.4000001" y="-2.4000001" width="33.6750002" height="33.6979594">
+            <rect x="-2.4000001" y="-2.4000001" width="33.6750002" height="33.6979594" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+    </defs>
+    <g id="Web-App" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="6-3-1-Client-Added-Copy" transform="translate(-656.000000, -221.000000)">
+            <g id="Modal" transform="translate(498.000000, 190.000000)">
+                <g id="Content" transform="translate(35.000000, 32.000000)">
+                    <g id="Icon-Phone" transform="translate(124.000000, 0.000000)">
+                        <g id="Phone">
+                            <path d="M30.038,58 L3.962,58 C2.326,58 1,56.674 1,55.038 L1,2.962 C1,1.326 2.326,0 3.962,0 L30.038,0 C31.674,0 33,1.326 33,2.962 L33,55.038 C33,56.674 31.674,58 30.038,58 L30.038,58 Z" id="Fill-22" fill="#FFFFFF"></path>
+                            <path d="M30.038,58 L3.962,58 C2.326,58 1,56.674 1,55.038 L1,2.962 C1,1.326 2.326,0 3.962,0 L30.038,0 C31.674,0 33,1.326 33,2.962 L33,55.038 C33,56.674 31.674,58 30.038,58 L30.038,58 Z" id="Stroke-23" stroke="#7E8FA5" stroke-linecap="round"></path>
+                            <polygon id="Fill-1562" fill="#FFFFFF" points="1 6 33 6 33 50 1 50"></polygon>
+                            <polygon id="Stroke-1563" stroke="#7E8FA5" stroke-linecap="round" points="1 6 33 6 33 50 1 50"></polygon>
+                            <path d="M11.0998339,27.3588889 L16.1060852,27.3588889 L15.3357644,31.4636061 L23.2866116,31.4636061 C22.2090903,33.5633063 20.022324,35 17.5,35 C13.9101491,35 11,32.0898509 11,28.5 C11,28.1106874 11.0342263,27.7293687 11.0998339,27.3588889 Z M11.6562423,25.6505051 C12.712235,23.4889203 14.9322395,22 17.5,22 C21.0898509,22 24,24.9101491 24,28.5 C24,28.9258426 23.9590494,29.3421207 23.8808712,29.7451111 L18.6425073,29.7451111 L19.513996,25.6505051 L11.6562423,25.6505051 Z" id="Combined-Shape" fill="#7E8FA5"></path>
+                            <path d="M16,3 L21,3 M12,3 L13,3" id="Stroke-1564" stroke="#7E8FA5" stroke-linecap="round"></path>
+                            <path d="M20,54 C20,55.657 18.657,57 17,57 C15.343,57 14,55.657 14,54 C14,52.343 15.343,51 17,51 C18.657,51 20,52.343 20,54 L20,54 Z" id="Fill-1565" fill="#FFFFFF"></path>
+                            <path d="M20,54 C20,55.657 18.657,57 17,57 C15.343,57 14,55.657 14,54 C14,52.343 15.343,51 17,51 C18.657,51 20,52.343 20,54 L20,54 Z" id="Stroke-1566" stroke="#7E8FA5" stroke-linecap="round"></path>
+                            <path d="M0,9 L0,10 M0,13 L0,14 M0,17 L0,18" id="Stroke-1567" stroke="#7E8FA5" stroke-linecap="round"></path>
+                        </g>
+                        <g id="Success-Icon" transform="translate(22.125000, 38.102041)">
+                            <g id="Stroke-108">
+                                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                <use stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="4.80000019" xlink:href="#path-1"></use>
+                                <use stroke="#70D838" stroke-width="1.20000005" xlink:href="#path-1"></use>
+                            </g>
+                            <polyline id="Stroke-114" stroke="#70D838" stroke-linecap="round" stroke-linejoin="round" points="21.65625 8.42857143 12.7716346 19.2653061 7.21875 14.4489796"></polyline>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

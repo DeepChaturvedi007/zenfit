@@ -1,0 +1,66 @@
+AppBundle\Entity\LandingPage:
+    type: entity
+    table: landing_pages
+    repositoryClass: AppBundle\Repository\LandingPageRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        slug:
+            type: string
+            length: 100
+
+        headline:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        subtitle:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        success_headline:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        success_subtitle:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        background_image:
+            type: string
+            length: 255
+
+        website:
+            type: string
+            length: 255
+            nullable: true
+
+        success_button:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: landing_pages
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

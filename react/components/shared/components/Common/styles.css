@@ -1,0 +1,15 @@
+.text-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+
+}
+
+.preloader-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}

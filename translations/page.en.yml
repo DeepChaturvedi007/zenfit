@@ -1,0 +1,200 @@
+heading:
+    title: 'Here you can order your diet and exercise plan'
+    subtitle: 'Please note that when you simply order plans, coaching and follow-ups on your development will not follow.'
+howItWorks:
+    title: 'This is how it works'
+    steps:
+        1:
+            title: '1. Complete questionnaire'
+            description: 'If you just fill out the form here on the page, I know everything to use to tailor plans made specifically for you.'
+        2:
+            title: '2. I create your plans'
+            description: 'Sit back and wait a maximum of 48 hours for me to prepare your personal plans based on the questionnaire you completed.'
+        3:
+            title: '3. Receive your plans'
+            description: 'When I finish your plans, you will receive them in the Zenfit app. The plan includes everything you need to get started!'
+plans:
+    title: 'Select product'
+    cards:
+        title: '%title%'
+        description: '%description%'
+        general:
+            action:
+                default: 'Choose plan'
+                active: Chosen
+            label:
+                popular: 'Most popular'
+            price: '%unit%%amount%'
+            discount: 'Save %unit%%amount%'
+gender:
+    title: 'Choose gender'
+    options:
+        male: Male
+        female: Female
+personInfo:
+    title: 'Personal information'
+    inputs:
+        name:
+            label: Name
+        age:
+            label: Age
+        phone:
+            label: 'Your phone'
+        email:
+            label: 'Your email'
+goal:
+    title: 'Your goal'
+    types:
+        gainMuscle:
+            title: 'Gain muscle (Lean bulk)'
+        loseFat:
+            title: 'Lose Fat (Tone up)'
+    intensity:
+        title: 'How fast?'
+        options:
+            1: 'I want to lose about 2 lbs per week'
+            2: 'I want to lose about 1 lbs per week'
+            3: 'I want to maintain my current weight'
+            4: 'I want to gain about 1lbs per week'
+            5: 'I want to gain about 2lbs per week'
+    extras:
+        title: 'Extra focus on certain body parts?'
+        options:
+            chest: Chest
+            shoulders: Shoulders
+            back: Back
+            legs: Legs
+            arms: Arms
+            calfs: Calfs
+body:
+    title: 'Your body'
+    personParams:
+        inputs:
+            startWeight:
+                label: 'Current weight'
+            goalWeight:
+                label: 'Goal weight'
+            height:
+                label: 'Height (cm)'
+            fat:
+                label: 'Fat percentage'
+    measurement:
+        title: 'Choose measurement system'
+        options:
+            us: 'US (lbs/inches)'
+            metric: 'Metric (kg/cm)'
+bodyPictures:
+    title: 'Before pictures (optional)'
+    description: '<b>NOTE: Images are optional. However, photos are important to me in updates.</b><br/>As it does I can make the best possible adjustments in your plans. No photos will be shared publicly on social media without consent!'
+    options:
+        front: Front
+        side: Side
+        back: Rear
+    actions:
+        addPhoto: 'Add photo'
+activity:
+    title: 'Activity Level'
+    intensity:
+        title: 'Sports and spare time'
+        options:
+            1: 'I don''t do any physical exercises'
+            2: 'I''m not very active and train 2-3 days a week'
+            3: 'I''m moderately active and work out 3-4 times a week'
+            4: 'I''m pretty active and work out 5-6 times a week'
+            5: 'I''ve a hard physical job and work out most days'
+meal:
+    title: 'Food preferences'
+    allergens:
+        options:
+            avoidLactose: 'No Lactose'
+            avoidGluten: 'No Gluten'
+            avoidNuts: 'No Nuts'
+            avoidEggs: 'No Egg'
+            avoidShellfish: 'No Shellfish'
+            avoidFish: 'No Fish'
+            avoidPig: 'No Pig'
+            isVegetarian: 'I''m Vegetarian'
+            isVegan: 'I''m Vegan'
+            isPescetarian: 'I''m Pescetarian'
+    count:
+        title: 'Choose a meals count'
+        options:
+            3: 'Three a day'
+            4: 'Four a day'
+            5: 'Five a day'
+            6: 'Six a day'
+    exclusion:
+        title: 'Exclude other ingredients'
+        input:
+            label: 'Choose ingredients'
+            placeholder: Search
+            selectAll: 'Select All'
+    budget:
+        title: 'Budget for cooking'
+        options:
+            1: 'Cheapest possible'
+            2: 'Not relevant'
+        clarifications:
+            prefix: 'Cheapest possible'
+            suffix: 'Not relevant'
+    cookingTime:
+        title: 'Time for cooking'
+        options:
+            1: 'Quick and simple'
+            2: 'Not relevant'
+        clarifications:
+            prefix: 'Quick and simple'
+            suffix: 'Not relevant'
+    comment:
+        title: 'Any other comments for nutrition and preferences?'
+        input:
+            label: 'Additional comment'
+        description: 'What equipment do you have available etc.'
+workout:
+    title: 'Workout preferences and experience'
+    intensity:
+        title: 'How many times a week are you able to work out?'
+        options:
+            general: '%value% times'
+    experience:
+        title: 'How experienced are you with strength training?'
+        options:
+            1: 'I am totally inexperienced'
+            2: 'I have a little bit of experience'
+            3: 'I have been working out for quite some time and know some exercises'
+            4: 'I am pretty experienced and know most exercises'
+            5: 'I have worked out for many years and know all exercises'
+    place:
+        title: 'Where do you work out?'
+        options:
+            1: 'In the gym'
+            2: 'Home workouts'
+            3: Outside
+    comment:
+        title: 'Any other comments for workout preferences? '
+        label: 'Additional comment'
+        description: 'What time do you prefer working out, etc.'
+additionalInfo:
+    title: 'Injuries, diseases and considerations'
+    injuries:
+        title: 'Any injuries? Please let me know'
+        options:
+            knee: Knee
+            shoulders: Shoulders
+            albow: Elbow
+            wrist: Wrist
+            back: Back
+            lowerBack: 'Lower Back'
+            abdominals: Abdominals
+            other: Other
+    comment:
+        title: 'Additional comments?'
+        label: 'Let me know'
+confirmation:
+    rules:
+        label: 'I confirm that I haven''t had an eating disorder'
+    terms:
+        label: 'I accept the'
+        link: 'terms and conditions'
+    submit:
+        text: 'Go to checkout'

@@ -1,0 +1,508 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    AdminBundle\:
+        resource: '../src/AdminBundle/*'
+
+    ApiBundle\:
+        resource: '../src/ApiBundle/*'
+
+    AppBundle\:
+        resource: '../src/AppBundle/*'
+        exclude: '../src/AppBundle/{DQL,Entity,Event}'
+
+    ChatBundle\:
+        resource: '../src/ChatBundle/*'
+
+    ClientBundle\:
+        resource: '../src/ClientBundle/*'
+
+    EmailBundle\:
+        resource: '../src/EmailBundle/*'
+
+    LenusBundle\:
+        resource: '../src/LenusBundle/*'
+
+    ExerciseBundle\:
+        resource: '../src/ExerciseBundle/*'
+
+    GymBundle\:
+        resource: '../src/GymBundle/*'
+
+    LeadBundle\:
+        resource: '../src/LeadBundle/*'
+
+    MealBundle\:
+        resource: '../src/MealBundle/*'
+
+    PlanBundle\:
+        resource: '../src/PlanBundle/*'
+
+    ProgressBundle\:
+        resource: '../src/ProgressBundle/*'
+
+    ReactApiBundle\:
+        resource: '../src/ReactApiBundle/*'
+
+    TrainerBundle\:
+        resource: '../src/TrainerBundle/*'
+
+    VideoBundle\:
+        resource: '../src/VideoBundle/*'
+
+    WorkoutPlanBundle\:
+        resource: '../src/WorkoutPlanBundle/*'
+
+    ZapierBundle\:
+        resource: '../src/ZapierBundle/*'
+
+    Zenfit\:
+        resource: '../src/Zenfit/*'
+
+    _instanceof:
+        Symfony\Bundle\FrameworkBundle\Controller\AbstractController:
+            tags: ['controller.service_arguments']
+        AppBundle\Consumer\MessageHandlerInterface:
+            tags: ['messenger.message_handler']
+
+    AppBundle\Controller\DefaultController:
+        arguments:
+            $stripeConnect: "%stripe_connect%"
+
+    ClientBundle\Controller\DefaultController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    LeadBundle\Services\LeadService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    ProgressBundle\Controller\DefaultController:
+        arguments:
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+
+    Stripe\Stripe:
+        autowire: false
+        autoconfigure: false
+        calls:
+            - setApiKey: ['%stripe_secret_key%']
+            - setApiVersion: ['%stripe_api_version%']
+
+    AppBundle\Services\StripeService:
+        arguments:
+            $stripeSecretKey: "%stripe_secret_key%"
+            $stripeApiVersion: "%stripe_api_version%"
+
+    AppBundle\Services\ErrorHandlerService:
+        arguments:
+            $env: "%kernel.environment%"
+            $sentryDSN: "%env(SENTRY_DSN)%"
+
+    AppBundle\Services\StripeConnectService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    ApiBundle\Services\ReferralService:
+        arguments:
+            $bitly: "%bitly%"
+
+    AppBundle\Services\DefaultMessageService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    Symfony\Component\HttpKernel\Profiler\Profiler:
+        alias: profiler
+
+    Symfony\Component\Security\Http\AccessMapInterface:
+        alias: security.access_map
+
+    Zenfit\UserBundle\Controller\RegistrationController:
+        arguments:
+            $formFactory: '@fos_user.registration.form.factory'
+
+    AppBundle\EventSubscriber\LocaleSubscriber:
+        arguments:
+            $defaultLocale: "%kernel.default_locale%"
+        autoconfigure: false #we temporarily disable IP identification
+
+    Gedmo\Timestampable\TimestampableListener:
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    AppBundle\Services\MailService:
+        arguments:
+            $sendgridApiKey: "%sendgrid_api_key%"
+
+    AppBundle\Services\BundleService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    AppBundle\Services\DashboardService:
+        arguments:
+            $fixerApiKey: "%fixerApiKey%"
+            $stripeConnect: "%stripe_connect%"
+
+    AppBundle\Command\Client\SendClientEmailFromTrainerCommand:
+        arguments:
+            $mailerZfEmail: '%mailer_zf_email%'
+
+    AppBundle\Command\Client\SendClientMessageNotificationEmailCommand:
+        arguments:
+            $clientMessageNotificationEmailTemplate: "%client_message_notification_email_template%"
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+            $mailerZfEmail: "%mailer_zf_email%"
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    AppBundle\Command\Trainer\SendTrainerEmailCommand:
+        arguments:
+            $mailerZfEmail: "%mailer_zf_email%"
+            $mailerZfName: "%mailer_zf_name%"
+
+    AppBundle\Command\Trainer\AutoAssignLeadsCommand:
+        arguments:
+            $mailerZfEmail: "%mailer_zf_email%"
+            $mailerZfName: "%mailer_zf_name%"
+
+    AppBundle\Command\Client\SendClientPaymentWarningEmailCommand:
+        arguments:
+            $mailerZfBillingEmail: "%mailer_zf_billing_email%"
+            $mailerZfName: "%mailer_zf_name%"
+
+    AppBundle\Services\StripeHook\PaymentFailedHookService:
+        arguments:
+            $mailerZfBillingEmail: "%mailer_zf_billing_email%"
+            $mailerZfName: "%mailer_zf_name%"
+
+    AppBundle\Services\QueueService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    Zenfit\StripeBundle\Controller\SCACheckoutController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+            $stripePublishableKey: "%stripe_publishable_key%"
+            $sentryDSN: "%env(SENTRY_DSN)%"
+            $env: "%kernel.environment%"
+
+    ChatBundle\Controller\ApiController:
+        arguments:
+            $s3ImagesBucket: "%s3ImagesBucket%"
+
+    AppBundle\Services\ClientService:
+        arguments:
+            $s3ImagesBucket: "%s3ImagesBucket%"
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+
+    AppBundle\Services\DocumentService:
+        arguments:
+            $s3documents: "%s3documents%"
+            $rootDir: '%kernel.project_dir%'
+            $bucket: "%env(ZF_DOC_S3_BUCKET)%"
+
+    MealBundle\Controller\v3\ApiController:
+        arguments:
+            $env: "%kernel.environment%"
+
+    TrainerBundle\Controller\AuthApiController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+            $refreshTokenTTL: '%gesdinet_jwt_refresh_token.ttl%'
+
+    AppBundle\Twig\AppExtension:
+        arguments:
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+
+    AppBundle\Twig\WebpackExtension:
+        arguments:
+            $rootDir: '%kernel.project_dir%'
+
+    AppBundle\Services\AwsService:
+        arguments:
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+            $awsKey: "%env(AWS_ACCESS_KEY_ID)%"
+            $awsSecret: "%env(AWS_SECRET_ACCESS_KEY)%"
+
+
+    AppBundle\Services\ClientImageService:
+        arguments:
+            $s3ImagesBucket: "%env(ZF_IMAGE_S3_BUCKET)%"
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+
+    AppBundle\Services\TrainerAssetsService:
+        arguments:
+            $youtubeApiKey: "%youtubeApiKey%"
+            $s3ImagesBucket: "%s3ImagesBucket%"
+            $s3rootUrl: "%s3rootUrl%"
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+            $rootDir: '%kernel.project_dir%'
+
+    AppBundle\Services\MealPlanService:
+        arguments:
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+            $s3ImagesBucket: "%s3ImagesBucket%"
+
+    AppBundle\Services\RecipesService:
+        arguments:
+            $s3ImagesBucket: "%s3ImagesBucket%"
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+
+    AppBundle\Services\UserSubscriptionService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+            $stripeDKTaxId: "%env(STRIPE_DK_TAX_RATE_ID)%"
+            $stripeNOTaxId: "%env(STRIPE_NO_TAX_RATE_ID)%"
+
+    AppBundle\Controller\AccountController:
+        arguments:
+            $stripePublishableKey: "%stripe_publishable_key%"
+
+    AppBundle\Services\TranslationService:
+        arguments:
+            $ipdataApiKey: "%ipdataApiKey%"
+
+    AppBundle\Services\PusherService:
+        arguments:
+            $pusherConfig: "%pusher%"
+
+    ReactApiBundle\Controller\v2\AuthController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    ReactApiBundle\Controller\v3\AuthController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    ReactApiBundle\Services\AuthService:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    ClientBundle\Controller\ClientController:
+        arguments:
+            $stripePublishableKey: "%stripe_publishable_key%"
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    AppBundle\Services\PdfService:
+        arguments:
+            $s3documents: "%s3documents%"
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+        calls:
+            - setProfiler: ['@?profiler']
+
+    AdminBundle\Controller\ApiController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    AppBundle\Consumer\PdfGenerationHandler:
+        arguments:
+            $mailerZfEmail: "%mailer_zf_email%"
+            $mailerZfName: "%mailer_zf_name%"
+
+    AppBundle\Command\GenerateStripeReceiptCommand:
+        arguments:
+            $mailerZfEmail: "%mailer_zf_email%"
+            $mailerZfName: "%mailer_zf_name%"
+
+    AppBundle\Consumer\VideoCompressHandler:
+        arguments:
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+            $s3ImagesBucket: "%s3ImagesBucket%"
+            $env: "%kernel.environment%"
+            $awsMediaConvertRole: "%env(AWS_MEDIA_CONVERT_ROLE)%"
+
+    AppBundle\Consumer\MediaCompressedHandler:
+        arguments:
+            $s3rootUrl: "%s3rootUrl%"
+            $s3ImagesBucket: "%s3ImagesBucket%"
+
+    AppBundle\Consumer\VoiceCompressHandler:
+        arguments:
+            $s3ImagesKeyPrefix: "%s3ImagesKeyPrefix%"
+            $s3ImagesBucket: "%s3ImagesBucket%"
+            $env: "%kernel.environment%"
+            $awsMediaConvertRole: "%env(AWS_MEDIA_CONVERT_ROLE)%"
+
+    AppBundle\EventListener\UserLoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onUserLogin }
+
+    AppBundle\EventListener\NotFoundEventListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception}
+
+    AppBundle\EventListener\ClientChangesListener:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+        tags:
+            - { name: kernel.event_listener, event: client.payment_pending, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.invite_pending, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.questionnaire_pending, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.payment_failed, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.updated_bodyprogress, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.sent_message, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.subscription_canceled, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.wrong_email, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.uploaded_image, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.updated_macros, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.need_welcome, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.ending_soon, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.completed, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.missing_checkin, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: client.missing_communication, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: trainer.update_meal_plan, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: trainer.update_workout_plan, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: trainer.create_meal_plan, method: onClientStatusUpdate }
+            - { name: kernel.event_listener, event: trainer.create_workout_plan, method: onClientStatusUpdate }
+
+            - { name: kernel.event_listener, event: client.payment_pending, method: onTrainerSentPaymentLink }
+            - { name: kernel.event_listener, event: client.created_login, method: onClientCreatedLogin }
+            - { name: kernel.event_listener, event: client.filled_out_survey, method: onClientAnsweredQuestionnaire }
+            - { name: kernel.event_listener, event: client.payment_succeeded, method: onClientPaymentSucceeded }
+            - { name: kernel.event_listener, event: client.sent_message, method: onClientSentMessage }
+            - { name: kernel.event_listener, event: client.completed, method: onClientEnded }
+            - { name: kernel.event_listener, event: client.updated_bodyprogress, method: onClientCheckedIn }
+            - { name: kernel.event_listener, event: trainer.replied_message, method: onTrainerRepliedClientMessage }
+            - { name: kernel.event_listener, event: trainer.sent_bulk_message, method: onTrainerSentBulkMessage }
+            - { name: kernel.event_listener, event: trainer.updated_meal_plan, method: onTrainerUpdatedClientMealPlan }
+            - { name: kernel.event_listener, event: trainer.updated_workout_plan, method: onTrainerUpdatedClientWorkoutPlan }
+            - { name: kernel.event_listener, event: trainer.deactivated_client, method: onTrainerDeactivatedClient }
+            - { name: kernel.event_listener, event: trainer.activated_client, method: onTrainerActivatedClient }
+            - { name: kernel.event_listener, event: trainer.extended_client, method: onTrainerExtendedClient }
+            - { name: kernel.event_listener, event: trainer.marked_message_unread, method: onTrainerMarkedMessageAsUnread }
+
+    AppBundle\Services\MyFitnessPalService:
+        arguments:
+            $myFitnessPalConfig: {
+                base_url: '%myfitnesspal.base_url%',
+                client_id: '%myfitnesspal.client_id%',
+                client_secret: '%myfitnesspal.client_secret%',
+                api_version: '%myfitnesspal.api_version%',
+                redirect_uri: '%myfitnesspal.redirect_uri%',
+                requests_per_second: '%myfitnesspal.requests_per_second%'
+            }
+
+    AppBundle\Services\TrackingService:
+        arguments:
+            $mixpanelKey: "%env(MIXPANEL_KEY)%"
+            $env: "%kernel.environment%"
+
+    AppBundle\Command\Client\SendClientPushWeeklyReminderCommand:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    ChatBundle\EventListener\ChatMessageListener:
+        tags:
+            - { name: kernel.event_listener, event: chat.message_deliver, method: onMessageDeliver }
+
+    AppBundle\Translation\TreeYamlFileDumper:
+        tags:
+            - { name: 'translation.dumper', alias: 'yaml_tree' }
+
+    OneSignal\Config:
+        arguments:
+            $applicationId: '%onesignal_app_id%'
+            $applicationAuthKey: '%onesignal_app_key%'
+
+    onesignal.client.psr18:
+        class: Symfony\Component\HttpClient\Psr18Client
+        arguments:
+            $client: '@onesignal.client'
+
+    OneSignal\OneSignal:
+        arguments:
+            $config: '@OneSignal\Config'
+            $requestFactory: '@onesignal.client.psr18'
+            $httpClient: '@onesignal.client.psr18'
+
+    AppBundle\Command\Utils\InsertExerciseFromCSVCommand:
+        arguments:
+            $projectDir: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\UpdateRecipeMetaFromCSVCommand:
+        arguments:
+            $projectDir: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\InsertIngredientsCommand:
+        arguments:
+            $projectDir: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\InsertRecipesCommand:
+        arguments:
+            $projectDir: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\InsertWeightsCommand:
+        arguments:
+            $projectDir: "%kernel.project_dir%"
+
+    ReactApiBundle\Services\TokenService:
+        arguments:
+            $jwtSecret: "%jwt_secret%"
+
+    MealBundle\Services\RecipeCustomGeneratorService:
+        arguments:
+            $projectRoot: "%kernel.project_dir%"
+
+    GymBundle\Controller\v1\TrainerApiController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    TrainerBundle\Controller\ApiController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    TrainerBundle\Controller\ClientStatusController:
+        arguments:
+            $appHostname: "%env(ZF_APP_HOSTNAME)%"
+
+    TrainerBundle\Controller\IntroController:
+        arguments:
+            $stripePublishableKey: "%stripe_publishable_key%"
+
+    ReactApiBundle\Controller\v2\PhotosController:
+        arguments:
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+
+    ReactApiBundle\Controller\v3\PhotosController:
+        arguments:
+            $s3beforeAfterImages: "%s3beforeAfterImages%"
+
+    AppBundle\Command\Utils\DeleteOldConversationsCommand:
+        arguments:
+            $projectRoot: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\InsertIngredientsDeprecatedCommand:
+        arguments:
+            $projectRoot: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\InsertLeadsFromCSVCommand:
+        arguments:
+            $projectRoot: "%kernel.project_dir%"
+
+    AppBundle\Command\Utils\InsertPlansCommand:
+        arguments:
+            $projectRoot: "%kernel.project_dir%"
+
+    Zenfit\UserBundle\Controller\ConnectController:
+        arguments: [ '@.inner' ]
+
+    Aws\MediaConvert\MediaConvertClient:
+        arguments:
+            - {
+                  "version": 'latest',
+                  "region": 'eu-central-1',
+                  "endpoint": 'https://usryickja.mediaconvert.eu-central-1.amazonaws.com',
+                  "credentials": {
+                      "key": "%env(AWS_ACCESS_KEY_ID)%",
+                      "secret": "%env(AWS_SECRET_ACCESS_KEY)%",
+                  }
+               }
+
+    AppBundle\Security\ZenfitJWTAuthenticator:
+        decorates: lexik_jwt_authentication.jwt_token_authenticator
+        arguments: ['@.inner']

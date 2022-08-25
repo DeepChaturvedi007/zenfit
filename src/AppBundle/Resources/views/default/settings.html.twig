@@ -1,0 +1,26 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+    {% include '@App/components/sideNav.html.twig' %}
+
+    <div id="page-wrapper" class="gray-bg">
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Settings' } %}
+
+        <div id="settings" data-props="{{ {
+            'settings': settings|json_encode,
+            'stripeConnect': app.user.userStripe ? true : false,
+            'token': app.user.interactiveToken,
+        }|json_encode }}"></div>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ "settings.css"|webpack_asset }}">
+{% endblock %}
+{% block script %}
+    <script src="{{ "settings.js"|webpack_asset }}"></script>
+{% endblock %}

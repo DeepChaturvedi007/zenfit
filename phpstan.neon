@@ -1,0 +1,21 @@
+includes:
+   - phpstan-baseline.neon
+parameters:
+    checkUninitializedProperties: true
+    ignoreErrors:
+        - '#.+ bool\|float\|int\|string\|null given#'
+        - '#.+ int, float\|int<min, -1>\|int<1, max>\|string\|true#'
+        - '#Cannot cast mixed to string.#'
+    reportUnmatchedIgnoredErrors: false
+    doctrine:
+        repositoryClass: Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
+        objectManagerLoader: tests/object-manager.php
+    bootstrapFiles:
+        - bin/.phpunit/phpunit/vendor/autoload.php
+    symfony:
+        console_application_loader: tests/console-application.php
+        container_xml_path: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
+    level: max
+    paths:
+        - src
+        - tests

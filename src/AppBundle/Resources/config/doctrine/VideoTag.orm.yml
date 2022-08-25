@@ -1,0 +1,31 @@
+AppBundle\Entity\VideoTag:
+    type: entity
+    table: video_tags
+    repositoryClass: AppBundle\Repository\VideoTagRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: TRUE
+
+    manyToOne:
+        video:
+            targetEntity: AppBundle\Entity\Video
+            inversedBy: videoTags
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    lifecycleCallbacks: {  }

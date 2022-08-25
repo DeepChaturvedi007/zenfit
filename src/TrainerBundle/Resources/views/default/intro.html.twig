@@ -1,0 +1,411 @@
+{% extends '@App/base.html.twig' %}
+{% set subscription = userSubscription.subscription %}
+{% set pricePerMonth = subscription.priceMonth %}
+{% set tax = subscription.tax %}
+{% set upfront = subscription.upfrontFee %}
+{% set priceWithoutTax = upfront ? subscription.priceMonth + upfront : subscription.priceMonth %}
+{% set sepaEnabled = subscription.currency == 'eur' %}
+
+{% block content -%}
+    <div id="wrapper" class="intro-page">
+        {% include '@App/components/metabar.html.twig' %}
+        <div class="page-container intro-container">
+            {% if(app.user.activated == 0 and userSubscription.lastPaymentFailed) %}
+                <div class="block-header intro-page__header">
+                    <div class="box-text">
+                        <h4>Your account has been disabled due to missing payment.</h4>
+                        <p><a href="{{ userSubscription.invoiceUrl }}">Click here</a> to pay your latest invoice, and open your account.</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="block-header intro-page__header">
+                    <div class="box-text">
+                        <h4>Get started with Zenfit</h4>
+                        <p>Enter your payment method below to get access.</p>
+                    </div>
+                </div>
+
+                {% set currency = subscription.currency|default('dkk') %}
+
+                <form class="subscription-card-form" id="payment-form" method="POST" style="flex:1;">
+                    <div class="control-errors m-b" data-type="form" role="alert"></div>
+
+                    {% if trialUntil %}
+                        <input type="hidden" name="trial" value="1" />
+                    {% endif %}
+
+                    <div class="select-payment-method">
+                        <ul class="nav nav-tabs">
+                          <li class="active" data-type="card"><a href="#card-container" data-toggle="tab">Pay with Card</a></li>
+                          {% if sepaEnabled %}<li data-type="sepa"><a href="#sepa-container" data-toggle="tab">Pay with SEPA</a></li>{% endif %}
+                        </ul>
+                    </div>
+
+              			<div class="tab-content">
+              			  <div class="tab-pane active" id="card-container">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <input class="form-control StripeElement" name="name"
+                                       placeholder="Cardholder's Name" type="text"
+                                       value=""/>
+                                <div class="control-errors" data-type="name" role="alert"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="stripe-card-number"></div>
+                                <div class="control-errors" data-type="cardNumber" role="alert"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div id="stripe-card-expiry"></div>
+                                <div class="control-errors" data-type="cardExpiry" role="alert"></div>
+                            </div>
+                            <div class="col-6">
+                                <div id="stripe-card-cvc"></div>
+                                <div class="control-errors" data-type="cardCvc" role="alert"></div>
+                            </div>
+                        </div>
+
+              				</div>
+                      <div class="tab-pane" id="sepa-container">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <input class="form-control StripeElement" name="name"
+                                       placeholder="Cardholder's Name" type="text"
+                                       value=""/>
+                                <div class="control-errors" data-type="name" role="alert"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="iban-element"></div>
+                                <div class="control-errors" data-type="iban" role="alert"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <small>
+                                  By providing your IBAN and confirming this payment, you are authorizing Zenfit ApS and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.
+                                </small>
+                            </div>
+                        </div>
+
+              				</div>
+              			</div>
+
+
+                    {% if subscription.country == 'eu' %}
+                        {% set tax='(+25% Danish tax without a valid VAT id)' %}
+
+                        <input type="hidden" name="tax_exempt" value="reverse" />
+
+                        <fieldset>
+                            <legend>Billing info</legend>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <input class="form-control StripeElement" name="company[vat_id]" id="vat-input"
+                                           placeholder="TAX / VAT id (eg. SE999999999901)" type="text"
+                                           value=""/>
+                                    {#}<button id="validate-vat">Validate</button>
+                                    <div class="control-errors" data-type="vat" role="alert"></div>#}
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    {% elseif subscription.country == 'non-eu' %}
+                        {% set tax='' %}
+                        <input type="hidden" name="tax_exempt" value="exempt" />
+                    {% elseif subscription.country == 'dk' %}
+                        {% set tax='(+ ' ~ currency|upper ~ priceWithoutTax|tax(25) ~ ' tax)' %}
+                        <input type="hidden" name="tax_exempt" value="none" />
+                    {% endif %}
+                    <input type="hidden" name="tax_rate" value="{{ tax }}" />
+                    <button class="btn btn-block btn-success" type="submit" disabled="disabled">
+                        Get Started
+                    </button>
+                </form>
+
+                <div class="intro-page__footer">
+                    <p>
+                        <strong>
+                            You'll be charged {{ currency|upper }}<span id="price-per-month">{{ pricePerMonth }}</span> / month
+                            <span id="upfront-block" {% if upfront == 0 %}style="display: none;"{% endif %}>+ {{ currency|upper }}<span id="upfront-price">{{ upfront }}</span> setup fee</span>
+                            <span id="tax-block">{{ tax }}</span>
+                        </strong>{% if trialUntil %} when your free trial ends on {{ trialUntil|date("F j, Y") }}{% endif %}.
+                    </p>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block extra_css %}
+    <link href="{{ asset('bundles/app/css/intro-page.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/app/css/subscription.css') }}" rel="stylesheet"/>
+    <style>
+        .StripeElement {
+            box-sizing: border-box;
+
+            height: 40px;
+
+            padding: 10px 12px;
+
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background-color: white;
+
+            /*box-shadow: 0 1px 3px 0 #e6ebf1;*/
+            /*-webkit-transition: box-shadow 150ms ease;*/
+            /*transition: box-shadow 150ms ease;*/
+            box-shadow: none;
+        }
+
+        .StripeElement--focus {
+            /*box-shadow: 0 1px 3px 0 #cfd7df;*/
+            border-color: #b0b0b0;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+
+        [role="alert"] {
+            color: #eb1c26;
+            margin-top: 8px;
+        }
+
+        .nav > li.active {
+            background: none !important;;
+            border: none !important;
+        }
+
+        .nav > li.active > a {
+            color: #555555;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{{ asset('bundles/app/js/stripe-sca.js') }}"></script>
+    <script>
+      (function ($) {
+        var stripe = Stripe('{{ stripeKey }}');
+        var elements = stripe.elements();
+
+        var form = document.getElementById('payment-form');
+        var cardName = form.elements.namedItem('name');
+        var submitButton = form.querySelector('button[type=submit]');
+        var trial = $("input[name=trial]").val();
+        var taxExempt = $("input[name=tax_exempt]").val();
+        var taxRate = $("input[name=tax_rate]").val();
+        var paymentType = $('.select-payment-method').find('li.active').data('type');
+
+        cardName.elementType = 'name';
+        submitButton.setAttribute('data-text', submitButton.textContent);
+
+        $('.select-payment-method')
+          .on('click', 'li', function() {
+            paymentType = $(this).data('type');
+          });
+
+        var style = {
+          base: {
+            iconColor: '#1A91EB',
+            color: '#31325f',
+            fontWeight: 400,
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '15px',
+            '::placeholder': {
+              color: '#aab7c4',
+            },
+            ':-webkit-autofill': {
+              color: '#1A91EB',
+            },
+          },
+        };
+
+        var cardNumber = elements.create('cardNumber', {
+          style: style,
+        });
+
+        var cardExpiry = elements.create('cardExpiry', {
+          style: style,
+        });
+
+        var cardCvc = elements.create('cardCvc', {
+          style: style,
+        });
+
+        // Create an instance of the IBAN Element
+        var iban = elements.create('iban', {
+          showIcon: true,
+          style: style,
+          supportedCountries: ['SEPA']
+        });
+
+        cardNumber.mount('#stripe-card-number');
+        cardExpiry.mount('#stripe-card-expiry');
+        cardCvc.mount('#stripe-card-cvc');
+        iban.mount('.iban-element');
+
+        cardNumber.addEventListener('change', onStripeElementChange);
+        cardExpiry.addEventListener('change', onStripeElementChange);
+        cardCvc.addEventListener('change', onStripeElementChange);
+        iban.addEventListener('change', onStripeElementChange);
+
+        var errors = {
+          'name': 'Your cardholder\'s name is incomplete.',
+          'cardNumber': 'Your card number is incomplete.',
+          'cardExpiry': 'Your card number is incomplete.',
+          'cardCvc': 'Your card\'s security code is incomplete.',
+        };
+
+          $('#validate-vat').click(function (e) {
+              e.preventDefault();
+              //updateTaxes($('#vat-input').val());
+          });
+
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          clearErrorMessages();
+          handleSubmitButton(true);
+
+          var isValid = validate();
+          var taxId = $('#vat-input').val();
+
+          var stripeSCA = new StripeSCA(stripe, 'trainer', {
+            initiateUrl: '{{ path('zenfit_stripe_trainer_initiate') }}',
+            confirmUrl: '{{ path('zenfit_stripe_trainer_confirm') }}',
+            confirmationUrl: '{{ path('zenfit_stripe_trainer_confirmed') }}',
+            tax_rate: taxRate,
+            tax_id: taxId,
+            tax_exempt: taxExempt,
+            trial: trial
+          });
+
+          var formData = {
+            name: '{{ app.user.name }}',
+            email: '{{ app.user.email }}'
+          };
+
+          stripeSCA
+              .setFormData(formData)
+              .setIban(iban)
+              .setCard(cardNumber)
+              .setPaymentType(paymentType);
+
+          stripeSCA.initiateStripeSubscription(error => {
+            toastr.error(error.message);
+            handleSubmitButton(false);
+          });
+
+        });
+
+
+        function onElementChange(event) {
+          var target = event.target;
+          var message = !target.value.length && errors[target.elementType];
+
+          validate(target.elementType, message);
+        }
+
+        function onStripeElementChange(event) {
+          var message = event.error && event.error.message;
+
+          validate(event.elementType, message);
+        }
+
+        function validate(elementType, message) {
+          if (paymentType === 'card') {
+            var elems = [cardNumber, cardExpiry, cardCvc];
+          } else {
+            var elems = [iban];
+          }
+
+          var violations = elems.reduce(function (count, elem) {
+            var isStripeElement = '_empty' in elem || '_invalid' in elem;
+
+            if (isStripeElement) {
+              console.log(elem);
+              if (elem._invalid) {
+                count += 1;
+              }
+            } else if (!elem.value.length) {
+              count += 1;
+            }
+
+            if (elementType === elem.elementType) {
+              handleErrorMessage(message, elementType);
+            }
+
+            return count;
+          }, 0);
+
+          console.log(violations);
+
+          submitButton.disabled = violations > 0;
+
+          return !violations;
+        }
+
+        function handleSubmitButton(isProcessing) {
+          submitButton.disabled = isProcessing;
+          if (isProcessing) {
+            submitButton.textContent = 'Processing…';
+          } else {
+            submitButton.textContent = submitButton.getAttribute('data-text');
+          }
+        }
+
+        function handleErrorMessage(message, elementType, elem) {
+          if (!elem) {
+            elem = document.querySelector('.control-errors[data-type="' + elementType + '"]');
+          }
+
+          if (elem) {
+            if (message) {
+              elem.textContent = message;
+              elem.classList.add('visible');
+            } else {
+              elem.classList.remove('visible');
+            }
+          }
+        }
+
+        function clearErrorMessages() {
+          var elems = document.querySelectorAll('.control-errors');
+
+          [].forEach.call(elems, function (elem) {
+            handleErrorMessage(null, undefined, elem);
+          });
+
+          handleSubmitButton(false);
+        }
+
+        function triggerChange(elem) {
+          var event = new Event('change');
+          elem.dispatchEvent(event);
+        }
+      })(jQuery);
+    </script>
+{% endblock %}

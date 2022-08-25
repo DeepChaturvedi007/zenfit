@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label class="control-label">Workouts Per Week? <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="How many times per week are you working out?">?</span></label>
+    <div class="form-group-in">
+        <select name="workoutsPerWeek" class="form-control" />
+            <option value="1" {% if 1 == client.workoutsPerWeek %} selected {% endif %}>1</option>
+            <option value="2" {% if 2 == client.workoutsPerWeek %} selected {% endif %}>2</option>
+            <option value="3" {% if 3 == client.workoutsPerWeek %} selected {% endif %}>3</option>
+            <option value="4" {% if 4 == client.workoutsPerWeek %} selected {% endif %}>4</option>
+            <option value="5" {% if 5 == client.workoutsPerWeek %} selected {% endif %}>5</option>
+            <option value="6" {% if 6 == client.workoutsPerWeek %} selected {% endif %}>6</option>
+            <option value="7" {% if 7 == client.workoutsPerWeek %} selected {% endif %}>7</option>
+        </select>
+    </div>
+</div>

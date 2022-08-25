@@ -1,0 +1,28 @@
+{% include '@App/components/metabar.html.twig' with { 'title': client.name } %}
+
+<nav class="responsive-tabs client-nav">
+    <a class="responsive-tab info-tab {{ clientInfo is defined ? 'active' : '' }}" href="{{ path_if(client.active, 'clientInfo',{'client': client.id}) }}">
+      <span class="responsive-tab-icon"><i class="material-icons">account_box</i></span>
+      General
+    </a>
+    <a class="responsive-tab workout-tab {{ clientWorkout is defined ? 'active' : '' }}" href="{{ path_if(client.active, 'workout_client',{ 'client': client.id }) }}">
+        <span class="responsive-tab-icon"><i class="material-icons">fitness_center</i></span>
+        {{ is_full_view() ? 'Workout Plan' : 'Workout' }}
+    </a>
+    <a class="responsive-tab meal-tab {{ clientMeal is defined ? 'active' : '' }}" href="{{ path_if(client.active, 'meal_client',{ 'client': client.id }) }}">
+        <span class="responsive-tab-icon"><i class="material-icons">restaurant_menu</i></span>
+        {{ is_full_view() ? 'Meal Plan' : 'Meal' }}
+    </a>
+    <a class="responsive-tab body-tab {{ clientBodyProgress is defined ? 'active' : '' }}" href="{{ path_if(client.active, 'clientProgress',{'client': client.id}) }}">
+        <span class="responsive-tab-icon"><i class="material-icons">insert_chart</i></span>
+        {{ is_full_view() ? 'Progress' : 'Progress' }}
+    </a>
+    <a class="responsive-tab documents-tab {{ clientDocuments is defined ? 'active' : '' }}" href="{{ path_if(client.active, 'clientDocuments',{'client': client.id}) }}">
+        <span class="responsive-tab-icon"><i class="material-icons">description</i></span>
+        {{ is_full_view() ? 'Documents' : 'Docs' }}
+    </a>
+    <a class="responsive-tab videos-tab {{ clientVideos is defined ? 'active' : '' }}" href="{{ path('clientVideos',{'client': client.id}) }}">
+        <span class="responsive-tab-icon"><i class="material-icons">videocam</i></span>
+        {{ is_full_view() ? 'Videos' : 'Videos' }}
+    </a>
+</nav>

@@ -1,0 +1,91 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+
+    {% include '@App/components/sideNav.html.twig' %}
+
+    <div id="page-wrapper" class="gray-bg">
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Edit exercise</h2>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <form class="form-horizontal" method="post" action="{{ path('save_exercise') }}">
+                <input type="text" value="{{ exercise.id }}" name="id" style="display: none;">
+                <div class="form-group"><label class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" value="{{ exercise.name }}" name="name" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Img</label>
+                    <div class="col-lg-10">
+                        <input type="text" value="{{ exercise.pictureUrl }}" name="img" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Video</label>
+                    <div class="col-lg-10">
+                        <input type="text" value="{{ exercise.videoUrl }}" name="video" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Time/Reps</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="type">
+                            {% for type in types %}
+                                <option {% if type.id == exercise.workoutType.id %}selected{% endif %} value="{{ type.id }}">{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Exercise Type</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="exerciseType">
+                            {% for exerciseType in exerciseTypes %}
+                                <option {% if exerciseType.id == exercise.exerciseType.id %}selected{% endif %} value="{{ exerciseType.id }}">{{ exerciseType.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Muscle Group</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="muscleGroup">
+                            {% for muscleGroup in muscleGroups %}
+                                <option {% if muscleGroup.id == exercise.muscleGroup.id %}selected{% endif %} value="{{ muscleGroup.id }}">{{ muscleGroup.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label class="col-lg-2 control-label">Equipment</label>
+                    <div class="col-lg-10">
+                        <select class="form-control m-b" name="equipment">
+                            {% for equipment in equipments %}
+                                <option {% if equipment.id == exercise.equipment.id %}selected{% endif %} value="{{ equipment.id }}">{{ equipment.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% include '@App/components/footer.html.twig' %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function() {});
+    </script>
+{% endblock script %}

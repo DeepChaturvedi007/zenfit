@@ -1,0 +1,43 @@
+section.container-fluid,
+section.container {
+    font-family: Poppins, sans-serif;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+section .flex-card {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+section header .container-title {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: #171725;
+    margin: 0;
+}
+section.container-fluid header a,
+section.container header a,
+section.container-fluid header a:visited,
+section.container-fluid header a:focus,
+section.container-fluid header a:active,
+section.container header a:visited,
+section.container header a:focus,
+section.container header a:active {
+    letter-spacing: .8px;
+}
+
+section.container-fluid a,
+section.container a,
+section.container-fluid a:visited,
+section.container-fluid a:focus,
+section.container-fluid a:active,
+section.container a:visited,
+section.container a:focus,
+section.container a:active {
+    font-family: Poppins, sans-serif;
+    color: #0062ff;
+}

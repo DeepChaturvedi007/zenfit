@@ -1,0 +1,263 @@
+@import "../shared/styles/main.css";
+
+#progress-container .flex-card {
+    font-family: Poppins, sans-serif;
+}
+
+#progress-container .progress-table tfoot td {
+    color: #44444f;
+    font-size: 11px;
+    font-weight: 600;
+    vertical-align: middle;
+    text-transform: lowercase;
+}
+
+#progress-container .flex-card .card-header {
+    padding: 25px 25px 0 25px;
+}
+
+#progress-container .flex-card .card-body {
+    padding: 10px 25px 20px 25px;
+    justify-content: flex-start;
+}
+
+#progress-container .progress-exercises-table .card-body {
+    padding: 10px 12px 20px 12px;
+}
+
+#progress-container .progress-table .card-body {
+    padding: 20px 12px 12px;
+}
+
+#progress-container .flex-card .card-title {
+    font-weight: 600;
+}
+
+#progress-container .progress-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#progress-container .progress-table thead th {
+    width: 72px;
+    text-align: center;
+}
+#progress-container .progress-exercises-table tbody td {
+    width: 72px;
+    text-align: center;
+    padding-left: 6px;
+}
+
+#progress-container .progress-table tfoot {
+    padding-left: 16px;
+}
+
+#progress-container .progress-table thead,
+#progress-container .progress-table tfoot {
+    display: block;
+    width: 100%;
+    background-color: #fafafb;
+}
+
+#progress-container .progress-table tbody {
+    display: block;
+    overflow-y: auto;
+}
+
+#progress-container .progress-kcal-table tbody {
+    max-height: 292px;
+}
+
+#progress-container .progress-exercises-table tbody {
+    max-height: 392px;
+}
+
+#progress-container .progress-table tfoot .current-week {
+    font-size: 9px;
+    text-transform: none;
+    white-space: break-spaces;
+}
+
+#progress-container tfoot .progress-label--success {
+    background-color: rgba(61, 213, 152, 0.2);
+    color: #3dd598;
+}
+
+#progress-container .card-header .current-week {
+    font-size: 16px;
+    font-weight: 600;
+    color: #171725;
+    letter-spacing: 0.1px;
+    margin: 0;
+}
+
+#progress-container .progress-table tr {
+    display: inline-table;
+    width: 100%;
+}
+
+#progress-container .progress-table tr {
+    cursor: pointer;
+}
+
+#progress-container .progress-table tbody tr:hover {
+    background: rgba(0,0,0,.075);
+}
+
+#progress-container .progress-table tbody tr.active {
+    background-color: rgba(61, 213, 152, 0.05);
+}
+
+#progress-container .mfp-link {
+    display: inline-block;
+    padding: 2px 15px 2px 15px;
+    border: solid 1px #e2e2ea;
+    border-radius: 10px;
+    color: #3a3a3c;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+}
+
+#progress-container .chart-dropdown-navigation {
+    padding: 2px 5px;
+    margin-left: 5px;
+    border-radius: 10px;
+    border: solid 2px #e2e2ea;
+    position: relative;
+    white-space: nowrap;
+}
+
+#progress-container .chart-dropdown-navigation div {
+    width: 100%;
+    padding: 5px 20px;
+    border-radius: 10px;
+    border: solid 2px #e2e2ea;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #fff;
+    z-index: 1;
+}
+
+#progress-container .chart-dropdown-navigation ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+}
+
+#progress-container .chart-dropdown-navigation li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#progress-container .meal-progress-bar {
+    position: relative;
+    height: 3px;
+    width: 100%;
+    border-radius: 50px;
+}
+
+#progress-container .meal-progress-bar-filler {
+    height: 100%;
+    border-radius: inherit;
+    background: #3dd598;
+    transition: width .2s ease-in;
+}
+
+#progress-container .kpi-progress {
+    height: 5px;
+    width: 110px;
+}
+
+#progress-container progress::-webkit-progress-bar {
+    background-color: rgba(61, 213, 152, 0.3); width: 100%;
+}
+
+#progress-container progress::-webkit-progress-value {
+    background-color: #3dd598;
+    stroke-width: 16px;
+}
+
+#progress-container .progress-circle-chart svg circle:first-child {
+    stroke: rgba(61, 213, 152, 0.3);
+}
+
+#progress-container .progress-circle-chart svg circle {
+    stroke: #3dd598;
+    stroke-width: 16px;
+}
+
+#progress-container canvas {
+    max-height: 390px;
+}
+
+#progress-container .progress-exercises-graph canvas {
+    max-height: 330px;
+}
+
+#progress-container .progress-circle-chart > div:first-child {
+    min-width: 80px;
+    max-width: 150px;
+}
+.workout-week-part {
+    display: flex;
+    align-items: center;
+
+}
+.date-range {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0px 10px;
+}
+.action-btn {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 25px!important;
+}
+.action-btn-disable {
+    cursor: not-allowed;
+    color: #c5c5c5;
+}
+.workout-history-table {
+    width: 100%;
+}
+.workout-history-table thead tr {
+}
+.workout-history-table thead th {
+    text-align: center;
+    font-weight: 600;
+    color: #44444f;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 12px 3px;
+}
+.workout-history-table tbody tr {
+    border-bottom: 1px solid #F1F1F5;
+}
+.workout-history-table tbody td {
+    text-align: center;
+    padding: 12px 0px;
+}
+.for-all-exercise {
+    color: #0062ff;
+}
+.history-comment {
+    padding: 5px;
+    max-width: 200px;
+}
+@media (max-width: 567px) {
+    #progress-container .progress-table td:first-child,
+    #progress-container .progress-table th:first-child {
+        width: 35%;
+    }
+}
+
+@media (max-width: 414px) {
+    #progress-container .progress-table tfoot .current-week {
+        white-space: break-spaces;
+    }
+}

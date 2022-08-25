@@ -1,0 +1,126 @@
+{% extends '@App/base.html.twig' %}
+{% import _self as notifications %}
+
+{% macro action_message(message) %}
+    {% if message.event_name == 'client.updated_bodyprogress' %}
+        <strong>{{ message.client_name }}</strong> updated <strong>Body progress</strong>
+    {% elseif message.event_name == 'client.updated_meal_plans' %}
+        <strong>{{ message.client_name }}</strong> updated <strong>Meal progress</strong>
+    {% elseif message.event_name == 'client.uploaded_image' %}
+        <strong>{{ message.client_name }}</strong> updated <strong>Progress picture</strong>
+    {% elseif message.event_name == 'client.login' %}
+        <strong>{{ message.client_name }}</strong> has <strong>Logged in</strong>
+    {% elseif message.event_name == 'client.created_login' %}
+        <strong>{{ message.client_name }}</strong> created login to <strong>Zenfit</strong>
+    {% elseif message.event_name == 'client.filled_out_survey' %}
+        <strong>{{ message.client_name }}</strong> answered the <strong>Questionnaire</strong>
+    {% elseif message.event_name == 'client.old_meal_plans' %}
+        <strong>{{ message.client_name }}'s</strong> meal plan is now more than <strong>60 days old</strong>
+    {% elseif message.event_name == 'client.old_workout_plans' %}
+        <strong>{{ message.client_name }}'s</strong> workout plan is now more than <strong>60 days old</strong>
+    {% elseif message.event_name == 'client.requires_login' %}
+        <strong>{{ message.client_name }}</strong> didn't create login - want to remind client?
+    {% elseif message.event_name == 'client.requires_invitation' %}
+        <strong>{{ message.client_name }}</strong> didn't receive invitation - want to resend invitation?
+    {% endif %}
+{% endmacro %}
+
+{% block content -%}
+<div id="wrapper">
+
+    {% include '@App/components/sideNav.html.twig' %}
+    {% include '@App/components/metabar.html.twig' with { 'title': 'Notifications' } %}
+
+    <div id="page-wrapper" class="gray-bg sm-white-bg">
+
+        <div class="wrapper wrapper-content" style="width: 60%">
+            <div class="text-right">
+                <a href="{{ path('account') }}">
+                    <strong>Notification settings</strong>
+                </a>
+            </div>
+            <div id="notifications-feed">
+                {% for message in messages %}
+                    {% set picture = message.client_picture ? message.client_picture : '/bundles/app/1456081788_user-01.png' %}
+
+                    <a class="dropdown-notifications-message{{ message.seen ? '' : ' is-new' }}" {{ message.attrs|join(' ')|raw }}>
+                        <img class="img-circle" src="{{ picture }}" alt="">
+                        <div>
+                            {{ notifications.action_message(message) }}
+                            <time>{{ message.date_diff }}</time>
+                        </div>
+                    </a>
+                {% else %}
+
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+        {% include '@App/components/footer.html.twig' %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    (function($) {
+        var $document = $(document);
+        var $window = $(window);
+        var $feed = $('#notifications-feed');
+        var $notifications = $('.metabar-notifications');
+
+        var notifications = new $.Notifications({
+          pagination: {
+            page: 2,
+            next: 3,
+          },
+        });
+
+        notifications.before = function () {
+          $feed
+            .toggleClass('is-loading', this.fetching)
+            .append($.Notifications.renderSpinner());
+        };
+
+        notifications.after = function () {
+          $feed
+            .toggleClass('is-loading', this.fetching)
+            .find('.sk-spinner')
+            .remove();
+        };
+
+        notifications.success = function (response) {
+          $feed.append(response.data.map($.Notifications.renderMessage));
+        };
+
+
+        var documentHeight;
+        var windowHeight;
+
+        $window
+          .on('resize.sizes', function () {
+            documentHeight = $document.height();
+            windowHeight = $window.height();
+          })
+          .trigger('resize.sizes')
+          .on('scroll.notifications', function () {
+              if (window.scrollY >= documentHeight - windowHeight - 100) {
+                notifications.fetch();
+              }
+          })
+          .trigger('scroll.notifications');
+
+        $notifications.on('notifications:mark', function (event, ids) {
+          $feed
+            .find('.is-new')
+            .filter(function () {
+              return ids.indexOf(this.getAttribute('data-id'));
+            })
+            .removeClass('is-new');
+        })
+    })(jQuery);
+</script>
+{% endblock script %}

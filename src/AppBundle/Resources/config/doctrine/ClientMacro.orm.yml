@@ -1,0 +1,59 @@
+AppBundle\Entity\ClientMacro:
+    type: entity
+    table: client_macros
+    repositoryClass: AppBundle\Repository\ClientMacroRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        kcal:
+            type: float
+            precision: 5
+            scale: 2
+            nullable: TRUE
+            options:
+              default: NULL
+
+        carbs:
+            type: float
+            precision: 5
+            scale: 2
+            nullable: TRUE
+            options:
+              default: NULL
+
+        protein:
+            type: float
+            precision: 5
+            scale: 2
+            nullable: TRUE
+            options:
+              default: NULL
+
+        fat:
+            type: float
+            precision: 5
+            scale: 2
+            nullable: TRUE
+            options:
+              default: NULL
+
+        date:
+            type: date
+            nullable: FALSE
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: clientMacro
+            joinColumn:
+               nullable: false
+               onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

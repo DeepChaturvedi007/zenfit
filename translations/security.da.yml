@@ -1,0 +1,34 @@
+'An authentication exception occurred':
+    '': 'En fejl indtraf ved godkendelse.'
+'Authentication credentials could not be found':
+    '': 'Loginoplysninger kan findes.'
+'Authentication request could not be processed due to a system problem':
+    '': 'Godkendelsesanmodning kan ikke behandles på grund af et systemfejl.'
+'Invalid credentials':
+    '': 'Ugyldige loginoplysninger.'
+'Cookie has already been used by someone else':
+    '': 'Cookie er allerede brugt af en anden.'
+'Not privileged to request the resource':
+    '': 'Ingen adgang til at forespørge ressourcen.'
+'Invalid CSRF token':
+    '': 'Ugyldig CSRF-token.'
+'No authentication provider found to support the authentication token':
+    '': 'Ingen godkendelsesudbyder er fundet til understøttelsen af godkendelsestoken.'
+'No session available, it either timed out or cookies are not enabled':
+    '': 'Ingen session tilgængelig, sessionen er enten udløbet eller cookies er ikke aktiveret.'
+'No token could be found':
+    '': 'Ingen token kan findes.'
+'Username could not be found':
+    '': 'Brugernavn kan ikke findes.'
+'Account has expired':
+    '': 'Brugerkonto er udløbet.'
+'Credentials have expired':
+    '': 'Loginoplysninger er udløbet.'
+'Account is disabled':
+    '': 'Brugerkonto er deaktiveret.'
+'Account is locked':
+    '': 'Brugerkonto er låst.'
+'Too many failed login attempts, please try again later':
+    '': 'For mange fejlede login forsøg, prøv venligst senere.'
+'Invalid or expired login link':
+    '': 'Ugyldigt eller udløbet login link.'

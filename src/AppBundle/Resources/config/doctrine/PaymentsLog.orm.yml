@@ -1,0 +1,73 @@
+AppBundle\Entity\PaymentsLog:
+    type: entity
+    table: payments_log
+    repositoryClass: AppBundle\Repository\PaymentsLogRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        type:
+            type: string
+            length: 255
+        customer:
+            type: string
+            length: 255
+            nullable: TRUE
+        charge:
+            type: string
+            length: 255
+            nullable: TRUE
+        amount:
+            type: string
+            length: 255
+            nullable: TRUE
+        currency:
+            type: string
+            length: 10
+            nullable: TRUE
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: true
+        arrivalDate:
+            type: datetime
+            column: arrival_date
+            nullable: true
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: paymentsLog
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: paymentsLog
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToOne:
+        stripeConnect:
+            targetEntity: AppBundle\Entity\StripeConnect
+            inversedBy: paymentsLog
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+
+    lifecycleCallbacks:
+        prePersist: [onPrePersist]

@@ -1,0 +1,12 @@
+AppBundle\Entity\AwsMediaConvertDataItem:
+    type: entity
+    repositoryClass: AppBundle\Repository\AwsMediaConvertDataItemRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        messageIds:
+            type: text

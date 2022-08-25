@@ -1,0 +1,110 @@
+AppBundle\Entity\WorkoutPlan:
+    type: entity
+    table: workout_plans
+    repositoryClass: AppBundle\Repository\WorkoutPlanRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        name:
+            type: string
+            nullable: false
+
+        explaination:
+            type: string
+            nullable: true
+
+        comment:
+            type: text
+            nullable: TRUE
+
+        status:
+            type: string
+            options:
+                default: active
+
+        template:
+          type: boolean
+          options:
+              default: 0
+
+        demo:
+          type: boolean
+          options:
+              default: 0
+
+        lastUpdated:
+            type: datetime
+            column: last_updated
+            nullable: true
+
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: true
+
+        assignmentTags:
+            type: string
+            column: assignment_tags
+            nullable: TRUE
+
+        deleted:
+            type: boolean
+
+    oneToMany:
+        workoutDays:
+            targetEntity: AppBundle\Entity\WorkoutDay
+            mappedBy: workoutPlan
+            orderBy: { 'order' : 'ASC' }
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: workoutPlans
+            joinColumn:
+                referencedColumnName: id
+                nullable: true
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: workoutPlans
+            joinColumn:
+                referencedColumnName: id
+                nullable: TRUE
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToOne:
+        settings:
+            targetEntity: AppBundle\Entity\WorkoutPlanSettings
+            mappedBy: plan
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        workoutPlanMeta:
+            targetEntity: AppBundle\Entity\WorkoutPlanMeta
+            mappedBy: plan
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE

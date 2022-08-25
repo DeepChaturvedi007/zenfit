@@ -1,0 +1,88 @@
+#color-picker {
+    width: 100%;
+
+    .box {
+        padding: 10px 15px 10px 12px;
+        border-radius: 6px;
+        border: solid 1px #ebebeb;
+        background-color: #fff;
+    }
+
+    .title {
+        display: flex;
+        height: 40px;
+        color: #92929d;
+        font-size: 14px;
+
+        &-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        &-blank {
+            flex-grow: 1;
+        }
+    } 
+
+    .content {
+        margin-top: 1px;
+        height: 293px;
+        display: none;
+        
+
+        &-saturation {
+            position: relative;
+            height: 187px;
+            border-radius: 5px;
+        }
+
+        &-hue {
+            position: relative;
+            height: 10px;
+            margin-top: 12px;
+
+            .hue-horizontal {
+                border-radius: 5px;
+            }
+        }
+
+        &-alpha {
+            position: relative;
+            height: 10px;
+            border-radius: 5px;
+            margin: 8px 0px 12px;
+        }
+
+        &-select {
+            width: 89px;         
+            border-radius: 4px;  
+            margin-right: 10px;
+        }
+
+        .picker {
+            width: 10px;
+            height: 10px;
+            border: solid 2px #fff;
+            border-radius: 50%;
+        }
+
+        input, select {
+            height: 34px;
+            border: solid 1px #f3f3f3;
+            padding: 7px 10px;
+            font-size: 14px;
+            opacity: 0.5;
+            border-radius: 4px;
+        }
+
+        input {
+            width: 70px;
+        }
+    }
+
+    .content.visible {
+        display: block;
+    }
+}

@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+    db:
+        restart: always
+        image: mysql:8
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: zenfit
+            MYSQL_PASSWORD: root
+        volumes:
+            - ./docker/mysql/conf:/etc/mysql/conf.d:cached
+
+    nginx:
+        restart: always
+        build: docker/nginx
+        ports:
+            - 8888:80
+        links:
+            - app
+        environment:
+            APP_SERVER_NAME: zenfit.test localhost 127.0.0.1
+            APP_UPSTREAM: app
+        volumes:
+            - .:/var/www/html:cached
+
+    app:
+        restart: always
+        build: .
+        ports:
+            - 9000:9000
+        links:
+            - db:mysqldb
+        environment:
+            PHP_OPCACHE_VALIDATE_TIMESTAMPS: 1
+            APP_ENV: dev
+            ZF_APP_HOSTNAME: https://zenfit.test
+        volumes:
+            - ./docker/php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+            - ./docker/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+            - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - .:/var/www/html:cached

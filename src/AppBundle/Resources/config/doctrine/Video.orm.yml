@@ -1,0 +1,76 @@
+AppBundle\Entity\Video:
+    type: entity
+    table: videos
+    repositoryClass: AppBundle\Repository\VideoRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        url:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        comment:
+            type: text
+            nullable: TRUE
+
+        picture:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+        assignmentTags:
+            type: string
+            column: assignment_tags
+            nullable: TRUE
+
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: true
+
+        assignWhen:
+            type: integer
+            column: assign_when
+            nullable: false
+            options:
+                default: 0
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: videos
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+    oneToMany:
+        videoTags:
+            targetEntity: AppBundle\Entity\VideoTag
+            mappedBy: video
+
+        videoClients:
+            targetEntity: AppBundle\Entity\VideoClient
+            mappedBy: video
+
+    lifecycleCallbacks: {  }

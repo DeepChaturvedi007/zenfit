@@ -1,0 +1,193 @@
+$mainBlue: #0045FF;
+.h1, .h2, .h3, h1, h2, h3{
+  margin: 0;
+}
+
+
+.salesStats{
+  min-height: 100vh;
+
+  /*Mobile*/
+  @media (max-width: 1024px){
+    .stats{
+      flex-wrap: wrap!important;
+    }
+    .coolCard{
+      background-color: #FAFAFB!important;
+      width: 49%;
+    }
+    .top{
+      h2{
+        padding: 11px 11px 9px;
+      }
+      flex-direction: column;
+      align-items: flex-start!important;
+      .chosenPeriod,.parentPeriods,.DateRangePicker{
+        width: 100%;
+      }
+    }
+    .table .empty{
+      text-align: center;
+      margin: 5rem 0px;
+      text-align: center;
+    }
+  }
+
+
+  h2{
+    font-family: Poppins,sans-serif;
+    font-weight: 800;
+    color: black;
+  }
+
+  .top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+  }
+
+
+  .DayPickerNavigation_button__default{
+    border: 0;
+  }
+  .parentPeriods{
+    display: flex;
+    flex-direction: row;
+    span{
+      font-weight: 500;
+      border-radius: 10px;
+      padding: 2px 1rem;
+      cursor: pointer;
+      font-family: Poppins, serif;
+    }
+  }
+  .periods{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .chosenPeriod{
+    /*min-width: 13rem;
+    display: flex;
+    align-items: center;
+*/
+    strong,li,td{
+      font-family: Poppins,sans-serif;
+    }
+    .active{
+      background:#0062FF;
+      color:white;
+      border-radius: 10px 10px 0 0;
+      padding: 2px 1rem;
+    }
+    span{
+      min-width: 13rem;
+      svg{
+        margin-bottom: -2px;
+        margin-right: 3px;
+      }
+    }
+
+    /*Date picker*/
+    .CalendarDay__selected{
+      background: $mainBlue;
+      color: white;
+    }
+    .CalendarDay__selected_end{
+      border-radius: 0 15px 15px 0;
+    }
+    .CalendarDay__selected_start {
+      border-radius: 15px 0 0 15px;
+    }/*
+    .DateRangePickerInput_clearDates {
+      padding: 5px;
+      right: -17rem;
+      top: 36%;
+    }*/
+    .DateInput_input__focused{
+      border-bottom-color: $mainBlue;
+    }
+    .CalendarDay__hovered_span:hover,
+    .CalendarDay__hovered_span,
+    .CalendarDay__selected_span{
+      background: rgba(0,98,255,0.1);
+      color: black;
+    }
+    .DateRangePickerInput__withBorder{
+      border: 0;
+    }
+    .CalendarDay__default{
+      border: 0;
+    }
+    input{
+      font-size: 14px;
+      font-family: Poppins,sans-serif;
+    }
+    /**/
+    .DateRangePicker{
+      position: relative;
+    }/*
+    .DateInput,.DateRangePickerInput_arrow{
+      display: none;
+    }*/
+  }
+  .stats{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
+
+  .table{
+    padding: 2rem 0;
+    td{
+      padding: 1.5rem 16px;
+      font-size: 14px;
+      border: 0;
+      background: white;
+      border-bottom: 1px solid #EBEBEB;
+    }
+    th{
+      padding: 1.25rem 16px;
+      font-size: 11px;
+      border-bottom: 1px solid #EBEBEB;
+      border-top: 1px solid #EBEBEB;
+    }
+    th:first-child{
+      border-left: 1px solid #EBEBEB;
+    }
+    th:last-child{
+      border-right: 1px solid #EBEBEB;
+    }
+
+  }
+  .coolCard{
+    border-radius: 10px;
+    background: #fff;
+    padding: 2rem 3rem;
+    flex-grow: 1;
+    margin: 1rem 2.5px;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .coolTitle{
+      font-size: 13px;
+    }
+    .empty{
+      display: flex;
+      align-items: center;
+      height: 80%;
+      width: 300px;
+    }
+    .coolNumber{
+      font-size: 20px;
+      font-weight: bold;
+      color: black;
+      span{
+        text-transform: uppercase;
+      }
+    }
+  }
+}

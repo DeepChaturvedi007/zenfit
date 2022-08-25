@@ -1,0 +1,54 @@
+framework:
+    messenger:
+        buses:
+            messenger.bus.deafult:
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
+        failure_transport: failed
+
+        transports:
+            pdf_generation:
+                dsn: '%env(SQS_PDF_URL)%'
+                options:
+                    access_key: '%env(AWS_ACCESS_KEY_ID)%'
+                    secret_key: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+            video_compress:
+                dsn: '%env(SQS_VIDEO_URL)%'
+                options:
+                    access_key: '%env(AWS_ACCESS_KEY_ID)%'
+                    secret_key: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+            media_compressed:
+                dsn: '%env(SQS_MEDIA_COMPRESSED_URL)%'
+                serializer: AppBundle\Consumer\AwsEventBridgeSerializer
+                options:
+                    access_key: '%env(AWS_ACCESS_KEY_ID)%'
+                    secret_key: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+            voice_compress:
+                dsn: '%env(SQS_VOICE_URL)%'
+                options:
+                    access_key: '%env(AWS_ACCESS_KEY_ID)%'
+                    secret_key: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+            chat_multiple:
+                dsn: '%env(SQS_CHAT_MULTIPLE_URL)%'
+                options:
+                    access_key: '%env(AWS_ACCESS_KEY_ID)%'
+                    secret_key: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+            sync: 'sync://'
+            failed:
+                dsn: 'doctrine://default'
+                options:
+                    queue_name: 'failed'
+
+        routing:
+            AppBundle\Consumer\PdfGenerationEvent: pdf_generation
+            AppBundle\Consumer\VideoCompressEvent: video_compress
+            AppBundle\Consumer\MediaCompressedEvent: media_compressed
+            AppBundle\Consumer\VoiceCompressEvent: voice_compress
+            AppBundle\Consumer\ChatMultipleEvent: chat_multiple

@@ -1,0 +1,83 @@
+{% macro header(plan, client, colorPDF) %}
+    <header style="background:{{ colorPDF ? colorPDF : '#1f8aff' }}">
+        <div class="w-1-of-3"></div>
+        <div class="w-1-of-3 text-center">
+            {% if client is not null %}
+                <h5>{{ client.name }}</h5>
+            {% endif %}
+            <span>{{ plan.name }}</span>
+        </div>
+        <div class="w-1-of-3 text-right">
+            {% if plan.lastUpdated %}
+                <small>{{ plan.lastUpdated|date('M j, Y') }}</small>
+            {% endif %}
+        </div>
+    </header>
+{% endmacro %}
+
+{% macro meal_header(meal) %}
+    <section class="meal-info">
+        <h5>{{ meal.name }}</h5>
+        <div class="meal-details">
+            <div class="meal-comment">{% trans %} meal.metaDescription {% endtrans %}</div>
+            <div class="meal-meta">
+                <span class="">{% trans %} meal.protein {% endtrans %}: {{ meal.avg_totals.protein }}g</span>
+                <span class="">{% trans %} meal.carbs {% endtrans %}: {{ meal.avg_totals.carbohydrate }}g</span>
+                <span class="">{% trans %} meal.fat {% endtrans %}: {{ meal.avg_totals.fat }}g</span>
+                <span class="text-right">{{ meal.avg_totals.kcal }} kcal</span>
+            </div>
+        </div>
+    </section>
+{% endmacro %}
+
+{% macro product_weight(product) %}
+    {% set weight = product.weight %}
+    {% if weight %}
+        {{ product.weightUnits }} x {{ weight.name }} ({{ product.totalWeight|round }}g)
+    {% else %}
+        {{ product.totalWeight|round }}g
+    {% endif %}
+{% endmacro %}
+
+{% macro product_name(product) %}
+    {% set name = product.product.name %}
+    {{ name|capitalize }}
+{% endmacro %}
+
+{% macro recipe(recipe) %}
+    {% import _self as blocks %}
+
+    <div class="recipe">
+        <div class="recipe-image">
+            <img src="{{ recipe.image }}" />
+        </div>
+        <div class="recipe-details">
+            <h3>{{ recipe.name }}</h3>
+            <div class="flex">
+                <div class="w-2-of-3">
+                    <h5>{% trans %} meal.ingredients {% endtrans %}</h5>
+                    <ul>
+                        {% for product in recipe.products %}
+                            <li>
+                                <span>{{ blocks.product_name(product) }}</span>
+                                <span>{{ blocks.product_weight(product) }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="recipe-meta">
+                        <span>{{ recipe.totals.protein }}g<small>{% trans %} meal.protein {% endtrans %}</small></span>
+                        <span>{{ recipe.totals.carbohydrate }}g<small>{% trans %} meal.carbs {% endtrans %}</small></span>
+                        <span>{{ recipe.totals.fat }}g<small>{% trans %} meal.fat {% endtrans %}</small></span>
+                        <span>{{ recipe.totals.kcal }}<small>Kcal</small></span>
+                    </div>
+                </div>
+                <div class="w-1-of-3">
+                    <h5>{% trans %} meal.recipe {% endtrans %}</h5>
+                    <div class="recipe-comment">
+                        {{ recipe.comment|nl2br }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

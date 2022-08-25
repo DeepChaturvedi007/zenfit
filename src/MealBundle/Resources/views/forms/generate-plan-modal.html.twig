@@ -1,0 +1,222 @@
+{% set favorite = app.user.recipePreferences|filter(preference => preference.favorite) %}
+{% set ownRecipes = app.user.recipes %}
+<!-- begin Generate meal plans modal -->
+<div class="modal inmodal" id="generateMealPlan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="notify"></div>
+
+                {% if client %}
+                    {% set routePath = 'generate_meal_plan' %}
+                    {% set routeParams = { client: client.id } %}
+                {% else %}
+                    {% set routePath = 'generate_meal_template' %}
+                    {% set routeParams = {} %}
+                {% endif %}
+
+                <form method="POST" style="margin-top:5px;" id="generateMealPlanForm"
+                      action="{{ path(routePath, routeParams) }}">
+                    <!-- begin form-group -->
+                    <div class="form-group">
+                        <label class="control-label" for="meal-plan-title">Title</label>
+                        <div class="form-group-in description row">
+                            <div class="col-xs-6">
+                                <div class="box-unit">
+                                    <input
+                                        id="meal-plan-title"
+                                        type="text"
+                                        name="name"
+                                        class="form-control title"
+                                        placeholder="Title of Meal Plan (eg. 3000 kcal)"
+                                        value="{{ client ? 'meal.clientPlanTitle'|trans({'%name%': client.name}, null, client.locale) }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end form-group -->
+
+                    <!-- begin form-group -->
+                    <div class="form-group">
+                        <label class="control-label">Number of meals</label>
+                        <div class="area meal-area">
+                            <div class="col meal-col">
+                                <label for="meals-3" class="btn {{ client and client.numberOfMeals == 3 ? 'current' : '' }}">
+                                    3
+                                    <input type="radio" name="meals" id="meals-3" value="3">
+                                </label>
+                            </div>
+                            <div class="col meal-col">
+                                <label for="meals-4" class="btn {{ client and client.numberOfMeals == 4 ? 'current' : '' }}">
+                                    4
+                                    <input type="radio" name="meals" id="meals-4" value="4">
+                                </label>
+                            </div>
+                            <div class="col meal-col">
+                                <label for="meals-5" class="btn {{ client and client.numberOfMeals == 5 ? 'current' : '' }}">
+                                    5
+                                    <input type="radio" name="meals" id="meals-5" value="5">
+                                </label>
+                            </div>
+                            <div class="col meal-col">
+                                <label for="meals-6" class="btn {{ client and client.numberOfMeals == 6 ? 'current' : '' }}">
+                                    6
+                                    <input type="radio" name="meals" id="meals-6" value="6">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end form-group -->
+
+                    <!-- begin form-group -->
+                    <div class="form-group">
+                        <label class="control-label">Alternative recipes per meal</label>
+                        <div class="area meal-area">
+                            <div class="col meal-col">
+                                <label for="alternatives-1" class="btn ">1
+                                    <input type="radio" name="alternatives" id="alternatives-1" value="1">
+                                </label>
+                            </div>
+                            <div class="col meal-col">
+                                <label for="alternatives-2" class="btn ">2
+                                    <input type="radio" name="alternatives" id="alternatives-2" value="2">
+                                </label>
+                            </div>
+                            <div class="col meal-col">
+                                <label for="alternatives-3" class="btn current">3
+                                    <input type="radio" checked name="alternatives" id="alternatives-3" value="3">
+                                </label>
+                            </div>
+                            <div class="col meal-col">
+                                <label for="alternatives-4" class="btn ">4
+                                    <input type="radio" name="alternatives" id="alternatives-4" value="4">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end form-group -->
+
+                    {% if (favorite|length) > 0 or (ownRecipes|length) > 0 %}
+                        <!-- begin form-group -->
+                        <div class="form-group">
+                            <label class="control-label">
+                                Prioritize favorite / own recipes
+                            </label>
+                            <div>
+                                <label class="control-label">
+                                    <input type="checkbox" name="prioritize"> <small>Yes, prioritize my own and favorite recipes</small>
+                                </label>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% include '@App/components/clientFields/avoid.html.twig' with {'client': client} %}
+
+                    <!-- begin form-group -->
+                    <div class="form-group">
+                        <label class="control-label">Language</label>
+                        <div class="form-group-in description row">
+                            <div class="col-xs-6">
+                                <div class="box-unit">
+                                    <select class="form-control" name="language" id="language">
+                                        <option {{ client and client.locale == 'en' ? 'selected' : '' }} value="en">
+                                            English
+                                        </option>
+                                        <option {{ client and client.locale == 'da_DK' ? 'selected' : '' }} value="da_DK">
+                                            Dansk
+                                        </option>
+                                        <option {{ client and client.locale == 'sv_SE' ? 'selected' : '' }} value="sv_SE">
+                                            Swedish
+                                        </option>
+                                        <option {{ client and client.locale == 'nb_NO' ? 'selected' : '' }} value="nb_NO">
+                                            Norwegian
+                                        </option>
+                                        <option {{ client and client.locale == 'fi_FI' ? 'selected' : '' }} value="fi_FI">
+                                            Finnish
+                                        </option>
+                                        <option {{ client and client.locale == 'nl_NL' ? 'selected' : '' }} value="nl_NL">
+                                            Dutch
+                                        </option>
+                                        <option {{ client and client.locale == 'de_DE' ? 'selected' : '' }} value="de_DE">
+                                            German
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end form-group -->
+
+                    <!-- begin form-group -->
+                    <div class="form-group">
+                        <label class="control-label">Exclude certain ingredients</label>
+                        <div class="form-group-in description exclude-ingredients-wrapper">
+                          <select name="exclude-ingredients[]" id="exclude-ingredients" multiple="multiple" style="display: none;" placeholder="For instance: 'Almonds', 'Raisins' etc."></select>
+                        </div>
+                    </div>
+                    <!-- end form-group -->
+
+                    <div class="form-meal-types">
+                        <input type="radio" name="type" id="mealTypeFixed" value="1">
+                        <label for="mealTypeFixed">Fixed Split</label>
+                        <div class="form-meal-types-panel">
+                            <div class="form-meal-types-cols">
+                                <div class="col-md-6">
+                                    <label for="meal_kcal">Kcals</label>
+                                    <input type="text" name="kcal" id="meal_kcal" class="form-control" value="{{ calories }}" placeholder="Kcals">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="macro_split">Macro Split</label>
+                                    <select class="form-control" name="macro_split" id="macro_split">
+                                        {% for value, title in macro_splits() %}
+                                            <option{{ loop.first ? ' selected' : '' }} value="{{ value }}">{{ title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="radio" name="type" id="mealTypeCustom" value="2">
+                        <label for="mealTypeCustom">Custom Macros <span style="margin-left:5px;" class="label label-success">BETA</span></label>
+                        <div class="form-meal-types-panel">
+                            <div class="form-meal-types-cols">
+                                <div class="col-md-3">
+                                    <label for="textbox2">Carbs (g)</label>
+                                    <input type="text" name="carbs" class="form-control" placeholder="Carbs">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textbox2">Protein (g)</label>
+                                    <input type="text" name="protein" class="form-control" placeholder="Protein">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textbox2">Fat (g)</label>
+                                    <input type="text" name="fat" class="form-control" placeholder="Fat">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="textbox2">Kcals</label>
+                                    <p id="custom-macros-kcals">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-container flex-j-c flex-al-c">
+                        <button type="submit" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Loading"
+                                class="btn btn-success meal-item-btn">generate meal plan
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Generate meal plans modal -->

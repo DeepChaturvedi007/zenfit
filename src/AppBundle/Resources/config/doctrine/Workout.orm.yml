@@ -1,0 +1,108 @@
+AppBundle\Entity\Workout:
+    type: entity
+    table: workout
+    repositoryClass: AppBundle\Repository\WorkoutRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        info:
+            type: text
+            nullable: TRUE
+
+        comment:
+            type: text
+            nullable: TRUE
+
+        orderBy:
+            type: integer
+
+        time:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        reps:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        rest:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        sets:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        startWeight:
+            type: string
+            length: 50
+            column: start_weight
+            nullable: TRUE
+
+        tempo:
+            type: string
+            length: 50
+            column: tempo
+            nullable: TRUE
+
+        rm:
+            type: string
+            length: 50
+            column: rm
+            nullable: TRUE
+
+    manyToOne:
+        exercise:
+            targetEntity: AppBundle\Entity\Exercise
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        workoutDay:
+            targetEntity: AppBundle\Entity\WorkoutDay
+            inversedBy: workouts
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        parent:
+            targetEntity: AppBundle\Entity\Workout
+            inversedBy: supers
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToMany:
+        supers:
+            orderBy: { 'orderBy' : 'ASC' }
+            targetEntity: AppBundle\Entity\Workout
+            mappedBy: parent
+            cache:
+                usage: NONSTRICT_READ_WRITE
+        tracking:
+            targetEntity: AppBundle\Entity\TrackWorkout
+            mappedBy: workout
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

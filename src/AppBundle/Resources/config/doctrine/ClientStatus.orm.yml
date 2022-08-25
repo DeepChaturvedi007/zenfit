@@ -1,0 +1,57 @@
+AppBundle\Entity\ClientStatus:
+    type: entity
+    table: client_status
+    repositoryClass: AppBundle\Repository\ClientStatusRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+
+    indexes:
+        client_resolved_event:
+            columns: [client_id, resolved, event_id]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        date:
+            type: datetime
+            column: date
+
+        resolved:
+            type: boolean
+            column: resolved
+            options:
+                default: false
+
+        resolvedBy:
+            type: datetime
+            column: resolved_by
+            nullable: true
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: clientStatus
+            joinColumn:
+               nullable: false
+               onDelete: CASCADE
+
+        event:
+            targetEntity: AppBundle\Entity\Event
+            joinColumn:
+                nullable: false
+                onDelete: CASCADE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToMany:
+        messages:
+            targetEntity: ChatBundle\Entity\Message
+            mappedBy: clientStatus
+
+    lifecycleCallbacks: {  }

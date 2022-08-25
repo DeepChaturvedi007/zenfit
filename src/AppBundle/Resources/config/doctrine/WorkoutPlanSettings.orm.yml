@@ -1,0 +1,69 @@
+AppBundle\Entity\WorkoutPlanSettings:
+    type: entity
+    table: workout_plans_settings
+    repositoryClass: AppBundle\Repository\WorkoutPlanSettingsRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        sets:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+        reps:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+        time:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+        rest:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+        weight:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+        tempo:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+        rm:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+
+    oneToOne:
+        plan:
+            targetEntity: AppBundle\Entity\WorkoutPlan
+            inversedBy: settings
+            joinColumn:
+                name: plan_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE

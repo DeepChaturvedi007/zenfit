@@ -1,0 +1,24 @@
+@import "../Theme/_color.scss";
+
+.zf-tabbar {
+    margin: 0 -15px;
+    padding: 12px 30px 12px 35px;
+    border: solid 0.5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+
+    &--item {
+        opacity: 0.3;
+        margin: 0 60px 11px 5px;
+        padding: 12px 0;
+        font-family: Poppins;
+        font-size: 12px;
+        font-weight: 500;
+        color: #000;
+    }
+
+    &--item.active {
+        color: $CTA_COLORS_BG;
+        border-bottom: solid 1px $CTA_COLORS_BG;
+        opacity: 1;
+    }
+}

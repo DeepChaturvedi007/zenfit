@@ -1,0 +1,243 @@
+client:
+    activation:
+        greeting: 'Hoi %name%!'
+        greetingNew: "Hoi %name%, laten we je op weg helpen!"
+        welcomeMsg: 'Je bent uitgenodigd om een account aan te maken. Vul de volgende vragenlijst in.'
+        description: 'Je dient een wachtwoord aan te maken om toegang te krijgen tot de  %name% App.'
+        createPasswordTitle: 'Creëer jouw wachtwoord'
+        createAccountTitle: 'Maak een account  aan'
+        createAccountSubTitle: 'Voer je algemene gegevens in om je account aan te maken'
+        updateAccountTitle: 'Account bijwerken'
+        updateAccountSubTitle: 'Voer uw gegevens in om uw account bij te werken'
+        email: 'Jouw e-mail'
+        emailInvalid: 'E-mail is ongeldig'
+        password: 'Kies een wachtwoord'
+        fieldEmpty: 'Veld is leeg'
+        fieldNotSelected: 'Er zijn geen opties gekozen'
+        passwordDontMatch: 'Wachtwoorden komen niet overeen'
+        passwordPlaceholder: 'Maak het lastig, maar toch gedenkwaardig'
+        confirmPassword: 'Bevestig wachtwoord'
+        confirmPasswordPlaceholder: 'Voer je wachtwoord nogmaals in'
+        passwordLength: 'Wachtwoord moet ten minste 8 tekens lang zijn'
+        createLoginBtn: 'Creëer login'
+        updateLogin: 'Account bijwerken'
+        hasBeenCreated: 'Je account is aangemaakt'
+        next: 'Volgende'
+        generalTitle: 'Algemene gegevens'
+        generalSubTitle: 'Vul je basisgegevens in'
+        bodyPictures:
+            front: 'Voorkant'
+            side: 'Zijkant'
+            back: 'Achterkant'
+            uploadPicture: 'upload foto'
+            removePicture: 'verwijder foto'
+            spec: 'Sleep je JPG of PNG bestand hierheen'
+    survey:
+        title: 'Vertel me iets over jezelf'
+        description: 'Vul de vragenlijst van je trainer in - jouw trainer heeft deze informatie nodig om de beste plannen voor jou te kunnen maken!'
+        loginCreatedTitle: 'Goed gedaan! Jouw login is gecreëerd!'
+        loginCreatedDescription: 'Nu hoef je alleen nog maar de vragenlijst in te vullen zodat jouw coach kan beginnen met het maken van je plannen.'
+        contactTitle: 'Contact Informatie'
+        photo: 'Jouw Foto'
+        imperial: 'imperiaal'
+        metric: 'metrisch'
+        uploadPhoto: 'Upload Foto'
+        changePhoto: 'Verander Foto'
+        fullName: 'Volledige Naam'
+        email: E-mail
+        phone: Telefoon
+        basicInfoTitle: 'Basis Informatie'
+        gender: Geslacht
+        male: Man
+        female: Vrouw
+        age: Leeftijd
+        metricSystem: 'Verenigde Staten of Metriek Stelsel'
+        startWeight: 'Start Gewicht'
+        height: Lengte
+        activityLevel: 'Activiteitsniveau'
+        selectActivityLevel: 'Selecteer Activiteitsniveau'
+        activityLevels:
+            1: 'Ik doe helemaal niet aan lichaamsbeweging'
+            2: 'Ik ben niet echt actief en train 2-3 dagen per week'
+            3: 'Ik ben matig actief en train 3-4 keer per week'
+            4: 'Ik ben behoorlijk actief en train vrij veel'
+            5: 'Ik heb een zware fysieke baan en train de meeste dagen'
+        photos: 'Foto''s'
+        photosDescription: 'Upload één of meerdere foto''s van jezelf (optioneel)'
+        goalInfoTitle: 'Jouw Doel'
+        yourCurrentWeight: 'Je huidige gewicht is %weightString%. Wat is je streefgewicht?'
+        goalHigherCurrent: 'Huidig gewicht is hoger dan streefgewicht'
+        goalLessCurrent: 'Huidig gewicht is lager dan streefgewicht'
+        goalEqualCurrent: 'Huidig gewicht is gelijk aan streefgewicht'
+        goalWeek: 'Met deze voortgang, zal het %week% weken kosten om je doel te bereiken!'
+        primaryGoal: 'Primaire Doel'
+        selectPrimaryGoal: 'Primaire Doel'
+        customPrimaryGoals:
+            2: 'Afvallen'
+            3: 'Gewicht behouden'
+            4: 'Aankomen'
+        primaryGoals:
+            metric:
+                1: 'Raak 1 kg per week kwijt'
+                2: 'Raak 0,5 kg per week kwijt'
+                3: 'Behoud van het gewicht'
+                4: 'Kom 0,5 kg per week aan'
+                5: 'Kom 1 kg per week aan'
+            imperial:
+                1: 'Raak 2 pond per week kwijt'
+                2: 'Raak 1 pond per week kwijt'
+                3: 'Behoud van het gewicht'
+                4: 'Kom 1 pond per week aan'
+                5: 'Kom 2 pond per week aan'
+        goalWeight: 'Doelgewicht'
+        additionalInfoTitle: 'Aanvullende Vragen'
+        injuries: 'Blessures / Ziekten'
+        injuriesPlaceholder: 'Heb je verwondingen/ziektes/medische problemen die van invloed kunnen zijn op jouw plan? Bijvoorbeeld rugpijn, astma, enz.'
+        workoutExperienceLevel: 'Ervaring met training'
+        workoutExperienceLevelPlaceholder: 'Hoe lang ben je al consistent aan het trainen?'
+        selectWorkoutExperienceLevel: 'Kies jouw ervaringsniveau.'
+        workoutExperienceLevels:
+            1: 'Ik ben beginner. Ik heb geen tot weinig ervaring.'
+            2: 'Ik train nu al een tijdje en ken de basis.'
+            3: 'Ik ben ervaren en train al vele jaren.'
+        workoutExperience: 'Wil je nog iets toevoegen aan deze ervaring over jouw training?'
+        workoutExperiencePlaceholder: 'Voel je vrij het uit te leggen.'
+        workoutPreferences: 'Trainingsvoorkeuren'
+        workoutSubtitlePreferences: 'Vul alle vragen hieronder in'
+        workoutPreferencesPlaceholder: 'Zijn er specifieke spiergroepen die je wilt verbeteren? Probeer je de kracht, het uithoudingsvermogen, of beide te verbeteren?'
+        workoutLocation: 'Waar train je?'
+        selectWorkoutLocation: 'Selecteer waar jij je trainingen doet.'
+        workoutLocationPlaceholder: 'Train je in de sportschool, thuis of buiten?'
+        workoutLocations:
+            1: 'Sportschool'
+            2: 'Thuis'
+            3: 'Buiten'
+        workoutsPerWeek: 'Trainingen per Week?'
+        workoutsPerWeekPlaceholder: 'Hoe vaak per week wil je trainen?'
+        allergiesIngredientsToAvoid: 'Allergieën of ingrediënten die vermeden moeten worden?'
+        allergiesIngredientsToAvoidPlaceholder: 'Ingrediënten / voedsel dat vermeden moet worden?'
+        excludeIngredients: 'Ingrediënten uitsluiten (allergieën)'
+        none: 'geen'
+        vegetarianType: "Ik ben vegetariër"
+        pescetarianType: "Ik ben pescetariër"
+        veganType: "Ik ben veganist"
+        lactose: Lactose
+        gluten: Gluten
+        nuts: Noten
+        eggs: Eieren
+        pig: Varken
+        shellfish: Schaaldieren
+        fish: Vis
+        vegetarian: 'Ik ben Vegetariër'
+        vegan: 'I ben Veganist'
+        pescetarian: 'Ik ben Pescotariër'
+        dietStyle: 'Jouw Dieet'
+        dietStyleSubTitle: 'Vul alle vragen hieronder in'
+        dietStyleTitle: 'Voedingsvoorkeuren'
+        dietStylePlaceholder: 'Heb je speciale voedselwensen, of bepaald voedsel dat jouw voorkeur heeft?'
+        numberOfMeals: 'Maaltijden Per Dag'
+        numberOfMealsPlaceholder: 'Hoeveel maaltijden wil je per dag?'
+        lifestyleNew: "Levensstijl - Actieve Baan? Actieve levensstijl? Rook je? Iets anders?"
+        lifestylePlaceholder: 'Actieve Baan? Actieve levensstijl? Rook je? Iets anders?'
+        motivation: 'Motivatie'
+        otherFeedbackTitle: 'Andere feedback'
+        otherFeedbackSubTitle: 'Dit zijn de laatste vragen en dan ben je klaar!'
+        otherLifeStyle: 'Beschrijf je levensstijl (werk, hobbies, rook je, enz.)'
+        howMotivated: 'Hoe gemotiveerd ben je?'
+        motivationPlaceholder: 'Als 1 geheel ongemotiveerd is, en 10 is dat je er klaar voor bent om 6 keer per dag te eten en 6 keer per week te trainen - hoe gemotiveerd ben je?'
+        submit: 'Vragenlijst Indienen'
+    downloadApp:
+        title: 'Vragenlijst verzonden naar jouw Trainer!'
+        updated: 'Uw account is bijgewerkt'
+        updatedSubtitle: "U heeft uw update van uw account voltooid. Ga je gang en download de client-app!"
+        description: 'Geweldig %name%! Nu kun je achterover leunen, en jouw trainer je plannen laten maken.'
+        readyTitle: 'Je bent klaar om de %name% app te downloaden!'
+        whatsNext: 'Wat volgt er?'
+        subTitle: 'Je hebt het aanmaken van je account voltooid. Ga je gang en download de client-app!'
+        downloadAppTitle: 'Mocht je de %name% app nog niet hebben gedownload, dan is dit het juiste moment'
+        iphone: 'Download de iPhone Versie'
+        android: 'Download de Android Versie'
+    checkout:
+        amount: Bedrag
+        periodFixed: 'Komt maandelijks terug voor %months% maanden'
+        periodUntilUnsubscribe: 'Komt maandelijks terug tot je je uitschrijft'
+        upfrontFee: 'Voorafgaande betaling %upfrontFee%'
+        couponCode: 'Coupon Code'
+        choosePayment: 'Choose payment method'
+        back: 'Back'
+        cardPay: 'Pay with Card'
+        klarnaPay: 'Pay with Klarna'
+        sepaPay: 'Pay with Sepa'
+        name: 'Naam van Kaarthouder'
+        email: E-mail
+        ibanDesc: By providing your IBAN and confirming this payment, you are authorizing Zenfit ApS and Stripe, our payment service provider, to send instructions to your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.
+        acceptTerms: 'Ik heb de %terms% gelezen en geaccepteerd.'
+        termsOfService: 'servicevoorwaarden'
+        acceptTermsError: You must accept the terms of service
+        klarnaError: Klarna payment failed. Please try again or with another payment method.
+        reachOutSupport: Please reach out to Zenfit support.
+        reachOutBank: Please contact your bank or try another card.
+        paymentDeclined: Your payment declined.
+        invalidNameError: Invalid name
+        invalidEmailError: Invalid email
+        button: Koop
+        sepaButton: Confirm mandate and initiate debit for %amount%
+        paymentSuccessfulTitle: 'Betaling Succesvol'
+        paymentSuccessfulDescription: 'Wij hebben een betalingsbevestiging naar jouw e-mail gestuurd.'
+        paymentSuccessfulBundleSubtitle: 'Click below to download the files'
+        paymentSuccessfulSubtitle: 'Click below to create a login for %app%.'
+        paymentSuccessfulButton: 'Creëer mijn login'
+        klarna:
+            title: 'Klarna'
+            category:
+                now: 'Pay now'
+                later: 'Pay later'
+                overTime: 'Pay over time'
+        firstMonth: 'Eerste maand'
+        afterFirstMonth: 'Volgende maanden tot je je uitschrijft.'
+        creditCard: Creditcard
+        description: 'Veilige geldoverdracht via uw bankrekening. Visa, Maestro, Discover, American Express.'
+        cardNumber: Kaartnummer
+        expiryDate: Vervaldatum
+        cvcCode: CVC
+        stripeMessage: 'Deze betaling is veilig gecodeerd met %stripe%'
+    notifications:
+        checkIn: Hey %name%, vergeet niet om vandaag in te checken
+        newVideo: Je coach heeft net een nieuwe video voor je geüpload!
+        voice: Your coach sent you a voice message
+        video: Your coach sent you a video message
+emails:
+    client:
+        newMessage:
+            subject: 'Je hebt een nieuw bericht!'
+            cta: 'Klik hier om het te lezen'
+        answerSurvey:
+            subject: 'Vul de vragenlijst van je trainer in.'
+            body: 'Jouw trainer heeft gevraagd of je de vragenlijst wil invullen, zodat jouw plannen gemaakt kunnen worden.'
+            cta: 'Klik a.u.b. hier om dat te doen'
+        mealPlanPdf:
+            subject: 'Maaltijdplan PDF'
+            body: 'Hoi %client%, bijgaand is jouw maaltijdplan in PDF.'
+        workoutPlanPdf:
+            subject: 'Trainingsplan PDF'
+            body: 'Hoi %client%, bijgaand is jouw trainingsplan in PDF.'
+    user:
+        newMessage:
+            subject: 'Je hebt een nieuw bericht!'
+            body: 'Jouw client %client% heeft jou een nieuw bericht gestuurd in Zenfit.'
+            cta: 'Klik hier om het te lezen'
+meal:
+    clientPlanTitle: '%name% maaltijdplan'
+    metaDescription: 'Je kunt elk van deze maaltijden kiezen. Ze bevatten allemaal ongeveer:'
+    carbs: Koolhydraten
+    protein: Proteïne
+    fat: Vet
+    ingredients: Ingrediënten
+    recipe: Recipt
+    types:
+        1: Ontbijt
+        2: Lunch
+        3: Diner
+        4: 'Ochtend Snack'
+        5: 'Middag Snack'
+        6: 'Avond Snack'

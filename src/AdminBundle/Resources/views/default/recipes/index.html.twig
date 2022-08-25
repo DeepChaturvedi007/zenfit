@@ -1,0 +1,363 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Admin Dashboard' } %}
+        
+        <div id="page-wrapper" class="gray-bg sm-white-bg">
+            {% include '@Admin/components/nav.html.twig' with {'recipes': 'true'} %}
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <form id="recipes-search-form" class="form-inline" onsubmit="void(0)">
+                            <div class="form-group">
+                                <a href="#" data-toggle="modal" data-target="#recipeModal" role="button" class="btn btn-success btn-upper">Create Recipe</a>
+                            </div>
+                            <div class="form-group">
+                                <input type="text"
+                                       id="search-name"
+                                       class="form-control"
+                                       placeholder="Search...">
+                            </div>
+                            <div class="form-group">
+                                <select id="macro-split-select" class="form-control">
+                                    <option value="">Select macro</option>
+                                    {% for value, label in macroOptions %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="language-select" class="form-control">
+                                    <option value="">Select language</option>
+                                    {% for value, label in languageOptions %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="duration-select" class="form-control">
+                                    <option value="">Select duration</option>
+                                    {% for value, label in durationOptions %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="type-select" class="form-control">s
+                                    <option value="">Select type</option>
+                                    {% for value, label in typeOptions %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="approved-select" class="form-control">s
+                                    <option value="">All</option>
+                                    <option value="1">Approved</option>
+                                    <option value="0">Not Approved</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <button type="button" class="meta btn btn-default" data-name="lactose" data-value="false">No lactose</button>
+                        <button type="button" class="meta btn btn-default" data-name="gluten" data-value="false">No gluten</button>
+                        <button type="button" class="meta btn btn-default" data-name="nuts" data-value="false">No nuts</button>
+                        <button type="button" class="meta btn btn-default" data-name="eggs" data-value="false">No egg</button>
+                        <button type="button" class="meta btn btn-default" data-name="pig" data-value="false">No pig</button>
+                        <button type="button" class="meta btn btn-default" data-name="shellfish" data-value="false">No shellfish</button>
+                        <button type="button" class="meta btn btn-default" data-name="fish" data-value="false">No fish</button>
+                        <span>&nbsp;|&nbsp;</span>
+                        <button type="button" class="meta btn btn-default" data-name="vegetarian" data-value="true">I'm vegetarian</button>
+                        <button type="button" class="meta btn btn-default" data-name="vegan" data-value="true">I'm vegan</button>
+                        <button type="button" class="meta btn btn-default" data-name="pescetarian" data-value="true">I'm pescetarian</button>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <button type="button" class="meta btn btn-default" data-name="lactose" data-value="true">Has lactose</button>
+                        <button type="button" class="meta btn btn-default" data-name="gluten" data-value="true">Has gluten</button>
+                        <button type="button" class="meta btn btn-default" data-name="nuts" data-value="true">Has nuts</button>
+                        <button type="button" class="meta btn btn-default" data-name="eggs" data-value="true">Has egg</button>
+                        <button type="button" class="meta btn btn-default" data-name="pig" data-value="true">Has pig</button>
+                        <button type="button" class="meta btn btn-default" data-name="shellfish" data-value="true">Has shellfish</button>
+                        <button type="button" class="meta btn btn-default" data-name="fish" data-value="true">Has fish</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="table actions-on-hover">
+                        <thead>
+                        <tr>
+                            <th>Recipe name</th>
+                            <th class="no-wrap">Lang</th>
+                            <th class="no-wrap">Type</th>
+                            <th style="text-align: right;" width="150">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="recipes-list">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row preloader">
+                    <div class="col-xs-12 text-center">
+                        <i class="fa fa-circle-o-notch fa-spin fa-fw" style="font-size: 36px"></i>
+                    </div>
+                </div>
+            </div>
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    {% include '@Meal/recipes/recipe-modal.html.twig' with {'admin': true} %}
+    <script>
+      (function ($) {
+        // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
+        class SearchParams extends URLSearchParams {
+          constructor(...params) {
+            super(...params);
+            this.eventsPrefix = 'search_params_';
+            this.changeEvent = new CustomEvent(`${this.eventsPrefix}change`);
+            window.dispatchEvent(this.changeEvent);
+          }
+          on (type, cb) {
+            window.addEventListener(`${this.eventsPrefix}${type}`, cb);
+          }
+
+          delete(key) {
+            super.delete(key);
+            window.dispatchEvent(this.changeEvent)
+          }
+          set(key, value) {
+            super.set(key, value);
+            window.dispatchEvent(this.changeEvent)
+          }
+          append(key, value) {
+            super.append(key, value);
+            window.dispatchEvent(this.changeEvent)
+          }
+        }
+
+        let debounced = null;
+        let debouncedRequest = null;
+        let activeRequest = null;
+        let hasMore = true;
+        const resourceUrl = `{{path('admin_api_recipes')}}`;
+        const list = $('.recipes-list');
+        const preloader = $('.preloader');
+        const form = $('#recipes-search-form');
+
+        const searchParams = new SearchParams(window.location.search);
+        searchParams.set('limit', 200);
+        searchParams.set('offset', 0);
+        searchParams.on('change', () => {
+          clearTimeout(debouncedRequest);
+          window.history.replaceState({ preventReload: true }, null, `${window.location.pathname}?${searchParams.toString()}`);
+          debouncedRequest = setTimeout(() => load(), 100);
+        })
+
+        const handleParamChange = (key, value) => {
+          if([[], null, undefined, ''].includes(value)){
+            searchParams.delete(key)
+          } else {
+            searchParams.set(key, value);
+          }
+        }
+        const setupFromSearch  = () => {
+          if(searchParams.has('name')) {
+            $('#search-name').val(searchParams.get('name'))
+          }
+          if(searchParams.has('macroSplit')) {
+            $('#macro-split-select').val(searchParams.get('macroSplit'))
+          }
+          if(searchParams.has('duration')) {
+            $('#duration-select').val(searchParams.get('duration'))
+          }
+          if(searchParams.has('type')) {
+            $('#type-select').val(searchParams.get('type'))
+          }
+          if(searchParams.has('locale')) {
+            $('#language-select').val(searchParams.get('locale'))
+          }
+          if(searchParams.has('approved')) {
+            $('#approved-select').val(searchParams.get('approved'))
+          }
+          $('.meta').each((i, el) => {
+            const name = $(el).data('name');
+            const value = $(el).data('value');
+            const val = searchParams.get(name) === 'false' ? false : searchParams.get(name) === 'true' ? true : null;
+
+            if(val === value) {
+              $(el).addClass('btn-info').removeClass('btn-default');
+            } else {
+              $(el).removeClass('btn-info').addClass('btn-default');
+              handleParamChange(name);
+            }
+          })
+        };
+        setupFromSearch();
+        load();
+
+        window.addEventListener('popstate', function (event) {
+          if (window.history.state && window.history.state.preventReload) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }, false);
+
+        form.submit(function (e) {
+          e.preventDefault();
+          return false;
+        });
+
+        $('#wrapper').scroll(function() {
+          const area = $(this)[0];
+          const shouldLoadMore = area.scrollTop > area.scrollHeight - area.clientHeight - 100;
+          if(shouldLoadMore) loadMore();
+        });
+
+        $('#search-name').keyup(function () {
+          clearTimeout(debounced);
+          debounced = setTimeout(() => {
+            handleParamChange('name', $(this).val());
+            erase();
+          }, 300)
+        });
+
+        $('#macro-split-select').change(function () {
+          handleParamChange('macroSplit', $(this).val());
+          erase();
+        });
+
+        $('#duration-select').change(function () {
+          handleParamChange('duration', $(this).val());
+          erase();
+        });
+
+        $('#type-select').change(function () {
+          handleParamChange('type', $(this).val());
+          erase();
+        });
+
+        $('#language-select').change(function () {
+          handleParamChange('locale', $(this).val());
+          erase();
+        });
+
+        $('#approved-select').change(function () {
+          handleParamChange('approved', $(this).val());
+          erase();
+        });
+
+        $('.meta').click(function () {
+          const name = $(this).data('name');
+          const value = $(this).data('value');
+
+          if(searchParams.has(name)) {
+            handleParamChange(name);
+            $(this).removeClass('btn-info');
+            $(this).addClass('btn-default');
+          } else {
+            handleParamChange(name, value);
+            $(this).addClass('btn-info');
+            $(this).removeClass('btn-default');
+          }
+          erase();
+        });
+
+        function erase () {
+          hasMore = true;
+          searchParams.set('limit', 200);
+          searchParams.set('offset', 0);
+          list.empty();
+        }
+
+        function loadMore () {
+          if(!hasMore) return;
+          hasMore = false;
+          const offset = +searchParams.get('offset') || 0;
+          const limit = +searchParams.get('limit') || 200;
+          searchParams.set('offset', offset + limit);
+        }
+
+        function load () {
+          if(activeRequest) activeRequest.abort();
+          preloader.show();
+          activeRequest = $.ajax({
+            method: "GET",
+            url: `${resourceUrl}${window.location.search}`,
+            success: function(rows) {
+              if(Array.isArray(rows) && rows.length) {
+                rows.forEach(row => list.append(row));
+                hasMore = true;
+              } else {
+                hasMore = false;
+              }
+            },
+            error: function (req, status, error) {
+              if(status === 'abort') return;
+              swal("Error!", "Oops!! Something went wrong. Can't load recipes", "error");
+            },
+            complete: function () {
+              preloader.hide()
+            }
+          })
+        }
+
+        function removeFromTheList (id) {
+          const item = list.find(`tr[data-recipe="${id}"]`);
+          item.remove();
+        }
+
+        window.addEventListener('onRecipeDeleted', function (e) {
+          if(!e.detail.recipeId || !Number(e.detail.recipeId)) return;
+          const recipeId = Number(e.detail.recipeId);
+          removeFromTheList(recipeId);
+        });
+
+        window.addEventListener('onRecipeSaved', function (e) {
+          if(!e.detail.recipeId || !Number(e.detail.recipeId)) return;
+          const recipeId = Number(e.detail.recipeId);
+          const url = `{{ path('admin_api_recipes_show', { id: ':id' }) }}`.replace(':id', recipeId);
+
+          $.ajax({
+            url,
+            type: 'GET',
+            success: function (row) {
+              removeFromTheList(recipeId);
+              //list.prepend(row);
+              swal({
+                title: "Recipe has been saved",
+                text: "Please refresh page to update filters",
+                type: "success",
+                showCancelButton: false,
+                confirmButtonText: "Ok!",
+                closeOnConfirm: true
+              })
+              setTimeout(function() {
+                //location.reload();
+              },1000);
+            },
+            error: function (err) {
+              toastr.error('An error occurred');
+            }
+          });
+        });
+
+
+      })(jQuery)
+    </script>
+
+    <script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+    {% include '@Admin/default/recipes/clone_and_adjust_recipe_modal.html.twig' %}
+{% endblock %}

@@ -1,0 +1,58 @@
+.client-subscription-modal { 
+    .custom-modal-content {
+    }
+    .current-payment-plan {
+        display: flex;
+        img {
+            padding-right: 15px;
+        }
+        .until {
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: #7f8fa4;
+            margin-top: 9px;
+            display: block;
+        }
+        p span {
+            font-size: 17px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.4px;
+            text-align: left;
+            color: #354052;
+        }
+    }
+    .info {
+        font-size: 13px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.23;
+        text-align: left;
+        color: #7f8fa4;
+        margin-bottom: 20px;
+    }
+    .when-client-pays, .specific-date {
+        cursor: pointer;
+
+    }
+    .active {
+        color: #2895f1
+    }
+    .input-group-addon-custom {
+        display: flex;
+    }
+    .input-group-addon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+    }
+}

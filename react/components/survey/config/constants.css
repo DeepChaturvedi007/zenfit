@@ -1,0 +1,12 @@
+:root {
+    --dark: #000000;
+    --light: #ffffff;
+    --primary: #1676ee;
+    --success: #007f30;
+    --danger: #FF0000;
+    --muted: #141414;
+    --default-border: 1px solid #f1f1f5;
+    --default-padding: 10px 15px;
+    --font-size: 14px;
+    --animation-duration: .4s;
+}

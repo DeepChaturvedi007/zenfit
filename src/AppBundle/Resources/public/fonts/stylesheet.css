@@ -1,0 +1,87 @@
+/*@font-face {*/
+    /*font-family: 'Calibre';*/
+    /*src: url('calibre-thin-webfont.eot');*/
+    /*src: url('calibre-thin-webfont.eot?#iefix') format('embedded-opentype'),*/
+    /*url('calibre-thin-webfont.woff') format('woff'),*/
+    /*url('calibre-thin-webfont.ttf') format('truetype'),*/
+    /*url('calibre-thin-webfont.svg#calibrethin') format('svg');*/
+    /*font-weight: 100;*/
+    /*font-style: normal;*/
+/*}*/
+
+@font-face {
+    font-family: 'Calibre';
+    src: url('calibre-light-webfont.eot');
+    src: url('calibre-light-webfont.eot?#iefix') format('embedded-opentype'),
+    url('calibre-light-webfont.woff') format('woff'),
+    url('calibre-light-webfont.ttf') format('truetype'),
+    url('calibre-light-webfont.svg#calibrelight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Calibre';
+    src: url('calibre-regular-webfont.eot');
+    src: url('calibre-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('calibre-regular-webfont.woff') format('woff'),
+    url('calibre-regular-webfont.ttf') format('truetype'),
+    url('calibre-regular-webfont.svg#calibre_regularregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Calibre';
+    src: url('calibre-medium-webfont.eot');
+    src: url('calibre-medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('calibre-medium-webfont.woff') format('woff'),
+    url('calibre-medium-webfont.ttf') format('truetype'),
+    url('calibre-medium-webfont.svg#calibremedium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+/*@font-face {*/
+    /*font-family: 'Calibre';*/
+    /*src: url('calibre-semibold-webfont.eot');*/
+    /*src: url('calibre-semibold-webfont.eot?#iefix') format('embedded-opentype'),*/
+    /*url('calibre-semibold-webfont.woff') format('woff'),*/
+    /*url('calibre-semibold-webfont.ttf') format('truetype'),*/
+    /*url('calibre-semibold-webfont.svg#calibresemibold') format('svg');*/
+    /*font-weight: 600;*/
+    /*font-style: normal;*/
+/*}*/
+
+@font-face {
+    font-family: 'Calibre';
+    src: url('calibre-medium-webfont.eot');
+    src: url('calibre-medium-webfont.eot?#iefix') format('embedded-opentype'),
+    url('calibre-medium-webfont.woff') format('woff'),
+    url('calibre-medium-webfont.ttf') format('truetype'),
+    url('calibre-medium-webfont.svg#calibremedium') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/*@font-face {*/
+    /*font-family: 'Calibre';*/
+    /*src: url('calibre-bold-webfont.eot');*/
+    /*src: url('calibre-bold-webfont.eot?#iefix') format('embedded-opentype'),*/
+    /*url('calibre-bold-webfont.woff') format('woff'),*/
+    /*url('calibre-bold-webfont.ttf') format('truetype'),*/
+    /*url('calibre-bold-webfont.svg#calibrebold') format('svg');*/
+    /*font-weight: 700;*/
+    /*font-style: normal;*/
+/*}*/
+
+/*@font-face {*/
+    /*font-family: 'Calibre';*/
+    /*src: url('calibre-black-webfont.eot');*/
+    /*src: url('calibre-black-webfont.eot?#iefix') format('embedded-opentype'),*/
+    /*url('calibre-black-webfont.woff') format('woff'),*/
+    /*url('calibre-black-webfont.ttf') format('truetype'),*/
+    /*url('calibre-black-webfont.svg#calibreblack') format('svg');*/
+    /*font-weight: 800;*/
+    /*font-style: normal;*/
+/*}*/

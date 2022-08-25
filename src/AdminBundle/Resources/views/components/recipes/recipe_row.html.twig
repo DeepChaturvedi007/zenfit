@@ -1,0 +1,140 @@
+{% block content -%}
+
+    {% set lang = '' %}
+    {% for locale, recipes in recipe.groupRecipesByLocaleAndIngredients %}
+        {% set gf = recipes.glutenFree %}
+        {% set lf = recipes.lactoseFree %}
+        {% set lf_gf = recipes.glutenAndLactoseFree %}
+
+        {% set label = 'label-js-danger' %}
+
+        {% if recipes.errors == 0 and recipes.total > 0 and recipes.total == recipes.approved %}
+            {% set label = 'label-js-warning' %}
+        {% endif %}
+
+        {% if gf > 0 and lf > 0 and recipes.total == recipes.approved and recipes.errors == 0 %}
+            {% set label = 'label-js-success' %}
+        {% endif %}
+
+        {% if gf > 0 %}
+            {% set gf_label = 'label-js-success' %}
+        {% else %}
+            {% set gf_label = 'label-js-danger' %}
+        {% endif %}
+
+        {% if lf > 0 %}
+            {% set lf_label = 'label-js-success' %}
+        {% else %}
+            {% set lf_label = 'label-js-danger' %}
+        {% endif %}
+
+        {% if lf_gf > 0 %}
+            {% set lf_gf_label = 'label-js-success' %}
+        {% else %}
+            {% set lf_gf_label = 'label-js-danger' %}
+        {% endif %}
+
+        {% set errors = '' %}
+        {% if recipes.errors > 0 %}
+            {% set errors = "Ingredient error" %}
+        {% elseif recipes.approved == 0 %}
+            {% set errors = "No active recipes" %}
+        {% endif %}
+
+        {% set lang = lang ~ " "
+            ~ "<span class=" ~ label ~ ">"
+            ~ locale
+            ~ " "
+            ~ recipes.approved
+            ~ "/"
+            ~ recipes.total
+            ~ "</span>"
+            ~ " - "
+            ~ "<span class=" ~ gf_label ~ ">"
+            ~ "GF: " ~ gf
+            ~ "</span>"
+            ~ "<span class=" ~ lf_label ~ ">"
+            ~ "LF: " ~ lf
+            ~ "</span>"
+            ~ "<span class=" ~ lf_gf_label ~ ">"
+            ~ "LFGF: " ~ lf_gf
+            ~ "</span>"
+            ~ " "
+            ~ errors
+            ~ "<br /><br />"
+        %}
+    {% endfor %}
+
+    <tr data-recipe="{{ recipe.id }}">
+        <td width="50%">
+            {% if recipe.image %}
+                <img class="recipe-list-image m-r-xs" src="{{ recipe.image|picture_filter('recipes') }}" alt="{{ recipe.name }}">
+            {% else %}
+                <img class="recipe-list-image m-r-xs" src="{{ asset('bundles/app/images/recipe-placeholder.png') }}" alt="{{ recipe.name }}">
+            {% endif %}
+            <a href="{{ path('admin_recipe_children', { 'id': recipe.id }) }}"><strong>{{ recipe.name }}</strong></a>
+        </td>
+        <td class="no-wrap">{{ lang|raw }}</td>
+        <td class="no-wrap">{{ recipe.getTypes|map(typeInstance => typeInstance.type|meal_type)|join(', ') }}</td>
+        <td class="text-right table-actions no-wrap">
+          {% if recipe.user is null %}
+              <a
+                  class="btn btn-default btn-sm btn-edit-plan"
+                  role="button"
+                  href="#"
+                  data-action="{{ path('admin_api_recipes_clone_and_adjust', { 'recipe': recipe.id }) }}"
+                  data-name="{{ recipe.name }}"
+                  data-description="{{ recipe.comment }}"
+                  data-locale="{{ recipe.locale }}"
+                  data-macro-split="{{ recipe.macroSplit }}"
+                  data-target="#cloneAndAdjustRecipeModal"
+                  data-toggle="modal"
+                  data-postaction="true"
+              >
+                  <span class="fa fa-magic" aria-hidden="true"></span>
+              </a>
+          {% endif %}
+        </td>
+
+    </tr>
+
+    <style>
+      .label-js-danger {
+        color: #5e5e5e;
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        font-weight: normal;
+        padding: 3px 8px;
+        text-shadow: none;
+        background-color: #ed5565;
+        color: #FFFFFF;
+      }
+
+      .label-js-success {
+        background-color: #5cb85c;
+        color: #5e5e5e;
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        font-weight: normal;
+        padding: 3px 8px;
+        text-shadow: none;
+        color: #FFFFFF;
+      }
+
+      .label-js-warning {
+        background-color: #ffc107;
+        color: #5e5e5e;
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        font-weight: normal;
+        padding: 3px 8px;
+        text-shadow: none;
+        color: #FFFFFF;
+      }
+    </style>
+
+    <script>
+      $('[data-toggle="tooltip"]').tooltip();
+    </script>
+
+{% endblock %}

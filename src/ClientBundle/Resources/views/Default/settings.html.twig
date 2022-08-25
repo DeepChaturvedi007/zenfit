@@ -1,0 +1,258 @@
+{% extends '@App/base.html.twig' %}
+
+{% set userSettings = client.user.userSettings %}
+
+{% block content -%}
+
+    <div id="wrapper" class="gray-bg">
+        <div class="page-container">
+            <div class="block-header">
+                <img class="box-logo" src="{{ userSettings and userSettings.companyLogo ? userSettings.companyLogo : asset('bundles/app/images/zenfit-logo-dark.svg') }}">
+                <div class="box-text">
+                    <h4 class="box-title">Hi {{ client.name }}!</h4>
+                    <p>Update your profile settings here.</p>
+                    <a href="{{ path('clientLogout') }}">Logout</a>
+                </div>
+            </div>
+
+            {% for message in app.flashes('error') %}
+                <p class="text-danger">{{ message }}</p>
+            {% endfor %}
+
+            {% for message in app.flashes('success') %}
+                <p class="text-success">{{ message }}</p>
+            {% endfor %}
+
+            <div class="block-body">
+                <form class="form client-settings" method="POST" action="{{ path('clientSendSettings') }}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="ibox">
+                                <div class="ibox-content ibox-content-line m-p-x">
+                                    <div class="form-group">
+                                        <label class="control-label">Your Name</label>
+                                        <div class="form-group-in max-width">
+                                            <input name="name" type="text" class="form-control"
+                                                   value="{{ client.name }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Your Email</label>
+                                        <div class="form-group-in max-width">
+                                            <input name="email" type="email" class="form-control"
+                                                   value="{{ client.email }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="exampleInputName2">Password</label>
+                                        <div class="form-group-in max-width">
+                                            <button class="btn btn-default btn-upper change-password">Change password
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="password-container" style="display:none;">
+                                        <div class="form-group">
+                                            <label class="control-label" for="exampleInputName2">Current
+                                                password</label>
+                                            <div class="form-group-in max-width">
+                                                <input type="password" name="currentPassword" class="form-control"
+                                                       placeholder="Current password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="exampleInputName2">Choose new
+                                                password</label>
+                                            <div class="form-group-in max-width">
+                                                <input type="password" name="password" class="form-control"
+                                                       placeholder="Make it tricky, yet memorable">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="exampleInputName2">Confirm new
+                                                password</label>
+                                            <div class="form-group-in max-width">
+                                                <input type="password" name="password2" class="form-control"
+                                                       placeholder="Confirm your new password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Receive emails</label>
+                                        <div class="form-group-in max-width">
+                                            <input name="receiveEmails" type="checkbox"
+                                                   class="input-receive-emails" {{ client.getAcceptEmailNotifications ? ' checked' : '' }}>
+                                            Receive email notifications
+                                        </div>
+                                    </div>
+
+                                    {% if client.clientStripe and not client.clientStripe.canceled %}
+                                        <div class="form-group">
+                                            <label class="control-label">Credit card</label>
+                                            <div class="form-group-in max-width">
+                                                <button class="btn btn-default btn-upper" id="checkout-button">Change Credit
+                                                    Card
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Subscription</label>
+                                            <div class="form-group-in max-width">
+                                                <button class="btn btn-danger btn-upper stop-subscription">Stop
+                                                    Subscription
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% set clientSettings = client.clientSettings %}
+
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            MyFitnessPal
+                                        </label>
+                                        <div class="form-group-in max-width">
+                                            {% if isIntegratedWithMFP %}
+                                                <span class="label label-success">Connected</span>
+                                            {% else %}
+                                                <a href="{{ mfpAuthUrl }}" class="btn btn-default btn-upper">
+                                                    Integrate with MyFitnessPal
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label class="control-label">Delete profile</label>
+                                      {% if client.deleted %}
+                                        <a onclick="return confirm('Are you sure?')" style="float: left;" class="btn btn-warning btn-upper btn-delete-profile" href="{{ path('delete_client', {client: client.id}) }}">
+                                            Delete my profile
+                                        </a>
+                                      {% else %}
+                                        <small>To completely remove your information from Zenfit, please ask your coach to delete you first.</small>
+                                      {% endif %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label"></label>
+                                        <div class="form-group-in">
+                                            <button style="float: right;" type="submit"
+                                                    class="btn btn-success btn-upper btn-save-settings">Save Settings
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% include '@Client/modals/clientUnsubscribeModal.html.twig' %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+
+      (function ($) {
+        $(window).keydown(function (event) {
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
+
+
+        var stripe = Stripe("{{ stripeKey }}", {
+          stripeAccount: "{{ stripeAccount }}"
+        });
+
+        var checkoutButton = document.getElementById('checkout-button');
+        checkoutButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          const data = {
+            client: "{{ client.id }}"
+          }
+
+          $.post("{{ path('createSession') }}", data)
+            .then(res => {
+              stripe.redirectToCheckout({
+                sessionId: res.sessionId
+              });
+            });
+        });
+
+        var token = '{{ token }}';
+        $.ajaxSetup({
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+          }
+        });
+
+        $('body')
+          .on('click', '.change-password', function (e) {
+            e.preventDefault();
+            $('.password-container').toggle();
+          })
+          .on('submit', 'form', function (e) {
+            e.preventDefault();
+
+            var $form = $(this);
+
+            var $submitButton = $form
+              .find('[type="submit"]')
+              .button('loading');
+
+            let data = {
+              name: $form.find('input[name="name"]').val(),
+              email: $form.find('input[name="email"]').val(),
+              password: $form.find('input[name="password"]').val(),
+              password2: $form.find('input[name="password2"]').val(),
+              currentPassword: $form.find('input[name="currentPassword"]').val(),
+              receiveEmails: $form.find('input[name="receiveEmails"]').prop('checked') > 0 ? 1 : 0
+            };
+
+            $.post($form.attr('action'), data)
+              .done(function (res) {
+                toastr.success(res.message);
+                setTimeout(function () {
+                  window.location.reload();
+                }, 1000);
+              })
+              .fail(function (xhr) {
+                toastr.error(xhr.responseJSON.message);
+              })
+              .always(function () {
+                $submitButton.button('reset');
+              });
+          })
+          .on('click', '.stop-subscription', function (e) {
+            e.preventDefault();
+            $('#client-unsubscribe-modal').modal('show');
+          })
+
+          .on('click', '.unsubscribeClient', function (e) {
+            e.preventDefault();
+            var data = {
+              client: "{{ client.id }}",
+            };
+            $.post("{{ path('clientRequestUnsubscribe') }}", data)
+              .done(function (res) {
+                toastr.info('Your trainer will be prompted to confirm your unsubscription.');
+                setTimeout(function () {
+                  window.location.reload();
+                }, 2000)
+              })
+              .fail(function (xhr, status, error) {
+                toastr.error(xhr.responseJSON.message);
+              });
+          });
+
+      })(jQuery);
+    </script>
+
+{% endblock script %}

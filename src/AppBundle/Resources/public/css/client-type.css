@@ -1,0 +1,53 @@
+.btn-lead {
+    font-weight: 500;
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 1.29;
+    color: #000000;
+    border-radius: 0;
+    border: solid 1px #dcdddd;
+    background-color: #f6f7f7;
+    min-width: 70px;
+    margin: 0 0 0 -1px !important;
+    background-image: linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0)), linear-gradient(#f5f8fa, #f5f8fa);
+}
+
+.btn-lead:hover {
+    background-color: rgba(40, 149, 241, 0.1);
+    border: solid 1px rgba(40, 149, 241, 0.4);
+    color: rgba(40, 149, 241, 0.4);
+    color: #1A91EB;
+}
+
+.current {
+    background-color: rgba(40, 149, 241, 0.1);
+    border: solid 1px #1A91EB;
+    color: #1A91EB !important;
+    position: relative;
+    z-index: 1;
+}
+
+.area {
+    overflow: hidden;
+}
+
+.area .col {
+    float: left;
+}
+
+.area .col:first-child .btn-lead {
+    border-radius: 3px 0 0 3px;
+    margin-left: 0 !important;
+}
+
+.area .col:last-child .btn-lead {
+    border-radius: 0 3px 3px 0;
+}
+
+.area .btn-lead label {
+    font-weight: 500;
+}
+
+.area .btn-lead input {
+    display: none;
+}

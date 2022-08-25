@@ -1,0 +1,68 @@
+{% set current_route = app.request.attributes.get('_route') %}
+
+<link href="{{ asset('bundles/app/css/meta-bar.css') }}" rel="stylesheet">
+
+<div class="row wrapper metabar">
+    {% if current_route == 'clientIntro' %}
+        <div class="metabar-title">
+            <div class="footer-logo text-center">
+                <img src="{{ asset('bundles/app/zenfit-logo-inverse.png') }}">
+            </div>
+        </div>
+    {% else %}
+        {% if current_route == 'intro' %}
+            <div class="metabar-title">
+                <img src="{{ asset('bundles/app/images/zenfit-logo-dark.svg') }}">
+            </div>
+        {% endif %}
+        <div class="hidden-md hidden-lg">
+            <a class="navbar-minimalize btn" href="#">
+                <i class="material-icons">dehaze</i>
+            </a>
+        </div>
+        {% if template is defined and template is not null %}
+            <div>
+                <a class="btn btn-success" href="{{ path(template) }}" role="button">
+                    <i class="fa fa-arrow-left"></i> Back
+                </a>
+            </div>
+        {% endif %}
+        {% if title is defined %}
+            <div class="metabar-title">
+                <div class="metabar-title-in">
+                    {# <h2 class="{{ mobile is defined ? 'meta-mobile-title' : ''  }}">{{ title }}</h2>
+                    {% if description is defined %}
+                        <small>{{ description }}</small>
+                    {% endif %} #}
+                    <img src="{{ asset('bundles/app/images/zenfit-logo-white-new.svg') }}">
+                </div>
+            </div>
+        {% endif %}
+        <div class="metabar-actions">
+            {% if actions is defined %}
+                {{ actions|raw }}
+            {% endif %}
+
+            {% if current_route != 'intro' %}
+              {% set userSettings = app.user.userSettings %}
+              <!-- User -->
+              <div class="dropdown metabar-actions-col metabar-profile">
+                  {% set userPic = userSettings and userSettings.profilePicture ? userSettings.profilePicture : asset('bundles/app/1456081788_user-01.png')  %}
+                  <img alt="image" class="img-circle metabar-profile-pic user-profile-picture hidden-xs" src="{{ userPic }}" data-placeholder="{{ asset('bundles/app/1456081788_user-01.png') }}">
+                  <a data-toggle="dropdown" class="dropdown-toggle hidden-xs" href="#">
+                      <strong>{{ app.user.name }}</strong>
+                      <small class="text-muted block">{{ userSettings and userSettings.companyName ? userSettings.companyName : '' }} <b class="caret"></b></small>
+                  </a>
+                  <a data-toggle="dropdown" class="dropdown-toggle hidden-sm hidden-md hidden-lg hidden-xl" href="#"><i class="action fa fa-cog"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-right dropdown-main-profile">
+                      {% if not app.user.assistant %}
+                      <li><a href="{{ path('settings') }}">Settings</a></li>
+                      <li class="divider"></li>
+                      {% endif %}
+                      <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                  </ul>
+              </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,26 @@
+AppBundle\Entity\ExerciseCategory:
+    type: entity
+    table: exercise_categories
+    repositoryClass: AppBundle\Repository\ExerciseCategoriesRepository
+    cache:
+            usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+
+    oneToMany:
+        exercise:
+            targetEntity: AppBundle\Entity\Exercise
+            mappedBy: exerciseCategory
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

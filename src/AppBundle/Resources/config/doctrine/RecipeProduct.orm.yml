@@ -1,0 +1,81 @@
+AppBundle\Entity\RecipeProduct:
+    type: entity
+    table: recipes_products
+    repositoryClass: AppBundle\Repository\RecipeProductRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    indexes:
+        recipe_idx:
+            columns: [ recipe_id ]
+        product_idx:
+            columns: [ meal_product_id ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        totalWeight:
+            type: integer
+            length: 5
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+
+        weightUnits:
+            type: float
+            nullable: false
+            options:
+                default: 0
+
+        order:
+            column: '`order`'
+            type: smallint
+            length: 5
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+
+        tweak:
+            type: boolean
+            column: tweak
+            options:
+                default: false
+
+    manyToOne:
+        recipe:
+            targetEntity: AppBundle\Entity\Recipe
+            inversedBy: products
+            joinColumn:
+                name: recipe_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        product:
+            targetEntity: AppBundle\Entity\MealProduct
+            joinColumn:
+                name: meal_product_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        weight:
+            targetEntity: AppBundle\Entity\MealProductWeight
+            joinColumn:
+                name: product_weight_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE

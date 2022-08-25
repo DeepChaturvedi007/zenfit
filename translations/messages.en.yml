@@ -1,0 +1,238 @@
+client:
+    activation:
+        greeting: 'Hi %name%!'
+        greetingNew: "Hi %name%, let's get you started!"
+        welcomeMsg: 'You have been invited to create an account. Please fill out the following questionnaire.'
+        description: 'You need to choose a password in order to access the %name% App.'
+        createPasswordTitle: 'Create your password'
+        createAccountTitle: 'Create account'
+        createAccountSubTitle: 'Enter your general information to create your account'
+        updateAccountTitle: 'Update account'
+        updateAccountSubTitle: 'Enter your information to update your account'
+        email: 'Your e-mail'
+        emailInvalid: 'Email is invalid'
+        password: 'Choose a password'
+        fieldEmpty: 'Field is empty'
+        fieldNotSelected: 'No options have been chosen'
+        passwordDontMatch: 'Passwords don’t match'
+        passwordPlaceholder: 'Make it tricky, yet memorable'
+        confirmPassword: 'Confirm password'
+        confirmPasswordPlaceholder: 'Enter your password again'
+        passwordLength: 'Password must be at least 6 characters long'
+        createLoginBtn: 'Create login'
+        updateLogin: 'Update account'
+        hasBeenCreated: 'Your account has been created'
+        next: 'Next'
+        generalTitle: 'General information'
+        generalSubTitle: 'Fill out the basic information about you'
+        bodyPictures:
+            front: 'Front'
+            side: 'Side'
+            back: 'Back'
+            uploadPicture: 'upload picture'
+            removePicture: 'remove picture'
+            spec: 'Drop your JPG or PNG file here'
+    survey:
+        title: 'Tell me a little about yourself'
+        description: 'Please fill out your trainer''s questionnaire - your trainer needs this information in order to create the best plans for you!'
+        loginCreatedTitle: 'Great job! Your login was created!'
+        loginCreatedDescription: 'Now you only need to answer this questionnaire so your coach can get started creating your plans.'
+        contactTitle: 'Contact Information'
+        photo: 'Your Photo'
+        imperial: 'imperial'
+        metric: 'metric'
+        uploadPhoto: 'Upload Photo'
+        changePhoto: 'Change Photo'
+        fullName: 'Full Name'
+        email: E-Mail
+        phone: Phone
+        basicInfoTitle: 'Basic Information'
+        gender: Gender
+        male: Male
+        female: Female
+        age: Age
+        metricSystem: 'US or Metric System'
+        startWeight: 'Start Weight'
+        height: Height
+        activityLevel: 'Activity Level'
+        selectActivityLevel: 'Select Activity Level'
+        activityLevels:
+            1: 'I do not do any physical exercise'
+            2: 'I am not very active and train 2-3 days a week'
+            3: 'I am moderately active and work out 3-4 times a week'
+            4: 'I am pretty active and work out quite a bit'
+            5: 'I have a hard physical job and work out most days'
+        photos: Photos
+        photosDescription: 'Upload one or more pictures of you (optional)'
+        goalInfoTitle: 'Your Goal'
+        yourCurrentWeight: 'You current weight is %weightString%. What is your goal weight?'
+        goalHigherCurrent: 'Current weight is higher than goal weight'
+        goalLessCurrent: 'Current weight is less than goal weight '
+        goalEqualCurrent: 'Current weight is equal to goal weight '
+        goalWeek: 'With this progress, it will take %week% weeks to reach your goal!'
+        primaryGoal: 'Primary Goal'
+        selectPrimaryGoal: 'Select Primary Goal'
+        customPrimaryGoals:
+            2: 'Lose weight'
+            3: 'Maintain weight'
+            4: 'Gain weight'
+        primaryGoals:
+          metric:
+              1: 'Lose 1 kg per week'
+              2: 'Lose 0,5 kg per week'
+              3: 'Maintain weight'
+              4: 'Gain 0,5 kg per week'
+              5: 'Gain 1 kg per week'
+          imperial:
+              1: 'Lose 2 pounds per week'
+              2: 'Lose 1 pound per week'
+              3: 'Maintain weight'
+              4: 'Gain 1 pound per week'
+              5: 'Gain 2 pounds per week'
+        goalWeight: 'Goal Weight'
+        additionalInfoTitle: 'Additional Questions'
+        injuries: 'Injuries / Diseases'
+        injuriesPlaceholder: 'Do you have any injuries/diseases/medical concerns that may affect your plan? E.g. back pain, asthma etc.'
+        workoutExperienceLevel: 'Workout Experience'
+        workoutExperienceLevelPlaceholder: 'How long have you been working out consistently?'
+        selectWorkoutExperienceLevel: 'Please select your experience level.'
+        workoutExperienceLevels:
+            1: 'I am a beginner and have none to little experience.'
+            2: 'I have trained for some time and know the fundamentals.'
+            3: 'I am experienced and have trained for many years.'
+        workoutExperience: Anything you'd like to add to your workout experience?
+        workoutExperiencePlaceholder: Feel free to elaborate
+        workoutPreferences: 'Workout Preferences'
+        workoutSubtitlePreferences: 'Please fill out all of the questions below'
+        workoutPreferencesPlaceholder: 'Are there any specific muscle groups you want to improve? Are you trying to improve strength, endurance, or both?'
+        workoutLocation: 'Where do you work out?'
+        selectWorkoutLocation: 'Please select where you do your workouts.'
+        workoutLocationPlaceholder: 'Do you work out in the gym, or at home or outside?'
+        workoutLocations:
+            1: 'Gym'
+            2: 'Home'
+            3: 'Outdoor'
+        workoutsPerWeek: 'Workouts per week?'
+        workoutsPerWeekPlaceholder: 'How many times per week do you want to workout?'
+        allergiesIngredientsToAvoid: 'Allergies or ingredients to avoid?'
+        allergiesIngredientsToAvoidPlaceholder: 'Ingredients / food items to avoid?'
+        excludeIngredients: 'Exclude ingredients (allergies)'
+        none: 'none'
+        vegetarianType: "I'm Vegetarian"
+        pescetarianType: "I'm Pescetarian"
+        veganType: "I'm Vegan"
+        lactose: Lactose
+        gluten: Gluten
+        nuts: Nuts
+        eggs: Eggs
+        pig: Pig
+        shellfish: Shellfish
+        fish: Fish
+        vegetarian: 'I am Vegetarian'
+        vegan: 'I am Vegan'
+        pescetarian: 'I am Pescetarian'
+        dietStyle: 'Your Diet'
+        dietStyleSubTitle: 'Please fill out all of the questions below'
+        dietStyleTitle: 'Dietary preferences'
+        dietStylePlaceholder: 'Do you have special food requirements, or some food items you prefer?'
+        numberOfMeals: 'Meals per day'
+        numberOfMealsPlaceholder: 'How many meals per day would you like?'
+        lifestyleNew: "Lifestyle - Active job? Active life-style? Do you smoke? Other?"
+        lifestyle: Lifestyle
+        lifestylePlaceholder: 'Active Job? Active life-style? Do you smoke? Other?'
+        motivation: 'Motivation'
+        otherFeedbackTitle: 'Other feedback'
+        otherFeedbackSubTitle: 'These are the final questions and then you’re ready!'
+        otherLifeStyle: 'Describe your lifestyle (job, hobbies, do you smoke, etc.)'
+        howMotivated: 'How motivated are you?'
+        motivationPlaceholder: 'If 1 is not motivated at all, and 10 is you’re ready to eat 6 times a day, and work out 6 days a week - how motivated you are?'
+        submit: 'Submit Questionnaire'
+    downloadApp:
+        title: 'Questionnaire sent to your Coach!'
+        updated: 'Your account has been updated'
+        updatedSubtitle: "You have completed your update of your account. Please go ahead and download the client-app!"
+        description: 'Awesome %name%! Now just lean back, and let your coach create your plans.'
+        readyTitle: 'You are ready to download the %name% app!'
+        whatsNext: 'What''s next?'
+        subTitle: 'You have completed the creation of your account. Please go ahead and download the client-app!'
+        downloadAppTitle: 'If you haven''t already downloaded the %name% App, then now is the time'
+        iphone: 'Get The iPhone Version'
+        android: 'Get The Android Version'
+    checkout:
+        amount: Amount
+        periodFixed: 'Recurs monthly for %months% months'
+        periodUntilUnsubscribe: 'Recurs monthly until you unsubscribe'
+        upfrontFee: 'Upfront fee %upfrontFee%'
+        couponCode: 'Coupon Code'
+        choosePayment: 'Choose payment method'
+        back: 'Back'
+        cardPay: 'Pay with Card'
+        klarnaPay: 'Pay with Klarna'
+        sepaPay: 'Pay with Sepa'
+        name: 'Cardholder''s Name'
+        email: E-mail
+        ibanDesc: By providing your IBAN and confirming this payment, you are authorizing Zenfit ApS and Stripe, our payment service provider, to send instructions to your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.
+        acceptTerms: I have read and accept the %terms%
+        termsOfService: 'terms of service'
+        acceptTermsError: You must accept the terms of service
+        klarnaError: Klarna payment failed. Please try again or with another payment method.
+        reachOutSupport: Please reach out to Zenfit support.
+        reachOutBank: Please contact your bank or try another card.
+        paymentDeclined: Your payment declined.
+        invalidNameError: Invalid name
+        invalidEmailError: Invalid email
+        button: Buy
+        sepaButton: Confirm mandate and initiate debit for %amount%
+        paymentSuccessfulTitle: 'Payment Successful'
+        paymentSuccessfulDescription: 'We''ve sent a payment confirmation to your email'
+        paymentSuccessfulBundleSubtitle: 'Click below to download the files'
+        paymentSuccessfulSubtitle: 'Click below to create a login for %app%.'
+        paymentSuccessfulButton: 'Create my login'
+        klarna:
+            title: 'Klarna'
+            category:
+                now: 'Pay now'
+                later: 'Pay later'
+                overTime: 'Pay over time'
+    notifications:
+        checkIn: Hi %name%, please remember to check-in today :)
+        newVideo: Hi %name%, your coach just uploaded a new video to you!
+        voice: Your coach sent you a voice message
+        video: Your coach sent you a video message
+
+emails:
+    client:
+        newMessage:
+            subject: 'You''ve got a new message!'
+            cta: 'Click here to read it'
+        answerSurvey:
+            subject: 'Please fill out your coach''s questionnaire'
+            body: 'Your coach has prompted you to fill out the questionnaire, so your plans can be created.'
+            cta: 'Please click here to do so'
+        mealPlanPdf:
+            subject: 'Meal Plan PDF'
+            body: 'Hi %client%, attached is your meal plan as PDF.'
+        workoutPlanPdf:
+            subject: 'Workout Plan PDF'
+            body: 'Hi %client%, attached is your workout plan as PDF.'
+    user:
+        newMessage:
+            subject: 'You''ve got a new message!'
+            body: 'Your client %client% sent you a new message in Zenfit.'
+            cta: 'Click here to read it'
+
+meal:
+    clientPlanTitle: '%name% meal plan'
+    metaDescription: 'You can freely choose either of these meals. They all contain roughly:'
+    carbs: Carbs
+    protein: Protein
+    fat: Fat
+    ingredients: Ingredients
+    recipe: Recipe
+    types:
+        1: Breakfast
+        2: Lunch
+        3: Dinner
+        4: 'Morning Snack'
+        5: 'Afternoon Snack'
+        6: 'Evening Snack'

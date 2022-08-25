@@ -1,0 +1,228 @@
+{% extends '@App/base.html.twig' %}
+{% block content -%}
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Admin Dashboard' } %}
+        
+        <div id="page-wrapper" class="gray-bg sm-white-bg">
+            {% include '@Admin/components/nav.html.twig' with {'trainers': 'true'} %}
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="form-inline m-x-n no-padding">
+                    <div class="form-group">
+                        <input type="text" name="email" class="form-control" placeholder="E-mail">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <button id="filter" class="btn btn-info"><i class="fa fa-filter"></i></button>
+                    </div>
+                    <div class="form-group">
+                        <button id="reset-filter" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="form-group">
+                        <input id="active" type="checkbox" name="activated">
+                        Only show active trainers
+                    </div>
+                </div>
+                <br>
+                <div class="ibox-content m-x-n no-padding">
+                    <div class="project-list">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Sub</th>
+                                    <th>Status</th>
+                                    <th>Last Payment</th>
+                                    <th>Last Login</th>
+                                    <th class="sortable" data-sort-by="clients">Clients</th>
+                                    <th>Subscribed Date</th>
+                                    <th>Stripe Connect</th>
+                                    <th>Activated<th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                        <button class="btn btn-primary load-more">Load More</button>
+                    </div>
+                </div>
+            </div>
+            {% include '@App/components/footer.html.twig' %}
+
+        </div>
+
+    </div>
+    <style>
+        .sortable {
+            cursor: pointer;
+        }
+        .sortable.active {
+            color: #0a6aa1;
+        }
+    </style>
+{% endblock %}
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const tableBody = $('#table-body');
+            let data = {
+                maxResults: 20,
+                offset: 0,
+                activeOnly: false,
+            };
+
+            loadUsers(data);
+
+            $('body')
+              .on('click', '.load-more', onLoadMore)
+              .on('click', '#reset-filter', onReset)
+              .on('click', '#filter', onFilter)
+              .on('click', '.sortable', onSort)
+              .on('click', '.activate-btn', activateTrainer);
+
+
+            function activateTrainer () {
+              let data = {
+                  user: $(this).data('user')
+              }
+
+              $.post('{{ path('activate_trainer') }}', data)
+                .done(() => {
+                  toastr.success('Activated.')
+                });
+            }
+
+
+            function onSort (event) {
+              const element = $(event.target);
+              element.toggleClass('active');
+              if(data.sort !== element.data('sortBy')) {
+                data.sort = element.data('sortBy');
+              } else {
+                delete data.sort;
+              }
+              loadUsers(data);
+            }
+
+            function onLoadMore () {
+                //data.maxResults = data.maxResults + 10;
+                data.offset = data.offset + 20;
+                data.activeOnly  = $('#active').is(':checked');
+
+                if ($('input[name="name"]').val().length > 0) {
+                    data.name = $('input[name="name"]').val();
+                }
+                if ($('input[name="email"]').val().length > 0) {
+                    data.email = $('input[name="email"]').val();
+                }
+                loadUsers(data, true)
+            }
+
+            function onReset () {
+                data.maxResults = 20;
+                data.offset = 0;
+                data.name = "";
+                data.email = "";
+                data.activeOnly = false;
+
+                $('input[name="name"]').val('');
+                $('input[name="email"]').val('');
+                $('#active').prop('checked', false);
+
+                loadUsers(data)
+            }
+
+            function onFilter () {
+                data.maxResults = 20;
+                data.offset = 0;
+                data.activeOnly  = $('#active').is(':checked');
+
+                if ($('input[name="name"]').val().length > 0) {
+                    data.name = $('input[name="name"]').val();
+                } else {
+                    data.name = '';
+                }
+                if ($('input[name="email"]').val().length > 0) {
+                    data.email = $('input[name="email"]').val();
+                } else {
+                    data.email = ''
+                }
+                loadUsers(data, false)
+            }
+
+            function onResult (users) {
+              users.forEach(user => renderUserRow(user));
+            }
+
+            function loadUsers(data, append = false) {
+                $.get('{{ path('admin_api_users') }}', data)
+                    .done(data => {
+                      if(!append) tableBody.empty();
+                      onResult(data);
+                    });
+            }
+
+            function renderUserRow (user) {
+              let status = user.sub_canceled ?
+                '<span class="label label-danger">Canceled</span>' :
+                '<span class="label label-success">Running</span>';
+
+              let last_payment = user.sub_last_payment_failed ?
+                '<span class="label label-danger">Failed</span>' :
+                '<span class="label label-success">Succeeded</span>';
+
+              if (user.sub == 'None') {
+                last_payment = null;
+                status = null;
+              }
+
+              let lastLoginDate = user.lastLogin ? user.lastLogin.date : null;
+              let subscribedDate = user.subscribedDate ? user.subscribedDate.date : null;
+              let stripeConnect = user.stripe_connect ? "<i class='fa fa-check'></i>" : "";
+
+              console.log(user.stripe_connect);
+
+              let el =
+                `<tr>
+                    <td>${user.id}</td>
+                    <td>${user.email}</td>
+                    <td>${user.name}</td>
+                    <td>${user.sub}</td>
+                    <td>${status}</td>
+                    <td>${last_payment}</td>
+                    <td>${lastLoginDate}</td>
+                    <td>${user.clients}</td>
+                    <td>${subscribedDate}</td>
+                    <td>${stripeConnect}</td>
+                    <td>${user.activated}</td>
+                    <td style="white-space: nowrap">${renderUserActions(user)}</td>
+                  </tr>`;
+
+              tableBody.append(el);
+            }
+
+            function renderUserActions (user) {
+              const visitAction = `{{ path('interactiveLogin', { 'token': ':token' }) }}`
+                .replace(':token', user.interactiveToken);
+
+              const trainerLink = `
+                <a
+                    class="btn btn-success btn-xs"
+                    href="${visitAction}">Visit</a>`;
+
+              const activate = user.activated ? '' : `<a class="btn btn-success btn-xs activate-btn" data-user="${user.id}">Activate</a>`;
+
+              return `${trainerLink} ${activate}`;
+            }
+        });
+    </script>
+
+{% endblock script %}

@@ -1,0 +1,84 @@
+@import "../shared/styles/main.css";
+
+.affiliate-promotion {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+    width: 490px;
+    max-width: 100%;
+    font-family: Poppins, sans-serif;
+}
+
+.affiliate-promotion>* {
+    width: 320px;
+    max-width: 100%;
+}
+
+.affiliate-promotion input[name="referralLink"] {
+    display: flex;
+    width: 100%;
+    padding: var(--default-padding);
+    border-radius: 15px;
+    border: var(--default-border);
+    background-color: var(--light);
+}
+
+.affiliate-promotion button.affiliate-action {
+    display: flex;
+    width: 100%;
+    padding: var(--default-padding);
+    border-radius: 10px;
+    background-color: var(--primary);
+    color: var(--light);
+    font-weight: bold;
+    justify-content: center;
+    border: none;
+    align-items: center;
+}
+
+.affiliate-promotion button.affiliate-action:focus {
+    outline: none;
+}
+.affiliate-promotion button.affiliate-action i {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 2px;
+}
+
+.earnings-info {
+    border-radius: 15px;
+    background-color: #f2f8ff;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: .8px;
+    width: 160px;
+    color: var(--dark)
+}
+
+.list {
+    width: 100%;
+}
+.list.vertical {}
+
+.list.vertical .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0 15px 0;
+}
+
+.list.vertical .item .content {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.list.vertical .item .content a {
+    font-size: 14px;
+    font-family: Poppins, sans-serif;
+    letter-spacing: 0.2px;
+    color: #171725;
+
+}

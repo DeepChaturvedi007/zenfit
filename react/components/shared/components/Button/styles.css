@@ -1,0 +1,102 @@
+.btn {
+    border-radius: 5px;
+    border: 2px solid transparent;
+    text-align: center;
+    font-size: var(--font-size);
+    padding: 5px 10px;
+    transition: var(--animation-duration) ease all;
+    text-decoration: none!important;
+}
+.btn-center {
+    display: flex;
+    align-items: center;
+}
+.btn:hover,
+.btn:active,
+.btn:focus {
+    outline: none;
+}
+
+.btn:hover,
+.btn.btn-default:hover,
+.btn.btn-success:hover,
+.btn.btn-primary:hover,
+.btn.btn-muted:hover,
+.btn.btn-danger:hover {
+    opacity: .7
+}
+
+.btn-default,
+.btn-default:hover,
+.btn-default:focus,
+.btn-default.inverse:hover {
+    background-color: var(--light);
+    border-color: var(--light);
+    color: var(--dark);
+}
+
+.btn-default.inverse {
+    background-color: var(--dark);
+    border-color: var(--light);
+    color: var(--light);
+}
+
+.btn-success,
+.btn-success:hover,
+.btn-success:focus,
+.btn-success.inverse:hover {
+    background-color: var(--success);
+    border-color: var(--success);
+    color: var(--light);
+}
+
+.btn-success.inverse {
+    background-color: var(--light);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.inverse:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--light);
+}
+
+.btn-primary.inverse {
+    background-color: var(--light);
+    border-color: var(--muted);
+    color: var(--dark);
+}
+
+.btn-muted,
+.btn-muted:hover,
+.btn-muted:focus,
+.btn-muted.inverse:hover {
+    background-color: var(--muted);
+    border-color: var(--muted);
+    color: var(--dark);
+}
+
+.btn-muted.inverse {
+    background-color: var(--dark);
+    border-color: var(--muted);
+    color: var(--muted);
+}
+
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger.inverse:hover {
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: var(--light);
+}
+
+.btn-danger.inverse {
+    background-color: var(--light);
+    border-color: var(--danger);
+    color: var(--danger);
+}

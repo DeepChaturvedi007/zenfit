@@ -1,0 +1,22 @@
+{% extends '@App/base.html.twig' %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset("plans-page.css"|webpack_asset) }}">
+{% endblock extra_css %}
+{% block content %}
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Plans' } %}
+        <div id="page-wrapper" class="gray-bg">
+{#                {{ dump(plans) }}#}
+                <div id="plans-page-controller"
+                     data-props="{{ {
+                     }|json_encode }}"
+                ></div>
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ asset("plans-page.js"|webpack_asset) }}"></script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% set globalEventName = 'onSocketNotification' %}
+{% set proxyEndpoint = path('supportProxyDownload') %}
+<div id="zenfit-sockets" data-props="{{
+{
+    'authUserId': app.user.getId,
+    'appId': pusher.app_id,
+    'authKey': pusher.auth_key,
+    'cluster': pusher.options.cluster,
+    'debug': pusher.options.debug,
+    'encrypted': pusher.options.encrypted,
+    'globalEventName': globalEventName
+}
+|json_encode }}"></div>
+
+<script src="{{ asset("zenfit-sockets.js"|webpack_asset) }}"></script>
+<script>
+    const proxyEndpoint = `{{ proxyEndpoint }}`;
+    const globalEventName = `{{ globalEventName }}`;
+
+    document.addEventListener(globalEventName, function (e) {
+      const url = e.detail.url;
+      const name = url.substr(url.lastIndexOf('/') + 1);
+
+      if(!url) return;
+
+      window.toastr.success(
+        'Click here to download.',
+        'Your document is ready!',
+        {
+          timeOut: 0,
+          extendedTimeOut: 0,
+          closeButton: true,
+          positionClass: 'toast-bottom-right',
+          onclick: function () {
+            const a = document.createElement('a');
+            a.href = `${proxyEndpoint}?url=${url}`;
+            a.download = name;
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+        }
+      );
+    })
+</script>

@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label class="control-label">Injuries / Diseases <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="Do you have any injuries or diseases?">?</span></label>
+    <div class="form-group-in">
+        <textarea class="form-control" name="injuries" {% if client.injuries is null %} placeholder="Do you have any injuries or diseases?" {% endif %} rows="3">{% if client.injuries is not null %}{{ client.injuries }}{% endif %}</textarea>
+    </div>
+</div>

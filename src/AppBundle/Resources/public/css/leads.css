@@ -1,0 +1,281 @@
+.modal {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: auto;
+}
+
+.empty-container-meta {
+    flex-direction: row;
+    align-items: center;
+}
+
+.empty-container-body {
+    padding: 16px 16px 16px 0;
+}
+
+.empty-container-actions {
+    margin-top: 0;
+    text-align: right;
+}
+
+.table-container {
+    border: 0px;
+}
+
+.table-container p {
+    margin: 0px;
+}
+
+.table-container .table td {
+    cursor: pointer;
+}
+
+.contact-again .material-icons {
+    color: #7f8fa4;
+    position: absolute;
+    right: 6px;
+    top: 12px;
+}
+
+.tooltip {
+    z-index: 2009;
+    opacity: 1;
+}
+
+tr .lead-name .material-icons {
+    color: #7f8fa4;
+    position: absolute;
+    font-size: 16px;
+    top: 17px;
+    margin-left: 3px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+tr:hover .lead-name .material-icons {
+    visibility: visible;
+}
+
+.table-container .table td, .table-container .table th {
+    background: #fff;
+    border: 1px solid #dcdddd !important;
+    color: #354052;
+}
+
+.table-container .table td:last-child {
+    padding-right: 35px;
+}
+
+.table-container p.won, .table-container .table td.won {
+    color: #3eb890;
+}
+
+.table-container p.lost, .table-container .table td.lost {
+    color: #e01765;
+}
+
+.table-container {
+    color: black;
+}
+
+.table-container .table tbody tr:hover td:first-child:after {
+    background-color: transparent;
+}
+
+.table-container .table tbody tr.new {
+    background-color: #fafbfb;
+}
+
+.table-container .table tbody tr:hover td {
+    background-color: #f6f7f7;
+}
+
+.form-search {
+    display: inline-block;
+    vertical-align: middle;
+    width: 240px;
+    margin-right: 5px;
+}
+
+.checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.checkbox label {
+    padding-bottom: 10px;
+}
+
+#addNewLeadModal textarea {
+    overflow: hidden;
+}
+
+#addNewLeadModal .btn-delete {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ff0000;
+    border-radius: 3px;
+    background-color: #f6f7f7;
+    margin-left: -12px;
+}
+
+#addNewLeadModal .box-hidden {
+    display: none;
+}
+
+#addNewLeadModal label {
+    cursor: pointer;
+}
+
+#addNewLeadModal .dialogMessage {
+    height: 110px;
+    overflow-y: scroll;
+}
+
+#leadWon .top-padding {
+    padding-top: 16px;
+}
+
+.modal-footer .btn-box {
+    float: right;
+}
+
+.modal-footer .btn-box .btn {
+    min-width: 85px;
+}
+
+.form-control {
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.1);
+    border-color: #dcdddd !important;
+}
+
+#leadWon select.form-control {
+    padding: 0 30px 0 12px !important;
+}
+
+#sendEmailToClient .inline small {
+    display: block;
+}
+
+#sendEmailToClient .text-left span {
+    color: #337ab7;
+}
+
+select.form-control {
+    background: #fff url(../images/select-arrow.png) no-repeat 100% 50%;
+    padding-right: 30px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+@media (max-width: 1160px) {
+    .empty-container-meta {
+        position: relative;
+        padding-top: 50px;
+    }
+
+    .form-search {
+        width: 100%;
+        max-width: 384px;
+        position: absolute;
+        top: 16px;
+        left: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .table-container .lead-name {
+        font-size: 15px;
+    }
+
+    .table-container .table td {
+        padding: 17px 16px 16px;
+    }
+
+    .table-container p {
+        margin: 0 0 8px;
+    }
+
+    .table-container p.phone {
+        color: #2da1f8;
+    }
+
+    .contact-again .material-icons {
+        top: 20px;
+        right: 12px;
+    }
+
+    .row div + div {
+        margin-top: 20px;
+    }
+
+    .form-search {
+        max-width: inherit;
+    }
+}
+
+@media (min-width: 768px) {
+    .modal-headline {
+        display: flex;
+    }
+
+    .modal-headline p {
+        overflow: hidden;
+        padding: 6px 0 0 10px;
+        font-size: 11px;
+        color: #354052 !important;
+    }
+}
+
+@media (max-width: 376px) {
+    #sendEmailToClient .inline {
+        max-width: 230px;
+    }
+}
+
+@media (max-width: 359px) {
+    .btn-lead {
+        min-width: 62px;
+    }
+
+    #sendEmailToClient .inline {
+        max-width: 165px;
+    }
+}
+
+#sendEmailToClient .editable {
+    min-height: 200px;
+    background-color: #fff;
+    border: 1px solid #CCC;
+    padding: 10px;
+    border-radius: 3px;
+    outline-style:none;
+    word-wrap: break-word;
+    /*display: none;*/
+}
+
+.visible-status {
+    display: none !important;
+}
+
+@media (max-width: 911px) {
+    .hidden-status {
+        display: none !important;
+    }
+
+    tr .lead-name .material-icons {
+        font-size: 18px;
+        top: 18px;
+    }
+
+    .visible-status {
+        display: inline-block !important;
+    }
+}

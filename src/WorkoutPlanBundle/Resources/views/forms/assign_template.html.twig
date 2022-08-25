@@ -1,0 +1,65 @@
+<div class="modal modal-workout inmodal sm in"
+     id="assignTemplate"
+     data-plan="{{ plan is defined ? plan.id : '' }}"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div id="assign-step-one">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Assign Plan to Client(s)</h4>
+                    <p class="sub-description">0 Clients Selected</p>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-main">
+                        <div class="form-group">
+                            <i class="material-icons">search</i>
+                            <input type="text" class="form-control search" placeholder="Search..."/>
+                        </div>
+                        <div class="user-list"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-left">
+                        <button class="btn btn-cancel" type="button">Cancel</button>
+                        <button type="submit"
+                                class="btn btn-success btn-upper btn-assign disabled"
+                                data-loading-text="Assigning...">Assign to Client(s)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="assign-step-two" style="display: none">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Template Successfully Assigned</h4>
+                    <p>The Template is now available for customization by visiting the client(s).</p>
+                </div>
+                <div class="modal-body">
+                    <div class="user-list"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-left">
+                        <button type="submit"
+                                class="btn btn-success btn-upper btn-assign">Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% block extra_css %}
+    <link href="{{ asset('bundles/app/css/assignPlanToClient.css') }}" rel="stylesheet" />
+{% endblock %}

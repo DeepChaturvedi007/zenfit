@@ -1,0 +1,23 @@
+AppBundle\Entity\ClientTag:
+    type: entity
+    table: client_tags
+    repositoryClass: AppBundle\Repository\ClientTagRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: tags
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,24 @@
+.social-btns {
+    margin: 20px 0 20px 0;
+}
+
+.social-btn {
+    width: 100%;
+}
+
+.register-logo {
+    width: 20%;
+    margin-bottom: 30px;
+}
+
+.or-seperator {
+    margin-bottom: 20px;
+}
+
+.go-back {
+    margin-top: 20px;
+}
+
+body {
+    background-color: #edeff2;
+}

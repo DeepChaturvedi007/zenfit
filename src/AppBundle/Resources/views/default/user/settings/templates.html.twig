@@ -1,0 +1,37 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Settings' } %}
+
+        <div id="page-wrapper" class="gray-bg sm-white-bg">
+            {% include '@App/default/user/settings/partials/nav.html.twig' with { tab: 'templates' } %}
+
+            <div
+                id="default-messages-container"
+                data-props="{{ {
+                    messages: {
+                        messages: messages,
+                        userId: app.user.id,
+                        typeTitles: typeTitles,
+                        placeholderLabels: placeholdersByType
+                    }
+                }|json_encode }}"
+            ></div>
+
+            {% include '@App/components/footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset("default-messages.css"|webpack_asset) }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset("default-messages.js"|webpack_asset) }}"></script>
+{% endblock script %}

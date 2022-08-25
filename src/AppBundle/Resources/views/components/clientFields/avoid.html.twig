@@ -1,0 +1,69 @@
+{% set isClient = client is defined and client is not null and client.clientFoodPreferences %}
+
+{% set avoidLactose = isClient and client.clientFoodPreferences.avoidLactose %}
+{% set avoidGluten = isClient and client.clientFoodPreferences.avoidGluten %}
+{% set avoidNuts = isClient and client.clientFoodPreferences.avoidNuts %}
+{% set avoidEggs = isClient and client.clientFoodPreferences.avoidEggs %}
+{% set avoidPig = isClient  and client.clientFoodPreferences.avoidPig %}
+{% set avoidShellfish = isClient and client.clientFoodPreferences.avoidShellfish %}
+{% set avoidFish = isClient and client.clientFoodPreferences.avoidFish %}
+{% set isVegetarian = isClient and client.clientFoodPreferences.isVegetarian %}
+{% set isVegan = isClient and client.clientFoodPreferences.isVegan %}
+{% set isPescetarian = isClient and client.clientFoodPreferences.isPescetarian %}
+
+
+<div class="form-group">
+    <label class="control-label">{{ title is defined ? title : 'Allergies / food preferences?' }}</label>
+    <div class="area meal-area avoid-checkbox">
+        <div class="col meal-col">
+            <label for="avoid_lactose" class="btn {{ avoidLactose ? 'current' : '' }}">{{ lactose is defined ? lactose : 'No lactose' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_lactose" value="avoidLactose" {{ avoidLactose ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="avoid_gluten" class="btn {{ avoidGluten ? 'current' : '' }}">{{ gluten is defined ? gluten : 'No gluten' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_gluten" value="avoidGluten" {{ avoidGluten ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="avoid_nuts" class="btn {{ avoidNuts ? 'current' : '' }}">{{ nuts is defined ? nuts : 'No nuts' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_nuts" value="avoidNuts" {{ avoidNuts ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="avoid_eggs" class="btn {{ avoidEggs ? 'current' : '' }}">{{ eggs is defined ? eggs : 'No eggs' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_eggs" value="avoidEggs" {{ avoidEggs ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="avoid_pig" class="btn {{ avoidPig ? 'current' : '' }}">{{ pig is defined ? pig : 'No pig' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_pig" value="avoidPig" {{ avoidPig ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="avoid_shellfish" class="btn {{ avoidShellfish ? 'current' : '' }}">{{ shellfish is defined ? shellfish : 'No shellfish' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_shellfish" value="avoidShellfish" {{ avoidShellfish ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="avoid_fish" class="btn {{ avoidFish ? 'current' : '' }}">{{ fish is defined ? fish : 'No fish' }}
+                <input type="checkbox" name="foodPreferences[]" id="avoid_fish" value="avoidFish" {{ avoidFish ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="is_vegetarian" class="btn {{ isVegetarian ? 'current' : '' }}">{{ vegetarian is defined ? vegetarian : 'I am Vegetarian' }}
+                <input type="checkbox" name="foodPreferences[]" id="is_vegetarian" value="isVegetarian" {{ isVegetarian ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="is_vegan" class="btn {{ isVegan ? 'current' : '' }}">{{ vegan is defined ? vegan : 'I am Vegan' }}
+                <input type="checkbox" name="foodPreferences[]" id="is_vegan" value="isVegan" {{ isVegan ? 'checked' : '' }}>
+            </label>
+        </div>
+        <div class="col meal-col">
+            <label for="is_pescetarian" class="btn {{ isPescetarian ? 'current' : '' }}">{{ pescetarian is defined ? pescetarian : 'I am Pescetarian' }}
+                <input type="checkbox" name="foodPreferences[]" id="is_pescetarian" value="isPescetarian" {{ isPescetarian ? 'checked' : '' }}>
+            </label>
+        </div>
+    </div>
+</div>

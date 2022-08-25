@@ -1,0 +1,8 @@
+.contenteditable-textarea {
+    width: 100%;
+    min-height: 75px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: white;
+    outline: 0px solid transparent;
+}

@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+$oldAppEnv = getenv('APP_ENV');
+
+putenv('APP_ENV=test');
+
+ini_set('memory_limit', '-1');
+
+if (!file_exists(dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php')) {
+    echo "Unable to find the `simple-phpunit.php` script in `vendor/symfony/phpunit-bridge/bin/`.\n";
+    exit(1);
+}
+
+if (!isset($argv[1]) || 'install' !== $argv[1] || file_exists('install')) {
+    date_default_timezone_set('Europe/Copenhagen');
+
+    passthru('php bin/console doctrine:schema:update --force --env=test');
+    passthru('php bin/console zf:fixtures:load --env=test');
+}
+
+if (false === getenv('SYMFONY_PHPUNIT_DIR')) {
+    putenv('SYMFONY_PHPUNIT_DIR='.__DIR__.'/.phpunit');
+}
+
+require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';
+
+putenv("APP_ENV=$oldAppEnv");

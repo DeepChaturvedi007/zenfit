@@ -1,0 +1,48 @@
+GymBundle\Entity\Gym:
+    type: entity
+    table: gyms
+    repositoryClass: GymBundle\Repository\GymRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        autoAssignLeads:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        admin:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: gym
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+        assignDataFrom:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: gym
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+
+    manyToMany:
+        users:
+            targetEntity: AppBundle\Entity\User
+            joinTable:
+                name: gym_users
+
+    lifecycleCallbacks:
+      prePersist: [onPrePersist]

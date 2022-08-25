@@ -1,0 +1,137 @@
+AppBundle\Entity\Recipe:
+    type: entity
+    table: recipes
+    repositoryClass: AppBundle\Repository\RecipeRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    indexes:
+        user_approved_deleted:
+            columns: [ user_id, approved, deleted ]
+        name_idx:
+            columns: [ name ]
+            flags: fulltext
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        excelId:
+            type: integer
+            nullable: true
+            length: 10
+
+        name:
+            type: string
+            length: 255
+
+        type:
+            type: integer
+            options:
+                default: 0
+
+        locale:
+            type: string
+            length: 10
+            nullable: false
+            options:
+                default: en
+
+        macroSplit:
+            type: integer
+
+        image:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        comment:
+            type: text
+            nullable: TRUE
+
+        createdAt:
+            type: datetime
+            column: created_at
+
+        updatedAt:
+            type: datetime
+            column: updated_at
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+        approved:
+            type: boolean
+            options:
+                default: true
+
+        cookingTime:
+            type: integer
+            length: 2
+
+        isSpecial:
+            type: boolean
+            options:
+                default: 0
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: recipes
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        parent:
+            targetEntity: AppBundle\Entity\Recipe
+            inversedBy: children
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToMany:
+        mealPlans:
+            targetEntity: AppBundle\Entity\MealPlan
+            mappedBy: recipe
+
+        products:
+            targetEntity: AppBundle\Entity\RecipeProduct
+            mappedBy: recipe
+            orderBy: { 'order': 'ASC' }
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        types:
+            targetEntity: AppBundle\Entity\RecipeType
+            mappedBy: recipe
+            cascade: ["persist"]
+
+        preferences:
+            targetEntity: AppBundle\Entity\RecipePreference
+            mappedBy: recipe
+
+        children:
+            targetEntity: AppBundle\Entity\Recipe
+            mappedBy: parent
+
+    oneToOne:
+        recipeMeta:
+            targetEntity: AppBundle\Entity\RecipeMeta
+            mappedBy: recipe
+            cascade: ["persist"]
+
+    lifecycleCallbacks:
+        prePersist: [onAdd]
+        preUpdate: [onUpdate]

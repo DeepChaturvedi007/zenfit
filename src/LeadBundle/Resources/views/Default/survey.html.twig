@@ -1,0 +1,25 @@
+{% extends '@Lead/layout.html.twig' %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset("survey-page.css"|webpack_asset) }}">
+{% endblock extra_css %}
+
+{% block content -%}
+    <div id="survey-page-controller"
+         data-props="{{ {
+             plans: bundles,
+             hash: user.interactiveToken,
+             background: backgroundImage,
+             language: locale,
+             bundle: bundle
+         }|json_encode }}"
+    ></div>
+    {% if user.userTerms and user.userTerms.terms %}
+        <div id ="survey-page-hidden" style="display: none">
+            {{ user.userTerms.terms }}
+        </div>
+    {% endif %}
+{% endblock content %}
+
+{% block script %}
+    <script src="{{ asset("survey-page.js"|webpack_asset) }}"></script>
+{% endblock script %}

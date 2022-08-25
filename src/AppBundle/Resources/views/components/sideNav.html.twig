@@ -1,0 +1,112 @@
+{% set current_route = app.request.attributes.get('_route') %}
+
+<link href="{{ asset('bundles/app/css/side-bar.css') }}" rel="stylesheet">
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            {# <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a href="#">
+                        <img id="logo" style="width: 90px;" src="{{ asset('bundles/app/images/zenfit-logo-white-new.svg') }}">
+                    </a>
+                </div>
+                <div class="logo-element">
+                    <img id="logo" class="mobile-logo-element" style="width: 80%;" src="{{ asset('bundles/app/images/zenfit-logo-white-new.svg') }}">
+                </div>
+            </li> #}
+            {% if app.user and not app.user.assistant %}
+                <li class="nav-item {{ (current_route == 'dashboardOverview') ? ' active' }}">
+                    <a href="{{ path('dashboardOverview') }}"><i class="material-icons material-design-icons">dashboard</i> <span class="nav-label">Dashboard</span></a>
+                </li>
+            {% endif %}
+            {% if app.user and app.user.leadsVisible %}
+                <li class="nav-item {{ (current_route == 'leads') ? ' active' }}">
+                    <a href="{{ path('leads') }}">
+                        <i class="material-icons material-design-icons">person_add</i>
+                        <span class="nav-label">Leads</span>
+                        {% set newLeadsCount = userRepository.newLeadsCount(app.user) %}
+                        {% if newLeadsCount %}
+                            <span class='label label-warning'>{{ newLeadsCount }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+            {% if app.user and not app.user.assistant %}
+                {% if app.user.plansVisible %}
+                  <li class="nav-item {{ (current_route == 'plansOverview') ? ' active' }}">
+                      <a href="{{ path('plansOverview') }}">
+                        <i class="material-icons material-design-icons">dashboard</i>
+                        <span class="nav-label">Plans</span>
+                      </a>
+                  </li>
+                {% endif %}
+            {% endif %}
+            <li class="nav-item {{ (
+                current_route == 'clients'
+                or current_route == 'clientInfo'
+                or current_route == 'clientInfoQuestionnaire'
+                or current_route == 'workout_client'
+                or current_route == 'workout_client_edit'
+                or current_route == 'clientBodyProgress'
+                or current_route == 'clientDocuments'
+                or current_route == 'clientMeal'
+                or current_route == 'mealPlanOverviewClient'
+                or current_route == 'meal_client'
+                or current_route == 'meal_client_edit'
+                or current_route == 'clientVideos'
+                or current_route == 'clients'
+                or isTemplate is defined and isTemplate is same as(false) and current_route == 'workoutDayEditorMobile')
+                ? 'active' }}">
+                <a href="{{ path('clients') }}"><i class="material-icons material-design-icons">account_circle</i> <span class="nav-label">Clients</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'chatOverview') ? ' active' }}">
+                <a href="{{ path('chatOverview') }}">
+                    <i class="material-icons material-design-icons">speaker_notes</i>
+                    <span class="nav-label">Messages</span>
+                    <span id="unread-message-updater" data-count="{{ userRepository.unreadConversationsCount(app.user) }}" data-user="{{ app.user.id }}"></span>
+                </a>
+            </li>
+            {% if app.user and not app.user.assistant %}
+            <li class="nav-item {{ (
+                current_route == 'workout_templates'
+                or current_route == 'workout_templates_edit'
+                or isTemplate is defined and isTemplate is same as(true) and current_route == 'workoutDayEditorMobile'
+                ) ? ' active' }}">
+                <a href="{{ path('workout_templates') }}"><i class="material-icons material-design-icons">format_list_bulleted</i> <span class="nav-label">Workout Plans</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'meal_templates' or current_route == 'meal_templates_edit') ? ' active' }}">
+                <a href="{{ path('meal_templates') }}"><i class="material-icons material-design-icons">restaurant_menu</i> <span class="nav-label">Meal Plans</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'meal_recipes' or current_route == 'meal_recipes_editor') ? ' active' }}">
+                <a href="{{ path('meal_recipes') }}"><i class="material-icons material-design-icons">menu_book</i> <span class="nav-label">Recipes</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'user_exercises') ? ' active' }}" id="my_exercises">
+                <a href="{{ path('user_exercises') }}"><i class="material-icons material-design-icons">fitness_center</i> <span class="nav-label">Exercises</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'mealProducts') ? ' active' }}">
+                <a href="{{ path('mealProducts') }}"><i class="material-icons material-design-icons">person_add</i> <span class="nav-label">Food Items</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'documentOverview') ? 'active' }}">
+                <a href="{{ path('documentOverview') }}"><i class="material-icons material-design-icons">attach_file</i> <span class="nav-label">Documents</span></a>
+            </li>
+            <li class="nav-item {{ (current_route == 'video_library_overview') ? 'active' }}">
+                <a href="{{ path('video_library_overview') }}"><i class="material-icons material-design-icons">videocam</i> <span class="nav-label">Videos</span></a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" href="https://intercom.help/zenfit-help-center/en/collections/2805934-trainers-faq"><i class="material-icons material-design-icons">help</i> <span class="nav-label">Help - FAQ</span></a>
+            </li>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li class="nav-item {{ (current_route == 'admin_home') ? 'active' }}">
+                <a href="{{ path('admin_home') }}"><i class="material-icons material-design-icons">favorite_border</i> <span class="nav-label">Admin</span></a>
+            </li>
+            {% elseif is_granted('ROLE_ADMIN') %}
+                <li class="nav-item {{ (current_route == 'admin_recipes') ? 'active' }}">
+                    <a href="{{ path('admin_recipes') }}"><i class="material-icons material-design-icons">favorite_border</i> <span class="nav-label">Admin</span></a>
+                </li>
+            {% endif %}
+            {% endif %}
+        </ul>
+
+    </div>
+</nav>

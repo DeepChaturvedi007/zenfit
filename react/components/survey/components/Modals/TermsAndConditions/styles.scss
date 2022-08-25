@@ -1,0 +1,17 @@
+#terms-and-conditions-content {
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');
+
+  max-height: calc(100vh - 200px);
+  margin: auto;
+  overflow: auto;
+  * {
+    line-height: 1.8;
+    font-family: "Open Sans", sans-serif;
+    color: #333333;
+    font-size: 14px;
+
+    p {
+      font-weight: 400;
+    }
+  }
+}

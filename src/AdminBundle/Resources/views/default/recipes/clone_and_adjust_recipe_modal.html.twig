@@ -1,0 +1,241 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+<div
+        class="modal inmodal in sm"
+        id="cloneAndAdjustRecipeModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Clone and Adjust Recipe</h4>
+            </div>
+            <form action="" method="POST" id="cloneAndAdjustRecipeForm" autocomplete="off" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group macro-list">
+                        <label for="recipeMacroSplit" class="control-label">Choose macro split</label>
+                        {% for value, title in macro_splits() %}
+                            <div class="macro-item form-check" hidden data-type="{{ value }}">
+                                <input type="checkbox" name="macro_split" class="form-check-input" id="macro-{{ value }}">
+                                <label style="font-weight: normal" class="form-check-label" for="macro-{{ value }}">{{ title }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="macro-item form-check">
+                        <input type="checkbox" name="add-languages" class="form-check-input" id="add-languages">
+                        <label class="form-check-label" for="add-languages">Add more languages</label>
+                    </div>
+                    {% for value, label in languageOptions %}
+                        <div class="form-group locale-node" hidden>
+                            <label class="control-label">
+                                <input type="checkbox" class="form-check-input" data-locale="{{ value }}">
+                                {{ label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <br />
+                    <div class="macro-item form-check">
+                        <input type="checkbox" name="add-prefs" class="form-check-input" id="add-prefs">
+                        <label class="form-check-label" for="add-prefs">Add lactose- & gluten-free versions</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"
+                      class="btn btn-block btn-success btn-upper"
+                      data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"
+                    >Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+    <script>
+      (function($) {
+        const $modal = $('#cloneAndAdjustRecipeModal');
+        const $modalBody = $modal.find('.modal-body');
+        const $modalForm = $modal.find('form');
+        const $submit = $modalForm.find('button[type="submit"]');
+        const $collapse = $('[id$="Collapse"]');
+        let initialData = {};
+        let postAction = undefined;
+
+        const setupForm = (data) => {
+          const {
+            action,
+            name,
+            description,
+            locale,
+            macroSplit
+          } = data;
+
+          $modalForm.attr('action', action);
+          $modalForm.find(`[name="${locale}-name"]`).val(name);
+          $modalForm.find(`[name="${locale}-description"]`).val(description);
+
+          $('.macro-item').each(function (i, el) {
+            const $wrapper = $(el);
+            const $inputCheck = $wrapper.find('[name="macro_split"]');
+            $inputCheck.prop('checked', false);
+            $wrapper.show();
+          })
+        };
+
+        const showLanguages = () => {
+          $('.locale-node').show();
+        };
+
+        const hideLanguages = () => {
+          $('.locale-node').each((i, el) => {
+            $(el).hide().find('input[type="checkbox"]').attr('checked', false);
+          });
+          $modal.find('.collapse').collapse('hide');
+        };
+
+        const onHideLocale = (event) => {
+          $(event.target).find('input,textarea').val('');
+        };
+
+        const onShowLocale = (event) => {
+          const $nameInput = $(event.target).find('[name$="name"]');
+          const $descriptionInput = $(event.target).find('[name$="description"]');
+          if(initialData.locale === $(event.target).data('locale') && !$nameInput.val()) {
+            $nameInput.val(initialData.name);
+            $descriptionInput.val(initialData.description);
+          }
+        };
+
+        const onSwitchLanguagesCtrl = (event) => {
+          $(event.target).prop('checked') ? showLanguages() : hideLanguages();
+        };
+
+        const onShowModal = (event) => {
+          $modalForm.find('[name="name"]').val("");
+          hideLanguages();
+          const data = $(event.relatedTarget).data() || {};
+          initialData = {...data};
+          postAction = !!data.postaction;
+          setupForm(data);
+        };
+
+        const onHideModal = () => {
+          $modal.find('form').trigger('reset');
+          $modalBody.find('.alert-danger').remove();
+        };
+
+        const onSubmit = (event) => {
+          event.preventDefault();
+          $('.macro-list').removeClass('has-error');
+          $collapse.removeClass('has-error');
+          const $alert = $modalBody.find('.alert-danger');
+          $alert.remove();
+          $submit.button('loading');
+
+          const splits = [];
+          $modalForm.find('[name="macro_split"]:checked')
+            .each((i, el) => {
+              splits.push($(el).closest('.macro-item').data('type'));
+            });
+
+          if (!splits.length) {
+            $('.macro-list').addClass('has-error');
+            $modalBody.prepend('<div class="alert alert-danger">You have to specify a macro split.</div>');
+            return;
+          }
+
+          const localeData = [];
+          $('.locale-node input:checked')
+            .each(function (i, el) {
+              const locale = $(el).data('locale');
+              localeData.push({locale});
+            });
+
+          if(!localeData.length) {
+            localeData.push({
+              locale: initialData.locale
+            })
+          }
+
+          //check if we should generate lactose- & gluten-free versions as well
+          let generateLactoseAndGlutenFreeVersions = false;
+          if ($('[name=add-prefs]:checked').length == 1) {
+            generateLactoseAndGlutenFreeVersions = true;
+          }
+
+          //prepare data to send to backend
+          const recipes = [];
+          function appendToRecipesArray(item, macro_split, without = []) {
+            recipes.push({
+              ...item,
+              macro_split: macro_split,
+              without: without
+            })
+          }
+
+          splits.forEach((split) => {
+            localeData.forEach((item) => {
+              appendToRecipesArray(item, split)
+              if (generateLactoseAndGlutenFreeVersions) {
+                [['gluten'], ['lactose'], ['gluten', 'lactose']].forEach((without) => {
+                  appendToRecipesArray(item, split, without)
+                });
+              }
+            });
+          });
+
+          $.ajax({
+            url: $modalForm.attr('action'),
+            type: 'POST',
+            data: JSON.stringify(recipes),
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+
+              const fireEvent = (item) => {
+                const event = new CustomEvent("onRecipeSaved", {
+                  detail: {
+                    recipeId: item.id,
+                    name: item.name
+                  }
+                });
+                window.dispatchEvent(event);
+              }
+              if(postAction) {
+                let itemsCount = 1;
+                if(Array.isArray(res)) {
+                  itemsCount = res.length;
+                  res.forEach(fireEvent)
+                } else {
+                  fireEvent(res);
+                }
+                setTimeout(() => $modal.modal('hide'), 200 * itemsCount);
+              } else {
+                location.reload();
+              }
+            },
+            error: function (err) {
+              if(err.status === 422 && err.responseJSON && err.responseJSON.message) {
+                $modalBody.prepend(`<div class="alert alert-danger">${err.responseJSON.message}</div>`);
+              }
+              toastr.error('An error occurred');
+            }
+          });
+        };
+
+        $modalForm.find('[name="add-languages"]').change(onSwitchLanguagesCtrl);
+        $collapse.on('hide.bs.collapse', onHideLocale);
+        $collapse.on('show.bs.collapse', onShowLocale);
+        $modal.on('show.bs.modal', onShowModal);
+        $modal.on('hidden.bs.modal', onHideModal);
+        $modalForm.on('submit', onSubmit);
+      })(jQuery);
+    </script>
+{% endblock script %}

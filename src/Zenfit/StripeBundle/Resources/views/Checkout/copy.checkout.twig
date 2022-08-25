@@ -1,0 +1,483 @@
+{% extends '@App/empty.html.twig' %}
+
+{% block content %}
+
+{% set userSettings = user.userSettings %}
+
+    <div class="checkout">
+        <div class="logo-block">
+            {% if userSettings and userSettings.companyLogo %}
+                <img width="110" src="{{ userSettings.companyLogo }}"/>
+            {% endif %}
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8 checkout-container">
+                    <p>{% trans %} client.checkout.amount {% endtrans %}</p>
+                    <h2 class="amount">{{ currencySign }}
+                      <span id="amount">{{ amount }}</span>
+                      <span style="text-transform: uppercase">{{ currency }}</span>
+                    </h2>
+
+                    {% if bundle is defined %}
+                        <p>{{ userSettings and userSettings.companyName ? userSettings.companyName : user.name }}</p>
+                    {% endif %}
+
+                    <div class="card-container">
+                    {% if upfrontFee > 0 %}
+                        <img width="18" height="18" src="{{ asset('bundles/app/images/checkout/card.svg') }}" />
+                        <span>{% trans with {'%upfrontFee%': currencySign ~ upfrontFee ~ ' ' ~ currency|upper } %} client.checkout.upfrontFee {% endtrans %}</span>
+                        <br />
+                    {% endif %}
+
+                    {% if recurring > 0 %}
+                        <img width="18" height="18" src="{{ asset('bundles/app/images/checkout/recurring.svg') }}" />
+                        {{ currencySign }}<span id="recurring">{{ recurring }}</span> {{ currency|upper }} - {{ period }}
+                        <br />
+                    {% endif %}
+
+                    {% if checkoutTerms is not null %}
+                        <div style="display:flex; vertical-align:middle;">
+                          <div>
+                            <img width="18" height="18" src="{{ asset('bundles/app/images/checkout/terms.svg') }}"/>
+                          </div>
+                          <div style="margin-left: 3px;">
+                            <span>{{ checkoutTerms|raw|nl2br }}</span>
+                          </div>
+                        </div>
+                    {% endif %}
+
+                    <div style="margin-top:32px;">
+                        {% if coupon and coupon.valid %}
+
+                            {% set couponDuration = '.' %}
+                            {% if coupon.duration == 'once' %}
+                                {% set couponDuration = ' for 1 month.' %}
+                            {% elseif coupon.duration == 'repeating' %}
+                                {% set couponDuration = ' for ' ~ coupon.duration_in_months ~ ' months.' %}
+                            {% endif %}
+
+                            {% set amountOff = coupon.percent_off ? coupon.percent_off ~ '%' : coupon.currency|upper ~ coupon.amount_off / 100 %}
+
+                            <div class="alert alert-success" role="alert">
+                                <i class="fa fa-check"></i> Coupon applied with {{ amountOff }} off{{ couponDuration }}
+                            </div>
+                            <input type="hidden" name="coupon" value="{{ coupon.id }}"/>
+
+                        {% else %}
+                            {% if couponCode %}
+                                <div class="alert alert-danger">
+                                    This coupon code <strong>"{{ couponCode }}"</strong> is invalid or has expired.
+                                </div>
+                            {% endif %}
+                            <div class="alert alert-success hidden coupon-success-alert" role="alert">
+                                <i class="fa fa-check"></i> Coupon applied with <span class="percent_off"></span> off!
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if klarnaEnabled %}
+                        <div>
+                            <button class="btn btn-primary klarna-initiate">Pay with Klarna</button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row card-container">
+                <div id="card-container" class="col-md-offset-2 col-md-8 checkout-container">
+                    <div class="checkout-card">
+                        <div>
+                            <h3>{% trans %} client.checkout.creditCard {% endtrans %}</h3>
+                            <p>{% trans %} client.checkout.description {% endtrans %}</p>
+                        </div>
+                        <img width="106" height="22" src="{{ asset('bundles/app/images/cards.svg') }}"/>
+                    </div>
+
+                    <form
+                        id="payment-form"
+                        class="payment-form"
+                        method="post"
+                        autocomplete="off"
+                        action="{{ path('zenfit_stripe_checkout_confirm') }}"
+                    >
+
+                        {% if bundle is defined %}
+                            <input type="hidden" name="bundle" value="{{ bundle }}">
+                        {% endif %}
+
+                        {% if coupon %}
+                            <input type="hidden" name="coupon" value="{{ coupon.id }}"/>
+                        {% endif %}
+
+                        <input type="text" name="focus" style="opacity: 0">
+                        <div class="row">
+                            <div class="{{ type == 'bundle' ? 'col-sm-6' : 'col-sm-12' }} form-group">
+                                <label for="coupon">{% trans %} client.checkout.name {% endtrans %}</label>
+                                <input class="form-control name-input" name="name"
+                                       placeholder="{% trans %} client.checkout.name {% endtrans %}" type="text"
+                                       value=""/>
+                            </div>
+
+                            {% if type == 'bundle' %}
+                                <div class="col-sm-6 form-group">
+                                    <label for="coupon">{% trans %} client.checkout.email {% endtrans %}</label>
+                                    <input class="form-control name-input" name="email"
+                                           placeholder="{% trans %} client.checkout.email {% endtrans %}"
+                                           type="email" value=""/>
+                                </div>
+                            {% endif %}
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="card-number">
+                                            {% trans %} client.checkout.cardNumber {% endtrans %}
+                                        </label>
+                                        <div id="stripe-card-number"></div>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label for="card-number">
+                                            {% trans %} client.checkout.expiryDate {% endtrans %}
+                                        </label>
+                                        <div id="stripe-card-expiry"></div>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="card-number">
+                                            {% trans %} client.checkout.cvcCode {% endtrans %}
+                                        </label>
+                                        <div id="stripe-card-cvc"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="input-group input-checkbox-spacing">
+                                        <label for="terms-checkbox"><input id="terms-checkbox" type="checkbox"
+                                                                           name="terms">&nbsp;{% trans with {'%terms%': '<a href="#" id="terms"> terms of service</a>' } %} client.checkout.acceptTerms {% endtrans %}</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <button
+                                            id="buy-button"
+                                            class="btn btn-success btn-upper btn-buy-width"
+                                            type="submit"
+                                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Buying..."
+                                        >{% trans %} client.checkout.button {% endtrans %}
+                                      </button>
+                                    </div>
+                                    <p class="info-encrypted">{% trans with {'%stripe%': '<a href="https://stripe.com" target="_blank">Stripe</a>' } %} client.checkout.stripeMessage {% endtrans %}</p>
+                                </div>
+                            </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {# The terms of service modal #}
+        <div class="modal inmodal in md" id="terms-of-service" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-content-light-grey">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">Terms of use</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="terms-col-main">
+                            {{ terms | raw }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn btn-success btn-upper pull-right" type="button" data-dismiss="modal">
+                            Okay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="checkout-loader">
+        <div class="checkout-loader-content">
+            <h3>Processing your payment</h3>
+            <p>Please wait…</p>
+            <i class='fa fa-spinner fa-spin' style="font-size: 70px;"></i>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        @media (min-width: 768px) {
+            .modal-dialog {
+                width: 750px;
+            }
+        }
+
+        .StripeElement {
+            background-color: #FFFFFF;
+            background-image: none;
+            border: 1px solid #e5e6e7;
+            border-radius: 1px;
+            color: inherit;
+            display: block;
+            padding: 8px 12px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .StripeElement--focus {
+            border: 1px solid #1ab394;
+        }
+
+        .checkout-loader {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(237, 237, 237, 0.86);
+            z-index: 9;
+            display: none;
+        }
+
+        .checkout-loader-content {
+            position: relative;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .checkout-loader h3 {
+            font-size: 40px;
+            font-weight: 500;
+            color: #1F1F1F;
+        }
+
+        .checkout-loader p {
+            margin-top: 20px;
+            color: #1F1F1F;
+            font-size: 20px;
+            font-weight: 200;
+            margin-bottom: 20px;
+        }
+
+        .name-input {
+            border-radius: 0;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .name-input:focus {
+            border: 1px solid #1ab394;
+        }
+
+        .checkout-container img {
+            margin-right: 3px;
+        }
+    </style>
+{% endblock %}
+
+{% block script %}
+    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{{ asset('bundles/app/js/stripe-sca.js') }}"></script>
+    <script>
+      (function ($) {
+        'use strict';
+
+        var $loader = $('.checkout-loader');
+
+        var stripe = Stripe('{{ stripeKey }}', {
+          stripeAccount: '{{ stripeUserId }}',
+        });
+
+        //initiate Stripe data
+        var stripeSCA = new StripeSCA(stripe, 'client', {
+          datakey: '{{ datakey is defined and datakey ? datakey : null }}',
+          bundle: '{{ bundle is defined and bundle ? bundle : null }}',
+          coupon: '{{ coupon is defined and coupon ? coupon.id : null }}',
+          client: '{{ clientId is defined and clientId ? clientId : null }}',
+          token: '{{ token }}',
+          initiateUrl: '{{ path('zenfit_stripe_checkout_initiate') }}',
+          confirmUrl: '{{ path('zenfit_stripe_checkout_confirm') }}',
+          confirmationUrl: '{{ path('zenfit_stripe_checkout_confirmed') }}'
+        });
+
+        //check for callback from klarna
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.get('klarna_callback')) {
+          $loader.show();
+          stripeSCA
+            .setPaymentType('klarna')
+            .setSource(urlParams.get('source'))
+            .setFormData({
+              name: '{{ name }}',
+              email: '{{ email }}'
+            });
+
+          stripeSCA.initiateStripeSubscription(error => {
+            var subtitle = 'Klarna payment failed. Please try again or pay with card.';
+            dispatchError(subtitle, error, {timeOut: 5000});
+            flushAction();
+          });
+        }
+
+        var elements = stripe.elements();
+        var elementStyles = {
+          base: {
+            color: '#555',
+            fontFamily: 'Quicksand, Open Sans, Segoe UI, sans-serif',
+            fontSize: '14px',
+            fontSmoothing: 'antialiased',
+
+            ':focus': {
+              color: '#424770',
+            },
+
+            '::placeholder': {
+              color: '#ccc',
+            },
+
+            ':focus::placeholder': {
+              color: '#ccc',
+            },
+          },
+          invalid: {
+            color: '#fa755a',
+            ':focus': {
+              color: '#FA755A',
+            },
+            '::placeholder': {
+              color: '#ccc',
+            },
+          },
+        };
+        var currentAction = {
+          $form: null,
+          $submit: null,
+        };
+
+        var $termsModal = $('#terms-of-service')
+          .on('hidden.bs.modal', function () {
+            var $buttons = $(this).find('button');
+
+            $buttons.eq(0).prop('disabled', false);
+            $buttons.eq(1).button('reset');
+          });
+
+        var elementClasses = {
+          //focus: 'focus',
+          empty: 'empty',
+          invalid: 'invalid',
+        };
+
+        var cardNumber = elements.create('cardNumber', {
+          style: elementStyles,
+          classes: elementClasses,
+        });
+        cardNumber.mount('#stripe-card-number');
+        var cardExpiry = elements.create('cardExpiry', {
+          style: elementStyles,
+          classes: elementClasses,
+        });
+        cardExpiry.mount('#stripe-card-expiry');
+
+        var cardCvc = elements.create('cardCvc', {
+          style: elementStyles,
+          classes: elementClasses,
+        });
+        cardCvc.mount('#stripe-card-cvc');
+
+        function dispatchError(message, subtitle, options) {
+          toastr.error(message, subtitle || '{% trans %}client.checkout.paymentErrorTitle{% endtrans %}', options || {});
+          $loader.hide();
+
+          if (currentAction.$submit) {
+            currentAction.$submit.button('reset');
+          }
+        }
+
+        function flushAction() {
+          currentAction.$form = null;
+          currentAction.$submit = null;
+        }
+
+        $('body')
+          .on('click', '#terms', function (e) {
+            e.preventDefault();
+            $termsModal.modal('show');
+          })
+          .on('submit', '#payment-form', function (e) {
+            e.preventDefault();
+
+            $('input[name="focus"]').focus().blur();
+
+            var $form = $(this);
+            var $submit = $form.find('button[type="submit"]').button('loading');
+            var formData = {
+              name: $form.find('[name="name"]').val(),
+              email: $form.find('[name="email"]').val(),
+              terms: $('#terms-checkbox').is(':checked'),
+            };
+
+            toastr.clear();
+            $loader.show();
+
+            currentAction.$submit = $submit;
+            currentAction.$form = $form;
+
+            if (!formData.terms) {
+              return dispatchError('You must accept the terms of service');
+            }
+            if (formData.name === '') {
+              return dispatchError('Invalid name');
+            }
+            if (formData.email === '') {
+              return dispatchError('Invalid email');
+            }
+
+            var token = "{{ token }}";
+
+            stripeSCA
+              .setToken(token)
+              .setCard(cardNumber)
+              .setFormData(formData)
+              .setPaymentType('card');
+
+            stripeSCA.initiateStripeSubscription(error => {
+              var subtitle = 'Please reach out to Zenfit support.';
+              dispatchError(subtitle, error, {timeOut: 5000});
+              flushAction();
+            });
+          })
+          .on('click', '.klarna-initiate', function(e) {
+            e.preventDefault();
+
+            let klarnaCountry = '{{ klarnaCountry }}';
+            let klarnaAmount = '{{ klarnaAmount }}';
+            let currency = '{{ currency }}'
+            stripeSCA.initiateKlarna(klarnaAmount, currency, klarnaCountry)
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                var subtitle = 'Please reach out to Zenfit support.';
+                dispatchError(subtitle, err, {timeOut: 5000});
+                flushAction();
+              });
+          })
+
+      })(jQuery);
+    </script>
+{% endblock %}

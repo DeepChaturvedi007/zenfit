@@ -1,0 +1,292 @@
+@import "./react/shared/UI/Theme/color";
+
+#client-overview, .signUpWrapper {
+  height: 100%;
+  background-color: #fcfcfc;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+body{
+  background-color: #fcfcfc!important;
+}
+
+.intercom-lightweight-app{
+  display: none!important;
+}
+
+.zf-noData {
+  .zf-title {
+    height: 100%;
+  }
+}
+
+.signUpWrapper {
+  .zf-content {
+    background-color: #fcfcfc;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .bgImg {
+    width: 20rem;
+    height: 5rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: -2rem;
+  }
+
+  .zf-GetStarted {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    flex-direction: column;
+
+    .oval {
+      cursor: pointer;
+      margin-top: 8vh;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      border: solid 1px #2c2c2c;
+      border-radius: 10rem;
+      transform: rotate(180deg);
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        border: solid 1px #2c2c2c;
+        background: #2c2c2c;
+
+        & svg {
+          fill: white;
+        }
+      }
+
+      svg {
+        width: 22px;
+        height: 22px;
+        fill: black;
+      }
+    }
+  }
+
+  .zf-CreateAccount {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+  }
+
+  .zf-title {
+    max-width: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    h1, h2 {
+      margin: 0;
+      font-family: Poppins, serif;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #000;
+    }
+
+    h1 {
+      padding: 3rem 0 1rem;
+      font-weight: bold;
+      font-size: 34px;
+      word-break: break-word;
+    }
+
+    h2 {
+      font-weight: normal;
+      font-size: 16px;
+    }
+  }
+
+  .zf-General {
+    display: flex;
+    flex-direction: column;
+    .imperial{
+      display: flex;
+      flex-direction: row;
+      > *:first-child{
+        margin-right: 1rem;
+      }
+      > *:last-child{
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .zf-footer {
+    width: 100%;
+    background-color: #fcfcfc;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .zf-Progress {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    .pictures {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin-bottom: 4rem;
+    }
+
+    .submit {
+      width: 100%;
+      margin: auto;
+      justify-content: center;
+      display: flex;
+      max-width: 600px;
+    }
+  }
+
+  .zf-Goal {
+    .weekInfo {
+      font-family: Poppins, sans-serif;
+      font-size: 13px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+      color: #92929d;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+  }
+
+  .zf-Workout, .zf-CreateAccount {
+    padding: 1rem;
+
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #868686;
+      border-radius: 25px;
+    }
+  }
+
+  .zf-Diet, .zf-Other, .zf-Workout, .zf-Photos, .zf-GetStarted, .zf-Done {
+    min-width: 600px;
+    max-width: 600px;
+  }
+
+  .zf-CreateAccount, .zf-General, .zf-Goal {
+    min-width: 400px;
+    max-width: 400px;
+  }
+
+
+  .zf-Done {
+    display: flex;
+    justify-content: space-evenly;
+    img {
+      max-width: 15rem;
+    }
+
+    a {
+      width: 25%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+
+  .zf-Other {
+    .terms {
+      margin-top: -1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      .termsTxt {
+        font-family: Poppins, sans-serif;
+        font-size: 13px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: left;
+      }
+    }
+  }
+
+  .zf-upload {
+    img {
+      border-radius: 100%;
+    }
+  }
+
+
+  @media(max-width: 1024px) {
+    .zf-GetStarted,
+    .zf-Diet,
+    .zf-Done,
+    .zf-Workout,
+    .zf-General,
+    .zf-CreateAccount,
+    .zf-Goal,
+    .zf-Other {
+      padding: 0;
+      min-width: 100%;
+    }
+    .MuiFormLabel-root {
+      width: 96%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .zf-Done{
+      a{
+        width: 100%;
+      }
+    }
+
+    .zf-title {
+      padding: 0;
+    }
+
+    .zf-content {
+      padding: 30px 15px 60px;
+
+      .submit {
+        width: 100%;
+      }
+    }
+  }
+
+}

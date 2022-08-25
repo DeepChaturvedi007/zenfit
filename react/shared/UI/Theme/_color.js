@@ -1,0 +1,13 @@
+export const CTA_COLORS_BG = "#0062ff";
+export const CTA_COLORS_BG_GREY = "#f2f4f6";
+export const INPUT_COLORS_ACTIVE = "#2ab85e";
+export const INPUT_COLORS_HOVER = "#ccc";
+export const INPUT_COLORS_BORDER = "#ebebeb";
+export const CTA_BUTTON_BG_GREY = "#d7dee9";
+export const INACTIVE_COLOR = "#e6eaed";
+export const ACTIVE_COLOR = "rgba(0, 98, 255, 0.7)";
+export const SUCCES_COLOR = "#2ab85e";
+export const INPUT_IMG_PERSON_ICON_BG = "#eeeeee";
+export const INPUT_IMG_PERSON_ICON = "#cccccc";
+export const ERROR_COLOR = '#f44336'
+export const DISABLED_COLOR = '#D2D2D2'

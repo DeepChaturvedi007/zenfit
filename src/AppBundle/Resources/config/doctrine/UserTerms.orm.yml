@@ -1,0 +1,28 @@
+AppBundle\Entity\UserTerms:
+    type: entity
+    table: user_terms
+    repositoryClass: AppBundle\Repository\UserTermsRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        terms:
+            type: text
+            nullable: false
+
+    oneToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: userTerms
+            joinColumn:
+                nullable: false
+
+    lifecycleCallbacks: {  }

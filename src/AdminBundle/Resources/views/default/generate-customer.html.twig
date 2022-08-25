@@ -1,0 +1,87 @@
+{% extends '@App/base.html.twig' %}
+{% block content -%}
+<div id="wrapper">
+    {% include '@App/components/sideNav.html.twig' %}
+    {% include '@App/components/metabar.html.twig' with { 'title': 'Admin Dashboard' } %}
+    <div id="page-wrapper" class="gray-bg sm-white-bg">
+        {% include '@Admin/components/nav.html.twig' with {'trainers': 'true'} %}
+        <form action="{{ path('generate_customer_post') }}" id="createCustomer" method="POST">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="ibox-content m-x-n">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="">Customer name</label>
+                                <input type="text" class="form-control" name="customer_name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="">Customer email</label>
+                                <input type="email" class="form-control" name="customer_email" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="">Currency</label>
+                                <select name="currency" class="form-control">
+                                    <option value="dkk">DKK</option>
+                                    <option value="sek">SEK</option>
+                                    <option value="nok">NOK</option>
+                                    <option value="usd">USD</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Subscription</label>
+                                <input type="number" class="form-control" name="subscription" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="">Upfront fee (optional)</label>
+                                <input type="number" class="form-control" name="upfront_fee" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">Website (optional)</label>
+                                <input type="number" class="form-control" name="website" />
+                            </div>
+                            <div class="form-group">
+                                <button id="submit-btn" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Create Customer</button>
+                                <br>
+                                <br>
+                                <p id="response1"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    {% endblock %}
+
+    {% block script %}
+
+        <script>
+            $(document).ready(function () {
+                $('#createCustomer').on('submit', function (e) {
+                    e.preventDefault();
+                    $btn = $('#submit-btn');
+                    $btn.button('loading');
+                    let data = {
+                        customerName: $('input[name="customer_name"]').val(),
+                        customerEmail: $('input[name="customer_email"]').val(),
+                        subscription: $('input[name="subscription"]').val(),
+                        currency: $('select[name="currency"]').val(),
+                        website: $('input[name="website"]').val(),
+                        upfrontfee: $('input[name="upfront_fee"]').val(),
+                    }
+                    $.post($(this).attr('action'), data)
+                      .done(data => {
+                        $('#response1').text(data.url);
+                      }).fail(err => {
+                        toastr.error('An error occurred')
+                      }).always(() => {
+                        $btn.button('reset');
+                      })
+                });
+            });
+        </script>
+
+    {% endblock script %}

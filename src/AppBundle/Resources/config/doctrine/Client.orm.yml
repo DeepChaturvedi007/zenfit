@@ -1,0 +1,343 @@
+AppBundle\Entity\Client:
+    type: entity
+    table: clients
+    repositoryClass: AppBundle\Repository\ClientRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        #BASIC INFO
+        name:
+            type: string
+            length: 255
+
+        email:
+            type: string
+            length: 255
+
+        phone:
+            type: string
+            length: 255
+            nullable: true
+
+        password:
+            type: string
+            length: 255
+            nullable: true
+
+        locale:
+            type: string
+            nullable: true
+
+        dayTrackProgress:
+            type: integer
+            column: day_track_progress
+            nullable: true
+
+        duration:
+            type: integer
+            column: duration
+            nullable: true
+
+        startDate:
+            type: date
+            column: start_date
+            nullable: true
+
+        gender:
+            type: integer
+            length: 1
+            nullable: true
+
+        age:
+            type: integer
+            nullable: true
+
+        #GOAL
+        primaryGoal:
+            column: primary_goal
+            type: integer
+            length: 1
+            nullable: true
+
+        measuringSystem:
+            type: integer
+            column: measuring_system
+
+        startWeight:
+            type: float
+            nullable: true
+
+        goalWeight:
+            type: float
+            column: goal_weight
+            nullable: true
+
+        height:
+            type: float
+            nullable: true
+
+        feet:
+            type: float
+            nullable: true
+
+        inches:
+            type: float
+            nullable: true
+
+        activityLevel:
+            type: integer
+            column: activity_level
+            nullable: true
+
+        pal:
+            type: float
+            nullable: true
+
+        #DIET
+        numberOfMeals:
+            type: integer
+            nullable: true
+
+        dietStyle:
+            type: text
+            column: diet_style
+            nullable: true
+
+        #WORKOUT
+        workoutsPerWeek:
+            type: integer
+            nullable: true
+
+        experience:
+            type: text
+            nullable: true
+
+        experienceLevel:
+            type: integer
+            nullable: true
+
+        exercisePreferences:
+            type: text
+            nullable: true
+
+        workoutLocation:
+            type: integer
+            nullable: true
+
+        #OTHER
+        lifestyle:
+            type: text
+            nullable: true
+
+        motivation:
+            type: text
+            nullable: true
+
+        injuries:
+            type: text
+            nullable: true
+
+        other:
+            type: text
+            nullable: true
+
+        #OTHERS PART 2 - NOT USED IN APIs
+        demoClient:
+           type: boolean
+           column: demo_client
+
+        lasseDemoClient:
+           type: boolean
+
+        workoutUpdated:
+            type: datetime
+            column: workout_updated
+            nullable: true
+
+        mealUpdated:
+            type: datetime
+            column: meal_updated
+            nullable: true
+
+        bodyProgressUpdated:
+            type: datetime
+            column: body_progress_updated
+            nullable: true
+
+        deleted:
+            type: boolean
+            column: deleted
+            options:
+                default: false
+
+        deletedAt:
+            type: datetime
+            column: deleted_at
+            nullable: true
+
+        active:
+            type: boolean
+            column: active
+            options:
+                default: true
+
+        endDate:
+            type: date
+            column: end_date
+            nullable: true
+
+        photo:
+            type: string
+            length: 255
+            nullable: true
+
+        answeredQuestionnaire:
+            type: boolean
+            column: answered_questionnaire
+            options:
+                default: false
+
+        acceptTerms:
+            type: boolean
+            column: accept_terms
+            nullable: false
+
+        acceptEmailNotifications:
+            type: boolean
+            column: accept_email_notifications
+
+        accessApp:
+            type: boolean
+            column: access_app
+            options:
+                default: true
+
+        token:
+            type: string
+            length: 255
+            nullable: true
+
+        note:
+            type: text
+            nullable: true
+
+        createdAt:
+            type: datetime
+            column: created_at
+            nullable: true
+
+        updateWorkoutSchedule:
+            type: integer
+            column: update_workout_schedule
+            nullable: true
+
+        updateMealSchedule:
+            type: integer
+            column: update_meal_schedule
+            nullable: true
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: clients
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToMany:
+        answers:
+            targetEntity: AppBundle\Entity\Answer
+            mappedBy: client
+            cascade: ["persist"]
+        images:
+            targetEntity: AppBundle\Entity\ClientImage
+            mappedBy: client
+        reminders:
+            targetEntity: AppBundle\Entity\ClientReminder
+            mappedBy: client
+        checkIns:
+            targetEntity: AppBundle\Entity\ProgressFeedback
+            mappedBy: client
+        bodyProgress:
+            targetEntity: AppBundle\Entity\BodyProgress
+            mappedBy: client
+        activities:
+            targetEntity: AppBundle\Entity\ActivityLog
+            mappedBy: client
+        workoutPlans:
+            targetEntity: AppBundle\Entity\WorkoutPlan
+            mappedBy: client
+        emails:
+            targetEntity: AppBundle\Entity\Queue
+            mappedBy: client
+        mealPlans:
+            targetEntity: AppBundle\Entity\MealPlan
+            mappedBy: client
+        masterMealPlans:
+            targetEntity: AppBundle\Entity\MasterMealPlan
+            mappedBy: client
+        messages:
+            targetEntity: ChatBundle\Entity\Message
+            mappedBy: client
+        conversations:
+            targetEntity: ChatBundle\Entity\Conversation
+            mappedBy: client
+        payments:
+            targetEntity: AppBundle\Entity\Payment
+            mappedBy: client
+        paymentsLog:
+            targetEntity: AppBundle\Entity\PaymentsLog
+            mappedBy: client
+        tags:
+            targetEntity: AppBundle\Entity\ClientTag
+            mappedBy: client
+        clientStatus:
+            targetEntity: AppBundle\Entity\ClientStatus
+            mappedBy: client
+        videoClient:
+            targetEntity: AppBundle\Entity\VideoClient
+            mappedBy: client
+
+    oneToOne:
+        clientFoodPreferences:
+            targetEntity: AppBundle\Entity\ClientFoodPreference
+            mappedBy: client
+            nullable: true
+        clientStripe:
+            targetEntity: AppBundle\Entity\ClientStripe
+            mappedBy: client
+            nullable: true
+        clientSettings:
+            targetEntity: AppBundle\Entity\ClientSettings
+            mappedBy: client
+            nullable: true
+        lead:
+            targetEntity: AppBundle\Entity\Lead
+            mappedBy: client
+        plan:
+            targetEntity: AppBundle\Entity\Plan
+            mappedBy: client
+
+    indexes:
+        deleted_idx:
+            columns: [ deleted ]
+        email_idx:
+            columns: [ email ]
+        user_deleted_active:
+            columns: [ user_id, deleted, active ]
+
+    lifecycleCallbacks:
+        prePersist: [onPrePersist]
+        preUpdate: [onPreUpdate]

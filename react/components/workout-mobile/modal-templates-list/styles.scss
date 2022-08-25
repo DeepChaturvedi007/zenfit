@@ -1,0 +1,42 @@
+.templates-list-header {
+  background: #f9f9f9;
+  height: 20px;
+}
+.templates-list {
+  list-style: none;
+  margin: 0;
+  max-height: calc(100% - 83px);
+  overflow-y: auto;
+  padding: 0;
+  li {
+    color: #7f8fa4;
+    border-bottom: 1px solid #e6eaee;
+    display: flex;
+    padding: 20px 16px;
+    .template-text {
+      flex: 1;
+      h4 {
+        color: #1a91eb;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.27;
+        margin: 0 0 7px;
+      }
+      p {
+        font-size: 13px;
+        margin: 0;
+      }
+    }
+    .template-status {
+      align-self: center;
+      font-size: 15px;
+      line-height: 1.47;
+      &.selected {
+        color: #1a91eb;
+      }
+    }
+    &:first-child {
+      border-top: 1px solid #e6eaee;
+    }
+  }
+}

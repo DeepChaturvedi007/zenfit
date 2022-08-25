@@ -1,0 +1,58 @@
+<div class="modal modal-workout inmodal in" id="addWorkoutTemplate" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">{{ title }}</h4>
+                <p>You can add one or several existing Workout Templates to the Workout.</p>
+            </div>
+
+            {% if plan %}
+                {% set routePath = 'workout_update' %}
+                {% set routeParams = { 'plan': plan.id } %}
+            {% else %}
+                {% set routePath = 'workout_create' %}
+                {% set routeParams = {} %}
+            {% endif %}
+
+            <form id="applyTemplateForm" action="{{ path(routePath, routeParams) }}" method="POST">
+                {% if client is defined and client is not null %}
+                    <input type="hidden" name="client" value="{{ client.id }}"/>
+                {% endif %}
+
+                <div class="modal-body">
+                    <div id="applyTemplateCheckboxes">
+                        {% if templates is empty %}
+                            <div class="alert alert-info">Hm, it doesn't seem like you have any existing Workout Templates that you can apply. <strong><a href="{{ path('workout_templates') }}">Click here</a></strong> to create your first!</div>
+                        {% endif %}
+                        {% for template in templates %}
+                            <div class="checkbox">
+                                <label for="template_{{ template.id }}">
+                                    <input type="checkbox" id="template_{{ template.id }}" name="templates[]" value="{{ template.id }}">
+                                    <strong>{{ template.name }} - {{ template.explaination }}</strong>
+                                    <span class="label label-{{ template.days == 0 ? 'warning' : 'inverse'}}">
+                                        {% if template.days == 0 %}
+                                            Empty
+                                        {% else %}
+                                            {{ template.days }} workout days
+                                        {% endif %}
+                                    </span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if templates is not empty %}
+                    <div class="modal-footer">
+                        <button type="submit" id="saveTemplate" class="btn btn-block btn-success btn-upper">
+                            {{ plan ? 'Add Workout Template(s)' : 'Create Workout' }}
+                        </button>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>

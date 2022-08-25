@@ -1,0 +1,152 @@
+.payment-block {
+  padding: 7px 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: solid 1px #dfe3e9;
+  border-radius: 6px;
+}
+.payment-block span {
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #7f8fa4;
+}
+.payment-block .block-subscription > span {
+  display: inline-block;
+  padding-top: 6px;
+}
+.payment-block p {
+  font-size: 17px;
+  text-align: left;
+  color: #354052;
+  margin: 0;
+  font-weight: 300;
+}
+.payment-block p span {
+  font-weight: 500;
+  text-align: left;
+  color: #354052;
+}
+.payment-block button {
+  border-radius: 2px;
+  background-color: #ffffff;
+  text-transform: uppercase;
+  border: solid 1px #dfe3e9;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 8px;
+  font-weight: 600;
+  min-height: 32px;
+}
+.payment-block .image {
+  padding-right: 16px;
+  vertical-align: top;
+}
+.payment-block .button {
+  float: right;
+}
+#paymentModalStepTwo .modal-footer small {
+  display: block;
+}
+.current-payment-plan .until {
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #7f8fa4;
+  margin-top: 9px;
+  display: block;
+}
+.current-payment-plan p {
+  font-size: 17px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #354052;
+}
+.current-payment-plan p span {
+  font-size: 17px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #354052;
+}
+.current-payment-plan .image {
+  padding-right: 16px;
+}
+.info {
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.23;
+  letter-spacing: -0.1px;
+  text-align: left;
+  color: #7f8fa4;
+}
+#paymentModal .info {
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.23;
+  text-align: left;
+  color: #7f8fa4;
+  margin-bottom: 20px;
+}
+#paymentModal .small,
+#paymentModal small {
+  font-size: 11px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.45;
+  text-align: left;
+  color: #7f8fa4;
+}
+#paymentModal .setup-payment span {
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  text-align: left;
+  color: #354052;
+}
+#paymentModalStepTwo .modal-footer small {
+  display: block;
+}
+.link {
+  cursor: pointer;
+  color: #2895f1;
+}
+.payment-block .no-payment {
+  padding-top: 10px;
+}
+
+
+@media (max-width: 820px) {
+  .payment-block button {
+    font-size: 12px;
+  }
+  .payment-block p {
+    font-size: 14px;
+  }
+}
+.box-hidden {
+    display: none;
+}

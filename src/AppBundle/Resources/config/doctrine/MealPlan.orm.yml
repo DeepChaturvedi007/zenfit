@@ -1,0 +1,140 @@
+AppBundle\Entity\MealPlan:
+    type: entity
+    table: meal_plans
+    repositoryClass: AppBundle\Repository\MealPlanRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    indexes:
+        parent_idx:
+            columns: [ parent_id ]
+        client_idx:
+            columns: [ client_id ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        comment:
+            type: text
+            nullable: TRUE
+
+        order:
+            column: '`order`'
+            type: smallint
+            length: 5
+            options:
+                unsigned: true
+                default: 1
+
+        lastUpdated:
+            type: datetime
+            column: last_updated
+            nullable: true
+
+        createdAt:
+            type: datetime
+            column: created_at
+
+        active:
+            type: boolean
+            options:
+                default: 0
+
+        image:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        deleted:
+            type: boolean
+            options:
+                default: 0
+
+        macroSplit:
+            type: integer
+            nullable: true
+
+        type:
+            type: integer
+            options:
+                default: 0
+
+        contains_alternatives:
+            type: boolean
+            options:
+                default: 0
+
+        percentWeight:
+            type: float
+            nullable: TRUE
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: mealPlans
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        parent:
+            targetEntity: AppBundle\Entity\MealPlan
+            inversedBy: children
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        recipe:
+            targetEntity: AppBundle\Entity\Recipe
+            inversedBy: mealPlans
+            joinColumn:
+                name: recipe_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        masterMealPlan:
+            targetEntity: AppBundle\Entity\MasterMealPlan
+            inversedBy: mealPlans
+            joinColumn:
+                name: master_meal_plan_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToMany:
+            children:
+                targetEntity: AppBundle\Entity\MealPlan
+                mappedBy: parent
+                orderBy: { 'order': 'ASC' }
+                cache:
+                    usage: NONSTRICT_READ_WRITE
+
+            products:
+                targetEntity: AppBundle\Entity\MealPlanProduct
+                mappedBy: plan
+                orderBy: { 'order': 'ASC' }
+                cache:
+                    usage: NONSTRICT_READ_WRITE
+

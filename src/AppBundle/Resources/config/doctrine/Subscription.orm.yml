@@ -1,0 +1,71 @@
+AppBundle\Entity\Subscription:
+    type: entity
+    table: subscriptions
+    repositoryClass: AppBundle\Repository\SubscriptionRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+
+        priceMonth:
+            type: integer
+            length: 10
+
+        stripeNameMonth:
+            type: string
+            length: 30
+            nullable: TRUE
+
+        slug:
+            type: string
+            length: 34
+            nullable: TRUE
+
+        tax:
+            type: integer
+            length: 2
+            nullable: TRUE
+
+        tiered:
+            type: boolean
+            options:
+                default: false
+
+        currency:
+            type: string
+            length: 34
+
+        upfrontFee:
+            type: string
+            length: 34
+            nullable: TRUE
+
+        country:
+            type: string
+            length: 6
+
+        growth:
+            type: boolean
+            options:
+                default: false
+
+    oneToMany:
+        users:
+            targetEntity: AppBundle\Entity\User
+            mappedBy: subscription
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        userSubscription:
+            targetEntity: AppBundle\Entity\UserSubscription
+            mappedBy: subscription
+
+    lifecycleCallbacks: {  }

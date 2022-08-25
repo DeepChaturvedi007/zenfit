@@ -1,0 +1,48 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content %}
+<div id="wrapper">
+    <div id="auth" data-props="{{ {
+        'view': view,
+        'datakey': datakey|default(''),
+        'locales': locales()|json_encode
+    }|json_encode }}"></div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ "auth.css"|webpack_asset }}">
+{% endblock %}
+{% block script %}
+    <script src="{{ "auth.js"|webpack_asset }}"></script>
+    <script>
+        $(function() {
+            if(getUrlVars()['sub']) {
+                setCookie('sub',getUrlVars()['sub']);
+            }
+            if(getUrlVars()['zfkey']) {
+                setCookie('zfkey',getUrlVars()['zfkey']);
+            }
+            if(getUrlVars()['nt']) {
+                setCookie('nt',getUrlVars()['nt']);
+            }
+            function setCookie(key, value) {
+                var expires = new Date();
+                expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+                document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+            }
+            function getUrlVars()
+            {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+        },(jQuery));
+    </script>
+{% endblock %}

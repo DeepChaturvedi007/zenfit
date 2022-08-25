@@ -1,0 +1,104 @@
+AppBundle\Entity\BodyProgress:
+    type: entity
+    table: body_progress
+    repositoryClass: AppBundle\Repository\BodyProgressRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        weight:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        muscleMass:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        fat:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        date:
+            type: datetime
+
+        chest:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        waist:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        hips:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        glutes:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        leftArm:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        rightArm:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        leftThigh:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        rightThigh:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        leftCalf:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+        rightCalf:
+            type: float
+            nullable: TRUE
+            options:
+              default: NULL
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: bodyProgress
+            joinColumn:
+               nullable: false
+               onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

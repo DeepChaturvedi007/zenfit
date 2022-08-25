@@ -1,0 +1,7 @@
+services:
+    zf_stripe_initiate:
+        class: Zenfit\StripeBundle\Services\StripeService
+
+    Zenfit\StripeBundle\Controller\SCACheckoutController:
+        autowire: true
+        tags: [ 'controller.service_arguments' ]

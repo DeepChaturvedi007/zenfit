@@ -1,0 +1,56 @@
+{% set metric = {'weight': 'kg', } %}
+{% set imperial = {'weight': 'lbs'} %}
+
+{% set feet = null %}
+{% set inches = null %}
+{% if client.height is not null %}
+    {% set fullFeet = client.height * 0.032808 %}
+    {% set feet = fullFeet|round(0, 'floor') %}
+    {% set inches = ((fullFeet - feet) * 12)|round(1, 'common') %}
+{% endif %}
+
+{% set weight = metric.weight %}
+{% set isHiddenMetric = '' %}
+{% set isHiddenImperial = 'hidden' %}
+{% if constant('MEASURING_SYSTEM_METRIC', client) == client.measuringSystem %}
+    {% set weight = metric.weight %}
+    {% set isHiddenImperial = 'hidden' %}
+    {% set isHiddenMetric = '' %}
+{% elseif constant('MEASURING_SYSTEM_IMPERIAL', client) == client.measuringSystem %}
+    {% set weight = imperial.weight %}
+    {% set isHiddenMetric = 'hidden' %}
+    {% set isHiddenImperial = '' %}
+{% endif %}
+
+<div class="form-group">
+    <label class="control-label">Height</label>
+    <input type="hidden" name="height" value="{{ client.height }}">
+      <div class="form-group-in max-width row measuring-system-metric" {{ isHiddenMetric }}>
+          <div class="col-xs-6">
+              <div class="box-unit">
+                  <input type="number"
+                         class="form-control replace-comma"
+                         {% if client.height is not null %} value="{{ client.height }}" {% else %} placeholder="Height" {% endif %}
+                  >
+                  <div class="unit">cm</div>
+              </div>
+          </div>
+      </div>
+      <div class="form-group-in max-width row measuring-system-imperial" {{ isHiddenImperial }}>
+          <div class="col-xs-6">
+              <div class="box-unit">
+                  <input type="number"
+                         class="form-control replace-comma"
+                         {% if feet is not null %} value="{{ feet }}" {% else %} placeholder="Height" {% endif %}
+                  >
+                  <div class="unit">ft</div>
+              </div>
+          </div>
+          <div class="col-xs-6">
+              <div class="box-unit">
+                  <input type="number" class="form-control replace-comma" {% if inches is not null %} value="{{ inches }}" {% else %} placeholder="Height" {% endif %}>
+                  <div class="unit">in</div>
+              </div>
+          </div>
+      </div>
+</div>

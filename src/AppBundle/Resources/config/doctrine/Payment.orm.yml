@@ -1,0 +1,128 @@
+AppBundle\Entity\Payment:
+    type: entity
+    table: payments
+    repositoryClass: AppBundle\Repository\PaymentRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        datakey:
+            type: string
+            length: 255
+
+        months:
+            type: integer
+            length: 2
+
+        recurringFee:
+            type: string
+            length: 50
+
+        upfrontFee:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        currency:
+            type: string
+            length: 5
+
+        charged:
+            type: boolean
+            options:
+                default: false
+
+        sentAt:
+            type: datetime
+            nullable: true
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+        trialEnd:
+            type: string
+            length: 255
+            nullable: true
+
+        terms:
+            type: text
+            nullable: true
+
+        delayUpfront:
+            type: boolean
+            options:
+                default: false
+
+        applicationFee:
+            type: float
+            nullable: true
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: payments
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+
+        salesPerson:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: payments
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+
+    oneToOne:
+        lead:
+            targetEntity: AppBundle\Entity\Lead
+            mappedBy: payment
+            joinColumn:
+                referencedColumnName: id
+                nullable: TRUE
+                onDelete: SET NULL
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        plan:
+            targetEntity: AppBundle\Entity\Plan
+            mappedBy: payment
+            joinColumn:
+                referencedColumnName: id
+                nullable: TRUE
+                onDelete: SET NULL
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        queue:
+            targetEntity: AppBundle\Entity\Queue
+            mappedBy: payment
+            joinColumn:
+                referencedColumnName: id
+                nullable: TRUE
+                onDelete: SET NULL
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        clientStripe:
+            targetEntity: AppBundle\Entity\ClientStripe
+            mappedBy: payment
+            joinColumn:
+                referencedColumnName: id
+                nullable: TRUE
+                onDelete: SET NULL
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,63 @@
+AppBundle\Entity\Document:
+    type: entity
+    table: documents
+    repositoryClass: AppBundle\Repository\DocumentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        name:
+            type: string
+            length: 255
+
+        fileName:
+            type: string
+            length: 255
+            column: file_name
+
+        comment:
+            type: string
+            length: 255
+            nullable: true
+
+        demo:
+            type: boolean
+            options:
+                default: false
+
+        deleted:
+            type: boolean
+            options:
+                default: false
+
+        assignmentTags:
+            type: string
+            column: assignment_tags
+            nullable: TRUE
+
+        image:
+            type: string
+            length: 255
+            nullable: TRUE
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: documents
+            joinColumn:
+                onDelete: CASCADE
+                nullable: TRUE
+
+        bundle:
+            targetEntity: AppBundle\Entity\Bundle
+            inversedBy: documents
+            joinColumn:
+                onDelete: CASCADE
+                nullable: TRUE
+
+    lifecycleCallbacks: {  }

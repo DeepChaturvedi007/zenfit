@@ -1,0 +1,169 @@
+AppBundle\Entity\MealProduct:
+    type: entity
+    table: meal_products
+    repositoryClass: AppBundle\Repository\MealProductRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        #DEPRECATED
+        excelId:
+            type: integer
+            nullable: true
+            length: 10
+
+        name:
+            type: string
+            length: 255
+            nullable: false
+
+        nameDanish:
+            type: string
+            length: 255
+            nullable: true
+
+        brand:
+            type: string
+            length: 255
+            nullable: TRUE
+        #DEPRECATED
+
+        kcal:
+            type: integer
+            length: 10
+            nullable: false
+            options:
+                default: 0
+
+        kj:
+            type: integer
+            length: 10
+            nullable: false
+            options:
+                default: 0
+
+        protein:
+            type: float
+            options:
+                default: 0
+
+        fat:
+            type: float
+            options:
+                default: 0
+
+        saturatedFat:
+            type: float
+            options:
+                default: 0
+
+        monoUnsaturatedFat:
+            type: float
+            options:
+                default: 0
+
+        polyUnsaturatedFat:
+            type: float
+            options:
+                default: 0
+
+        carbohydrates:
+            type: float
+            options:
+                default: 0
+
+        addedSugars:
+            type: float
+            options:
+                default: 0
+
+        fiber:
+            type: float
+            options:
+                default: 0
+
+
+        alcohol:
+            type: float
+            options:
+                default: 0
+
+        cholesterol:
+            type: float
+            options:
+                default: 0
+
+        deleted:
+            type: boolean
+            column: deleted
+            nullable: false
+            options:
+                default: false
+
+        allowSplit:
+            type: boolean
+            column: allow_split
+            nullable: false
+            options:
+                default: true
+
+        label:
+            type: string
+            length: 255
+            nullable: true
+
+    indexes:
+        meal_products_en_fulltext:
+            columns: ["name", "name_danish", "brand"]
+            flags: fulltext
+
+        meal_products_dk_fulltext:
+            columns: ["name_danish", "name", "brand"]
+            flags: fulltext
+        name_idx:
+            columns: [ name ]
+            flags: fulltext
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: mealProducts
+            joinColumn:
+                referencedColumnName: id
+                nullable: TRUE
+                onDelete: CASCADE
+
+        glutenFreeAlternative:
+            targetEntity: AppBundle\Entity\MealProduct
+            inversedBy: glutenFreeAlternative
+
+        lactoseFreeAlternative:
+            targetEntity: AppBundle\Entity\MealProduct
+            inversedBy: lactoseFreeAlternative
+
+    oneToMany:
+        weights:
+            targetEntity: AppBundle\Entity\MealProductWeight
+            mappedBy: product
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        mealProductLanguages:
+            targetEntity: AppBundle\Entity\MealProductLanguage
+            mappedBy: mealProduct
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToOne:
+        mealProductMeta:
+            targetEntity: AppBundle\Entity\MealProductMeta
+            mappedBy: mealProduct
+            cascade: ["persist"]

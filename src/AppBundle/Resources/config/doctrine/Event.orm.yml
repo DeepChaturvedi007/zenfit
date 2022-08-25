@@ -1,0 +1,31 @@
+AppBundle\Entity\Event:
+    type: entity
+    table: events
+    repositoryClass: AppBundle\Repository\EventRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+
+        title:
+            type: string
+            length: 255
+
+        notifyTrainer:
+            type: boolean
+            length: 1
+
+        priority:
+            type: integer
+            length: 2
+            nullable: false
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,191 @@
+{% set cs = client.clientStripe %}
+
+<div class="ibox">
+    <header class="ibox-header reverse">
+        <div class="ibox-header-left">
+            <h4 class="ibox-header-title">Payment Info</h4>
+        </div>
+    </header>
+
+    <div class="ibox-content ibox-content-line m-p-x">
+      {% if clientArr.payments %}
+
+        {% set SUBSCRIPTION_STATUS = {
+            'active': {
+                'label': 'label-green-success',
+                'title': 'Active',
+                'tooltip': false
+            },
+            'pending': {
+                'label': 'label-default',
+                'title': 'Pending',
+                'tooltip': false
+            },
+            'canceled': {
+                'label': 'label-danger',
+                'title': 'Canceled',
+                'tooltip': false
+            },
+            'paused': {
+                'label': 'label-warning',
+                'title': 'Paused',
+                'tooltip': cs ? 'Paused until ' ~ cs.pausedUntil|date('d M Y') : 'Paused'
+            },
+            'will_start': {
+                'label': 'label-warning',
+                'title': 'Will Start',
+                'tooltip': 'Subscription starts ' ~ clientArr.payments[0].trial_end|date('d M Y')
+            }
+        } %}
+
+        <div class="form-group">
+            <div class="payment-info-header">
+                <div class="payment-info-item">
+                    <label class="control-label">Status</label>
+
+                    {% set status = SUBSCRIPTION_STATUS[clientArr.payments[0].status] %}
+
+                    <span class="label {{ status.label }}">
+                      {{ status.title }}
+                    </span>
+
+                    {% if status.tooltip %}
+                        <span data-toggle="tooltip"
+                              data-placement="bottom"
+                              data-original-title="{{ status.tooltip }}">
+                            <i class="material-icons material-icons-sm">info</i>
+                        </span>
+                    {% endif %}
+
+                </div>
+                <div class="payment-info-item">
+                    <label class="control-label">Created</label>
+                    <span>{{ cs ? cs.currentPeriodStart|date('d M Y') : clientArr.payments[0].sent_at|date('d M Y') }}</span>
+                </div>
+                <div class="payment-info-item">
+                    <label class="control-label">Ending</label>
+                    <span>{{ cs and cs.payment and cs.payment.months != 13 ? cs.periodEnd|date('d M Y') : '-' }}</span>
+                </div>
+                <div class="payment-info-item">
+                    <label class="control-label">Terms</label>
+                    {% if clientArr.payments[0].terms %}
+                      {% set accepted = cs and cs.payment %}
+                      <span
+                        class="label label-{{ accepted ? 'info' : 'default' }}"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        data-original-title="{{ clientArr.payments[0].terms }}">
+                          {% if accepted %}
+                            <i class="material-icons material-icons-sm">verified_user</i> Terms accepted
+                          {% else %}
+                            <i class="material-icons material-icons-sm">verified_user</i> Terms
+                          {% endif %}
+                        </span>
+                    {% else %}
+                      <span class="label label-default">No terms</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-in">
+                <label class="control-label">Subscription</label>
+                {{ clientArr.payments[0].recurring_fee }} {{ clientArr.payments[0].currency|upper }} / mo
+
+                {% if clientArr.payments[0].months == 13 %}
+                  until client unsubscribes
+                {% else %}
+                  for {{ clientArr.payments[0].months }} months
+                {% endif %}
+
+                {% if clientArr.payments[0].upfront_fee %}
+                  + {{ clientArr.payments[0].upfront_fee }} {{ clientArr.payments[0].currency|upper }} in upfront fee
+                {% endif %}
+
+            </div>
+        </div>
+        <table class="table table-payment-info">
+            <tr class="active">
+                <th>AMOUNT</th>
+                <th class="text-right">DATE</th>
+            </tr>
+
+            {% set nextPaymentAttempt = cs ? date(cs.nextPaymentAttempt|date).diff(now).days : false %}
+            {% set isSubscriptionCanceled = cs ? cs.canceled : true %}
+
+            {% set PAYMENT_STATUS = {
+                'invoice.payment_failed': {
+                    'label': 'label-danger',
+                    'title': 'Failed',
+                    'tooltip': isSubscriptionCanceled ? false : 'Will retry in ' ~ nextPaymentAttempt ~ ' days.'
+                },
+                'invoice.payment_succeeded': {
+                    'label': 'label-info',
+                    'title': 'Paid',
+                    'tooltip': false,
+                    'nextPaymentAttempt': false
+                },
+                'charge.succeeded': {
+                    'label': 'label-info',
+                    'title': 'Paid',
+                    'tooltip': false,
+                    'nextPaymentAttempt': false
+                },
+                'charge.refunded': {
+                    'label': 'label-warning',
+                    'title': 'Refunded',
+                    'tooltip': false,
+                    'nextPaymentAttempt': false
+                }
+            } %}
+
+            {% set tooltipSet = false %}
+            {% set prevPayment = null %}
+
+            {% for payment in paymentsLog|filter(p => PAYMENT_STATUS[p.type] is defined) %}
+                {% set status = PAYMENT_STATUS[payment.type] %}
+                {% set tooltip = status.tooltip %}
+
+                {% if prevPayment and status.title == 'Failed' %}
+                    {% set prevStatus = PAYMENT_STATUS[prevPayment.type] %}
+
+                    {% if prevStatus.title == 'Paid' %}
+                        {% set tooltip = false %}
+                    {% endif %}
+                {% endif %}
+
+                <tr>
+                    <td>{{ payment.amount }} {{ payment.currency|upper }}
+                        <span class="label {{ status.label }}">
+                          {{ status.title }}
+                        </span>
+                        {% if tooltip and not tooltipSet %}
+                            <span data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  data-original-title="{{ PAYMENT_STATUS[payment.type].tooltip }}">
+                                <i class="material-icons material-icons-sm">info</i>
+                            </span>
+                            {% set tooltipSet = true %}
+                        {% endif %}
+                        </span>
+                    </td>
+                    <td class="text-right">{{ payment.createdAt|date('d M Y') }}</td>
+                </tr>
+
+                {% set prevPayment = payment %}
+            {% endfor %}
+
+        </table>
+      {% else %}
+        {% if app.user.userStripe %}
+          <div class="alert alert-light-info setup-stripe" role="alert">
+            Setup subscription for {{ client.name }}. <a href="{{ path('clients') }}"><strong>Click here to setup subscription.</strong></a>
+          </div>
+        {% else %}
+          <div class="alert alert-light-info setup-stripe" role="alert">
+            Want to collect {{ client.name }}'s payments automatically each month? <a href="{{ stripe_connect }}" target="_blank"><strong>Click here to setup your Stripe account</strong></a>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+</div>

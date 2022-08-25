@@ -1,0 +1,230 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+    <div id="wrapper">
+
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Admin Dashboard' } %}
+        
+        <div id="page-wrapper" class="gray-bg sm-white-bg">
+            {% include '@Admin/components/nav.html.twig' with {'recipes': 'true'} %}
+            <div class="wrapper wrapper-content animated fadeInRight">
+
+                <div class="table-container">
+                    <table class="table actions-on-hover">
+                        <thead>
+                        <tr>
+                            <th>Recipe name</th>
+                            <th class="no-wrap">Lactose-free</th>
+                            <th class="no-wrap">Gluten-free</th>
+                            <th class="no-wrap">Type</th>
+                            <th class="no-wrap hidden-xs">Macro Split</th>
+                            <th class="no-wrap">Locale</th>
+                            <th class="no-wrap">Cooking Time</th>
+                            <th class="no-wrap text-center">Approved</th>
+                            <th style="text-align: right;" width="150">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="recipes-list">
+                            {% include '@Admin/components/recipes/recipe_child.html.twig' with { 'recipe': recipe } %}
+                            {% for child in recipe.children %}
+                                {% include '@Admin/components/recipes/recipe_child.html.twig' with { 'recipe': child } %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% set da_title = titlesAndDescriptions.da_DK is defined ? titlesAndDescriptions.da_DK.title : '' %}
+                {% set da_desc = titlesAndDescriptions.da_DK is defined ? titlesAndDescriptions.da_DK.description : '' %}
+                {% set se_title = titlesAndDescriptions.sv_SE is defined ? titlesAndDescriptions.sv_SE.title: '' %}
+                {% set se_desc = titlesAndDescriptions.sv_SE is defined ? titlesAndDescriptions.sv_SE.description: '' %}
+                {% set no_title = titlesAndDescriptions.nb_NO is defined ? titlesAndDescriptions.nb_NO.title: '' %}
+                {% set no_desc = titlesAndDescriptions.nb_NO is defined ? titlesAndDescriptions.nb_NO.description: '' %}
+                {% set nl_title = titlesAndDescriptions.nl_NL is defined ? titlesAndDescriptions.nl_NL.title: '' %}
+                {% set nl_desc = titlesAndDescriptions.nl_NL is defined ? titlesAndDescriptions.nl_NL.description: '' %}
+                {% set fi_title = titlesAndDescriptions.fi_FI is defined ? titlesAndDescriptions.fi_FI.title: '' %}
+                {% set fi_desc = titlesAndDescriptions.fi_FI is defined ? titlesAndDescriptions.fi_FI.description: '' %}
+                {% set de_title = titlesAndDescriptions.de_DE is defined ? titlesAndDescriptions.de_DE.title: '' %}
+                {% set de_desc = titlesAndDescriptions.de_DE is defined ? titlesAndDescriptions.de_DE.description: '' %}
+                {% set en_title = titlesAndDescriptions.en is defined ? titlesAndDescriptions.en.title: '' %}
+                {% set en_desc = titlesAndDescriptions.en is defined ? titlesAndDescriptions.en.description: '' %}
+
+                <div class="ibox-content m-x-n">
+                    <form method="POST" action="{{ path('admin_api_update_children_and_parent', { 'recipe': recipe.id }) }}">
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="">Danish Title</label>
+                                    <input type="text" class="form-control" name="da_title" value="{{ da_title }}" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Danish Description</label>
+                                    <textarea class="form-control" name="da_desc" rows="4" cols="50">{{ da_desc }}</textarea>
+                                </div>
+                                <div class="form-group {{ se_title == da_title ? 'has-error' : '' }}">
+                                    <label for="">Swedish Title</label>
+                                    <input type="text" class="form-control" name="se_title" value="{{ se_title }}" />
+                                </div>
+                                <div class="form-group {{ se_desc == da_desc ? 'has-error' : '' }}">
+                                    <label for="">Swedish Description</label>
+                                    <textarea class="form-control" name="se_desc" rows="4" cols="50">{{ se_desc }}</textarea>
+                                </div>
+                                <div class="form-group {{ no_title == da_title ? 'has-error' : '' }}">
+                                    <label for="">Norwegian Title</label>
+                                    <input type="text" class="form-control" name="no_title" value="{{ no_title }}" />
+                                </div>
+                                <div class="form-group {{ no_desc == da_desc ? 'has-error' : '' }}">
+                                    <label for="">Norwegian Description</label>
+                                    <textarea class="form-control" name="no_desc" rows="4" cols="50">{{ no_desc }}</textarea>
+                                </div>
+                                <div class="form-group {{ nl_title == da_title ? 'has-error' : '' }}">
+                                    <label for="">Dutch Title</label>
+                                    <input type="text" class="form-control" name="nl_title" value="{{ nl_title }}" />
+                                </div>
+                                <div class="form-group {{ nl_desc == da_desc ? 'has-error' : '' }}">
+                                    <label for="">Dutch Description</label>
+                                    <textarea class="form-control" name="nl_desc" rows="4" cols="50">{{ nl_desc }}</textarea>
+                                </div>
+                                <div class="form-group {{ fi_title == da_title ? 'has-error' : '' }}">
+                                    <label for="">Finnish Title</label>
+                                    <input type="text" class="form-control" name="fi_title" value="{{ fi_title }}" />
+                                </div>
+                                <div class="form-group {{ fi_desc == da_desc ? 'has-error' : '' }}">
+                                    <label for="">Finnish Description</label>
+                                    <textarea class="form-control" name="fi_desc" rows="4" cols="50">{{ fi_desc }}</textarea>
+                                </div>
+                                <div class="form-group {{ de_title == da_title ? 'has-error' : '' }}">
+                                    <label for="">German Title</label>
+                                    <input type="text" class="form-control" name="de_title" value="{{ de_title }}" />
+                                </div>
+                                <div class="form-group {{ de_desc == da_desc ? 'has-error' : '' }}">
+                                    <label for="">German Description</label>
+                                    <textarea class="form-control" name="de_desc" rows="4" cols="50">{{ de_desc }}</textarea>
+                                </div>
+                                <div class="form-group {{ en_title == da_title ? 'has-error' : '' }}">
+                                    <label for="">English Title</label>
+                                    <input type="text" class="form-control" name="en_title" value="{{ en_title }}" />
+                                </div>
+                                <div class="form-group {{ en_desc == da_desc ? 'has-error' : '' }}">
+                                    <label for="">English Description</label>
+                                    <textarea class="form-control" name="en_desc" rows="4" cols="50">{{ en_desc }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button
+                                      id="submit-btn"
+                                      class="btn btn-primary"
+                                      type="submit"
+                                    >Update
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    {% include '@Meal/recipes/recipe-modal.html.twig' with {'admin': true} %}
+    <script>
+      (function($) {
+        window.addEventListener('onRecipeApproved', function (e) {
+          if(!e.detail.recipeId || !Number(e.detail.recipeId)) return;
+          const recipeId = Number(e.detail.recipeId);
+          const url = `{{ path('admin_api_recipes_show', { id: ':id' }) }}`.replace(':id', `${recipeId}`);
+          $.ajax({
+            url,
+            type: 'GET',
+            success: function (row) {
+              //const item = list.find(`tr[data-recipe="${recipeId}"]`);
+              //item.replaceWith(row);
+              toastr.success('Success');
+            },
+            error: function (err) {
+              toastr.error('An error occurred');
+            }
+          });
+        });
+      })(jQuery);
+    </script>
+    <script>
+      (function($) {
+        if(!isPlainObject(window.recipes)) {
+          window.recipes = {};
+        }
+        window.recipes.shouldDelete = function (e) {
+          var href = e.currentTarget.href;
+          const targetId = $(e.currentTarget)
+            .closest('tr')
+            .data('recipe');
+          swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this meal plan!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+
+          }, function () {
+            $.ajax({
+              url: href,
+              type: 'DELETE',
+              success: function (res) {
+                swal.close();
+                const event = new CustomEvent("onRecipeDeleted", {
+                  detail: {
+                    recipeId: targetId
+                  }
+                });
+                window.dispatchEvent(event);
+              },
+              error: function (err) {
+                toastr.error('An error occurred');
+              }
+            });
+          });
+
+          e.preventDefault();
+        };
+
+        window.recipes.approve = function (e) {
+          var href = e.currentTarget.href;
+          $.ajax({
+            url: href,
+            data: {
+              approved: 1
+            },
+            type: 'POST',
+            success: function (res) {
+              const event = new CustomEvent("onRecipeApproved", {
+                detail: {
+                  recipeId: res.id
+                }
+              });
+              window.dispatchEvent(event);
+            },
+            error: function (err) {
+              toastr.error('An error occurred');
+            }
+          });
+
+          e.preventDefault();
+        };
+        function isPlainObject (obj) {
+          return Object.prototype.toString.call(obj) === '[object Object]';
+        }
+      })(jQuery);
+    </script>
+    <script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+{% endblock %}

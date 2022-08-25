@@ -1,0 +1,49 @@
+AppBundle\Entity\MealProductLanguage:
+    type: entity
+    table: meal_product_language
+    repositoryClass: AppBundle\Repository\MealProductLanguageRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+
+        deleted:
+            type: boolean
+            column: deleted
+            nullable: false
+            options:
+                default: false
+
+        brand:
+            type: string
+            length: 255
+            nullable: true
+
+    manyToOne:
+        mealProduct:
+            targetEntity: AppBundle\Entity\MealProduct
+            inversedBy: mealProductLanguages
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+
+        language:
+            targetEntity: AppBundle\Entity\Language
+            inversedBy: mealProductLanguages
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE

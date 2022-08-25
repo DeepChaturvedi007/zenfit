@@ -1,0 +1,25 @@
+.plans-handle {
+  background: $move-handle no-repeat 50% 50%;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  width: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 20;
+  touch-action: none;
+}
+
+.plans-no-touch {
+  .plans-search-result {
+    .plan-item {
+      cursor: move;
+      cursor: grab;
+      cursor: -moz-grab;
+      cursor: -webkit-grab;
+    }
+  }
+}

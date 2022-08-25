@@ -1,0 +1,31 @@
+#activity-configuration {
+  .wrapper {
+    max-width: 550px;
+    width: 100%
+  }
+
+  article {
+    width: 100%;
+
+    h6 {
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 1.3;
+      letter-spacing: 1.11px;
+      text-align: center;
+      color: #1e2022;
+      margin-top: 25px;
+    }
+
+    p {
+      font-size: 16px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 0.89px;
+      text-align: center;
+      color: #c5cad7;
+    }
+  }
+}

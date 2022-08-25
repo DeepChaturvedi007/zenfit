@@ -1,0 +1,142 @@
+<div class="empty-container-body">
+    <select class="visible-status form-control full-width">
+        <option
+                data-filter="all"
+                value="all-clients"
+                {{ filter == 'all' ? ' selected' : '' }}
+        >
+            All Clients (0)
+        </option>
+        <option
+                data-filter="pending"
+                value="pending"
+                {{ filter == 'pending' ? ' selected' : '' }}
+        >
+            Getting Started (0)
+        </option>
+        <option
+                data-filter="need-plans"
+                value="need-plans"
+                {{ filter == 'need-plans' ? ' selected' : '' }}
+        >
+            Update Plans (0)
+        </option>
+        <option
+                data-filter="progress"
+                value="progress"
+                {{ filter == 'progress' ? ' selected' : '' }}
+        >
+            New Check-ins (0)
+        </option>
+        <option
+                data-filter="missing-checkin"
+                value="missing-checkin"
+                {{ filter == 'missing-checkin' ? ' selected' : '' }}
+        >
+            Missed Check-in (0)
+        </option>
+        <option
+                data-filter="unanswered"
+                value="unanswered"
+                {{ filter == 'unanswered' ? ' selected' : '' }}
+        >
+            Unanswered (0)
+        </option>
+        <option
+                data-filter="ending"
+                value="ending"
+                {{ filter == 'ending' ? ' selected' : '' }}
+        >
+            Ending (0)
+        </option>
+        <option
+                data-filter="payments"
+                value="payments"
+                {{ filter == 'payments' ? ' selected' : '' }}
+        >
+            Payment Failed (0)
+        </option>
+        <option
+                data-filter="action-needed"
+                value="action-needed"
+                {{ filter == 'action-needed' ? ' selected' : '' }}
+        >
+            Action Needed (0)
+        </option>
+
+    </select>
+    <div class="hidden-status clients-filter">
+        <a href="#"
+           data-filter="all"
+           class="clients-filter-link{{ filter == 'all' ? ' current' : '' }}"
+           id="all-clients"
+        >
+            <span>0</span>
+            All Clients
+        </a>
+        <a href="#"
+           data-filter="pending"
+           class="clients-filter-link in-dialog-count{{ filter == 'pending' ? ' current' : '' }}"
+           id="pending"
+        >
+            <span>0</span>
+            Getting Started
+        </a>
+        <a href="#"
+           data-filter="progress"
+           class="clients-filter-link in-dialog-count{{ filter == 'progress' ? ' current' : '' }}"
+           id="progress"
+        >
+            <span>0</span>
+            New Check-ins
+        </a>
+        <a href="#"
+           data-filter="missing-checkin"
+           class="clients-filter-link won-count{{ filter == 'missing-checkin' ? ' current' : '' }}"
+           id="missing-checkin"
+        >
+            <span>0</span>
+            Missed Check-in
+        </a>
+        <a href="#"
+           data-filter="need-plans"
+           class="clients-filter-link won-count{{ filter == 'need-plans' ? ' current' : '' }}"
+           id="need-plans"
+        >
+            <span>0</span>
+            Update Plans
+        </a>
+        <a href="#"
+           data-filter="unanswered"
+           class="clients-filter-link won-count{{ filter == 'unanswered' ? ' current' : '' }}"
+           id="action-needed"
+        >
+            <span>0</span>
+            Unanswered
+        </a>
+        <a href="#"
+           data-filter="ending"
+           class="clients-filter-link won-count{{ filter == 'ending' ? ' current' : '' }}"
+           id="ending"
+        >
+            <span>0</span>
+            Ending
+        </a>
+        <a href="#"
+           data-filter="payments"
+           class="clients-filter-link won-count{{ filter == 'payments' ? ' current' : '' }}"
+           id="payments"
+        >
+            <span>0</span>
+            Payment Failed
+        </a>
+        <a href="#"
+           data-filter="action-needed"
+           class="clients-filter-link won-count{{ filter == 'action-needed' ? ' current' : '' }}"
+           id="action-needed"
+        >
+            <span>0</span>
+            Action Needed
+        </a>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+
+.form-group {
+    position: relative;
+}
+
+.search {
+    font-size: 12px;
+}
+
+.add-button-icon {
+    border-radius: 100px;
+    margin-right: 0;
+}
+
+.add-button-text {
+    font-family: Roboto;
+    font-size: 14px;
+    line-height: 1.57;
+}
+
+.form-group .material-icons {
+    position: absolute;
+    bottom: 5px;
+    right: 8px;
+    color: #7f8fa4;
+}
+
+.btn-cancel {
+    background-color: #fff;
+    color: #354052;
+}
+
+.btn-assign {
+    float: right;
+}
+
+.user-list {
+    overflow-y: auto;
+}
+
+.assign-client {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.assign-client-info {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.assign-client-image img {
+    width: 36px;
+    height: 36px;
+    border-radius: 100px;
+    border: 1px solid #DFE3E9;
+    margin-right: 10px;
+}
+
+.assign-client-name {
+    font-weight: 600;
+}
+
+.assign-client input {
+    width: 16px;
+    height: 16px;
+}

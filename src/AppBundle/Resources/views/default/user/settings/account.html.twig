@@ -1,0 +1,293 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@App/components/metabar.html.twig' with { 'title': 'Settings' } %}
+
+        <div id="page-wrapper" class="gray-bg sm-white-bg">
+            {% include '@App/default/user/settings/partials/nav.html.twig' with { tab: 'general' } %}
+
+            <div class="wrapper wrapper-content animated fadeInRight subscription-large-container">
+                {% for flashMessage in app.session.flashbag.get('profile_fail') %}
+                    <div class="alert alert-danger" role="alert">{{ flashMessage }}</div>
+                {% endfor %}
+
+                {% for flashMessage in app.session.flashbag.get('profile_success') %}
+                    <div class="alert alert-success" role="alert">{{ flashMessage }}</div>
+                {% endfor %}
+
+                {% include '@App/default/user/settings/partials/profile.html.twig' %}
+            </div>
+
+            <div class="modal inmodal in" data-show="true" id="wait_modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>PLEASE WAIT...</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {% include '@App/components/footer.html.twig' %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_css %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/INSPINIA/css/plugins/jasny/jasny-bootstrap.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/jasny/jasny-bootstrap.min.js') }}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      (function () {
+        var submitTimeout = 0;
+        var $profileForm = $('#userProfileForm');
+        var $profilePictures = $profileForm.find('.user-profile-picture');
+        var $trainerVideo = $('#trainer_video');
+        var $companyLogo = $profileForm.find('.form-company-logo');
+        var $companyBackground = $profileForm.find('.form-company-background');
+        var s3 = 'https://zenfit-images.s3.eu-central-1.amazonaws.com/before-after-images/trainers/';
+
+        var stripe = Stripe("{{ stripeKey }}");
+
+        var checkoutButton = document.getElementById('checkout-button');
+        checkoutButton.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          $.post("{{ path('trainer_create_session') }}")
+            .then(res => {
+              stripe.redirectToCheckout({
+                sessionId: res.sessionId
+              });
+            });
+        });
+
+
+        function updateTrainerVideo(data) {
+          var response = '';
+
+          if (data.trainerVideo) {
+            var url = s3 + data.trainerVideo;
+            response = '<video src="' + url + '" width="232" height="132" style="width:232px!important;height:132px;" controls>' +
+              'Sorry, your browser doesn\'t support embedded videos,' +
+              'but don\'t worry, you can <a href="' + url + '">download it</a>' +
+              'and watch it with your favorite video player!' +
+              '</video>';
+          } else if (data.videoEmbed) {
+            response = data.videoEmbed;
+          }
+
+          var helpText = 'Video uploaded and will appear in app.';
+
+          $trainerVideo
+            .html(response)
+            .next('.help-block')
+            .html(helpText)
+            .closest('.form-group')
+            .toggleClass('hidden', !response);
+        }
+
+        function renderAccountData(data) {
+          $profilePictures.each(function () {
+            var $img = $(this);
+            $img.attr('src', s3 + data.profilePicture + '?"' + new Date().getTime() || $img.data('placeholder'));
+          });
+
+          var $companyLogoImage = $companyLogo.find('img');
+
+          if (data.companyLogo) {
+            if (!$companyLogoImage.length) {
+              $companyLogoImage = $('<img src="' + s3 + data.companyLogo + '?"' + new Date().getTime() + '" alt=""/>');
+              $companyLogo.append($companyLogoImage);
+            } else {
+              $companyLogoImage.attr('src', s3 + data.companyLogo + '?"' + new Date().getTime());
+            }
+          } else {
+            $companyLogoImage.remove();
+          }
+
+          var $companyBackgroundImage = $companyBackground.find('img');
+
+          if (data.companyBackground) {
+            if (!$companyBackgroundImage.length) {
+              $companyBackgroundImage = $('<img src="' + s3 + data.companyBackground + '?"' + new Date().getTime() + '" alt=""/>');
+              $companyBackground.append($companyBackgroundImage);
+            } else {
+              $companyBackgroundImage.attr('src', s3 + data.companyBackground + '?"' + new Date().getTime());
+            }
+          } else {
+            $companyBackgroundImage.remove();
+          }
+
+          updateTrainerVideo(data);
+        }
+
+        function resetFormFileInputs() {
+          $profileForm
+            .find('.fileinput-exists')
+            .trigger('click')
+            .end();
+        }
+
+        function checkStatus(response) {
+          if (response.status >= 200 && response.status < 300) {
+            return response;
+          } else {
+            var error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+          }
+        }
+
+
+        function futch(url, opts, onProgress) {
+          return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open(opts.method || 'get', url);
+
+            for (var k in opts.headers || {}) {
+              xhr.setRequestHeader(k, opts.headers[k]);
+            }
+
+            xhr.onload = function (e) {
+              resolve(e.target.responseText);
+            };
+
+            xhr.onerror = reject;
+
+            if (xhr.upload && onProgress) {
+              xhr.upload.onprogress = onProgress; // event.loaded / event.total * 100 ; //event.lengthComputable
+            }
+
+            xhr.send(opts.body);
+          });
+        }
+
+        $('body')
+          .on('click', '#personalization-example', function (e) {
+            e.preventDefault();
+
+            bootbox.dialog({
+              title: 'How personalization of client app works',
+              message: '<iframe src="https://player.vimeo.com/video/236396347" width="550" height="310" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>',
+            });
+          })
+          .on('change.bs.fileinput', '#userProfileForm .fileinput', function (e) {
+            e.preventDefault();
+
+            var $form = $('#userProfileForm');
+            var profile = $form.find('input[name="profile_picture"]');
+            var logo = $form.find('input[name="company_logo"]');
+
+            if (!profile.val()) {
+              profile.attr('disabled', true);
+            }
+            if (!logo.val()) {
+              logo.attr('disabled', true);
+            }
+
+            var formData = new FormData();
+            formData.append('profile_picture', profile.prop('files')[0])
+            formData.append('company_logo', logo.prop('files')[0])
+
+            $.ajax({
+              type: 'POST',
+              url: "{{ path('account_profile') }}",
+              data: formData,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function (data) {
+                console.log('success');
+                console.log(data);
+              },
+              error: function (data) {
+                console.log('error');
+                console.log(data);
+              }
+            });
+
+          })
+          .on('submit', '#userProfileForm', function (e) {
+            e.preventDefault();
+
+            var $form = $(this);
+            var $submit = $form.find('[type="submit"]');
+            var $trainerVideoInput = $form.find('[name="trainer_video"]');
+            var $trainerVideoButton = $trainerVideoInput.parent().find('.fileinput-exists');
+            var data = $(this).serialize();
+
+            toastr.options.preventDuplicates = true;
+            $submit.button('loading');
+
+            var trainerVideoUploading = function (isUploading, progress) {
+              var origTitle = $trainerVideoButton.data('origTitle');
+
+              //console.log($trainerVideoButton);
+
+
+              if (!origTitle) {
+                $trainerVideoButton.data('origTitle', $trainerVideoButton.text());
+              }
+
+
+              if (isUploading) {
+                $trainerVideoButton.html('<i class="fa fa-circle-o-notch fa-spin"></i> Uploading: ' + parseInt(progress) + '%');
+              } else {
+                $trainerVideoButton.text(origTitle);
+              }
+            };
+
+            var onProgress = function (event) {
+              var progress = event.loaded / event.total * 100;
+
+              if ($trainerVideoInput.val() !== '') {
+                trainerVideoUploading(true, progress);
+              }
+            };
+
+            $.post($form.attr('action'), data)
+              .done(function (json) {
+                $submit.button('reset');
+                toastr.success(json.message);
+                renderAccountData(json.data || {});
+                resetFormFileInputs();
+                trainerVideoUploading(false);
+                location.reload();
+              }).fail(function (error) {
+              $submit.button('reset');
+              resetFormFileInputs();
+              trainerVideoUploading(false);
+              toastr.error(error.responseJSON.message);
+            });
+          })
+          .on('change', '#trainer_video', function (e) {
+            //fix Firefox issue
+            e.preventDefault();
+            e.stopPropagation();
+
+            return;
+          })
+          .on('change', '#userProfileForm', function () {
+            var $form = $(this);
+
+            clearTimeout(submitTimeout);
+            submitTimeout = setTimeout(function () {
+              //$form.trigger('submit');
+            }, 300);
+          });
+
+      }(jQuery));
+
+    </script>
+{% endblock script %}

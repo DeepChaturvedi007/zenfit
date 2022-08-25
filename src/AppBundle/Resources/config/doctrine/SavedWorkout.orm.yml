@@ -1,0 +1,40 @@
+AppBundle\Entity\SavedWorkout:
+    type: entity
+    table: saved_workouts
+    repositoryClass: AppBundle\Repository\SavedWorkoutRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+    fields:
+        time:
+            type: string
+            length: 50
+            nullable: TRUE
+
+        comment:
+            type: text
+            nullable: TRUE
+
+        date:
+            type: date
+            column: date
+            nullable: true
+
+
+    manyToOne:
+        workoutDay:
+            targetEntity: AppBundle\Entity\WorkoutDay
+            inversedBy: saved_workouts
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

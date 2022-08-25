@@ -1,0 +1,17 @@
+.learn-more {
+    font-family: Poppins, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    color: #0062ff;
+    text-transform: uppercase;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.payouts-subtitle {
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    font-size: 12px;
+}

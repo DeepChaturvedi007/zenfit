@@ -1,0 +1,251 @@
+client:
+    activation:
+        greeting: 'Hej %name%!'
+        greetingNew: "Hej %name%, lad os få dig i gang!"
+        welcomeMsg: 'Du er blevet inviteret til at oprette en konto. Udfyldt venligst det følgende spørgeskema.'
+        description: 'Du skal vælge et password for at få adgang til %name% Appen.'
+        createPasswordTitle: 'Vælg password'
+        createAccountTitle: 'Opret konto'
+        createAccountSubTitle: 'Indtast din generelle information for at oprette en konto'
+        updateAccountTitle: 'Opdater konto'
+        updateAccountSubTitle: 'Indtast dine informationer for at opdatere din konto'
+        email: 'Din e-mail'
+        emailInvalid: 'E-mailen er ugyldig'
+        password: 'Vælg password'
+        fieldEmpty: 'Dette felt er tomt'
+        fieldNotSelected: 'Intet felt er valgt'
+        passwordDontMatch: 'Koderne er ikke ens'
+        passwordPlaceholder: 'Skriv dit password'
+        confirmPassword: 'Gentag kode'
+        confirmPasswordPlaceholder: 'Skriv din kode igen'
+        passwordLength: 'Koden skal være på mindst 8 karakterer'
+        createLoginBtn: 'Opret konto'
+        updateLogin: 'Opdater konto'
+        hasBeenCreated: 'Din konto er blevet oprettet'
+        next: 'Næste'
+        generalTitle: 'General information'
+        generalSubTitle: 'Udfyld dine generelle informationer'
+        bodyPictures:
+            front: 'Foran'
+            side: 'Side'
+            back: 'Bagfra'
+            uploadPicture: 'Overfør billede'
+            removePicture: 'Fjern billede'
+            spec: 'Slip din JPG eller PNG fil here'
+    survey:
+        title: 'Fortæl lidt om dig selv.'
+        description: 'Udfyld din træners spørgeskema - Din træner har brug for disse informationer for at lave de bedste planer til dig!'
+        loginCreatedTitle: 'Sådan! Din bruger er oprettet.'
+        loginCreatedDescription: 'Nu mangler du kun at udfylde dette spørgeskema, så din træner kan påbegynde din trænings- og kostplan.'
+        contactTitle: 'Kontaktoplysninger'
+        photo: 'Dit billede'
+        imperial: 'Imperisk'
+        metric: 'Metrisk'
+        uploadPhoto: 'Overfør billede'
+        changePhoto: 'Skift billede'
+        fullName: 'Fulde navn'
+        email: E-Mail
+        phone: Telefon
+        basicInfoTitle: 'Information'
+        gender: Køn
+        male: Mand
+        female: Kvinde
+        age: Alder
+        metricSystem: 'US eller det metriske system (DK)'
+        startWeight: 'Startvægt'
+        height: Højde
+        activityLevel: 'Aktivitetsniveau'
+        selectActivityLevel: 'Vælg aktivitetniveau'
+        activityLevels:
+            1: 'Jeg er mest stillesiddende, og træner aldrig'
+            2: 'Jeg er ikke er så aktiv, og træner ca. 1-2 gange om ugen'
+            3: 'Jeg er moderat aktivt (træner 3-5 gange om ugen)'
+            4: 'Jeg har et forholdvist aktivt job og træner 6-7 gange om ugen'
+            5: 'Jeg har et hårdt fysisk job og træner de fleste dage i ugen'
+        photos: Billeder
+        photosDescription: 'Overfør et eller flere billeder (valgfrit)'
+        goalInfoTitle: 'Dit mål'
+        yourCurrentWeight: 'Din nuværende vægt er %weightString%. Hvad er dit mål for din vægt?'
+        goalHigherCurrent: 'Din nuværende vægt er højere end dit mål'
+        goalLessCurrent: 'Din nuværende vægt er lavere end dit mål'
+        goalEqualCurrent: 'Din nuværende vægt er den samme som dit mål'
+        goalWeek: 'Med denne udvikling, vil det tage %week% uger at nå dit mål!'
+        primaryGoal: 'Primære mål'
+        selectPrimaryGoal: 'Vælg dit primære mål'
+        customPrimaryGoals:
+            2: 'Tabe vægt'
+            3: 'Holde vægten'
+            4: 'Tage vægt på'
+        primaryGoals:
+            metric:
+                1: 'Tabe 1 kg om ugen'
+                2: 'Tabe 0,5 kg om ugen'
+                3: 'Beholde min vægt'
+                4: 'Tage 0,5 kg på om ugen'
+                5: 'Tage 1 kg på om ugen'
+            imperial:
+                1: 'Tabe 2 pund om ugen'
+                2: 'Tabe 1 pund om ugen'
+                3: 'Beholde min vægt'
+                4: 'Tage 1 pund på om ugen'
+                5: 'Tage 2 pund på om ugen'
+        goalWeight: 'Vægtmål'
+        additionalInfoTitle: 'Yderligere spørgsmål'
+        injuries: 'Skader / sygdomme'
+        injuriesPlaceholder: 'Har du nogen skader eller sygdomme?'
+        workoutExperienceLevel: 'Træningserfaring'
+        workoutExperienceLevelPlaceholder: 'Hvor længe har du trænet?'
+        selectWorkoutExperienceLevel: 'Venligst vælg din erfaring med træning.'
+        workoutExperienceLevels:
+            1: 'Jeg er begynder og har lidt til ingen erfaring.'
+            2: 'Jeg har trænet i noget tid, og kender de fundamentale øvelser.'
+            3: 'Jeg har trænet mange år og har meget erfaring.'
+        workoutExperience: 'Uddybende træningserfaring'
+        workoutExperiencePlaceholder: 'Gerne uddyb hvor erfaren du er med træning.'
+        workoutPreferences: 'Træningspræferencer'
+        workoutSubtitlePreferences: 'Udfyldt venligst alle de nedenstående spørgsmål'
+        workoutPreferencesPlaceholder: 'Er der nogle muskelgrupper du vil have særlig fokus på? Vil du have fokus på styrke, udholdenhed eller begge?'
+        workoutLocation: 'Hvor træner du og hvilket udstyr har du til rådighed?'
+        selectWorkoutLocation: 'Hvor træner du henne?'
+        workoutLocationPlaceholder: 'Træner du mest i træningscenter, derhjemme osv.? Hvilken type udstyr har du til rådighed?'
+        workoutLocations:
+            1: 'Træningscenter'
+            2: 'Hjemmetræning'
+            3: 'Udendørstræning'
+        workoutsPerWeek: 'Hvor mange gange om ugen ønsker du at træne?'
+        workoutsPerWeekPlaceholder: 'Hvor mange gang om ugen vil du træne?'
+        allergiesIngredientsToAvoid: 'Allergier eller ingredienser der skal undgås?'
+        allergiesIngredientsToAvoidPlaceholder: 'Allergier / ingredienser der skal undgås?'
+        excludeIngredients: 'Ekskluder ingredienser (allergier)'
+        none: 'Ingen'
+        vegetarianType: "Jeg er vegetar"
+        pescetarianType: "Jeg er pescetar"
+        veganType: "Jeg er veganer"
+        lactose: Laktose
+        gluten: Gluten
+        nuts: Nødder
+        eggs: Æg
+        pig: Svinekød
+        shellfish: Skaldyr
+        fish: Fisk
+        vegetarian: 'Jeg er vegetar'
+        vegan: 'Jeg er veganer'
+        pescetarian: 'Jeg er pescetar'
+        dietStyle: 'Din diæt'
+        dietStyleSubTitle: 'Udfyld venligst alle de nedenstående spørgsmål'
+        dietStyleTitle: 'Kostpræferencer'
+        dietStylePlaceholder: 'Hvilke fødevarer / retter vil du gerne have i din madplan? Andre ønsker til din kost?'
+        numberOfMeals: 'Antal måltider'
+        numberOfMealsPlaceholder: 'Hvor mange måltider ønsker du om dagen?'
+        lifestyle: Livsstil
+        lifestyleNew: "Livsstil - Aktivt job? Aktiv livsstil? Ryger du? Andet?"
+        lifestylePlaceholder: 'Aktivt/stillesiddende arbejde? Aktiv livsstil? Ryger? Andet?'
+        motivation: 'Motivation'
+        otherFeedbackTitle: 'Andet feedback'
+        otherFeedbackSubTitle: 'Disse er de sidste spørgsmål og så er du klar!'
+        otherLifeStyle: 'Beskriv din livsstil (job, hobbies, ryger du, osv.)'
+        howMotivated: 'Hvor motiveret er du?'
+        motivationPlaceholder: 'Hvis 1 betyder du er totalt umotiveret og 10 betyder, at du er klar på at spise 6 gange om dagen og træne 6 gange om ugen - hvor motiveret er du så?'
+        submit: 'Indsend spørgeskema'
+    downloadApp:
+        title: 'Spørgeskema sendt!'
+        updated: 'Din konto er blevet opdateret'
+        updatedSubtitle: "Du har gennemført din opdatering af din konto. Gå videre og download klient-appen!"
+        description: 'Sådan %name%! Læn dig tilbage og lad din træner lave dine planer.'
+        readyTitle: 'Nu er du klar til at downloade %name% appen'
+        whatsNext: 'Hvad så nu?'
+        subTitle: 'Du har nu oprettet en konto. Download venligst klient-appen!'
+        downloadAppTitle: 'Hvis du ikke har downloadet %name% appen, skal du gøre det nu.'
+        iphone: 'Hent iPhone versionen'
+        android: 'Hent Android versionen'
+    checkout:
+        amount: Beløb
+        periodFixed: 'Gentages månedligt i %months% måneder'
+        periodUntilUnsubscribe: 'Gentages månedligt indtil du afmelder'
+        upfrontFee: 'Opstartsgebyr %upfrontFee%'
+        couponCode: 'Kupon kode'
+        choosePayment: 'Vælg betalingsmåde'
+        back: 'Tilbage'
+        cardPay: 'Betal med kort'
+        klarnaPay: 'Betal med Klarna'
+        sepaPay: 'Betal med Sepa'
+        name: 'Kortholders navn'
+        email: E-mail
+        ibanDesc: 'Ved at opgive dit IBAN nummer og bekræfte denne betaling, så godkender du Zenfit ApS og Stripe, vores betalingsudbyder, til at tilsende oplysninger til din bank og trække fra din konto. Du har ret til en tilbagebetaling fra din bank under deres betingelser. En tilbagebetaling må ske indenfor 8 uger af den dato, hvor din konto blev trukket.'
+        acceptTerms: 'Jeg har læst og accepteret %terms%'
+        termsOfService: 'servicevilkår'
+        acceptTermsError: 'Du skal godkende betingelserne.'
+        klarnaError: 'Klarna betalingen blev ikke godkendt. Venligst prøv igen eller prøv en anden betalingsmetode.'
+        reachOutSupport: 'Venligst kontakt Zenfit Support.'
+        reachOutBank: 'Venligst kontakt din bank eller prøv et andet kort.'
+        paymentDeclined: 'Din betaling blev afvist.'
+        invalidNameError: 'Ugyldigt navn'
+        invalidEmailError: 'Ugyldig email'
+        button: Køb
+        sepaButton: 'Bekræft og igangsæt betaling på %amount%'
+        paymentSuccessfulTitle: 'Betalingen er gået igennem.'
+        paymentSuccessfulDescription: 'Vi har sendt en bekræftelse på e-mail.'
+        paymentSuccessfulBundleSubtitle: 'Download dine planer her'
+        paymentSuccessfulSubtitle: 'Klik nedenfor for at oprette en bruger til %app%.'
+        paymentSuccessfulButton: 'Opret min bruger'
+        klarna:
+            title: 'Klarna'
+            category:
+                now: 'Betal nu'
+                later: 'Betal senere'
+                overTime: 'Betal over tid'
+    notifications:
+        checkIn: 'Hejsa %name%, husk at du skal checke-ind idag! :)'
+        newVideo: 'Hej %name%, din træner har lige uploadet en ny video til dig!'
+        voice: 'Din træner har sendt dig en lydbesked'
+        video: 'Din træner har sendt dig en videobesked'
+emails:
+    client:
+        newMessage:
+            subject: 'Du har fået en ny besked!'
+            cta: 'Klik her for at læse den'
+        answerSurvey:
+            subject: 'Udfyld din træners spørgeskema'
+            body: 'Din træner afventer at du besvarer dit spørgeskema'
+            cta: 'Tryk her for at besvare'
+        mealPlanPdf:
+            subject: 'Madplan PDF'
+            body: 'Hej %client%, din kostplan er vedhæftet!'
+        workoutPlanPdf:
+            subject: 'Træningsplan PDF'
+            body: 'Hej %client%, din træningsplan er vedhæftet!'
+        paymentFailed1:
+            subject: 'Betalingspåmindelse til %trainer%'
+            cta: 'Tryk her for at betale'
+            body: 'Hej %name%,<br><br> Vi har desværre måtte konstatere at din betaling til %trainer% ikke gik igennem.<br><br> <strong>Betalingsinfo:</strong><br> Navn: %name%<br> Skylding beløb: %amount% %currency%<br><br> Hvis beløbet allerede er betalt kan du se bort fra denne email, ellers skal du betale straks for at undgå rykkergebyr.<br><br> %invoiceUrl%<br><br> Er der tale om en fejl, venligst kontakt din træner via chatten i Zenfit eller kontakt Zenfit support.<br><br> Der beregnes et rykkergebyr på 100 kr. for hver fremtidig betalingspåmindelse.<br><br> Med venlig hilsen,<br> Zenfit<br> billing@zenfitapp.com'
+        paymentFailed2:
+            subject: 'Rykker for manglende betaling til %trainer%'
+            cta: 'Tryk her for at betale'
+            body: 'Hej %name%,<br><br> Hermed fremsendes anden betalingspåmindelse inkl. første rykkergebyr à 100 kr.<br><br> Vi har desværre måtte konstatere at din betaling til %trainer% stadig ikke er gået igennem.<br><br> Vi beder dig betale det skyldige beløb straks.<br><br> %invoiceUrl%<br><br> <strong>Betalingsinfo:</strong><br> Navn: %name%<br> Skylding beløb: %amount% %currency%<br><br> Med venlig hilsen,<br> Zenfit<br> billing@zenfitapp.com'
+        paymentFailed3:
+            subject: 'Rykker for manglende betaling til %trainer%'
+            cta: 'Tryk her for at betale'
+            body: 'Hej %name%,<br><br> Hermed fremsendes sidste betalingspåmindelse.<br><br> Vi har desværre måtte konstatere at din betaling til %trainer% stadig ikke er gået igennem.<br><br> Vi beder dig betale det skyldige beløb straks.<br><br> %invoiceUrl%<br><br> På grund af den manglende betaling, har vi desværre måtte spærre din konto hos %trainer%.<br> Din profil åbnes igen når betalingen er registreret.<br><br> <strong>Betalingsinfo:</strong><br> Navn: %name%<br> Skylding beløb: %amount% %currency%<br><br> Med venlig hilsen,<br> Zenfit<br> billing@zenfitapp.com'
+    user:
+        newMessage:
+            subject: 'Du har fået en ny besked!'
+            body: 'Din klient, %client%, har sendt dig en ny besked i Zenfit!'
+            cta: 'Tryk her for at læse den'
+meal:
+    clientPlanTitle: '%name% madplan'
+    metaDescription: 'Du kan frit vælge mellem ét af nedenstående måltider. De indeholder alle ca. følgende:'
+    carbs: Kulhydrat
+    protein: Protein
+    fat: Fedt
+    ingredients: Ingredienser
+    recipe: Opskrift
+    types:
+        1: Morgenmad
+        2: Frokost
+        3: Aftensmad
+        4: 'Formiddagssnack'
+        5: 'Eftermiddagssnack'
+        6: 'Aftensnack'
+        '': __meal.types.
+meals:
+    '': __meals.

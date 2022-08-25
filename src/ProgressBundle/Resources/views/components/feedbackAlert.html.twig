@@ -1,0 +1,26 @@
+{% if clientStatus.exists %}
+    <div class="row bodyProgressAlert">
+        <div class="col-lg-12">
+            <div class="alert alert-dismissible progress-alert" role="alert">
+                <div class="left-side">
+                    <strong>New body progress update {{ clientStatus.date|date("d M, Y") }} - click to give feedback to {{ client.name }}</strong>
+                </div>
+                <div class="right-side">
+                    <a
+                      role="button"
+                      data-client="{{ client.id }}"
+                      data-title="Give feedback to {{ client.name }}"
+                      data-placeholders="{{ placeholders }}"
+                      class="btn btn-success btn-sm give-feedback open-default-message-modal">
+                      Give feedback
+                    </a>
+                    <a
+                      href="#"
+                      class="js-ignore-client-status"
+                      data-id="{{ clientStatus.id }}">
+                      Ignore</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

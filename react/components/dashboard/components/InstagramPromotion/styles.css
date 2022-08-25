@@ -1,0 +1,56 @@
+#instagram-promotion {
+  background-color: #323232;
+  padding: 20px 34px;
+}
+
+#instagram-promotion * {
+  font-family: Poppins, sans-serif;
+  color: #ffffff;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+}
+
+#instagram-promotion img {
+  width: 100%;
+  height: auto;
+}
+
+#instagram-promotion h4 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08px;
+}
+
+#instagram-promotion p {
+  font-size: 16px;
+  line-height: 1.31;
+  letter-spacing: 0.07px;
+}
+
+#instagram-promotion p strong {
+  font-weight: 500;
+}
+
+#instagram-promotion a {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.75;
+  letter-spacing: 0.05px;
+  text-align: center;
+  border: none;
+  outline: none;
+  background-color: #0062ff;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  #instagram-promotion * {
+    text-align: center;
+  }
+  #instagram-promotion h4 {
+    margin-top: 30px;
+  }
+}

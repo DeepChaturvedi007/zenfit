@@ -1,0 +1,359 @@
+<div class="modal inmodal fade" id="addVideoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <form id="addVideoForm" action="" method="POST" enctype="multipart/form-data">
+            <input id="videoIdentifier" type="hidden" name="id" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title"><span id="modal-name">Add Video</span></h4>
+                    <p class="description">The video will appear in your video feed inside your clients app.</p>
+                    <div class="alert alert-danger" style="display:none;"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="modal-body-main">
+                        <div class="form-group">
+                            <label class="control-label" for="videoTitle">Title</label>
+                            <input id="videoTitle"
+                                   placeholder="Choose a cool title…"
+                                   type="text"
+                                   name="title"
+                                   class="form-control video-placeholder">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="videoLink">YouTube/Vimeo Link</label>
+                            <input id="videoLink"
+                                   placeholder="Video Link"
+                                   type="text"
+                                   name="url"
+                                   class="form-control video-placeholder">
+                            <div class="video-thumbnail">
+                                <img/>
+                            </div>
+                            <input id="videoPicture" type="hidden" name="picture" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="videoDescription">Description for video</label>
+                            <textarea id="videoDescription"
+                                      placeholder="Write a detailed description to catch attention of clients…"
+                                      name="description"
+                                      class="form-control video-placeholder"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">
+                                Add hashtags
+                            </label>
+                            <input id="videoHashtags"
+                                   placeholder="Add some #hashtags"
+                                   type="text"
+                                   name="hashtags">
+                            <p class="video__text--small">Clients can sort videos after hashtags.</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">
+                                Assign to
+                            </label>
+                            <input placeholder="Choose who should see this video…"
+                                   type="text"
+                                   name="assign"
+                                   id="videoAssign">
+                            <p class="video__text--small">Which clients should receive this video?</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">
+                                Available to client
+                            </label>
+                            <input id="assignWhen"
+                                   type="number"
+                                   min="0"
+                                   max="365"
+                                   value="0"
+                                   name="assignWhen"
+                                   class="form-control">
+                            <p class="video__text--small">Days after activation - 0 being immediately.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"
+                            class="btn btn-success btn-upper action"
+                            data-save-text="Save"
+                            data-new-text="Add video"
+                            data-loading-text="Loading...">
+                        Add video
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .description {
+        margin-top: 5px !important;
+    }
+
+    .video-thumbnail > img {
+        width: 25%;
+        margin-top: 15px;
+    }
+
+    .notify-client-message {
+        height: 100px !important;
+    }
+</style>
+{% block extra_css %}
+    <style>
+        #addVideoForm * {
+            font-family: Roboto, sans-serif;
+            font-size: 14px;
+        }
+        #addVideoForm h4 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #addVideoForm label {
+            font-weight: bold;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: #000000;
+        }
+        #addVideoForm .video__text--small,
+        #addVideoForm .description {
+            color: #8190a5;
+        }
+        #addVideoForm .action {
+            width: 163px;
+            height: 30px;
+            border-radius: 2px;
+            background-image: linear-gradient(to top, #1991eb, #2da1f8 50%);
+        }
+        #addVideoForm textarea {
+            min-height: 54px;
+            overflow:hidden;
+        }
+    </style>
+{% endblock %}
+{% block css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script async>
+        $(document).ready(() => {
+            let interval = null;
+            const ON_MODAL_SHOW_EVENT = 'show.bs.modal';
+            const ON_MODAL_HIDE_EVENT = 'hide.bs.modal';
+            const hashTagsConfig = {
+              plugins: ['remove_button'],
+              delimiter: ',',
+              create: function(input) {
+                return {
+                  value: `#${input}`,
+                  text: `#${input}`
+                }
+              },
+            };
+            const userTagsConfig = {
+              plugins: ['remove_button'],
+              delimiter: ',',
+              closeAfterSelect: true,
+              options: [{ text: '#all', value: '#all' }],
+              create: false,
+              onItemAdd: function (value) {
+                if((['all', '#all']).includes(value.toLowerCase())) {
+                  this.items
+                    .filter(item => !(['all', '#all']).includes(item.toLowerCase()))
+                    .forEach(item => this.removeItem(item));
+                } else {
+                  this.removeItem('#all');
+                  this.removeItem('all');
+                }
+              }
+            };
+
+            const modalElement = $('#addVideoModal');
+            const form = $('#addVideoForm').first();
+            const idInput = $(form).find('#videoIdentifier');
+            const titleInput = $(form).find('#videoTitle');
+            const linkInput = $(form).find('#videoLink');
+            const videoAssignWhen = $(form).find('#assignWhen');
+            const descriptionInput = $(form).find('#videoDescription');
+            const pictureInput = $(form).find('#videoPicture');
+            const userTagsSelect = $(form).find('#videoAssign').selectize(userTagsConfig);
+            const hashTagsSelect = $(form).find('#videoHashtags').selectize(hashTagsConfig);
+            const submitBtn = $(form).find('button[type="submit"]');
+            const hashTagsSelectize = hashTagsSelect[0].selectize;
+            const userTagsSelectize = userTagsSelect[0].selectize;
+            const errorSection = $(form).find('div.alert-danger');
+
+            const getVideoPathInfo = (uri) => {
+                // - Supported YouTube URL formats:
+                //   - http://www.youtube.com/watch?v=My2FRPA3Gf8
+                //   - http://youtu.be/My2FRPA3Gf8
+                //   - https://youtube.googleapis.com/v/My2FRPA3Gf8
+                // - Supported Vimeo URL formats:
+                //   - http://vimeo.com/25451551
+                //   - http://player.vimeo.com/video/25451551
+                // - Also supports relative URLs:
+                //   - //player.vimeo.com/video/25451551
+                const VIDEO_RE = /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
+                uri.match(VIDEO_RE);
+                let type = null;
+                if (RegExp.$3.indexOf('youtu') > -1) {
+                  type = 'youtube';
+                } else if (RegExp.$3.indexOf('vimeo') > -1) {
+                  type = 'vimeo';
+                }
+                const id = RegExp.$6;
+                return { id, type };
+            };
+
+            const getVideoThumbnail = (id, type) => {
+                const VIDEO_THUMBNAIL_URL = "{{ path('exercise_video_thumbnail', {'videoId': ':id', 'type': ':type'}) }}";
+                const dfd = jQuery.Deferred();
+                const url = VIDEO_THUMBNAIL_URL.replace(':id', id).replace(':type', type);
+
+                $.getJSON(url)
+                    .done(function (response) {
+                        dfd.resolve(response.data.url);
+                    })
+                    .fail(function () {
+                        dfd.resolve(null);
+                    });
+                return dfd.promise();
+            };
+
+            const populateForm = (data = {}) => {
+                const { id, title, hashtags, url, picture, comment, assign, assignWhen } = data;
+                if(!id) {
+                  $('#modal-name').text('Add video');
+                  idInput.val(null);
+                  submitBtn.button('new');
+                  return;
+                }
+                $('#modal-name').text('Edit video');
+                submitBtn.button('save');
+                idInput.val(id);
+                titleInput.val(title);
+                linkInput.val(url);
+                videoAssignWhen.val(assignWhen)
+                descriptionInput.val(comment);
+                setTimeout(() => descriptionInput.change(), 100);
+                pictureInput.val(picture).change();
+
+                hashtags.map(tag => tag.title)
+                  .forEach(value => {
+                    if(!Object.hasOwnProperty(value)) {
+                      hashTagsSelectize.addOption({text: value, value: value})
+                    }
+                    hashTagsSelectize.addItem(value);
+                  });
+
+                if (assign.length === 0) {
+                  userTagsSelectize.addItem('#all');
+                } else {
+                  assign.map(tag => tag)
+                    .forEach(value => {
+                    if(!Object.hasOwnProperty(value)) {
+                      userTagsSelectize.addOption({text: value, value: value})
+                    }
+                    userTagsSelectize.addItem(value)
+                  });
+                }
+
+
+            };
+
+            const onShowModal = (event) => {
+                const button = $(event.relatedTarget);
+                const videoData = button.data('video') || {};
+                const action = button.data('action');
+                form.attr('action', action);
+                populateForm(videoData)
+                // Text area auto height
+                interval = setInterval(() => {
+                    const el = descriptionInput[0];
+                    const height = el.scrollHeight;
+                    el.style.cssText = 'height:auto;'; // Minimize in order to avoid extra lines
+                    el.style.cssText = `height: ${height}px`; // Expand according to scrollHeight
+                }, 0)
+            };
+
+            const onHideModal = () => {
+              form[0].reset();
+              form.removeAttr('action');
+              hashTagsSelectize.clear(true);
+              userTagsSelectize.clear(true);
+              pictureInput.val(null).change();
+              clearInterval(interval);
+            };
+
+            const onSubmit = (event) => {
+                event.preventDefault();
+                const action = form.attr('action');
+                const data = form.serialize();
+                submitBtn.attr('disabled', true);
+                $.post(action, data)
+                    .done(function (res) {
+                        location.reload();
+                    })
+                    .fail(function (err) {
+                        const json = JSON.parse(err.responseText);
+                        if(json.message) {
+                            errorSection.show();
+                            errorSection.html(json.message);
+                        }
+                    })
+                    .always(function () {
+                        submitBtn.attr('disabled', false);
+                    })
+            };
+
+            const onLinkChange = (event) => {
+                pictureInput.val(null).change();
+                const video = getVideoPathInfo(event.target.value);
+                submitBtn.button('loading');
+                getVideoThumbnail(video.id, video.type)
+                    .done(function (thumbnail) {
+                        pictureInput.val(thumbnail).change();
+                    })
+                    .always(function () {
+                      submitBtn.button('reset');
+                    });
+            };
+
+            const onPictureChange = (event) => {
+                const src = event.target.value;
+                $('.video-thumbnail > img').attr('src', src);
+            };
+
+            modalElement.on(ON_MODAL_SHOW_EVENT, onShowModal);
+            modalElement.on(ON_MODAL_HIDE_EVENT, onHideModal);
+            form.on('submit', onSubmit);
+            pictureInput.on('change', onPictureChange);
+            linkInput.on('input', onLinkChange);
+
+            $.get('/api/trainer/get-tags-by-user')
+                .done(res => {
+                    const { tags = [] } = res;
+                    const options = tags.map(tag => ({ text: tag, value: tag }));
+                    options.forEach(option => userTagsSelectize.addOption(option));
+            });
+
+            $.get('/api/trainer/get-video-tags-by-user')
+                .done(res => {
+                    const { tags = [] } = res;
+                    const options = tags.map(tag => ({ text: tag.title, value: tag.title }));
+                    options.forEach(option => hashTagsSelectize.addOption(option));
+                });
+        });
+    </script>
+{% endblock %}

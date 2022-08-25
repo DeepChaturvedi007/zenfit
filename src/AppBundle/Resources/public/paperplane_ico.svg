@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="77px" height="60px" viewBox="0 0 77 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Paperplane</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M28.875,14.4489796 C28.875,22.428862 22.4110425,28.8979592 14.4375,28.8979592 C6.4639575,28.8979592 0,22.428862 0,14.4489796 C0,6.46909714 6.4639575,0 14.4375,0 C22.4110425,0 28.875,6.46909714 28.875,14.4489796 L28.875,14.4489796 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-2.4000001" y="-2.4000001" width="33.6750002" height="33.6979594">
+            <rect x="-2.4000001" y="-2.4000001" width="33.6750002" height="33.6979594" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Paperplane">
+            <g id="Icon">
+                <g id="Paper-Plane" stroke="#7E8FA5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon id="Path" fill="#FFFFFF" points="20.65625 25.2857143 69.984375 0 29.078125 30.1020408 53.140625 45.755102 69.984375 0 0.126125 14.4489796"></polygon>
+                    <path d="M24.265625,45.755102 L38.52025,36.2440612 L24.265625,45.755102 Z" id="Path"></path>
+                    <polygon id="Path" fill="#FFFFFF" points="29.078125 30.1020408 24.3414219 45.755102 20.65625 25.2857143 69.984375 0"></polygon>
+                    <polygon id="Path" fill="#FFFFFF" points="29.078125 30.1020408 24.265625 45.755102 38.52025 36.2440612"></polygon>
+                </g>
+                <g id="Success-Icon" transform="translate(47.125000, 30.102041)">
+                    <g id="Stroke-108">
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <use stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="4.80000019" xlink:href="#path-1"></use>
+                        <use stroke="#70D838" stroke-width="1.20000005" xlink:href="#path-1"></use>
+                    </g>
+                    <polyline id="Stroke-114" stroke="#70D838" stroke-linecap="round" stroke-linejoin="round" points="21.65625 8.42857143 12.7716346 19.2653061 7.21875 14.4489796"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

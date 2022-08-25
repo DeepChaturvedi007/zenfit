@@ -1,0 +1,20 @@
+#gender-configuration {
+  .wrapper {
+    max-width: 600px;
+    width: 100%;
+    article {
+      width: 100%;
+    }
+    .options {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+
+      button {
+        flex: 1 0 auto;
+        margin: 10px;
+        min-width: 150px;
+      }
+    }
+  }
+}

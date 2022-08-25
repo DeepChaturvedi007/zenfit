@@ -1,0 +1,65 @@
+{% extends '@App/base.html.twig' %}
+
+{%- block body_classes -%}
+    no-scroll skip-height-fix
+{%- endblock -%}
+
+{% block content -%}
+    {% set baseMealPlanTitle = recipe.name %}
+    <div id="wrapper">
+        {% include '@App/components/sideNav.html.twig' %}
+
+        <div id="page-wrapper" class="gray-bg">
+            {% include '@App/components/metabar.html.twig' with {
+                'title': 'Recipe Builder',
+                'description': 'Create your recipe once and use on multiple clients!',
+                'template': 'meal_recipes',
+            } %}
+
+            {% include '@App/components/flashSuccess.html.twig' %}
+
+            <div class="exercise-wrapper no-client-nav" id="recipe-planner">
+                <div class="spinner">
+                    <img src="{{ asset('images/ajax-loader.gif') }}"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css -%}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/dragula-3.6.6.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/workout.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ "plans.css"|webpack_asset }}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.0/autosize.min.js"></script>
+    <script src="{{ "plans.js"|webpack_asset }}"></script>
+
+    {% include '@App/default/user/meal_products/editor.html.twig' %}
+    {% include '@Meal/recipes/recipe-modal.html.twig' with { 'skip_image': true, 'action': path('meal_recipes_update', { 'recipe': recipe.id }) } %}
+    {% include '@Meal/recipes/recipe-modal-image.html.twig' with { 'recipe': recipe } %}
+    <script>
+        (function ($) {
+            var recipe = {
+                id: '{{ recipe.id }}',
+                name: '{{ recipe.name }}',
+                macroSplit: '{{ recipe.macroSplit }}',
+                locale:  '{{ recipe.locale }}'
+            };
+
+            var recipePlans = new Plans(document.getElementById('recipe-planner'), Plans.RECIPE, {
+                locale: '{{ recipe.locale }}',
+                plan: recipe,
+                template: true,
+                macroSplitOptions: {{ macro_splits()|json_encode|raw }},
+                admin: '{{ admin }}'
+            });
+
+            autosize($('textarea'));
+        })(jQuery);
+    </script>
+{% endblock %}

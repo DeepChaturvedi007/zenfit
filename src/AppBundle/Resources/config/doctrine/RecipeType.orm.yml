@@ -1,0 +1,32 @@
+AppBundle\Entity\RecipeType:
+    type: entity
+    table: recipe_types
+    repositoryClass: AppBundle\Repository\RecipeTypeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        type:
+            type: integer
+            options:
+                default: 0
+
+    manyToOne:
+        recipe:
+            targetEntity: AppBundle\Entity\Recipe
+            inversedBy: types
+            joinColumn:
+                name: recipe_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

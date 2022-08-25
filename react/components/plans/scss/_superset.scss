@@ -1,0 +1,71 @@
+.plan-superset {
+  background-color: #f8fbfe;
+  position: relative;
+  padding: 10px 10px 10px 30px;
+  margin: 0 -10px 5px 0;
+
+  &::before {
+    background-color: #bcc9dc;
+    content: '';
+    width: 5px;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .plan-superset-divider:last-child {
+    margin-top: 10px;
+  }
+
+  .plans-box-item-list {
+    padding: 0px 0;
+    transition: padding-bottom .35s ease;
+    will-change: padding-bottom;
+
+    + .plan-superset .plan-superset-divider:last-child {
+      margin-top: 10px;
+    }
+    .plan-item:last-child {
+      margin-bottom: 10px;
+    }
+  }
+
+  .plans-box-item-list[data-count="0"] {
+    //padding-top: 0;
+    padding-bottom: 42px;
+  }
+
+  .plan-box-drop-zone {
+    left: 30px;
+  }
+}
+
+.plan-superset-divider {
+  color: #343F53;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.plan-superset-handle {
+  background-color: #f8fbfe;
+  background-position: 50% 0;
+  top: 6px;
+  height: 28px;
+}
+
+.plans-dragging .plan-superset {
+  .plans-box-item-list[data-count] {
+    padding-bottom: 42px;
+
+    & + .plan-box-drop-zone {
+      display: flex;
+      margin-top: -42px;
+    }
+  }
+
+  //.plans-box-item-list[data-count="0"] {
+  //  padding-bottom: 32px;
+  //}
+}

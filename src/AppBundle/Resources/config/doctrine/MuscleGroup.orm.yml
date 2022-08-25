@@ -1,0 +1,30 @@
+AppBundle\Entity\MuscleGroup:
+    type: entity
+    table: muscle_groups
+    repositoryClass: AppBundle\Repository\MuscleGroupRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+
+        name:
+            type: string
+            length: 255
+
+
+    oneToMany:
+        exercises:
+            targetEntity: AppBundle\Entity\Exercise
+            mappedBy: muscleGroup
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

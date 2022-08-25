@@ -1,0 +1,58 @@
+{% if plan %}
+    {% set routePath = 'meal_update' %}
+    {% set routeParams = { 'plan': plan.id } %}
+{% else %}
+    {% set routePath = 'meal_create' %}
+    {% set routeParams = {} %}
+{% endif %}
+<div class="modal inmodal in" id="addMealTemplate" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">{{ title }}</h4>
+                <p>You can add one or several existing Meal Templates to the Meal Plan.</p>
+            </div>
+            <form id="applyTemplateForm" action="{{ path(routePath, routeParams) }}" method="POST">
+                {% if client %}
+                    <input type="hidden" name="client" value="{{ client.id }}"/>
+                {% endif %}
+
+                <div class="modal-body">
+                    <div style="text-align: center">
+                        <img id="spinnerApplyTemplate" style="display: none"
+                             src="{{ asset('images/ajax-loader.gif') }}"/>
+                    </div>
+                    <div id="applyTemplateCheckboxes">
+                        {% if templates is empty %}
+                            <div class="alert alert-info">Hm, it doesn't seem like you have any existing Meal Templates that you can apply. <strong><a href="">Click here</a></strong> to create your first!</div>
+                        {% endif %}
+                        {% for template in templates %}
+                            <div class="checkbox">
+                                <label for="template_{{ template.id }}">
+                                    <input type="checkbox" id="template_{{ template.id }}" name="templates[]" value="{{ template.id }}">
+                                    <strong>{{ template.name }} - {{ template.explaination }}</strong>
+                                    <span class="label label-{{ template.mealsSize == 0 ? 'warning' : 'inverse'}}">
+                                        {% if template.mealsSize == 0 %}
+                                            Empty
+                                        {% else %}
+                                            {{ template.mealsSize }} meals
+                                        {% endif %}
+                                    </span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if templates is not empty %}
+                    <div class="modal-footer text-left">
+                        <button type="submit" id="saveTemplate" class="btn btn-block btn-success btn-upper">Add Meal Template(s)</button>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>

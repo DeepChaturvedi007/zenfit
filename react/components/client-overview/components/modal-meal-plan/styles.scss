@@ -1,0 +1,101 @@
+.modal-content {
+    z-index: 2002;
+}
+.meal-modal{
+    overflow-y: scroll;
+    .calculator-container {
+        background-color: #ffffff;
+        border-radius: 12px;
+        margin-top: 10px;
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .errorWall{
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.8);
+        margin-top: -15px;
+        color: black;
+        ul{
+            font-weight: 500;
+            padding: 0 15px;
+        }
+        div{
+            justify-content: center;
+        }
+    }
+
+    .errorBlur{
+        $blur:1.9px;
+        -webkit-filter: blur($blur);
+        -moz-filter: blur($blur);
+        filter: blur($blur);
+        div{
+            justify-content: center;
+        }
+    }
+
+    .MuiAlert-standardError{
+        font-size: 1.3rem;
+        margin: 1.5rem 0;
+    }
+
+    .macroTabsContainer{
+        border: 1px solid #e8e8e8;
+        width: 100%;
+        border-radius: 15px;
+        overflow: hidden;
+        .MuiTabs-indicator{display: none}
+        .MuiPaper-root{
+            background: #F8f8fa;
+            box-shadow: none;
+        }
+        .MuiTabs-root{
+            min-height: 40px;
+        }
+        .Mui-selected{
+            background: white ;
+
+        }
+        button{
+            color: black;
+            font-weight: 800;
+            font-size: 1rem;
+            text-align: left;
+            height: 40px;
+            min-height: 40px;
+            border-right: 1px solid #f1f1f5;
+        }
+        .MuiTab-wrapper{
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+        }
+        #tabpanel{
+            background: white;
+        }
+        .col-md-3{
+            width: 27%;
+        }
+        .section-info-title{
+            font-size: 9px;
+        }
+
+        .macroKcals{
+            display: flex;
+            align-items: flex-end ;
+            .diff{
+                font-size: 10px;
+                margin: 3px;
+            }
+            .red{color: red}
+            .green{color: #3dd598}
+        }
+
+    }
+
+}

@@ -1,0 +1,18 @@
+<style>
+    #language-picker {
+        width: 180px;
+    }
+</style>
+<select class="form-control m-b" id="language-picker" onchange="changeLanguage()">
+    {% for code, name in translations.readables %}
+        <option value={{translations.url(code)}} {{ code == translations.locale ? 'selected' : '' }}>
+            {{ name }}
+        </option>
+    {% endfor %}
+</select>
+<script>
+    function changeLanguage(){
+        const lang_url = document.getElementById("language-picker").value;
+        window.location.href = lang_url;
+    }
+</script>

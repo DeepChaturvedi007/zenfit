@@ -1,0 +1,237 @@
+client:
+  activation:
+    greeting: 'Hei %name%!'
+    greetingNew: "Hei %name%, la oss få deg i gang!"
+    welcomeMsg: 'Du har blitt invitert til å opprette en profil. Vennligst utfyll spørreskjemaet.'
+    description: 'Du må velge passord for å få tilgang til %name% Appen.'
+    createPasswordTitle: 'Velg passord'
+    createAccountTitle: 'Opprett profil'
+    createAccountSubTitle: 'Utfyll din basisinformasjon for å opprette profilen'
+    updateAccountTitle: 'Oppdater konto'
+    updateAccountSubTitle: 'Skriv inn informasjonen din for å oppdatere kontoen din'
+    email: 'Din epostadresse'
+    emailInvalid: 'Mailen er ikke gyldig'
+    password: 'Velg passord'
+    fieldEmpty: 'Feltet er tomt'
+    fieldNotSelected: 'Det er ikke valgt noe alternativ'
+    passwordDontMatch: 'Passordene matcher ikke'
+    passwordPlaceholder: 'Gjør det vanskelig, men noe du kan huske'
+    confirmPassword: 'Bekreft passord'
+    confirmPasswordPlaceholder: 'Tast inn passord igjen'
+    passwordLength: 'Passordet må være minst 8 tegn'
+    createLoginBtn: 'Opprett bruker'
+    updateLogin: 'Oppdater konto'
+    hasBeenCreated: 'Profilen din er opprettet'
+    next: 'Neste'
+    generalTitle: 'Generell informasjon'
+    generalSubTitle: 'Utfyll din basisinformasjon'
+    bodyPictures:
+      front: 'Foran'
+      side: 'Siden'
+      back: 'Bakfra'
+      uploadPicture: 'Last opp bilde'
+      removePicture: 'Fjern bilde'
+      spec: 'Last opp din JPG eller PNG fil her'
+  survey:
+    title: 'Fortell meg litt om deg selv'
+    description: 'Vennligst fyll ut spørreskjemaet fra treneren din – treneren din trenger denne informasjonen for å lage den beste planen for deg!'
+    loginCreatedTitle: 'Flott! Brukeren din er opprettet!'
+    loginCreatedDescription: 'Nå trenger du bare å fylle ut dette spørreskjemaet så treneren din kan begynne å lage en plan for deg.'
+    contactTitle: 'Kontaktinformasjon'
+    photo: 'Ditt Bilde'
+    imperial: 'imperial'
+    metric: 'metrisk'
+    uploadPhoto: 'Last Opp Bilde'
+    changePhoto: 'Endre Bilde'
+    fullName: 'Fullt Navn'
+    email: Epost
+    phone: Telefon
+    basicInfoTitle: 'Grunnleggende Informasjon'
+    gender: Kjønn
+    male: Mann
+    female: Kvinne
+    age: Alder
+    metricSystem: 'US or Metrisk System'
+    startWeight: 'Startvekt'
+    height: Høyde
+    activityLevel: 'Aktivitetsnivå'
+    selectActivityLevel: 'Velg Aktivitetsnivå'
+    activityLevels:
+      1: 'Jeg gjør ingen fysisk aktivitet'
+      2: 'Jeg er ikke så veldig aktiv og trener 2-3 dager i uken'
+      3: 'Jeg er litt aktiv og trener 3-4 dager i uken'
+      4: 'Jeg er ganske aktiv og trener ofte'
+      5: 'Jeg har en hard fysisk jobb og trener hver dag'
+    photos: Bilder
+    photosDescription: 'Last opp ett eller flere bilder (valgfritt)'
+    goalInfoTitle: 'Målsetting'
+    yourCurrentWeight: 'Din nåværende vekt er %weightString%. Hva er din målvekt?'
+    goalHigherCurrent: 'Nåværende vekt er høyere enn målvekt'
+    goalLessCurrent: 'Nåværende vekt er lavere enn målvekt'
+    goalEqualCurrent: 'Nåværende vekt er den samme som målvekt'
+    goalWeek: 'Med denne progresjonen vil det ta %week% uker å nå målet ditt!'
+    primaryGoal: 'Primærmål'
+    selectPrimaryGoal: 'Velg Primærmål'
+    customPrimaryGoals:
+      2: 'Gå ned i vekt'
+      3: 'Vedlikehold vekt'
+      4: 'Gå opp i vekt'
+    primaryGoals:
+      metric:
+        1: 'Gå ned 1 kg i uken'
+        2: 'Gå ned 0,5 kg i uken'
+        3: 'Vedlikehold vekt'
+        4: 'Gå opp 0,5 kg i uken'
+        5: 'Gå opp 1 kg i uken'
+      imperial:
+        1: 'Gå ned 2 lbs i uken'
+        2: 'Gå ned 1 lbs i uken'
+        3: 'Vedlikehold vekt'
+        4: 'Gå opp 1 lbs i uken'
+        5: 'Gå opp 2 lbs i uken'
+    goalWeight: 'Målvekt'
+    additionalInfoTitle: 'Andre Spørsmål'
+    injuries: 'Skader / Sykdommer'
+    injuriesPlaceholder: 'Har du noen skader eller sykdommer?'
+    workoutExperienceLevel: 'Velg ditt erfaringsnivå.'
+    workoutExperienceLevelPlaceholder: 'How long have you been working out consistently?'
+    selectWorkoutExperienceLevel: 'Velg ditt erfaringsnivå.'
+    workoutExperienceLevels:
+      1: 'Jeg er nybegynner, og har nesten ingen erfaring.'
+      2: 'Jeg har trent en stund og kan det grunnleggende.'
+      3: 'Jeg er veldig erfaren og har trent i mange år.'
+    workoutExperience: Er det noe du ønsker å legge til om din erfaring med trening?
+    workoutExperiencePlaceholder: Utdyp gjerne her.
+    workoutPreferences: 'Treningspreferanser'
+    workoutSubtitlePreferences: 'Vennligst utfyll spørsmålene under'
+    workoutPreferencesPlaceholder: 'Er det noen spesielle muskelgrupper du ønsker å utvikle? Ønsker du å forbedre styrke, utholdenhet eller begge?'
+    workoutLocation: 'Hvor trener du?'
+    selectWorkoutLocation: 'Hvor trener du?'
+    workoutLocationPlaceholder: 'Trener du på treningsstudioet, eller hjemme? Hva slags utstyr har du tilgjengelig for deg?'
+    workoutLocations:
+      1: 'Treningssenter'
+      2: 'Hjemme'
+      3: 'Ute'
+    workoutsPerWeek: 'Treninger per uke?'
+    workoutsPerWeekPlaceholder: 'Hvor mange ganger per uke ønsker du å trene?'
+    allergiesIngredientsToAvoid: 'Allergier eller ingredienser å unngå?'
+    allergiesIngredientsToAvoidPlaceholder: 'Ingredienser / mat å unngå?'
+    excludeIngredients: 'Ekskluder ingredienser (allergier)'
+    none: 'Ingen'
+    vegetarianType: "Jeg er vegetarianer"
+    pescetarianType: "Jeg er pescetarianer"
+    veganType: "Jeg er veganer"
+    lactose: Laktose
+    gluten: Gluten
+    nuts: Nøtter
+    eggs: Egg
+    pig: Svin
+    shellfish: Skalldyr
+    fish: Fisk
+    vegetarian: 'Jeg er Vegetarianer'
+    vegan: 'Jeg er Veganer'
+    pescetarian: 'Jeg er Pescetarianer'
+    dietStyle: 'Kostholdet ditt'
+    dietStyleSubTitle: 'Vennligst svar på spørsmålene under'
+    dietStyleTitle: 'Kostholdspreferanser'
+    dietStylePlaceholder: 'Har du noen spesielle kostholdspreferanser? Hva slags mat ønsker du at måltidene dine inkluderer?'
+    numberOfMeals: 'Antall måltider'
+    numberOfMealsPlaceholder: 'Hvor mange måltider vil du ha per dag?'
+    lifestyle: Livsstil
+    lifestyleNew: "Livsstil - aktiv jobb? Aktiv livsstil? Røyker du? Annet?"
+    lifestylePlaceholder: 'Aktiv jobb? Aktiv livsstil? Røyker du? Annet?'
+    motivation: 'Motivasjon'
+    otherFeedbackTitle: 'Annen feedback'
+    otherFeedbackSubTitle: 'Dette er de siste spørsmålene og så er du klar!'
+    otherLifeStyle: 'Beskriv livsstiler din (jobb, hobby, røyker du, etc.)'
+    howMotivated: 'Hvor motivert er du?'
+    motivationPlaceholder: 'Hvis 1 er ikke motivert i det hele tatt, og 10 er at du er klar for å spise 6 ganger om dagen og trene 6 dager i uken – hvor motivert er du?'
+    submit: 'Send Inn Spørreskjema'
+  downloadApp:
+    title: 'Spørreskjemaet er sendt til treneren din!'
+    updated: 'Din konto har blitt oppdatert'
+    updatedSubtitle: "Du har fullført oppdateringen av kontoen din. Vennligst fortsett og last ned klient-appen!"
+    description: 'Flott %name%! Nå kan du lene deg tilbake og la treneren din lage en plan for deg.'
+    readyTitle: 'Du er klar til å laste ned %name% appen!'
+    whatsNext: 'Hva er neste?'
+    subTitle: 'Du har fullført opprettelsen av profilen din. Du kan nå laste ned appen!w'
+    downloadAppTitle: 'Om du ikke allerede har lastet ned %name% Appen, så er nå tiden for det'
+    iphone: 'Få iPhone Versjonen'
+    android: 'Få Android Versjonen'
+  checkout:
+    amount: Beløp
+    periodFixed: 'Gjentas månedlig i %months% måneder'
+    periodUntilUnsubscribe: 'Gjentas månedlig til du kansellerer'
+    upfrontFee: 'Oppstartsgebyr %upfrontFee%'
+    couponCode: 'Kupong kode'
+    choosePayment: 'Velg betalingsmåte'
+    back: 'Tilbake'
+    cardPay: 'Betal med kort'
+    klarnaPay: 'Betal med Klarna'
+    sepaPay: 'Betal med Sepa'
+    name: 'Kortholders navn'
+    email: E-mail
+    ibanDesc: Ved å oppgi ditt IBAN-nummer og godta denne betalingen godkjenner du at Zenfit ApS og Stripe, vår betalingsleverandør, kan sende instrukser til banken din om å belaste kontoen din i samsvar med disse instruksjonene. Du har krav på refusjon fra banken i samsvar med vilkårene i avtalen med din bank. En refusjon må kreves innenfor 8 uker fra datoen kontoen din ble belastet.
+    acceptTerms: Jeg har lest og godkjent %terms%
+    termsOfService: 'Betingelser'
+    acceptTermsError: Du må godta betingelsene
+    klarnaError: Klarna betalingen ble ikke godtatt. Vennlig prøv igjen eller velg en annen betalingsmåte.
+    reachOutSupport: Vennligst kontakt Zenfit support.
+    reachOutBank: Kontakt vennligst banken din eller prøv med et annet kort.
+    paymentDeclined: Din betaling er avvist.
+    invalidNameError: Ugyldig navn
+    invalidEmailError: Ugyldig email
+    button: Kjøp
+    sepaButton: Bekreft mandat og start betaling for %amount%
+    paymentSuccessfulTitle: 'Betalingen er godtatt'
+    paymentSuccessfulDescription: 'Vi har sendt en ordrebekreftelse til din email'
+    paymentSuccessfulBundleSubtitle: 'Click below to download the files'
+    paymentSuccessfulSubtitle: 'Trykk på knappen under for å opprette en bruker til %app%.'
+    paymentSuccessfulButton: 'Opprett min innlogging'
+    klarna:
+      title: 'Klarna'
+      category:
+        now: 'Betal nå'
+        later: 'Betal senere'
+        overTime: 'Betal over tid'
+  notifications:
+    checkIn: Hei %name%, husk at du skal sende inn din utvikling idag! :)
+    newVideo: Hei %name%, coachen din har lastet opp en ny video til deg!
+    voice: Coachen din har sendt deg en talemelding
+    video: Coachen din har sendt deg en videomelding
+emails:
+  client:
+    newMessage:
+      subject: 'Du har en ny melding!'
+      cta: 'Trykk her for å lese den'
+    answerSurvey:
+      subject: 'Vennligst fyll inn spørreskjemaet fra din coach'
+      body: 'Din coach ønsker at du fyller ut spørreskjemaet så planene dine kan lages for deg.'
+      cta: 'Vennligst trykk her for å gjøre det'
+    mealPlanPdf:
+      subject: 'Måltidsplan PDF'
+      body: 'Hei %client%, vedlagt følger din måltidsplan i PDF format.'
+    workoutPlanPdf:
+      subject: 'Treningsplan PDF'
+      body: 'Hei %client%, vedlagt følger din treningsplan i PDF format.'
+  user:
+    newMessage:
+      subject: 'Du har en ny melding!'
+      body: 'Din klient %client% har sendt deg en ny melding i Zenfit.'
+      cta: 'Trykk her for å lese den'
+meal:
+  clientPlanTitle: '%name% matplan'
+  metaDescription: 'Du kan fritt velge mellom et av måltidene nedenfor. De inneholder alle ca. følgende:'
+  carbs: Karbohydrat
+  protein: Protein
+  fat: Fat
+  ingredients: Ingredienser
+  recipe: Oppskrift
+  types:
+    1: Frokost
+    2: Lunsj
+    3: Middag
+    4: 'Mellommåltid'
+    5: 'Mellommåltid'
+    6: 'Mellommåltid'
+  meal.fat: Fett

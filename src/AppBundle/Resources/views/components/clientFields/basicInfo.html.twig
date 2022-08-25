@@ -1,0 +1,20 @@
+<div class="col-xs-12 col-lg-6">
+    <div class="ibox">
+        <header class="ibox-header">
+            <div class="ibox-header-left">
+                <h4 class="ibox-header-title">Basic Info</h4>
+            </div>
+        </header>
+        <div class="ibox-content ibox-content-line m-p-x">
+            {% include '@App/components/clientFields/name.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/email.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/phone.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/gender.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/age.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/height.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/startWeight.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/goalWeight.html.twig' with {'client': client} %}
+            {% include '@App/components/clientFields/avoid.html.twig' with {'client': client} %}
+        </div>
+    </div>
+</div>

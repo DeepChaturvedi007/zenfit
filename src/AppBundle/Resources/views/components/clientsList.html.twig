@@ -1,0 +1,21 @@
+<div class="table-container">
+    <table class="table clients-table" id="{{ tableId }}">
+        <thead class="hidden-xs hidden-sm">
+        <tr>
+            <th data-sort-default>Name</th>
+            <th class="last-logged-in-th" data-sort-method="number">Ending</th>
+            <th data-sort-method="number">Body Progress Updated</th>
+            <th data-sort-method="number">Workout Plan Updated</th>
+            <th data-sort-method="number">Meal Plan Updated</th>
+            <th>Status</th>
+            {# <th class="text-right no-sort" data-sort-method="none"></th> #}
+        </tr>
+        </thead>
+        <tbody class="list" id="clients-list">
+
+        </tbody>
+    </table>
+</div>
+<div id="loader-wrapper">
+    <i class="fa fa-spinner fa-spin"></i>
+</div>

@@ -1,0 +1,83 @@
+{% block content -%}
+    {% set lactoseFree = not recipe.serializedRecipeMeta.lactose %}
+    {% set glutenFree = not recipe.serializedRecipeMeta.gluten %}
+
+    <tr data-recipe="{{ recipe.id }}">
+        <td width="50%">
+            {% if recipe.image %}
+                <img class="recipe-list-image m-r-xs" src="{{ recipe.image|picture_filter('recipes') }}" alt="{{ recipe.name }}">
+            {% else %}
+                <img class="recipe-list-image m-r-xs" src="{{ asset('bundles/app/images/recipe-placeholder.png') }}" alt="{{ recipe.name }}">
+            {% endif %}
+            <a href="{{ path('meal_recipes_editor', { 'recipe': recipe.id }) }}">
+              <strong>
+                {{ recipe.name }}
+                {{ recipe.errorsInRecipe == 0 ? '' : '<span class="label label-danger">Lang error</span>' }}
+                {{ recipe.isSpecial ? '<span class="label label-primary">SPECIAL</span>' : '' }}
+              </strong>
+            </a>
+        </td>
+        <td class="no-wrap">{{ lactoseFree ? "<span class='label label-green-success'>LF</span>" }}</td>
+        <td class="no-wrap">{{ glutenFree ? "<span class='label label-green-success'>GF</span>" }}</td>
+        <td class="no-wrap">{{ recipe.getTypes|map(typeInstance => typeInstance.type|meal_type)|join(', ') }}</td>
+        <td class="no-wrap hidden-xs">{{ recipe.macroSplit|macro_split }}</td>
+        <td class="no-wrap">{{ recipe.locale|locale_language }}</td>
+        <td class="no-wrap">{{ recipe.cookingTime|cooking_time }}</td>
+        <td class="no-wrap text-center">
+            {% if recipe.approved %}
+                <i class="glyphicon glyphicon-ok text-success"></i>
+            {% else %}
+                <a href="{{ path('meal_recipes_update', { 'recipe': recipe.id }) }}"
+                   role="button"
+                   class="btn btn-success btn-sm"
+                   onclick="recipes.approve(event)"
+                >
+                    Approve
+                </a>
+            {% endif %}
+        </td>
+        <td class="text-right table-actions no-wrap">
+            <a
+                class="btn btn-default btn-sm btn-edit-plan"
+                data-id="{{ recipe.id }}"
+                data-recipe-meta='{{ recipe.serializedRecipeMeta|json_encode|raw }}'
+                data-types='{{ recipe.typeList|json_encode|raw }}'
+                data-name="{{ recipe.name }}"
+                data-locale="{{ recipe.locale }}"
+                data-macro-split="{{ recipe.macroSplit }}"
+                data-cooking-time="{{ recipe.cookingTime }}"
+                data-title="Edit Recipe"
+                data-target="#recipeModal"
+                data-action="{{ path('meal_recipes_update', { 'recipe': recipe.id }) }}"
+                data-toggle="modal"
+                role="button"
+                href="#"
+                data-postaction="true"
+            >
+                <span class="fa fa-pencil" aria-hidden="true"></span>
+            </a>
+            <a
+                href="#"
+                class="btn btn-default btn-sm"
+                data-id="{{ recipe.id }}"
+                data-recipe-meta='{{ recipe.serializedRecipeMeta|json_encode|raw }}'
+                data-types='{{ recipe.typeList|json_encode|raw }}'
+                data-name="{{ recipe.name }}"
+                data-locale="{{ recipe.locale }}"
+                data-macro-split="{{ recipe.macroSplit }}"
+                data-cooking-time="{{ recipe.cookingTime }}"
+                data-title="Clone Recipe"
+                data-action="{{ path('meal_recipes_create') }}"
+                data-target="#recipeModal"
+                data-toggle="modal"
+                role="button"
+                data-postaction="true"
+            >
+                <span class="fa fa-clone" aria-hidden="true"></span>
+            </a>
+            <a href="{{ path('meal_recipes_delete', { 'recipe': recipe.id }) }}" role="button" class="btn btn-default btn-sm" onclick="recipes.shouldDelete(event)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+        </td>
+    </tr>
+{% endblock %}

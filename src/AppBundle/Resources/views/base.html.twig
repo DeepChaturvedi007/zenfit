@@ -1,0 +1,211 @@
+<!-- v:42d40fe -->
+<!DOCTYPE html>
+<html translate="no">
+<head>
+    <meta charset="utf-8">
+
+    <title>{{ page_title | default('Zenfit | Dashboard') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no, height=device-height" content="noindex" />
+
+    <link rel="icon" type="image/png" href="{{ asset('bundles/app/logo.png') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="{{ asset('bundles/app/logo.png') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.min.css" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/INSPINIA/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/css/emoji.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/style.css?v2') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/css/client-type.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/INSPINIA/css/new-meal.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/app/css/side-container.css') }}" rel="stylesheet">
+
+    {% block extra_css %}
+
+    {% endblock %}
+</head>
+
+<body class="{{ (app.request.attributes.get('_route') == 'fos_user_security_login'
+or app.request.attributes.get('_route') == 'fos_user_registration_register') ? 'gray-bg' }}">
+
+    <div class="content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    {% include '@App/default/modals/baseModals.html.twig' %}
+
+    <!-- Mainly scripts -->
+    <script src="{{ asset('bundles/app/js/polyfill/url-search-params.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/default-message.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/mobile.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/chat-widget.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/inspinia.js?v2') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/clipboard/clipboard.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+
+    {% if app.user %}
+        {% include '@App/components/subscriptionNotification.html.twig' %}
+        <script src="{{ "unread-message-updater.js"|webpack_asset }}"></script>
+    {% endif %}
+
+    <script>
+      window.paceOptions = {
+        document: true, // disabled
+        eventLag: true,
+        restartOnPushState: true,
+        restartOnRequestAfter: true,
+        ajax: {
+          trackMethods: [ 'POST','GET']
+        },
+      };
+
+      (function($) {
+
+        if(window.location.hash) {
+            var hash = window.location.hash;
+            var $hashElement = $(hash);
+
+            if ($hashElement.hasClass('modal')) {
+              $hashElement.modal('toggle');
+            }
+        }
+
+        var $body = $('body');
+        var globalAlertsSession = sessionStorage.getItem('globalAlerts');
+
+        function clearBodyAlert() {
+          if (0 === $body.find('.alert--global').length) {
+            $body.removeClass('body--alert');
+          }
+        }
+
+        if (globalAlertsSession) {
+          globalAlertsSession = JSON.parse(globalAlertsSession);
+
+          if (Array.isArray(globalAlertsSession)) {
+            globalAlertsSession.forEach(function(type) {
+              $('.alert--global[data-type="' + type + '"]').remove();
+            });
+
+            clearBodyAlert();
+          }
+        } else {
+          globalAlertsSession = [];
+        }
+
+        $('.alert--global').on('closed.bs.alert', function () {
+          var type = $(this).data('type');
+
+          if (type) {
+            globalAlertsSession.push(type);
+            sessionStorage.setItem('globalAlerts', JSON.stringify(globalAlertsSession));
+          }
+
+          clearBodyAlert();
+        });
+
+        $body.on('hidden.bs.modal', '#exerciseModal, #youtubeExerciseModal', function() {
+          runModalSpinner(this, 'Fetching data...');
+        });
+
+        $body.on('submit', '#applyTemplateForm', function(e) {
+          runModalSpinner('#addMealTemplate, #addWorkoutTemplate', 'Hold on, applying template...');
+        });
+
+
+        function runModalSpinner(targetModal, loadingText) {
+          $(targetModal)
+            .removeData('bs.modal')
+            .find('.modal-title')
+            .text(loadingText)
+            .end()
+            .find('.text-muted')
+            .hide()
+            .end()
+            .find('.btn')
+            .hide()
+            .end()
+            .find('.modal-body')
+            .append(
+              '<div class="sk-spinner sk-spinner-fading-circle">\n' +
+              '<div class="sk-circle1 sk-circle"></div>\n' +
+              '<div class="sk-circle2 sk-circle"></div>\n' +
+              '<div class="sk-circle3 sk-circle"></div>\n' +
+              '<div class="sk-circle4 sk-circle"></div>\n' +
+              '<div class="sk-circle5 sk-circle"></div>\n' +
+              '<div class="sk-circle6 sk-circle"></div>\n' +
+              '<div class="sk-circle7 sk-circle"></div>\n' +
+              '<div class="sk-circle8 sk-circle"></div>\n' +
+              '<div class="sk-circle9 sk-circle"></div>\n' +
+              '<div class="sk-circle10 sk-circle"></div>\n' +
+              '<div class="sk-circle11 sk-circle"></div>\n' +
+              '<div class="sk-circle12 sk-circle"></div>\n' +
+              '</div>'
+            );
+
+        }
+
+
+        $(".sort-table").tablesorter();
+
+      })(jQuery);
+    </script>
+    <script>
+        $(document).ready(function() {
+            if ( $("body").hasClass("body--alert") && $('#wrapper').hasClass("demo-wrapper")) {
+                $('.body--alert > .alert').css({'top': '40px', 'opacity':'1'})
+            } else if ($("body").hasClass("body--alert")) {
+                 $('.body--alert > .alert').css({'top': '0px', 'opacity':'1'})
+            }
+
+            // checkbox&radio buttons for setting button / label state
+            $('.meal-col input').each(function() {
+                var $this = $(this);
+                $this.on('change', function () {
+                    if ( $this.is(':radio') ) {
+                        var check = $this.prop("checked");
+                        $this.parents('.meal-area').find('label').removeClass('current');
+                        if(check)
+                            $this.closest('label').addClass('current');
+                    } else {
+                        $this.closest('label').toggleClass('current');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.0/autosize.min.js"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/jasny/jasny-bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/momentjs/moment.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/momentjs/moment-precise-range.js') }}"></script>
+    <script src="{{ asset("bundles/app/js/intlTelInput.min.js") }}"></script>
+
+    {% include '@App/default/tracking.html.twig' %}
+    {% include '@App/default/tracking/goals.html.twig' %}
+
+    {% block script %}{% endblock %}
+
+</body>
+</html>

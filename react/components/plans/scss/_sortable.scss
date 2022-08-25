@@ -1,0 +1,24 @@
+.plan-item,
+.plan-superset,
+.plans-meal-plan {
+  &.sortable-ghost {
+
+  }
+
+  &.sortable-chosen {
+    border-radius: 2px;
+    border: 1px solid #1A91EB;
+    overflow: hidden;
+  }
+}
+
+.plans-box {
+  &.sortable-chosen {
+    .plans-box-plan,
+    .plans-box-side {
+      border-radius: 2px;
+      border: 1px solid #1A91EB;
+      overflow: hidden;
+    }
+  }
+}

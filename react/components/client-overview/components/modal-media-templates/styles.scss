@@ -1,0 +1,29 @@
+.modal-content {
+    z-index: 2002;
+}
+.mediaModal{
+    .modal-body{
+        max-height: 63vh;
+    }
+    .modal-header{
+        display: flex;
+        justify-content: space-between;
+        #newMedia{
+            display: none;
+        }
+    }
+    .newMediaForm{
+        padding: 0 2rem 2rem;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    .modal-body{
+        overflow-y: scroll;
+    }
+}
+
+.mediaTitle{
+    width: 230px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,107 @@
+#custom-macros-kcals {
+  margin-top: 7px;
+}
+
+.form-meal-types {
+    margin: 0 0 20px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-meal-types > input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+
+    /*top: 10px;*/
+    /*left: 12px;*/
+    /*z-index: 2;*/
+}
+
+.form-meal-types > label {
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid #dcdddd;
+    border-right-width: 0;
+    position: relative;
+    padding: 0 12px;
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    user-select: none;
+    align-items: center;
+}
+
+.form-meal-types > label::before {
+    background-color: white;
+    border: 1px solid #b0b0b0;
+    border-radius: 50%;
+    display: inline-block;
+    content: "";
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+}
+
+.form-meal-types > label:first-of-type {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.form-meal-types > label:last-of-type {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-right-width: 1px;
+}
+
+.form-meal-types-panel {
+    background-color: white;
+    border: 1px solid white;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: none;
+    padding: 15px 0;
+    flex: 1 1 100%;
+}
+
+.form-meal-types > input[type="radio"]:checked ~ label {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-meal-types > input[type="radio"]:checked + label {
+    background-color: white;
+    border-color: #3dd598 #3dd598 white;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.form-meal-types > input[type="radio"]:checked + label::before {
+    border-color: #408BF9;
+    border-width: 5px;
+}
+
+.form-meal-types > input[type="radio"]:checked + label + .form-meal-types-panel {
+    display: block;
+    border-color: white #3dd598 #3dd598;
+}
+
+.form-meal-types-cols {
+    display: flex;
+}
+
+.form-meal-types-panel-label {
+    padding: 0 15px;
+}
+
+@media (min-width: 600px) {
+    .form-meal-types > label {
+        flex: 1;
+    }
+    .form-meal-types-panel {
+        order: 99;
+    }
+}

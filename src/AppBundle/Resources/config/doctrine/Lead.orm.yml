@@ -1,0 +1,111 @@
+AppBundle\Entity\Lead:
+    type: entity
+    table: leads
+    repositoryClass: AppBundle\Repository\LeadRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        email:
+            type: string
+            length: 255
+            nullable: TRUE
+
+        phone:
+            type: string
+            length: 30
+            nullable: TRUE
+
+        createdAt:
+            type: datetime
+            nullable: TRUE
+
+        updatedAt:
+            type: datetime
+            nullable: TRUE
+
+        viewed:
+            type: boolean
+
+        status:
+            type: integer
+            options:
+                default: 1
+
+        followUp:
+            type: boolean
+
+        followUpAt:
+            type: datetime
+            nullable: TRUE
+
+        inDialog:
+            type: boolean
+
+        dialogMessage:
+            type: text
+            nullable: TRUE
+
+        salesNotes:
+            type: text
+            nullable: TRUE
+
+        deleted:
+            type: boolean
+
+        utm:
+            type: text
+            nullable: TRUE
+
+        contactTime:
+            type: integer
+            options:
+                default: 0
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: leads
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    oneToOne:
+        payment:
+            targetEntity: AppBundle\Entity\Payment
+            inversedBy: lead
+            joinColumn:
+                name: payment_id
+                referencedColumnName: id
+                onDelete: SET NULL
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: lead
+            joinColumn:
+                name: client_id
+                referencedColumnName: id
+                onDelete: SET NULL
+
+    oneToMany:
+        tags:
+            targetEntity: AppBundle\Entity\LeadTag
+            mappedBy: lead
+
+    lifecycleCallbacks: {  }

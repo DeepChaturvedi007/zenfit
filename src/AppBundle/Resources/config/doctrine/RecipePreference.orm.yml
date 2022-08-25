@@ -1,0 +1,50 @@
+AppBundle\Entity\RecipePreference:
+    type: entity
+    table: recipe_preferences
+    repositoryClass: AppBundle\Repository\RecipePreferenceRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        favorite:
+            type: boolean
+            options:
+                default: false
+
+        dislike:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        recipe:
+            targetEntity: AppBundle\Entity\Recipe
+            inversedBy: preferences
+            joinColumn:
+                name: recipe_id
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: recipes
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: false
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+
+    lifecycleCallbacks: {  }

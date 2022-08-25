@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label class="control-label">Motivation <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="If 1 is not motivated at all, and 10 is you’re ready to eat 6 times a day, and work out 6 days a week - how motivated you are?">?</span></label>
+    <div class="form-group-in">
+        <textarea class="form-control" name="motivation" {% if client.motivation is null %} placeholder="If 1 is not motivated at all, and 10 is you’re ready to eat 6 times a day, and work out 6 days a week - how motivated you are?" {% endif %} rows="3">{% if client.motivation is not null %}{{ client.motivation }}{% endif %}</textarea>
+    </div>
+</div>

@@ -1,0 +1,143 @@
+{% set current_route = app.request.attributes.get('_route') %}
+
+<div class="modal inmodal fade sm" id="uploadDocument" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Upload new document</h4>
+            </div>
+
+            <form action="{{ path('uploadDocument') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="documentFile" class="control-label"></label>
+                        <input id="documentFile" type="file" name="document" accept="application/pdf" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="documentTitle" class="control-label">Title</label>
+                        <input id="documentTitle" type="text" name="title" class="form-control" placeholder="Title of document">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="documentComment" class="control-label">Comment</label>
+                        <input type="text" id="documentComment" name="comment" class="form-control" placeholder="Comment">
+                    </div>
+
+                    {% if current_route != 'clientDocuments' %}
+                      <div class="form-group">
+                          <label for="assignTo" class="control-label">
+                              Assign to
+                          </label>
+                          <input placeholder="Choose who should see this document…"
+                                 type="text"
+                                 name="assignTo"
+                                 id="assignTo">
+                      </div>
+                    {% endif %}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper">Upload document</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    (function($) {
+        const $modal = $("#uploadDocument");
+        const userTagsConfig = {
+            plugins: ['remove_button'],
+            delimiter: ',',
+            closeAfterSelect: true,
+            options: [{ text: '#all', value: '#all' }],
+            create: function(input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            },
+            onItemAdd: function (value) {
+                if((['all', '#all']).includes(value.toLowerCase())) {
+                    this.items
+                        .filter(item => !(['all', '#all']).includes(item.toLowerCase()))
+                        .forEach(item => this.removeItem(item));
+                } else {
+                    this.removeItem('#all');
+                    this.removeItem('all');
+                }
+            }
+        };
+        const hasTagsInput = !!$modal.find('#assignTo').length;
+        let userTagsSelectize;
+        if(hasTagsInput) {
+          const userTagsSelect = $modal.find('#assignTo').selectize(userTagsConfig);
+          userTagsSelectize = userTagsSelect[0].selectize;
+          $.get('/api/trainer/get-tags-by-user')
+            .done(res => {
+              const { tags = [] } = res;
+              const options = tags.map(tag => ({ text: tag, value: tag }));
+              options.forEach(option => userTagsSelectize.addOption(option));
+            });
+        }
+
+
+        $modal
+            .on('change', '[name=document]', function(e) {
+                var $titleInput = $modal.find('[name=title]');
+                var file = this.files[0];
+
+                if (!$titleInput.val() && file) {
+                    var fileName = file.name.split('.')[0];
+                    $titleInput.val(fileName);
+                }
+            })
+            .on('show.bs.modal', function(e) {
+                var $target = $(e.relatedTarget);
+                var isEdit = $target.data('type') === 'edit';
+                var title = isEdit ? 'Edit' : 'Upload new';
+                var document = isEdit ? $target.data('document') : {};
+                $(this)
+                    .find('.modal-header .fa')
+                        .toggleClass('fa-plus', !isEdit)
+                        .toggleClass('fa-pencil-square-o', isEdit)
+                        .end()
+                    .find('[name=id]')
+                        .val(document.id)
+                        .end()
+                    .find('.modal-title')
+                        .text(title + ' document')
+                        .end()
+                    .find('form')
+                        .attr('action', $target.data('action'))
+                    .find('[name=title]')
+                        .val(document.name)
+                        .end()
+                    .find('[name=comment]')
+                        .val(document.comment)
+                        .end()
+                    .find('[type=submit]')
+                        .text(isEdit ? 'Update document' : 'Upload document');
+
+                    if(hasTagsInput) {
+                        (document.assignTo || [])
+                            .map(tag => tag.title)
+                            .forEach(value => {
+                                if(!userTagsSelectize.options.hasOwnProperty(value)) {
+                                    userTagsSelectize.addOption({text: value, value: value})
+                                }
+                                userTagsSelectize.addItem(value)
+                            });
+                    }
+            });
+    }(jQuery));
+</script>

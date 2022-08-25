@@ -1,0 +1,115 @@
+.subscription-current {
+    color: #4e566d;
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+}
+
+.subscription-current p {
+    color: currentColor;
+    margin-bottom: 16px;
+}
+
+.subscription-current-title {
+    font-size: 32px;
+    color: #3b415e;
+    margin: 0 0 10px;
+}
+
+.subscription-current-prices {
+    display: flex;
+    /*justify-content: flex-start;*/
+    /*margin-bottom: 16px;*/
+}
+
+.subscription-current-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 0;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.subscription-current-price h2 {
+    display: inline-block;
+    color: #3b415e;
+    margin: 0 0 12px;
+    font-size: 32px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.subscription-current-price sup,
+.subscription-current-price sub {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.subscription-current-price sup {
+    top: -.8em;
+    margin-right: 4px;
+}
+
+.subscription-current-price sub {
+    color: #697386;
+    bottom: .1em;
+}
+
+.subscription-current-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2em 16px;
+    color: #8792a2;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 28px;
+    white-space: nowrap;
+}
+
+.subscription-current-divider:not(.no-borders)::before,
+.subscription-current-divider:not(.no-borders)::after {
+    display: block;
+    content: '';
+    width: 1px;
+    background-color: #e3e8ee;
+    flex-grow: 1;
+}
+
+@media (max-width: 767px) {
+    .subscription-current-prices {
+        flex-wrap: wrap;
+    }
+
+    .subscription-current-divider {
+        flex: 1;
+    }
+
+    .subscription-current-price {
+        flex-direction: column;
+    }
+
+    .subscription-current-price h2 {
+        flex: 1;
+    }
+
+    .subscription-card-form {
+        margin: 0 !important;
+    }
+
+    .subscription-card-form button[type="submit"] {
+        display: block;
+        width: 100%;
+        margin-top: 16px;
+    }
+
+    .subscription-current-footer {
+        margin-top: 16px;
+    }
+}

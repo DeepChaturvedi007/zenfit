@@ -1,0 +1,19 @@
+.modal-content {
+    z-index: 2002;
+}
+.datepicker {
+    z-index: 1000000;
+}
+.input-group-custom {
+    display: flex;
+    width: 100%;
+}
+.input-group-addon-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+}
+.form-control-custom {
+    width: 100%
+}

@@ -1,0 +1,248 @@
+client:
+    activation:
+        greeting: 'Hej %name%!'
+        greetingNew: "Hej %name%, nu sätter vi igång!"
+        welcomeMsg: 'Du har blivit inbjuden att skapa ett konto. Vänligen fyll i följande formulär.'
+        description: 'Du behöver välja ett lösenord för att komma åt %name% App.'
+        createPasswordTitle: 'Skapa Lösenord'
+        createAccountTitle: 'Skapa konto'
+        createAccountSubTitle: 'Fyll i din information för at skapa ditt konto'
+        updateAccountTitle: 'Uppdatera konto'
+        updateAccountSubTitle: 'Ange din information för att uppdatera ditt konto'
+        email: 'Din e-mail'
+        emailInvalid: 'Felaktig e-mail'
+        password: 'Välj lösenord'
+        fieldEmpty: 'Fältet är tomt'
+        fieldNotSelected: 'Inga val har gjorts'
+        passwordDontMatch: 'Lösenorden är olika'
+        passwordPlaceholder: 'Gör det svårt men kom ihåg det!'
+        confirmPassword: 'Bekräfta lösenord'
+        confirmPasswordPlaceholder: 'Fyll i ditt lösenord igen'
+        passwordLength: 'Lösenordet måste vara minst 8 tecken långt'
+        createLoginBtn: 'Skapa konto'
+        updateLogin: 'Uppdatera konto'
+        hasBeenCreated: 'Ditt konto har skapats'
+        next: 'Nästa'
+        generalTitle: 'Allmän information'
+        generalSubTitle: 'Fyll i din grundläggande information'
+        bodyPictures:
+            front: 'Framsida'
+            side: 'Sida'
+            back: 'Baksida'
+            uploadPicture: 'Ladda upp bild'
+            removePicture: 'Ta bort bild'
+            spec: 'Släpp din JPG- eller PNG-fil här'
+    survey:
+        title: 'Berätta lite om dig själv'
+        description: 'Vänligen börja med att fylla i din tränares frågeformulär - din tränare behöver ta del av denna information för att skapa det perfekta träningsprogrammet för dig'
+        loginCreatedTitle: 'Bra jobbat! Ditt konto har nu skapats'
+        loginCreatedDescription: 'Nu behöver du bara svara på detta frågeformulär så att din tränare kan skapa ditt träningsprogram.'
+        contactTitle: 'Kontaktinformation'
+        photo: 'Ditt foto'
+        imperial: 'Imperial'
+        metric: 'Metrisk'
+        uploadPhoto: 'Ladda upp foto'
+        changePhoto: 'Byt foto'
+        fullName: 'För- och efternamn'
+        email: E-Mail
+        phone: Telefon
+        basicInfoTitle: 'Allmän information'
+        gender: Kön
+        male: Man
+        female: Kvinna
+        age: Ålder
+        metricSystem: 'Imperiala mått (pounds) eller metersystemet (kilo)'
+        startWeight: 'Startvikt'
+        height: Längd
+        activityLevel: 'Aktivitetsnivå'
+        selectActivityLevel: 'Välj aktivitetsnivå'
+        activityLevels:
+            1: 'Jag utför ingen fysisk träning'
+            2: 'Jag är inte särskilt aktiv och tränar 2-3 dagar i veckan'
+            3: 'Jag är måttligt aktiv och tränar 3-4 gånger i veckan'
+            4: 'Jag är ganska aktiv och tränar ganska mycket'
+            5: 'Jag har ett hårt fysiskt jobb och tränar de flesta dagarna'
+        photos: Bilder
+        photosDescription: 'Ladda upp en eller flera bilder (valfritt)'
+        goalInfoTitle: 'Ditt mål'
+        yourCurrentWeight: 'Din nuvarande vikt är %weightString%. Vad är din målvikt?'
+        goalHigherCurrent: 'Nuvarande vikt är högre än målvikt'
+        goalLessCurrent: 'Nuvarande vikt är lägre än målvikt '
+        goalEqualCurrent: 'Nuvarande vikt är samma som målvikt '
+        goalWeek: 'Med denna takt kommer det ta %week% veckor att nå ditt mål!'
+        primaryGoal: 'Primärt mål'
+        selectPrimaryGoal: 'Välj ditt primära mål'
+        customPrimaryGoals:
+            2: 'Gå ner i vikt'
+            3: 'Behåll samma vikt'
+            4: 'Öka i vikt'
+        primaryGoals:
+            metric:
+                1: 'Minska 1 kg per vecka'
+                2: 'Minska 0,5 kg per vecka'
+                3: 'Behåll samma vikt'
+                4: 'Öka 0,5 kg per vecka'
+                5: 'Öka 1 kg per vecka'
+            imperial:
+                1: 'Minska 2 lbs per vecka'
+                2: 'Minska 1 lbs per vecka'
+                3: 'Behåll samma vikt'
+                4: 'Öka 1 lbs per vecka'
+                5: 'Öka 2 lbs per vecka'
+        goalWeight: 'Målvikt'
+        additionalInfoTitle: 'Övriga frågor'
+        injuries: 'Skador/sjukdommar'
+        injuriesPlaceholder: 'Har du någon skada eller sjukdom?'
+        workoutExperienceLevel: 'Träningserfarenhet'
+        workoutExperienceLevelPlaceholder: 'Hur länge har du tränat regelbundet?'
+        selectWorkoutExperienceLevel: 'Träningserfarenhet'
+        workoutExperienceLevels:
+            1: 'Jag är nybörjare och har ingen, eller endast lite, tidigare erfarenhet.'
+            2: 'Jag har tränat tidigare och känner till grunderna.'
+            3: 'Jag är mycket erfaren och har tränat under flera år.'
+        workoutExperience: Har du något du vill tillägga om din tidigare träning?
+        workoutExperiencePlaceholder: Hur länge har du tränat regelbundet?
+        workoutPreferences: 'Träningspreferenser'
+        workoutSubtitlePreferences: 'Vänligen svara på alla frågorna nedan'
+        workoutPreferencesPlaceholder: 'Vilka muskelgrupper vill du förstärka? Vill du förbättra din styrka, uthållighet eller både och?'
+        workoutLocation: 'Var tränar du?'
+        selectWorkoutLocation: 'Välj var du brukar träna.'
+        workoutLocationPlaceholder: 'Var tränar du?'
+        workoutLocations:
+            1: 'På gymmet'
+            2: 'Hemma'
+            3: 'Utomhus'
+        workoutsPerWeek: 'Antal träningstillfällen i veckan'
+        workoutsPerWeekPlaceholder: 'Hur många gånger i veckan vill du träna?'
+        allergiesIngredientsToAvoid: 'Allergier eller ingredienser du vill undvika'
+        allergiesIngredientsToAvoidPlaceholder: 'Ingredienser/maträtter du vill undvika'
+        excludeIngredients: 'Uteslut ingredienser (allergier)'
+        none: 'Ingen'
+        vegetarianType: "Jag är vegetarian"
+        pescetarianType: "Jag är pescetarian"
+        veganType: "Jag är vegan"
+        lactose: Laktos
+        gluten: Gluten
+        nuts: Nötter
+        eggs: Ägg
+        pig: Fläsk
+        shellfish: Skaldjur
+        fish: Fisk
+        vegetarian: 'Jag är vegetarian'
+        vegan: 'Jag är vegan'
+        pescetarian: 'Jag är pescetarian'
+        dietStyle: 'Din kosthållning/diet'
+        dietStyleSubTitle: 'Vänligen svara på alla frågorna nedan'
+        dietStyleTitle: 'Matpreferenser'
+        dietStylePlaceholder: 'Har du några särskilda matpreferenser? Vilken typ av mat önskar du att dina måltider innehåller?'
+        numberOfMeals: 'Antal måltider'
+        numberOfMealsPlaceholder: 'Hur många mål vill du äta per dag?'
+        lifestyle: Livsstil
+        lifestyleNew: "Livsstil - Aktivt jobb? Aktiv livsstil? Röker du? Annat?"
+        lifestylePlaceholder: 'Aktivt jobb? Aktiv livsstil? Röker du? Annat?'
+        motivation: 'Motivation'
+        otherFeedbackTitle: 'Annan feedback'
+        otherFeedbackSubTitle: 'Detta är de sista frågorna sedan är du klar!'
+        otherLifeStyle: 'Beskriv din livsstil (jobb, hobbies, om du röker, etc.)'
+        howMotivated: 'Hur motiverad är du?'
+        motivationPlaceholder: 'På en skala där 1 är inte motiverad alls och 10 är redo att äta 6 gånger om dagen och träna 6 gånger i veckan - hur motiverad är du?'
+        submit: 'Skicka in frågeformulär'
+    downloadApp:
+        title: 'Frågeformuläret har nu skickats till din tränare!'
+        updated: 'Ditt konto har uppdaterats'
+        updatedSubtitle: "Du har slutfört din uppdatering av ditt konto. Var snäll och ladda ner klientappen!"
+        description: 'Grymt %name%! Nu kan du luta dig tillbaka och låta din tränare skapa ditt alldeles egna träningsprogram.'
+        readyTitle: 'Du är redo att ladda ner %name% appen!'
+        whatsNext: 'Vad händer nu?'
+        subTitle: 'Du har nu skapat ditt konto. Vänligen ladda ner klientappen!'
+        downloadAppTitle: 'Om du inte har laddat ner %name% App, så är det dags nu'
+        iphone: 'Ladda ner versionen for iPhone'
+        android: 'Ladda ner versionen for Android'
+    checkout:
+        amount: Belopp
+        periodFixed: 'Återkommer månadsvis under %months% månader'
+        periodUntilUnsubscribe: 'Återkommer månadsvis fram tills det att du avslutar det själv'
+        upfrontFee: 'Startavgift %upfrontFee%'
+        couponCode: 'Rabattkod'
+        choosePayment: 'Välj betalningsmetod'
+        back: 'Tillbaka'
+        cardPay: 'Betala med kort'
+        klarnaPay: 'Betala med Klarna'
+        sepaPay: 'Betala med Sepa'
+        name: 'Kortinnehavarens namn'
+        email: E-mail
+        ibanDesc: Genom att ange ditt IBAN-nummer och genom att lämna ditt medgivande till betalning och godkännande av dessa villkor, ger du samtycke till att Zenfit ApS och Stripe, vår betalningsleverantör, kan skicka instruktioner till din bank om att dra pengar från din bank och ditt konto efter dessa villkor. Du har rätt till återbetalning från din bank under de villkor du har avtalat med banken. Begäran av återbetalning måste göras inom 8 veckor räknat från första dagen då ditt konto blev debiterat.
+        acceptTerms: 'Jag har läst och godkänner villkoren %terms%'
+        termsOfService: 'Villkor'
+        acceptTermsError: 'Du måste godkänna villkoren'
+        klarnaError: Klarna betalningen misslyckades. Försök igen senare eller med en annan betalningsmetod.
+        reachOutSupport: Kontakta Zenfit för support.
+        reachOutBank: Kontakta din bank eller prova med ett annat kort.
+        paymentDeclined: Din betalning kunde inte genomföras.
+        invalidNameError: Ogiltigt namn
+        invalidEmailError: Ogiltig e-mail
+        button: Köp
+        sepaButton: Bekräfta mandat och starta betalning för %amount%
+        paymentSuccessfulTitle: 'Betalningen är genomförd'
+        paymentSuccessfulDescription: 'En betalningsbekräftelse har skickats till din e-mail'
+        paymentSuccessfulBundleSubtitle: 'Klicka nedan för att ladda ner filerna'
+        paymentSuccessfulSubtitle: 'Klicka nedan för att lägga till en användare till %app%.'
+        paymentSuccessfulButton: 'Skapa konto'
+        klarna:
+            title: 'Klarna'
+            category:
+                now: 'Betala nu'
+                later: 'Betala senare'
+                overTime: 'Dela upp betalning'
+    notifications:
+        checkIn: Hej %name%, kom ihåg att göra din veckouppdatering idag! :)
+        newVideo: Hej %name%, din PT har laddat upp en ny video till dig!
+        voice: Din PT har skickat ett röstmeddelande
+        video: Din PT har skickat ett videomeddelande
+emails:
+    client:
+        newMessage:
+            subject: 'Du har ett nytt meddelande!'
+            cta: 'Klicka här för att läsa det.'
+        answerSurvey:
+            subject: 'Vänligen fyll i din coach''s frågeformulär.'
+            body: 'Din coach har uppmanat dig att fylla i frågeformuläret för att kunna upprätta en plan för dig.'
+            cta: 'Vänligen klicka här för att göra detta.'
+        mealPlanPdf:
+            subject: 'Kostschema PDF'
+            body: 'Hej %client%, bifogat finns ditt kostschema som PDF.'
+        workoutPlanPdf:
+            subject: 'Träningsprogram PDF'
+            body: 'Hej %client%, bifogat finns ditt träningsprogram som PDF.'
+        paymentFailed1:
+            subject: "Betalningspåminnelse till %trainer%"
+            cta: 'Klicka här för att betala'
+            body: "Hej %name%,<br><br> Tyvärr gick din betalning till %trainer% inte igenom.<br><br> <strong> Betalningsinformation: </strong> <br> Namn: %name% <br> Skuldbelopp: %amount% %currency% <br> <br> Om beloppet redan har betalats kan du bortse från det här e-postmeddelandet, annars måste det betalas omedelbart för att undvika påminnelseavgifter. <br> <br> %invoiceUrl%<br><br> Om ett fel inträffat, vänligen kontakta din tränare via chatten i Zenfit eller kontakta Zenfit support genom att svara på det här e-postmeddelandet. <br> <br> En påminnelsesavgift på 100 SEK åläggs för varje betalningspåminnelse.<br><br> Med vänliga hälsningar,<br> Zenfit<br> billing@zenfitapp.com"
+        paymentFailed2:
+            subject: 'Påminnelse om utebliven betalning till %trainer%'
+            cta: 'Klicka här för att betala'
+            body: "Hej %name%, <br> <br> Härmed skickas ytterligare en betalningspåminnelse inkl. första påminnelseavgiften på 100 SEK<br><br> Tyvärr har vi upptäckt att din betalning till %trainer% ännu inte har inkommit.<br> <br> Vi ber dig att omgående betala det förfallna beloppet.<br><br> %invoiceUrl%<br> <br> <strong>Betalningsinformation:</strong> <br> Namn: %name%<br> Skuldbelopp: %amount% %currency%<br><br> Med vänliga hälsningar,<br> Zenfit<br> billing@zenfitapp.com"
+        paymentFailed3:
+            subject: 'Sista påminnelsen för utebliven betalning till %trainer%'
+            cta: 'Klicka här för att betala'
+            body: "Hej %name%,<br><br> Det här är din sista betalningspåminnelse.<br><br> Tyvärr har vi upptäckt att din betalning till %trainer% ännu inte har inkommit.<br> <br> Vi ber dig att omgående betala det förfallna beloppet.<br><br> %invoiceUrl%<br><br> På grund av utebliven betalning har vi tyvärr behövt spärra ditt konto med %trainer%.<br> <strong>Betalningsinformation:</strong> <br> Namn: %name%<br> Skuldbelopp: %amount% %currency%<br><br> Med vänliga hälsningar,<br> Zenfit<br> billing@zenfitapp.com"
+    user:
+        newMessage:
+            subject: 'Du har ett nytt meddelande!'
+            body: 'Din klient %client% har skickat ett meddelande till dig i Zenfit.'
+            cta: 'Klicka här för att läsa.'
+meal:
+    clientPlanTitle: '%name% kostschema'
+    metaDescription: 'Du kan fritt välja mellan en av måltiderna nedan. De innehåller alla cirka följande:'
+    carbs: Kolhydrat
+    protein: Protein
+    fat: Fett
+    ingredients: Ingredienser
+    recipe: Recept
+    types:
+        1: Frukost
+        2: Lunch
+        3: Middag
+        4: 'Mellanmål'
+        5: 'Mellanmål'
+        6: 'Mellanmål'

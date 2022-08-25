@@ -1,0 +1,42 @@
+#confirm-and-submit {
+    * {
+        font-family: "Open Sans", sans-serif;
+    }
+
+    background-color: #f8f8f8;
+
+    .wrapper {
+        max-width: 100%;
+        width: 550px;
+        button {
+            width: 225px !important;
+            max-width: 100%;
+            margin: auto;
+            font-weight: normal;
+            letter-spacing: normal;
+            justify-self: center;
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .checkbox {
+        color: #1c334c;
+        text-align: left;
+        font-size: 14px;
+        font-weight: normal;
+
+        label {
+            padding-left: 0;
+            display: flex;
+            align-items: flex-start;
+
+            a {
+                color: #0076f6 !important;
+                text-decoration: underline;
+            }
+        }
+    }
+}

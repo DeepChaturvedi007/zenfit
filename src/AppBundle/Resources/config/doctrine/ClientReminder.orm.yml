@@ -1,0 +1,39 @@
+AppBundle\Entity\ClientReminder:
+    type: entity
+    table: client_reminders
+    repositoryClass: AppBundle\Repository\ClientReminderRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 32
+
+        dueDate:
+            type: date
+            column: due_date
+            nullable: false
+
+        resolved:
+            type: boolean
+            column: resolved
+            options:
+                default: 0
+
+        deleted:
+            type: boolean
+            options:
+                default: 0
+
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: images
+            joinColumn:
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

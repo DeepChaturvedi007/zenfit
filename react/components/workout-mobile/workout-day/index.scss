@@ -1,0 +1,292 @@
+@import "../components-styles";
+$select-arrow: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDZFNDEwNjlGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDZFNDEwNkFGNzFEMTFFMkJEQ0VDRTM1N0RCMzMyMkIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0NkU0MTA2N0Y3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0NkU0MTA2OEY3MUQxMUUyQkRDRUNFMzU3REIzMzIyQiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PuGsgwQAAAA5SURBVHjaYvz//z8DOYCJgUxAf42MQIzTk0D/M+KzkRGPoQSdykiKJrBGpOhgJFYTWNEIiEeAAAMAzNENEOH+do8AAAAASUVORK5CYII=');
+
+.container-block {
+  background: #f3f3f4;
+  padding: 15px;
+  .ibox-content,
+  .ibox-header {
+    background: none;
+  }
+  .ibox-header {
+    padding-top: 8px;
+  }
+}
+
+.list-sortable {
+  margin-bottom: 21px;
+}
+
+.day-workout-item {
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  display: -webkit-flex;
+  display: flex;
+  .workout-item-text {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    flex: 1;
+    margin-left: 10px;
+    h4 {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.62;
+      margin: 0;
+    }
+    table {
+      font-size: 10px;
+      line-height: 1.6;
+      text-align: left;
+      width: 100%;
+      td, th {
+        font-weight: 400;
+        padding: 0;
+      }
+      th {
+        color: #7f8fa4;
+      }
+      td {
+        color: #354052;
+      }
+    }
+  }
+  .workout-item-image {
+    img {
+      border-radius: 4px;
+      width: 36px;
+    }
+  }
+}
+
+.workout-super-set {
+  .workout-super-set-header {
+    display: flex;
+    span {
+      flex: 1;
+    }
+  }
+  .list-sortable {
+    min-height: 15px;
+  }
+  > .sortable-item {
+    background: #f3f3f4;
+    border-left: 4px solid #a8aab7;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0 0 0 8px;
+    > .exercise-item-move {
+      display: none;
+    }
+  }
+  span {
+    display: block;
+    color: #525e6e;
+    font-size: 12px;
+    line-height: 1.33;
+    margin: 0;
+    text-align: left;
+  }
+  span:first-child {
+    margin: 0 0 8px;
+  }
+}
+
+.workout-day-comment {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.62;
+  margin-top: 11px;
+  padding: 8px 10px;
+  resize: none;
+  width: 100%;
+  &::placeholder {
+    color: #a8aab7;
+  }
+}
+
+.add-exercise-btn {
+  text-align: center;
+  button {
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.62;
+    color: #1a91eb;
+    outline: none;
+    i {
+      margin-right: 8px;
+    }
+  }
+  &.add-exercise-btn-empty {
+    background: #ffffff;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+  }
+}
+
+.plus-icon{
+  display: inline-block;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  &:before,
+  &:after{
+    content: "";
+    position: absolute;
+    background-color: #7f8fa4;
+    transition: transform 0.25s ease-out;
+  }
+  &:before{
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    margin-left: -1px;
+  }
+  &:after{
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    margin-top: -1px;
+  }
+}
+
+.exercises-btn {
+  border: none;
+  background: none;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  padding: 3px 3px 3px 3px;
+}
+
+.options-list-btn {
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.icon-dots {
+  height: 3.5px;
+  &:before,
+  &:after {
+    height: 3.5px;
+  }
+}
+
+.plans-search-filters {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.plans-search-filter {
+  flex: 0 1 50%;
+
+  &:nth-child(odd) {
+    padding-right: 5px;
+  }
+
+  &:nth-child(even) {
+    padding-left: 5px;
+  }
+
+  .form-control {
+    background: $select-arrow no-repeat 100% 50%;
+    border-radius: 0;
+    padding-right: 1.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+}
+
+.plans-search-filters + .plans-search-filters {
+  width: 50%;
+}
+
+.plans-search-youtube-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+
+  h5 {
+    color: #525b6b;
+    margin: 0 0 0 12px;
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
+
+.plans-search-youtube-logo {
+  width: 56px;
+  height: 24px;
+
+  svg {
+    pointer-events: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #tube-paths {
+    fill: #e62117;
+  }
+}
+
+.plans-search-youtube-description {
+  text-align: center;
+  font-size: 14px;
+  color: #8c9aad;
+}
+
+.plans-search-youtube-footer a {
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+.plan-item-description {
+  display: block;
+  color: #1a91eb;
+  font-size: 11px;
+}
+
+.plans-search-title {
+  padding: 5px 20px;
+  display: flex;
+  & p {
+    margin: 0;
+  }
+  & a {
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
+  }
+}
+
+.search-result-empty-state {
+  text-align: center;
+}
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.8) !important;
+  @media (max-width: 767px) {
+    background: #f6f7f7 !important;
+  }
+
+  .modal-body .alert {
+    padding: 0px;
+    margin-bottom: 0px;
+  }
+}

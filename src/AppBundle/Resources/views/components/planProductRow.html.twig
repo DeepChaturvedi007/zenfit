@@ -1,0 +1,55 @@
+{% set isMobile = mobile is defined ? mobile : false %}
+<div
+    class="exercise-item{{ isMobile ? ' exercise-item-mobile' : '' }}"
+    data-id="{{ product.product.id }}"
+    data-entity-id="{{ product.id }}"
+    data-kcal="{{ product.product.kcal }}"
+    data-protein="{{ product.product.protein }}"
+    data-carbohydrates="{{ product.product.carbohydrates }}"
+    data-fat="{{ product.product.fat }}"
+>
+    <div class="exercise-item-move handle"></div>
+    <div class="exercise-item-details">
+        <span class="exercise-item-title js-product-amounts">
+            {{ product.product.getMealProductLanguageByLocale(locale).name }}
+            {{- product.product.brand is empty ? '' : ', ' ~ product.product.brand -}}
+        </span>
+        {#<small class="exercise-item-info">#}
+            {#{{ product.product.kcal }}kcal / 100g#}
+        {#</small>#}
+    </div>
+    <div class="exercise-item-actions">
+        <div
+            class="form-group js-input-weight"
+            data-weights="{{ product.product.weightList|json_encode }}"
+            data-weight-id="{{ product.weight ? product.weight.id : 0 }}"
+            data-weight-units="{{ product.weightUnits }}"
+            data-total-weight="{{ product.totalWeight }}"
+            data-total-kcal="{{ product.totalKcal }}"
+        >
+            {% if isMobile %}
+                {% if product.weight %}
+                    {{ product.weightUnits }} x {{ product.weight.name }} ({{ product.totalWeight }}g)
+                {% else %}
+                    {{ product.totalWeight ~ 'g' }}
+                {% endif %}
+            {% else %}
+                <a class="js-choose-amout" role="button" tabindex="0">
+                    {% if product.weight %}
+                        {{ product.weightUnits }} x {{ product.weight.name }} ({{ product.totalWeight }}g)
+                    {% else %}
+                        {{ product.totalWeight > 0 ? product.totalWeight ~ 'g' : 'Choose amount' }}
+                    {% endif %}
+                </a>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <span class="js-product-kcal">{{ product.totalKcal|round }}</span>kcal
+        </div>
+        {% if not isMobile %}
+            <button class="exercise-item-delete" data-action="delete-exercise" type="button">
+                <i class='fa fa-times'></i>
+            </button>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,155 @@
+<div
+    class="modal modal-workout inmodal in sm"
+    id="editTemplateText"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+    data-title="{{ title }}"
+    data-description="{{ description is defined ? description : '' }}"
+>
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">{{ title }}</h4>
+                <p class="modal-description">{{ description is defined ? description : '' }}</p>
+            </div>
+            <form action="{{ action }}" data-action="{{ action }}" method="POST">
+                <input type="hidden" name="client" value="{{ client ? client.id : '' }}">
+                <input type="hidden" name="plan" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="plan_name" class="control-label">Title</label>
+                        <input type="text" name="name" value="{{ plan ? plan.name : '' }}" class="form-control" id="plan_name" placeholder="Title of Plan (eg. 2 day split - beginner)">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Workouts per week (optional)</label>
+                        <select class="form-control" name="workoutsPerWeek">
+                            <option value="0">Undefined</option>
+                            {% for i in 1..7 %}
+                                <option{{ client and client.workoutsPerWeek == i ? ' selected' : '' }} value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Level (optional)</label>
+                        <select class="form-control" name="level">
+                            <option value="0">Undefined</option>
+                            {% for key, level in constant('AppBundle\\Entity\\WorkoutPlanMeta::LEVELS') %}
+                                <option value="{{ key }}">{{ level }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Location (optional)</label>
+                        <select class="form-control" name="location">
+                            <option value="0">Undefined</option>
+                            {% for key, location in constant('AppBundle\\Entity\\WorkoutPlanMeta::LOCATION') %}
+                                <option value="{{ key }}">{{ location }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Gender (optional)</label>
+                        <select class="form-control" name="gender">
+                            <option value="0">Undefined</option>
+                            <option value="1">Female</option>
+                            <option value="2">Male</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  (function($) {
+    var $modal = $('#editTemplateText');
+    var $modalTitle = $modal.find('.modal-title');
+    var $modalBody = $modal.find('.modal-body');
+    var $modalDescription = $modal.find('.modal-description');
+    var $modalForm = $modal.find('form');
+    var $submit = $modalForm.find('button[type="submit"]');
+    var currentPlan = null;
+
+    $modal
+      .on('show.bs.modal', function (event) {
+        var data = $(event.relatedTarget).data() || {};
+
+        if (data.title) {
+          $modalTitle.text(data.title);
+        }
+
+        if (data.action) {
+          $modalForm.attr('action', data.action);
+        }
+
+        $modalDescription.text(data.description || '');
+        $modalForm.find('[name="plan"]').val(data.plan || '');
+        $modalForm.find('[name="workoutsPerWeek"]').val(0);
+        $modalForm.find('[name="duration"]').val(0);
+        $modalForm.find('[name="level"]').val(0);
+        $modalForm.find('[name="gender"]').val(0);
+        $modalForm.find('[name="location"]').val(0);
+
+
+        currentPlan = data.name || data.explaination;
+
+        if (currentPlan) {
+          var name = data.name;
+
+          if (data.plan) {
+            name = `Copy of ${name}`;
+          }
+
+          $modalForm.find('[name="name"]').val(name);
+          $modalForm.find('[name="explaination"]').val(data.explaination);
+          $modalForm.find('[name="workoutsPerWeek"]').val(data.workoutsperweek);
+          $modalForm.find('[name="duration"]').val(data.duration);
+          $modalForm.find('[name="level"]').val(data.level);
+          $modalForm.find('[name="gender"]').val(data.gender);
+          $modalForm.find('[name="location"]').val(data.location);
+        }
+
+        $submit.text(currentPlan && !data.plan ? 'Save Changes' : 'Create Workout Plan');
+      })
+      .on('hidden.bs.modal', function () {
+        var data = $modal.data();
+
+        $modalTitle.text(data.title);
+        $modalDescription.text(data.description);
+        $modalForm.attr('action', $modalForm.data('action'));
+        $modalBody.find('.alert-danger').remove();
+        $modalForm.find('[name="plan"]').val('');
+
+        if (currentPlan) {
+          $modalForm.find('[name="name"]').val('');
+          $modalForm.find('[name="explaination"]').val('');
+        }
+
+        currentPlan = null;
+      });
+
+
+    $modalForm.on('submit', function (event) {
+      var title = $modalForm.find('[name="name"]').val();
+      var $alert = $modalBody.find('.alert-danger');
+
+      if (title === '') {
+        event.preventDefault();
+
+        if (!$alert.length) {
+          $modalBody.prepend('<div class="alert alert-danger">You need to give your plan a title.</div>');
+        }
+      } else {
+        $alert.remove();
+      }
+    });
+  })(jQuery);
+</script>

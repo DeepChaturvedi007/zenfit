@@ -1,0 +1,50 @@
+.weight-history-container {
+  background: #f9f9f9;
+  height: 100%;
+  max-height: calc(100% - 63px);
+  overflow-y: auto;
+  padding-top: 24px;
+  .weight-header {
+    display: flex;
+    font-size: 13px;
+    padding: 7px 16px 6px;
+    p {
+      color: #7f8fa4;
+      line-height: 1.38;
+      margin: 0;
+    }
+    button {
+      background: none;
+      border: none;
+      color: #1a91eb;
+      font-weight: 500;
+      line-height: 1.08;
+      outline: none;
+    }
+  }
+  ul {
+    background: #ffffff;
+    border-top: 1px solid #e4e4e4;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      align-items: flex-end;
+      border-bottom: 1px solid #e4e4e4;
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 17px 14px 16px;
+      .weight-set {
+        color: #354052;
+        font-size: 16px;
+        margin: 0;
+        line-height: 1;
+      }
+      .weight-data {
+        color: #1a91eb;
+        font-size: 17px;
+        line-height: 0.94;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.form-group-padding {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.summernote-form {
+    padding: 31px;
+}
+.loading-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.jodit-toolbar__box {
+    width: 100%;
+}
+@media (min-width: 992px) {
+    .summernote-form {
+        margin-top: 70px;
+    }
+}

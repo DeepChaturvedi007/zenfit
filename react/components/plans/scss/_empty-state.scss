@@ -1,0 +1,38 @@
+.empty-state {
+
+  position: relative;
+  padding-top: 80px;
+  overflow: hidden;
+  margin: 0 auto;
+
+  .empty-state-title {
+    color: #354052;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .empty-state-description {
+    color: #7F8FA4;
+    font-size: 14px;
+    line-height: 21px;
+    width: 340px;
+    text-align: center;
+    margin: 0 auto 30px;
+  }
+
+  .empty-state-actions {
+    text-align: center;
+  }
+
+  .or-selector {
+    margin: 7px;
+  }
+
+  .plans-left-description {
+    margin-top: 35px;
+    text-align: center;
+  }
+
+}

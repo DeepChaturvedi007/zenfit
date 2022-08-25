@@ -1,0 +1,36 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+<div id="wrapper">
+    {% include '@App/components/sideNav.html.twig' %}
+    {% include '@App/components/metabar.html.twig' with { 'title': 'Leads' } %}
+
+    <div id="page-wrapper" class="gray-bg">
+
+        <div
+            id="leads-overview"
+            data-props="{{ {
+                'authUserId': app.user.getId,
+                'isAssistant': app.user.assistant,
+                'isAdmin': (is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN')),
+                'stripeConnect': app.user.userStripe ? true : false,
+                'locale': app.user.language ? app.user.language.locale : 'en',
+                'paymentRequired': (app.user.userStripe) and (app.user.userStripe.paymentRequired) ? true : false,
+                'showLeadUtm': (app.user.userSettings) and (app.user.userSettings.showLeadUtm) ? true : false,
+                'settings': app.user.userSettings ? app.user.userSettings.serialize|json_encode : null
+            }|json_encode }}"
+        >
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ "leads-overview.css"|webpack_asset }}">
+{% endblock %}
+{% block script %}
+    <script src="{{ "leads-overview.js"|webpack_asset }}"></script>
+{% endblock %}

@@ -1,0 +1,35 @@
+AppBundle\Entity\Exercise:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+
+        preparation:
+            expose: true
+
+        name:
+            expose: true
+
+        description:
+            expose: true
+
+        muscleGroup:
+            expose: true
+
+        exerciseType:
+            expose: true
+
+        execution:
+            expose: true
+
+        source:
+            expose: true
+
+        picture_url:
+            expose: true
+
+        video_url:
+            expose: true
+
+        equipment:
+            expose: true

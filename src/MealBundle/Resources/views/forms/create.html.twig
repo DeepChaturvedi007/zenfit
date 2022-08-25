@@ -1,0 +1,61 @@
+<div class="modal inmodal in md" id="createMealPlan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Create Meal Plan</h4>
+            </div>
+            <div class="modal-body">
+                <div class="plan-create-row">
+                    <div class="plan-create-col">
+                        <div class="plan-create-col-main">
+                            <img src="{{ asset('bundles/app/template-plan-icon.png') }}" alt="">
+                            <h4>Create Meal Plan from Template</h4>
+                            <p>By creating your client’s meal plan from a template, you will save much time on customization.</p>
+                        </div>
+                        <div class="plan-create-col-footer">
+                            <button class="btn btn btn-success btn-upper" data-toggle="modal" data-target="#addMealTemplate" data-modal-back="#createMealPlan">Choose Template</button>
+                        </div>
+                    </div>
+                    <div class="plan-create-or">
+                        <span>or</span>
+                    </div>
+                    <div class="plan-create-col">
+                        <div class="plan-create-col-main">
+                            <img src="{{ asset('bundles/app/empty-plan-icon.png') }}" alt="">
+                            <h4>Create Meal Plan From Scratch</h4>
+                            <p>By creating from scratch, you can easily make a fully customized plan for your client. Don’t worry, you can always save plans as templates later on.</p>
+                        </div>
+                        <div class="plan-create-col-footer">
+                            <button class="btn btn-success btn-upper btn-edit-plan" data-type="new" data-toggle="modal" data-target="#mealPlanModal" data-modal-back="#createMealPlan">Create Plan From Scratch</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function ($) {
+      $('body').on('show.bs.modal', '#addMealTemplate, #mealPlanModal', function (event) {
+        var $modal = $(this);
+        var $relatedTarget = $(event.relatedTarget);
+        var backAction = $relatedTarget.data('modalBack');
+
+        $modal.find('.modal-back-action').remove();
+
+        if (backAction) {
+          $modal.find('.modal-header').prepend(
+            '<div class="modal-back-action">' +
+            '<button class="btn btn-upper" type="button" data-toggle="modal" data-target="' + backAction + '" data-dismiss="modal">' +
+            '<i class="material-icons">&#xE314;</i> Back' +
+            '</button>' +
+            '</div>'
+          );
+        }
+      });
+    })(jQuery);
+</script>

@@ -1,0 +1,54 @@
+AppBundle\Entity\ClientSettings:
+    type: entity
+    table: client_settings
+    repositoryClass: AppBundle\Repository\ClientSettingsRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        mfpUrl:
+            column: mfp_url
+            type: string
+            length: 255
+            nullable: true
+
+        mfpUserId:
+            column: mfp_user_id
+            type: string
+            length: 255
+            nullable: true
+
+        mfpAccessToken:
+            column: mfp_access_token
+            type: string
+            length: 512
+            nullable: true
+
+        mfpRefreshToken:
+            column: mfp_refresh_token
+            type: string
+            length: 512
+            nullable: true
+
+        mfpExpireDate:
+            column: mfp_expire_date
+            type: datetime
+            nullable: true
+
+    oneToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: clientSettings
+            joinColumn:
+               nullable: false
+               onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

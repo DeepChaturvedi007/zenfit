@@ -1,0 +1,54 @@
+:root {
+    --external-circle: 18px;
+    --inner-circle: 10px;
+}
+
+.zf-radio {
+    display: flex;
+    position: relative;
+}
+
+.zf-radio input[type="radio"] {
+    display: none;
+}
+.zf-radio label {
+    margin-left: 36px !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    color: #3f3f3f;
+}
+
+.zf-radio label:before,
+.zf-radio label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.zf-radio label:before {
+    border: 2px solid #798999;
+    width: var(--external-circle);
+    height: var(--external-circle);
+    background-color: #fff;
+    left: 0;
+    top: calc(50% - var(--external-circle)/2);
+}
+
+.zf-radio label:after {
+    width: var(--inner-circle);
+    height: var(--inner-circle);
+    background-color: #0091fe;
+    left: calc(var(--external-circle)/2 - var(--inner-circle)/2);
+    top: calc(50% - var(--inner-circle)/2);
+    display: none;
+}
+
+.zf-radio input[type="radio"]:checked + label:before {
+    border-color: #0091fe;
+}
+
+.zf-radio input[type="radio"]:checked + label:after {
+    display: block;
+}

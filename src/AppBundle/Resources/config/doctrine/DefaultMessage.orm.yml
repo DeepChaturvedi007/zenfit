@@ -1,0 +1,54 @@
+AppBundle\Entity\DefaultMessage:
+    type: entity
+    table: default_messages
+    repositoryClass: AppBundle\Repository\DefaultMessageRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+
+        message:
+            type: text
+
+        subject:
+            type: string
+            length: 255
+            nullable: true
+
+        type:
+            type: integer
+            length: 10
+
+        locale:
+            type: string
+            nullable: true
+
+        autoAssign:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        user:
+            targetEntity: AppBundle\Entity\User
+            inversedBy: defaultMessages
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+                nullable: TRUE
+            cache:
+                usage: NONSTRICT_READ_WRITE
+
+    lifecycleCallbacks: {  }

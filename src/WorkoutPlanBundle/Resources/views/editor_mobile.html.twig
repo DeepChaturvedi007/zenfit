@@ -1,0 +1,99 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+
+    {% set isTemplate = client == null %}
+
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+        {% include '@WorkoutPlan/forms/apply_template.html.twig' with {
+            'title': 'Apply template to Workout',
+            'plan': plan,
+            'client': client
+        } %}
+        {% include '@WorkoutPlan/forms/day.html.twig' %}
+        {% include '@App/default/modals/saveAsPdf.html.twig' with {'type': 'workout'} %}
+        {% include '@App/default/modals/confirmModal.html.twig' with {
+            modalId: 'deleteModal',
+            modalTitle: 'Delete workout plan?',
+            formPath: path('workout_delete',{'plan':plan.id}),
+            btnClass: 'btn-danger',
+            btnName: 'Delete'
+        } %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            {% if client %}
+                {% include '@App/components/clientNav.html.twig' with { 'clientWorkout': 'true' } %}
+            {% else %}
+                {% include '@App/components/metabar.html.twig' with {
+                    'title': plan.name,
+                    'template': null,
+                    'mobile': true
+                } %}
+            {% endif %}
+
+            {% set backUrl = isTemplate ? path('workout_templates') : path('workout_client',{'client':client.id}) %}
+
+            <div class="container-mobile m-n-p-x p-n-t">
+                <div class="wrapper wrapper-content">
+                    <div class="container-block">
+                        {% if showMessage %}
+                            <div class="alert alert-info b-r-n">
+                                {{ isTemplate ? 'This is you first workout plan template.' : 'This is you first workout plan.' }} You can add several workout days, drag'n'drop these days, and much more.
+                            </div>
+                        {% endif %}
+                        <div class="ibox float-e-margins">
+                            <header class="workouts-header">
+                                <div>
+                                    <a class="btn btn-success" href="{{ backUrl }}" role="button">
+                                        <i class="fa fa-arrow-left"></i> Back
+                                    </a>
+                                </div>
+                                <div class="workouts-header-left m-l">
+                                    <h4 class="text-center">{{ plan.name }}</h4>
+                                </div>
+                                <div data-plan-name="{{ plan.name }}"
+                                     data-plan-comment="{{ plan.explaination }}"
+                                     id="workout-days-options-list" class="workouts-header-left text-right"></div>
+                            </header>
+                            <div id="workout-days-list"
+                                 class="project-list"
+                                 data-plan-id="{{ plan.id }}"
+                                 data-item-url="{{ path('workoutDayEditorMobile', { 'day': ':id' }) }}"
+                                 data-is-template="{{ isTemplate }}"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include '@App/default/widgets/chatWidget.html.twig' %}
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css -%}
+    <link rel="stylesheet" href="{{ "workout-days.css"|webpack_asset }}">
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    <script src="{{ "workout-days.js"|webpack_asset }}"></script>
+    <script src="{{ asset('bundles/app/js/workout.js') }}"></script>
+    <script>
+        (function($) {
+            $('body')
+                .on('click', '[data-day-href]', function(evt) {
+                    evt.preventDefault();
+                    window.location.href = $(this).data('dayHref');
+                })
+        }(jQuery));
+    </script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock %}

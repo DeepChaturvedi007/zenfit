@@ -1,0 +1,39 @@
+AppBundle\Entity\DocumentClient:
+    type: entity
+    table: document_clients
+    repositoryClass: AppBundle\Repository\DocumentClientRepository
+    cache:
+        usage: NONSTRICT_READ_WRITE
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+            options:
+                unsigned: true
+
+    fields:
+        locked:
+            type: boolean
+            options:
+                default: false
+
+    manyToOne:
+        document:
+            targetEntity: AppBundle\Entity\Document
+            inversedBy: documentClients
+            joinColumn:
+                nullable: false
+                referencedColumnName: id
+                onDelete: CASCADE
+
+        client:
+            targetEntity: AppBundle\Entity\Client
+            inversedBy: documentClients
+            joinColumn:
+                nullable: false
+                referencedColumnName: id
+                onDelete: CASCADE
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,18 @@
+<svg width="50px" height="50px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#A9EE6A" offset="0%"></stop>
+            <stop stop-color="#70D838" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="8-6-3-Client-Payment-Form---Step-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-658.000000, -153.000000)">
+        <g id="Group" transform="translate(326.000000, 44.000000)">
+            <g id="1" transform="translate(253.000000, 109.000000)">
+                <g id="Success-Icon" transform="translate(79.000000, 0.000000)">
+                    <path d="M50,25 C50,38.807 38.807,50 25,50 C11.193,50 0,38.807 0,25 C0,11.193 11.193,0 25,0 C38.807,0 50,11.193 50,25 L50,25 Z" id="Stroke-108" fill="url(#linearGradient-1)"></path>
+                    <polyline id="Stroke-114" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="36 18 23.0769231 32 15 25.7777778"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,83 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <ul class="progress-indicator" style="margin-top: 10px;">
+
+            <li class="completed">
+                <span class="bubble"></span>
+                View demo client <br>
+            </li>
+            {% if clientInfo is defined %}
+                <li class="active">
+                    <span class="bubble"></span>
+                    Client info <br>
+                </li>
+                <li>
+                    <span class="bubble"></span>
+                    Workout plan <br>
+                </li>
+                <li>
+                    <span class="bubble"></span>
+                    Body progress
+                </li>
+                <li>
+                    <span class="bubble"></span>
+                    Visit client's app
+                </li>
+            {% endif %}
+            {% if clientWorkout is defined %}
+                <li class="completed">
+                    <span class="bubble"></span>
+                    Client info <br>
+                </li>
+                <li class="active">
+                    <span class="bubble"></span>
+                    Workout plan <br>
+                </li>
+                <li>
+                    <span class="bubble"></span>
+                    Body progress
+                </li>
+                <li>
+                    <span class="bubble"></span>
+                    Visit client's app
+                </li>
+            {% endif %}
+            {% if clientBodyProgress is defined %}
+                <li class="completed">
+                    <span class="bubble"></span>
+                    Client info <br>
+                </li>
+                <li class="completed">
+                    <span class="bubble"></span>
+                    Workout plan <br>
+                </li>
+                <li class="active">
+                    <span class="bubble"></span>
+                    Body progress
+                </li>
+                <li>
+                    <span class="bubble"></span>
+                    Visit client's app
+                </li>
+            {% endif %}
+            {% if appVisit is defined %}
+                <li class="completed">
+                    <span class="bubble"></span>
+                    Client info <br>
+                </li>
+                <li class="completed">
+                    <span class="bubble"></span>
+                    Workout plan <br>
+                </li>
+                <li class="completed">
+                    <span class="bubble"></span>
+                    Body progress
+                </li>
+                <li class="active">
+                    <span class="bubble"></span>
+                    Visit client's app
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

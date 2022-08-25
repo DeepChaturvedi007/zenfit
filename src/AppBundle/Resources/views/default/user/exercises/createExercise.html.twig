@@ -1,0 +1,327 @@
+<div class="modal inmodal fade sm" role="dialog" tabindex="-1" id="user_exercise_modal" data-show="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"></h4>
+                <p>The exercise you create will be available in 'Your exercises' and in your clients' workout plans.</p>
+            </div>
+            <form id="userExerciseForm" rv-action="formAction" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="" class="control-label">Exercise title</label>
+                        <input type="text" id="exerciseTitle" placeholder="Exercise title" class="form-control" name="name" rv-value="model.exercise.name">
+                    </div>
+
+                    <hr />
+
+                    <div style="text-align: center;">
+                        <h3>Additional info</h3>
+                        <small>* not required</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exerciseType" class="control-label">Exercise Type *</label>
+                        <select name="exerciseTypeId" id="exerciseType" rv-value="model.exercise.exerciseTypeId"  class="form-control">
+                            <option value="">Select exercise type...</option>
+                            <option value="1">Strength</option>
+                            <option value="2">Strech</option>
+                            <option value="4">Cardio</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="muscleGroup" class="control-label">Muscle Group *</label>
+                        <select name="muscleGroupId" id="muscleGroup"  class="form-control" rv-value="model.exercise.muscleGroupId">
+                            <option value="">Select muscle group...</option>
+                            {% for muscle in muscleGroups %}
+                                <option value="{{ muscle.id }}">{{ muscle.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="workoutType" class="control-label">Workout Type *</label>
+                        <select name="workoutTypeId" id="workoutType"  class="form-control" rv-value="model.exercise.workoutTypeId">
+                            <option value="">Select workout type...</option>
+                            <option value="1">Reps</option>
+                            <option value="2">Time</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="equipment" class="control-label">Equipment *</label>
+                        <select name="equipmentId" id="equipment" rv-value="model.exercise.equipmentId" class="form-control">
+                            <option value="">Select equipment...</option>
+                            {% for equipment in equipments %}
+                                <option value="{{ equipment.id }}">{{ equipment.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="control-label">Video Link *</label>
+                        <input placeholder="YouTube / Vimeo video url" type="text" name="videoUrl" rv-value="model.exercise.video_url" rv-on-keyup="handleVideo" rv-on-input="handleVideo" class="form-control">
+                        <small class="font-bold">Insert link to show clients how to perform exercise with a video. Eg. "https://youtu.be/EUjh50tLlBo"</small>
+                        <div class="p-t" rv-if="model.thumbnailLoading">
+                            <div class="sk-spinner sk-spinner-circle">
+                                <div class="sk-circle1 sk-circle"></div>
+                                <div class="sk-circle2 sk-circle"></div>
+                                <div class="sk-circle3 sk-circle"></div>
+                                <div class="sk-circle4 sk-circle"></div>
+                                <div class="sk-circle5 sk-circle"></div>
+                                <div class="sk-circle6 sk-circle"></div>
+                                <div class="sk-circle7 sk-circle"></div>
+                                <div class="sk-circle8 sk-circle"></div>
+                                <div class="sk-circle9 sk-circle"></div>
+                                <div class="sk-circle10 sk-circle"></div>
+                                <div class="sk-circle11 sk-circle"></div>
+                                <div class="sk-circle12 sk-circle"></div>
+                            </div>
+                        </div>
+                        <div class="mb-1 p-t" rv-if="model.thumbnail | exists">
+                            <img rv-src="model.thumbnail" alt="" style="width: 100%;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">Execution</label>
+                        <textarea
+                                rv-value="model.exercise.execution"
+                                id="exercise-execution"
+                                placeholder="Enter execution recommendations"
+                                type="text"
+                                name="execution"
+                                class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="videoThumbnail" rv-value="model.thumbnail">
+                    <input type="hidden" name="_method" rv-value="formMethod">
+                    <button type="submit" class="btn btn-block btn-success btn-upper">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{{ asset("bundles/app/js/rivets.bundled.min.js") }}"></script>
+<script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+<script>
+    (function($) {
+        window.deleteAlert = function (e) {
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this exercise!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
+                var formParent = $(e.target).closest("form");
+
+                $.ajax({
+                    method: "DELETE",
+                    url: formParent.attr("action"),
+                    success: function() {
+                        swal({
+                            title: "Deleted!",
+                            text: "Your exercise has been deleted.",
+                            type: "success",
+                        }, function() {
+                            console.log('......');
+                            window.location.reload();
+                        });
+                    },
+                    error: function () {
+                        swal("Error!", "Something went wrong, you can't delete this exercise because it's being used in on some of your clients. Please removed this exercise from all your client's workout plans.", "error");
+                    }
+                });
+
+                //$(e.target).closest("form").submit()
+            })
+        };
+
+
+        var YOUTUBE_ID_RE = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
+        var VIDEO_THUMBNAIL_URL = "{{ path('exercise_video_thumbnail', {'videoId': ':id', 'type': ':type'}) }}";
+
+        function getVideoPathInfo(uri) {
+            var id = null;
+            var type = 'other';
+
+            if (uri.indexOf('vimeo') > -1) {
+                id = uri.substr(uri.lastIndexOf('/') + 1);
+                type = 'vimeo';
+            } else if (uri.indexOf('youtube') > -1 || uri.indexOf('youtu.be') > -1) {
+                var found = uri.match(YOUTUBE_ID_RE);
+                id = found[1] || null;
+                type = 'youtube';
+            }
+
+            return { id: id, type: type };
+        }
+
+        function getVideoThumbnail(id, type) {
+            var dfd = jQuery.Deferred();
+            var url = VIDEO_THUMBNAIL_URL.replace(':id', id).replace(':type', type);
+
+            $.getJSON(url)
+                .done(function(response) {
+                    console.log('getVideoThumbnail', response)
+                    dfd.resolve(response.data.url);
+                })
+                .fail(function() {
+                    dfd.resolve(null);
+                });
+
+            return dfd.promise();
+        }
+
+        function previewFile(el) {
+            var dfd = jQuery.Deferred();
+            var file    = el.files[0];
+            var reader  = new FileReader();
+
+            reader.onloadend = function() {
+                dfd.resolve(reader.result);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                dfd.resolve(null);
+            }
+
+            return dfd.promise();
+        }
+
+        rivets.formatters.exists = function(value){
+            return Boolean(value);
+        };
+
+        rivets.binders.action = function(elm, value) {
+            elm.action = value;
+        };
+
+        rivets.binders.method = function(elm, value) {
+            elm.method = value;
+        };
+
+        var $exerciseModal = $('#user_exercise_modal');
+
+        $exerciseModal
+          .on('shown.bs.modal', function(e) {
+            setTimeout(function() {
+              var elem = $('input[name="videoUrl"]')[0];
+
+              if (elem && elem.value) {
+                var event = new Event('input');
+                elem.dispatchEvent(event);
+              }
+            }, 50);
+          })
+          .on('show.bs.modal', function(e) {
+            var $target = $(e.relatedTarget);
+            var isEdit = $target.data('type') === 'edit';
+            var exercise = {};
+            $(this)
+                .find('.modal-title').text(isEdit ? 'Edit exercise' : 'Create exercise');
+
+            if (isEdit) {
+                exercise = $target.data('exercise');
+            } else {
+                if ($target.data('title')) {
+                    exercise.name = $target.data('title');
+                }
+
+                if ($target.data('video')) {
+                  exercise.video_url = $target.data('video');
+                }
+            }
+
+            var el = $(this);
+            var handleVideoTimeout = 0;
+            var prevVideoUrl;
+            var view = null;
+
+            var model = {
+              exercise: exercise,
+              thumbnail: exercise.picture_url,
+              thumbnailLoading: false,
+            };
+            var data = {
+                model: model,
+                muscleGroups: {{ muscleGroups|json_encode|raw }},
+                equipments: {{ equipments|json_encode|raw }},
+                formAction: $target.data('action') ||  '{{ path("user_exercises") }}',
+                formMethod: isEdit ? 'PUT' : 'POST',
+
+                handleVideo: function(evt) {
+                  clearTimeout(handleVideoTimeout);
+
+                  handleVideoTimeout = setTimeout(function() {
+                    var value = evt.target.value;
+
+                    if (prevVideoUrl === value) {
+                      return;
+                    }
+
+                    if (value) {
+                      var video = getVideoPathInfo(evt.target.value);
+
+                      model.thumbnailLoading = true;
+
+                      getVideoThumbnail(video.id, video.type)
+                        .done(function(thumbnail) {
+                          model.thumbnail = thumbnail;
+                        })
+                        .always(function() {
+                          model.thumbnailLoading = false;
+                        });
+                    } else {
+                      model.thumbnail = undefined;
+                    }
+
+                    prevVideoUrl = value;
+                  }, 250);
+                }
+            };
+
+            view = this.$view = rivets.bind(el, data);
+        });
+
+        $("#userExerciseForm").on("submit", function(e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            var href = $(this).attr("action");
+            var method = $(this).attr("method");
+
+            $.ajax({
+                method: method,
+                url: href,
+                data: data,
+                success: function(res) {
+
+                    if(res.hash) {
+                        window.location.hash = res.hash;
+                    }
+                    location.reload();
+                }, error: function(err) {
+                    var msg = JSON.parse(err.responseText).msg;
+                    $exerciseModal.find('.modal-header h4, .modal-header div.alert')
+                        .replaceWith("<div class='alert alert-danger'>" + msg + "</div>");
+                }
+            });
+        })
+
+        $(".modal").on("hidden.bs.modal", function(){
+            var video = $("iframe").attr("src");
+            $("iframe").attr("src","");
+            $("iframe").attr("src",video);
+
+        });
+
+        $('body').on('hidden.bs.modal', '.modal', function () {
+            $(this).removeData('bs.modal');
+        });
+    }(jQuery));
+</script>

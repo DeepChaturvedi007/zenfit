@@ -1,0 +1,298 @@
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+ {% if action is not defined %}
+      {% set action = path('meal_recipes_create') %}
+ {% endif %}
+<div
+        class="modal inmodal in sm"
+        id="recipeModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        data-title="Recipe"
+        data-description="{{ description is defined ? description : '' }}"
+>
+    <div class="modal-dialog">
+        <div class="modal-content modal-content-light-grey">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Recipe</h4>
+                <p class="modal-description">{{ description is defined ? description : '' }}</p>
+            </div>
+            <form action="{{ action }}" data-action="{{ action }}" method="POST" id="createRecipeForm" autocomplete="off" enctype="multipart/form-data">
+                <input type="hidden" name="mode" />
+                <input type="hidden" name="sourceMeal" />
+                <input type="hidden" name="admin" value="{{ admin is defined ? 1 : 0 }}" />
+                <div class="modal-body">
+                    <input type="hidden" name="recipeId" value="" />
+                    <div class="form-group">
+                        <select class="form-control" name="locale" id="recipeLocale">
+                            {% for value, title in locales() %}
+                                <option{{ loop.first ? ' selected' : '' }} value="{{ value }}">{{ title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeName" class="control-label">Recipe name</label>
+                        <input type="text" name="name" id="recipeName" class="form-control title" placeholder="Name of recipe">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeMacroSplit" class="control-label">Choose macro split</label>
+                        <select class="form-control" name="macro_split" id="recipeMacroSplit">
+                            {% for value, title in macro_splits() %}
+                                <option{{ loop.first ? ' selected' : '' }} value="{{ value }}">{{ title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeType" class="control-label">Choose type</label>
+                        <select class="form-control selectpicker" name="type" id="recipeType" multiple>
+                          {% for value, title in meal_types() %}
+                              <option value="{{ value }}">{{ title }}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipeMacroSplit" class="control-label">Cooking time</label>
+                        <select class="form-control" name="cooking_time" id="recipeCookingTime">
+                            {% for value, title in cooking_times() %}
+                                <option{{ loop.first ? ' selected' : '' }} value="{{ value }}">{{ title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {% include '@App/components/clientFields/avoid.html.twig' with {
+                      'title': 'Recipe ingredients',
+                      'lactose': 'Lactose',
+                      'gluten': 'Gluten',
+                      'nuts': 'Nuts',
+                      'eggs': 'Eggs',
+                      'pig': 'Pig',
+                      'shellfish': 'Shellfish',
+                      'fish': 'Fish',
+                      'vegetarian': 'Vegetarian',
+                      'vegan': 'Vegan',
+                      'pescetarian': 'Pescetarian'
+                    } %}
+
+                    {% if skip_image is not defined or skip_image == false %}
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                              <label for="recipeImage" class="control-label">Upload recipe image</label>
+                              <input class="form-control" id="recipeImage" type="file" name="image" accept="image/*">
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                              <img class="recipeImgThumbnail" />
+                            </div>
+                          </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-block btn-success btn-upper">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+    <script>
+      (function($) {
+        var $modal = $('#recipeModal');
+        var $modalTitle = $modal.find('.modal-title');
+        var $modalBody = $modal.find('.modal-body');
+        var $modalDescription = $modal.find('.modal-description');
+        var $modalForm = $modal.find('form');
+        var $submit = $modalForm.find('button[type="submit"]');
+        var $recipeImage = $modal.find('#recipeImage');
+        var $recipeImgThumbnail = $modal.find('img.recipeImgThumbnail');
+        var $recipeTypes = $('#recipeType');
+        var currentRecipe = null;
+        let postAction = null;
+        let recipeId = null;
+        $modal
+          .on('show.bs.modal', function (event) {
+            $modalForm.find('[name="name"]').val("");
+            var data = $(event.relatedTarget).data() || {};
+
+            if (data.title) {
+              $modalTitle.text(data.title);
+            }
+
+            if (data.action) {
+              $modalForm.attr('action', data.action);
+            }
+
+            if (data.types) {
+              $recipeTypes.selectpicker("val", data.types);
+            }
+
+            postAction  = data.postaction;
+
+            var json = {"lactose":false,"gluten":false,"nuts":true,"eggs":false,"pig":false,"shellfish":false,"fish":false,"isVegetarian":false,"isVegan":false,"isPescetarian":false};
+
+            Object.keys(json).forEach(ingredient => {
+              let el;
+              if(ingredient.substring(0,2) === 'is') {
+                el = 'input#is_' + ingredient.substring(2).toLowerCase();
+              } else {
+                el = 'input#avoid_' + ingredient;
+              }
+              $(el).parent('label').removeClass('current');
+            })
+
+            if (data.recipeMeta) {
+              Object.keys(data.recipeMeta).forEach(ingredient => {
+                // if ingredient is chosen
+                if(data.recipeMeta[ingredient]) {
+                  let el;
+                  if(ingredient.substring(0,2) === 'is') {
+                    el = 'input#is_' + ingredient.substring(2).toLowerCase();
+                  } else {
+                    el = 'input#avoid_' + ingredient;
+                  }
+                  $(el).parent('label').addClass('current');
+                }
+              })
+            }
+            if (data.mode) {
+              $modalForm.find('[name="mode"]').val(data.mode);
+            }
+            if (data.macroSplit) {
+              $modalForm.find('[name="macro_split"]').val(data.macroSplit);
+            }
+
+            if (data.cookingTime) {
+              $modalForm.find('[name="cooking_time"]').val(data.cookingTime);
+            }
+
+            if (data.locale) {
+              $modalForm.find('[name="locale"]').val(data.locale);
+            }
+
+            if (data.id) {
+              $modalForm.find('[name="recipeId"]').val(data.id);
+            }
+
+            if (data.image) {
+              $recipeImgThumbnail.attr('src', data.image);
+            }
+
+            $modalDescription.text(data.description || '');
+            $modalForm.find('[name="recipe"]').val(data.id || '');
+            $modalForm.find('[name="sourceMeal"]').val(data.sourceMeal || '');
+
+            currentRecipe = data.name;
+
+            if (currentRecipe) {
+              var name = data.name;
+
+              $modalForm.find('[name="name"]').val(name);
+            }
+
+            $submit.text(currentRecipe && !data.id ? 'Save Changes' : 'Create Recipe');
+          })
+          .on('hidden.bs.modal', function () {
+            var data = $modal.data();
+
+            $modal.find('form').trigger('reset');
+            $modalTitle.text(data.title);
+            $modalDescription.text(data.description);
+            $modalForm.attr('action', $modalForm.data('action'));
+            $modalBody.find('.alert-danger').remove();
+            currentRecipe = null;
+          });
+
+
+        $modalForm.on('submit', function (event) {
+          event.preventDefault();
+          var name = $modalForm.find('[name="name"]').val();
+          var type = $modalForm.find('[name="type"]').val();
+          var $alert = $modalBody.find('.alert-danger');
+          $alert.remove();
+
+          if (name === '') {
+            $modalBody.prepend('<div class="alert alert-danger">You need to provide a recipe title.</div>');
+            return;
+          } else if (!type) {
+            $modalBody.prepend('<div class="alert alert-danger">You have to specify a recipe type.</div>');
+            return;
+          }
+
+          const mode = $modalForm.find('[name=mode]').val();
+          const sourceMeal = $modalForm.find('[name=sourceMeal]').val();
+          const recipe = $modalForm.find('[name=recipeId]').val();
+          const admin = $modalForm.find('[name=admin]').val();
+          const locale = $modalForm.find('[name=locale]').val();
+          const macroSplit = $modalForm.find('[name=macro_split]').val();
+          const cookingTime = $modalForm.find('[name=cooking_time]').val();
+          const image = $modalForm.find('[name=image]').val() ? $modalForm.find('[name=image]')[0].files[0] : null;
+          var avoid = [];
+          $(".avoid-checkbox label.current").each(function () {
+            const input = $(this).find('input');
+            avoid.push(input.val());
+          });
+
+          const data = new FormData();
+          data.append('recipe', recipe);
+          data.append('admin', admin);
+          data.append('locale', locale);
+          data.append('macro_split', macroSplit);
+          data.append('cooking_time', cookingTime);
+          data.append('image', image);
+          data.append('name', name);
+          data.append('type', JSON.stringify(type));
+          data.append('avoid', JSON.stringify(avoid));
+          data.append('mode', mode);
+          data.append('sourceMeal', sourceMeal);
+
+          $.ajax({
+            url: $modalForm.attr('action'),
+            type: 'POST',
+            data: data,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (res) {
+              if(postAction) {
+                const event = new CustomEvent("onRecipeSaved", {
+                  detail: {
+                    recipeId: res.id,
+                    name: res.name
+                  }
+                });
+                window.dispatchEvent(event);
+                $modal.modal('hide');
+              } else if (mode === 'save') {
+                toastr.success('Recipe successfully saved');
+                $modal.modal('hide');
+              } else {
+                location.reload();
+              }
+            },
+            error: function (err) {
+              toastr.error('An error occurred');
+            }
+          });
+        });
+
+        $recipeImage.on('change', function() {
+          if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+              $recipeImgThumbnail.attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+      })(jQuery);
+    </script>
+{% endblock script %}

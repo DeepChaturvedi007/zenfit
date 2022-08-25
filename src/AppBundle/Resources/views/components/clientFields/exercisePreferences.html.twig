@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label class="control-label">Workout Preferences <span class="tooltip-label" data-toggle="tooltip" data-placement="right" title="Are there any specific muscle groups you want to improve? Are you trying to improve strength, endurance, or both?">?</span></label>
+    <div class="form-group-in">
+        <textarea class="form-control" name="exercisePreferences" {% if client.exercisePreferences is null %} placeholder="Are there any specific muscle groups you want to improve? Are you trying to improve strength, endurance, or both?" {% endif %} rows="3">{% if client.exercisePreferences is not null %}{{ client.exercisePreferences }}{% endif %}</textarea>
+    </div>
+</div>

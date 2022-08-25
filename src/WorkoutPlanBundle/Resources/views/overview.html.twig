@@ -1,0 +1,346 @@
+{% extends '@App/base.html.twig' %}
+
+{% block content -%}
+    <div id="wrapper" {% if demoClient %} class="demo-wrapper" {% endif %}>
+        {% if demoClient %}
+            {% include '@App/components/demoNav.html.twig' %}
+        {% endif %}
+        {% include '@App/components/sideNav.html.twig' %}
+
+        {% set title = client ? client.name ~ '\'s Workout Plans' : 'Your Workout Templates' %}
+        {% set text = client ? 'Workouts created from this page will be available in ' ~ client.name ~ '\'s app.' :
+        'Workout Templates created from this page,<br> can be made once and assigned to multiple clients!' %}
+
+        {% if client %}
+            {% set btnActions = '<a href="#" data-toggle="modal" data-target="#createWorkout" role="button" class="btn btn-success btn-upper">Create New Workout Plan</a>' %}
+        {% else %}
+            {% set btnActions = '<a href="#" data-toggle="modal" data-target="#editTemplateText" role="button" class="btn btn-success btn-upper">Create New Workout Template</a>' %}
+        {% endif %}
+        {% if client %}
+            {% include '@App/components/clientNav.html.twig' with { 'clientWorkout': 'true' } %}
+        {% else %}
+            {% include '@App/components/metabar.html.twig' with { 'title': title } %}
+        {% endif %}
+
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="container-mobile m-n-p-x">
+                {% if plans is not empty %}
+                    {% include '@App/components/emptyContainer.html.twig' with {
+                        'title': client ? 'Create New Workout Plan for ' ~ client.name : 'Create New Workout Template',
+                        'text': text,
+                        'image': asset('bundles/app/dumbbell.png'),
+                        'actions': btnActions
+                    } %}
+                {% endif %}
+                <div class="animated fadeInRight under-header" style="padding-top: 20px;">
+                    {% if plans is not empty %}
+                        <div class="table-container">
+                            <table class="table actions-on-hover sort-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th class="no-wrap hidden-xs">Last Updated</th>
+                                        <th class="no-wrap hidden-xs">Created</th>
+                                        <th class="no-wrap hidden-xs"># Workout Days</th>
+                                        <th class="hidden-xs" width="150">Comment</th>
+                                        {% if client %}<th class="no-wrap hidden-xs">Status</th>{% endif %}
+                                        <th style="text-align: right;" width="150">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for plan in plans %}
+
+                                    {% if client %}
+                                        {% set routePath = 'workout_client_edit' %}
+                                        {% set routeParams = { 'plan': plan.id, 'client': client.id } %}
+                                    {% else %}
+                                        {% set routePath = 'workout_templates_edit' %}
+                                        {% set routeParams = { 'plan': plan.id } %}
+                                    {% endif %}
+
+                                    <tr>
+                                        <td width="50%">
+                                            <a href="{{ path(routePath, routeParams) }}">
+                                                <strong class="plan-name">{{ plan.name }}</strong>
+                                                {% if plan.last_updated %}
+                                                    <p class="hidden-sm hidden-md hidden-lg" style="color: #676a6c;">
+                                                        Updated: {{ plan.last_updated|date("M d, Y") }}
+                                                    </p>
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td class="no-wrap hidden-xs">
+                                            {% if plan.last_updated %}
+                                                {{ plan.last_updated|date("d M Y") }}
+                                            {% elseif plan.created %}
+                                                {{ plan.created|date("d M Y") }}
+                                            {% endif %}
+                                        <td class="no-wrap hidden-xs">
+                                            {% if plan.created %}
+                                                {{ plan.created|date("d M Y") }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="no-wrap hidden-xs">{{ plan.days }}</td>
+                                        <td class="hidden-xs">{{ plan.explaination }}</td>
+                                        {% if client %}
+                                            <td class="no-wrap hidden-xs">
+                                                <div class="dropdown" data-status="{{ plan.status }}">
+                                                    <a class="plan-status-handler"
+                                                       href="#"
+                                                       data-toggle="dropdown"
+                                                       aria-haspopup="true"
+                                                       aria-expanded="false">
+                                                        <span class="plan-status-label {{ plan.status == 'active' ? 'text-valid' : 'text-invalid' }}">
+                                                            {{ plan.status|capitalize }}
+                                                        </span>
+                                                        <span class="caret"></span>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#"
+                                                               data-action="toggle-action"
+                                                               data-url="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                               data-status="active">Activate</a></li>
+                                                        <li><a href="#"
+                                                               data-action="toggle-action"
+                                                               data-url="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                               data-status="inactive">Deactivate</a></li>
+                                                        <li><a href="#"
+                                                               data-action="toggle-action"
+                                                               data-url="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                               data-status="hidden">Hide plan</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        {% endif %}
+                                        <td class="text-right table-actions no-wrap">
+                                            <div class="hidden-sm hidden-md hidden-lg">
+                                                <div class="dropdown" >
+                                                    <button
+                                                            class="btn btn-default btn-sm btn-ellipsis"
+                                                            data-toggle="dropdown"
+                                                            aria-expanded="false"
+                                                            type="button"
+                                                    ><i class="material-icons">more_horiz</i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        {% if client is null %}
+                                                        <li>
+                                                            <a href="#"
+                                                               data-plan="{{ plan.id }}"
+                                                               data-target="#assignTemplate"
+                                                               data-toggle="modal"
+                                                               role="button">Assign Plan to Client(s)</a>
+                                                        </li>
+                                                        {% endif %}
+                                                        <li>
+                                                            <a href="#"
+                                                               data-name="{{ plan.name }}"
+                                                               data-comment="{{ plan.explaination }}"
+                                                               data-workoutsPerWeek="{{ plan.meta and plan.meta.workoutsPerWeek ? plan.meta.workoutsPerWeek : 0 }}"
+                                                               data-duration="{{ plan.meta and plan.meta.duration ? plan.meta.duration : 0 }}"
+                                                               data-gender="{{ plan.meta and plan.meta.gender ? plan.meta.gender : 0 }}"
+                                                               data-level="{{ plan.meta and plan.meta.level ? plan.meta.level : 0 }}"
+                                                               data-location="{{ plan.meta and plan.meta.location ? plan.meta.location : 0 }}"
+                                                               data-title="Edit Workout Plan"
+                                                               data-action="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                               data-target="#editTemplateText"
+                                                               data-toggle="modal"
+                                                               role="button">Edit name
+                                                            </a>
+                                                        </li>
+                                                        {% if client %}
+                                                            <li class="dropdown" data-status="{{ plan.status }}">
+                                                                <a class="plan-status-handler" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <span class="plan-status-label {{ plan.status == 'active' ? 'text-valid' : 'text-invalid' }}">{{ plan.status|capitalize }}</span>
+                                                                    <span class="caret"></span>
+                                                                </a>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a href="#"
+                                                                           data-action="toggle-action"
+                                                                           data-url="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                                           data-status="active">Activate</a></li>
+                                                                    <li><a href="#"
+                                                                           data-action="toggle-action"
+                                                                           data-url="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                                           data-status="inactive">Deactivate</a></li>
+                                                                    <li><a href="#"
+                                                                           data-action="toggle-action"
+                                                                           data-url="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                                           data-status="hidden">Hide plan</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        {% endif %}
+                                                        <li>
+                                                            <a href="#"
+                                                               data-plan="{{ plan.id }}"
+                                                               data-name="{{ plan.name }}"
+                                                               data-workoutsPerWeek="{{ plan.meta and plan.meta.workoutsPerWeek ? plan.meta.workoutsPerWeek : 0 }}"
+                                                               data-duration="{{ plan.meta and plan.meta.duration ? plan.meta.duration : 0 }}"
+                                                               data-gender="{{ plan.meta and plan.meta.gender ? plan.meta.gender : 0 }}"
+                                                               data-level="{{ plan.meta and plan.meta.level ? plan.meta.level : 0 }}"
+                                                               data-location="{{ plan.meta and plan.meta.location ? plan.meta.location : 0 }}"
+                                                               data-title="Clone Workout Plan"
+                                                               data-action="{{ path('workout_create') }}"
+                                                               data-target="#editTemplateText"
+                                                               data-toggle="modal"
+                                                               role="button">Duplicate plan
+                                                            </a>
+                                                        </li>
+                                                        <li><a class="delete-link"
+                                                               href="{{ path('workout_delete', { 'plan': plan.id }) }}"
+                                                               role="button"
+                                                               onclick="shouldDelete(event)">Delete plan</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="hidden-xs">
+                                                {% if client is null %}
+                                                <a
+                                                    class="btn btn-default btn-sm fa"
+                                                    href="#"
+                                                    data-plan="{{ plan.id }}"
+                                                    data-target="#assignTemplate"
+                                                    data-toggle="modal"
+                                                    role="button"
+                                                >
+                                                    <svg style="width:17px;height:17px" viewBox="0 0 24 24">
+                                                        <path fill="#7F8FA4" d="M18,19H6V17.6C6,15.6 10,14.5 12,14.5C14,14.5 18,15.6 18,17.6M12,7A3,3 0 0,1 15,10A3,3 0 0,1 12,13A3,3 0 0,1 9,10A3,3 0 0,1 12,7M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                                                    </svg>
+                                                </a>
+                                                {% endif %}
+                                                <a
+                                                    class="btn btn-default btn-sm"
+                                                    data-plan="{{ plan.id }}"
+                                                    data-name="{{ plan.name }}"
+                                                    data-workoutsPerWeek="{{ plan.meta and plan.meta.workoutsPerWeek ? plan.meta.workoutsPerWeek : 0 }}"
+                                                    data-duration="{{ plan.meta and plan.meta.duration ? plan.meta.duration : 0 }}"
+                                                    data-gender="{{ plan.meta and plan.meta.gender ? plan.meta.gender : 0 }}"
+                                                    data-level="{{ plan.meta and plan.meta.level ? plan.meta.level : 0 }}"
+                                                    data-location="{{ plan.meta and plan.meta.location ? plan.meta.location : 0 }}"
+                                                    data-title="Clone Workout Plan"
+                                                    data-action="{{ path('workout_create') }}"
+                                                    data-target="#editTemplateText"
+                                                    data-toggle="modal"
+                                                    role="button"
+                                                    href="#"
+                                                >
+                                                    <span class="fa fa-clone" aria-hidden="true"></span>
+                                               </a>
+                                                <a
+                                                   class="btn btn-default btn-sm"
+                                                   data-name="{{ plan.name }}"
+                                                   data-comment="{{ plan.explaination }}"
+                                                   data-workoutsPerWeek="{{ plan.meta and plan.meta.workoutsPerWeek ? plan.meta.workoutsPerWeek : 0 }}"
+                                                   data-duration="{{ plan.meta and plan.meta.duration ? plan.meta.duration : 0 }}"
+                                                   data-gender="{{ plan.meta and plan.meta.gender ? plan.meta.gender : 0 }}"
+                                                   data-level="{{ plan.meta and plan.meta.level ? plan.meta.level : 0 }}"
+                                                   data-location="{{ plan.meta and plan.meta.location ? plan.meta.location : 0 }}"
+                                                   data-title="Edit Workout Plan"
+                                                   data-action="{{ path('workout_update', { 'plan': plan.id }) }}"
+                                                   data-target="#editTemplateText"
+                                                   data-toggle="modal"
+                                                   href="#"
+                                                   role="button"
+                                                >
+                                                    <span class="fa fa-pencil" aria-hidden="true"></span>
+                                                </a>
+                                                <a
+                                                    class="btn btn-default btn-sm"
+                                                    href="{{ path('workout_delete', { 'plan': plan.id }) }}"
+                                                    role="button"
+                                                    onclick="shouldDelete(event)"
+                                                >
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="container text-center">
+                            {% if client %}
+                                <h2>You haven't created any Workout Plans for {{ client.name }} yet</h2>
+                                <p class="mb-1">
+                                    Create your first Workout Plan for {{ client.name }}, by using a Workout Template or starting from scratch.
+                                </p>
+                                {{ btnActions | raw }}
+                            {% else %}
+                                <h2>You haven't created any Workout Plan Templates yet</h2>
+                                <p class="mb-1">
+                                    Create your first Workout Plan Template
+                                </p>
+                                {{ btnActions | raw }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% include '@WorkoutPlan/forms/assign_template.html.twig' %}
+
+            {% include '@App/default/widgets/chatWidget.html.twig' %}
+
+            {% include '@App/components/footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link href="{{ asset("bundles/app/INSPINIA/css/plugins/sweetalert/sweetalert.css") }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "chat-widget.css"|webpack_asset }}">
+{% endblock %}
+
+{% block script %}
+    {% include '@WorkoutPlan/forms/create.html.twig' %}
+    {% include '@WorkoutPlan/forms/apply_template.html.twig' with {
+        'title': 'Create Workout Plan from Template',
+        'plan': null,
+        'client': client,
+    } %}
+    {% include '@WorkoutPlan/forms/plan.html.twig' with {
+        'action': path('workout_create'),
+        'title': 'Create New Workout Plan',
+        'description': 'Starting from scratch.',
+        'plan': null,
+        'client': client,
+    } %}
+    <script src="{{ asset('bundles/app/INSPINIA/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+
+    <script src="{{ asset("bundles/app/INSPINIA/js/plugins/sweetalert/sweetalert.min.js") }}"></script>
+    <script src="{{ asset("bundles/app/js/plan-status.js") }}"></script>
+    <script src="{{ asset('bundles/app/js/assign-template.js') }}"></script>
+    <script>
+        window.shouldDelete = function (e) {
+            var href = e.currentTarget.href;
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this workout!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+
+            }, function () {
+                window.location = href;
+            });
+            e.preventDefault();
+
+        };
+
+        $(document).ready(function(){
+          $('.dropdown a.plan-status-handler').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+          });
+          $('a.plan-status-handler + .dropdown-menu a').on("click", function(e){
+            $(this).parent().parent().hide();
+          });
+
+        });
+    </script>
+    <script src="{{ "chat-widget.js"|webpack_asset }}"></script>
+{% endblock %}
